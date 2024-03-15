@@ -1,5 +1,5 @@
-function Authentication() {
+function AuthenticationPage() {
     return <div>Auth</div>
 };
 
-export default Authentication;
+export default AuthenticationPage;

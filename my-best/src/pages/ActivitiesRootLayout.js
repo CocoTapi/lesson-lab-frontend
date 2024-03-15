@@ -1,6 +1,14 @@
+import { Outlet } from "react-router-dom";
+import ActivityNavigation from "../components/ActivityNavigation";
+
 function ActivitiesRootLayout(){
     return (
-        <div>activity nav</div>
+        <>
+            <ActivityNavigation />
+            <main>
+                <Outlet />
+            </main>
+        </>
     )
 }
 

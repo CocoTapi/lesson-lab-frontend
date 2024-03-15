@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import ActivitiesRootLayout from './pages/ActivitiesRootLayout';
 import ActivitiesPage from './pages/ActivitiesPage';
 import MyPage from './pages/MyPage';
-import Authentication from './pages/Authentication';
+import AuthenticationPage from './pages/Authentication';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'auth',
-        element: <Authentication />
+        element: <AuthenticationPage />
       },
       {
         path: 'my-page',
