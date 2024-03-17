@@ -1,18 +1,34 @@
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
 
 function LoginForm(){
+    const data = useActionData();
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === 'submitting';
+    //console.log(data);
+
     return (
         <>
-            <h1>Login</h1>
-            <Form>
+            <Form method='post'>
+                <h1>Login</h1>
+                {data && data.errors &&
+                    <ul>
+                        {Object.values(data.errors).map((err) => (
+                            <li key={err}>{err}</li>
+                        ))}
+                    </ul>
+                }
                 <div>
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input id='email' type='email' name='email' required/>
                 </div>
                 <div>
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input id='password' type='password' name='password' required/>
                 </div>
+                <div>
+                    <Link to='signup'>Create new user</Link>
+                </div>
+                <button disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Log In'}</button>
             </Form>
         </>
     )
