@@ -2,13 +2,10 @@ import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from "body-parser";
 import session from "express-session";
 
-import env from 'dotenv';
-
 import authRoutes from './auth/authRoutes'
 
 const app = express();
 const port = 8080;
-const saltRounds = 10
 
 // app.use(
 //     session({

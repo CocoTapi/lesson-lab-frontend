@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import ActivitiesRootLayout from './pages/ActivitiesRootLayout';
 import ActivitiesPage from './pages/ActivitiesPage';
 import MyPage from './pages/MyPage';
-import LoginPage, { action as loginAction } from './pages/LoginPage';
+import LoginPage, { action as loginAction, googleOAuth } from './pages/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />,
-        action: loginAction,
+        action: [loginAction, googleOAuth],
       },
       {
         path: 'my-page',

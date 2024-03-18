@@ -1,9 +1,12 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
 import { LoginInfo, SignUpInfo, UserInfo } from "../util/types";
+import env from 'dotenv';
+
+env.config();
 
 const db = Database.db;
-const saltRounds = 10;
+const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
 export async function signUp({ email, password, firstName, lastName }: SignUpInfo) {
 
@@ -45,4 +48,14 @@ export async function login({ email, password }: LoginInfo) {
 
   delete user.password;
   return user;
+}
+
+export async function getUserDataFromGoogle(access_token: any) {
+  const response = await fetch(
+    `https://www.googleapis.com/oauth2/v3/userinfo?access_token${access_token}`
+  )
+  console.log(response);
+
+  const data = await response.json();
+  console.log(`data: ${data}`);
 }

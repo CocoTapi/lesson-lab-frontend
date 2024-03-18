@@ -2,7 +2,12 @@ import { redirect } from "react-router-dom";
 import LoginForm from "../components/forms/LoginForm";
 
 function LoginPage() {
-    return <div><LoginForm /></div>
+    return (
+        <>
+        <div><LoginForm /></div>
+        <button type="button" onClick={() => googleOAuth()}>Google Login</button>
+        </>
+    )
 };
 
 export default LoginPage;
@@ -32,4 +37,19 @@ export async function action ({ request }) {
         console.log(err);
     }
     
+}
+
+function navigate(url) {
+    window.location.href = url;
+}
+
+export async function googleOAuth() {
+    const response = await fetch(`${API_URL}/oauth`, {
+        method: "POST",
+        headers: {
+            'Content-Type' : 'application/json'
+        }
+    })
+    const data = await response.json();
+    navigate(data.url);
 }
