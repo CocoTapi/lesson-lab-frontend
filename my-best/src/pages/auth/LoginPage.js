@@ -1,20 +1,22 @@
 import { redirect } from "react-router-dom";
-import LoginForm from "../components/forms/LoginForm";
+import LoginForm from "../../components/forms/LoginForm";
+import { API_URL } from "../../App";
 
 function LoginPage() {
+    
+
     return (
-        <>
-        <div><LoginForm /></div>
-        <button type="button" onClick={() => googleOAuth()}>Google Login</button>
-        </>
+         <div><LoginForm /></div>
     )
 };
 
 export default LoginPage;
 
-const API_URL = 'http://localhost:8080/';
+
 
 export async function action ({ request }) {
+    console.log("submitting");
+
     const data = await request.formData();
     const loginData = {
         email: data.get('email'),
@@ -39,17 +41,3 @@ export async function action ({ request }) {
     
 }
 
-function navigate(url) {
-    window.location.href = url;
-}
-
-export async function googleOAuth() {
-    const response = await fetch(`${API_URL}/oauth`, {
-        method: "POST",
-        headers: {
-            'Content-Type' : 'application/json'
-        }
-    })
-    const data = await response.json();
-    navigate(data.url);
-}

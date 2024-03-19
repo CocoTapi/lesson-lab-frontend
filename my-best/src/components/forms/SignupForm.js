@@ -6,6 +6,14 @@ function SignupForm(){
             <h1>Sign Up</h1>
             <Form>
                 <div>
+                    <label for="firstName">First Name</label>
+                    <input id='firstName' type='firstName' name='firstName' placeholder='First Name' required/>
+                </div>
+                <div>
+                    <label for="lastName">Last Name</label>
+                    <input id='lastName' type='lastName' name='lastName' placeholder='Last Name' required/>
+                </div>
+                <div>
                     <label for="email">Email</label>
                     <input id='email' type='email' name='email' required/>
                 </div>
@@ -16,7 +24,7 @@ function SignupForm(){
                 <div>
                     <Link to='login'>Log In</Link>
                 </div>
-                <button>Save</button>
+                <button>Sign Up</button>
             </Form>
         </>
     )

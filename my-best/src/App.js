@@ -6,7 +6,10 @@ import HomePage from './pages/HomePage';
 import ActivitiesRootLayout from './pages/ActivitiesRootLayout';
 import ActivitiesPage from './pages/ActivitiesPage';
 import MyPage from './pages/MyPage';
-import LoginPage, { action as loginAction, googleOAuth } from './pages/LoginPage';
+import LoginPage, { action as loginAction } from './pages/auth/LoginPage';
+import { action as googleOAuthAction } from './pages/auth/googleOAuth';
+import LoginLayout from './pages/auth/LoginLayout';
+
 
 const router = createBrowserRouter([
   {
@@ -24,8 +27,18 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <LoginPage />,
-        action: [loginAction, googleOAuth],
+        element: <LoginLayout />,
+        children: [
+          {
+            index: true,
+            element: <LoginPage />,
+            action: loginAction
+          },
+          {
+            path: 'auth',
+            action: googleOAuthAction
+          }
+        ]
       },
       {
         path: 'my-page',
@@ -40,6 +53,8 @@ const router = createBrowserRouter([
     ],
   }
 ]);
+
+export const API_URL = 'http://localhost:8080/';
 
 function App() {
   return <RouterProvider router={router} />;

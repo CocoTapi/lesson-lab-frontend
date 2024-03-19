@@ -7,30 +7,28 @@ function LoginForm(){
     //console.log(data);
 
     return (
-        <>
-            <Form method='post'>
-                <h1>Login</h1>
-                {data && data.errors &&
-                    <ul>
-                        {Object.values(data.errors).map((err) => (
-                            <li key={err}>{err}</li>
-                        ))}
-                    </ul>
-                }
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input id='email' type='email' name='email' required/>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input id='password' type='password' name='password' required/>
-                </div>
-                <div>
-                    <Link to='signup'>Create new user</Link>
-                </div>
-                <button disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Log In'}</button>
-            </Form>
-        </>
+        <Form method='post'>
+            <h1>Login</h1>
+            {data && data.errors &&
+                <ul>
+                    {Object.values(data.errors).map((err) => (
+                        <li key={err}>{err}</li>
+                    ))}
+                </ul>
+            }
+            <div>
+                <label htmlFor="email">Email</label>
+                <input id='email' type='email' name='email' required/>
+            </div>
+            <div>
+                <label htmlFor="password">Password</label>
+                <input id='password' type='password' name='password' required/>
+            </div>
+            <div>
+                <Link to='signup'>Create new user</Link>
+            </div>
+            <button disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Log In'}</button>
+        </Form>
     )
 }
 
