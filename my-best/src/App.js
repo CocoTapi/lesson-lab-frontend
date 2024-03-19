@@ -9,6 +9,7 @@ import MyPage from './pages/MyPage';
 import LoginPage, { action as loginAction } from './pages/auth/LoginPage';
 import { action as googleOAuthAction } from './pages/auth/googleOAuth';
 import LoginLayout from './pages/auth/LoginLayout';
+import SignUpPage, { action as signUpAction } from './pages/auth/SignUpPage';
 
 
 const router = createBrowserRouter([
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'login',
+        path: 'auth',
         element: <LoginLayout />,
         children: [
           {
@@ -35,8 +36,13 @@ const router = createBrowserRouter([
             action: loginAction
           },
           {
-            path: 'auth',
+            path: 'google',
             action: googleOAuthAction
+          },
+          {
+            path: 'sign-up',
+            element: <SignUpPage />,
+            action: signUpAction
           }
         ]
       },

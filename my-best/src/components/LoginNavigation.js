@@ -5,7 +5,7 @@ function LoginNavigation(){
         <div>
             <ul>
                 <li>
-                    <Form action='auth' method='post'>
+                    <Form action='google' method='post'>
                         <button>Google Login</button>
                     </Form>
                 </li>
