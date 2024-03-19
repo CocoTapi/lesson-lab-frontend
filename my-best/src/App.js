@@ -10,6 +10,7 @@ import LoginPage, { action as loginAction } from './pages/auth/LoginPage';
 import { action as googleOAuthAction } from './pages/auth/googleOAuth';
 import LoginLayout from './pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from './pages/auth/SignUpPage';
+import { action as logoutAction } from './pages/auth/logout';
 
 
 const router = createBrowserRouter([
@@ -55,7 +56,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'logout',
-      }
+        action: logoutAction,
+      },
     ],
   }
 ]);

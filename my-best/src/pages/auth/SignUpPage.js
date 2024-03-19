@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 import SignupForm from "../../components/forms/SignupForm";
 
 function SignUpPage(){
@@ -8,4 +9,6 @@ export default SignUpPage;
 
 export async function action () {
     console.log("Sign Up!!!!")
+
+    return redirect('/auth');
 }

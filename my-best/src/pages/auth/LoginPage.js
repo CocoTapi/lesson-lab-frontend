@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect, json } from "react-router-dom";
 import LoginForm from "../../components/forms/LoginForm";
 import { API_URL } from "../../App";
 
@@ -25,19 +25,32 @@ export async function action ({ request }) {
 
     console.log(loginData);
 
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                'Content-type' : 'application/json'
-            },
-            body: JSON.stringify(loginData)
-        })
-        console.log(response.data);
-        return redirect('/');
-    } catch(err) {
-        console.log(err);
+    const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(loginData)
+    })
+    console.log(response.data);
+
+    //error handling
+    if (response.status === 422 || response.status === 401) {
+        return response;
+    };
+
+    if (!response.ok){
+        throw json({ message: 'Could not authenticate user.'}, { status: 500 });
     }
-    
+
+    // TODO: setup token
+    const token = Math.floor(Math.random() * 10);
+
+    localStorage.setItem('token', token);
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    localStorage.setItem('expiration', expiration.toISOString());
+
+    return redirect('/');
 }
 
