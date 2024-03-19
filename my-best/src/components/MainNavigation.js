@@ -2,7 +2,7 @@ import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
 import classes from './css/MainNavigation.module.css';
 
 function MainNavigation(){
-    const token = useRouteLoaderData();
+    const token = useRouteLoaderData('root');
 
     return (
         <header className={classes.header}>
@@ -49,6 +49,18 @@ function MainNavigation(){
                              }   
                          >
                              Sign Up
+                         </NavLink>
+                     </li>
+                    }
+                    {token && 
+                         <li>
+                         <NavLink
+                             to="/my-page"
+                             className={( { isActive }) => 
+                                 isActive ? classes.active : undefined
+                             }   
+                         >
+                             My Page
                          </NavLink>
                      </li>
                     }

@@ -1,7 +1,7 @@
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
-import ErrorPage from './pages/ErrorPage';
+import ErrorPage from './pages/util/ErrorPage';
 import HomePage from './pages/HomePage';
 import ActivitiesRootLayout from './pages/ActivitiesRootLayout';
 import ActivitiesPage from './pages/ActivitiesPage';
@@ -11,6 +11,7 @@ import { action as googleOAuthAction } from './pages/auth/googleOAuth';
 import LoginLayout from './pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from './pages/auth/SignUpPage';
 import { action as logoutAction } from './pages/auth/logout';
+import { checkAuthLoader, loader as tokenLoader } from './pages/util/checkAuth';
 
 
 const router = createBrowserRouter([
@@ -18,6 +19,8 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
+    id: 'root',
+    loader: tokenLoader,
     children: [
       { index: true, element: <HomePage /> },
       { 
@@ -50,6 +53,7 @@ const router = createBrowserRouter([
       {
         path: 'my-page',
         errorElement: <ErrorPage />,
+        loader: checkAuthLoader,
         children: [
           { index: true, element: <MyPage /> }
         ]
