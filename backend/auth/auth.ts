@@ -39,7 +39,6 @@ export async function login({ email, password }: LoginInfo) {
   const storedHashedPassword = user.password;
 
   const bcryptResult = await bcrypt.compare(password, storedHashedPassword);
-
   if (!bcryptResult) throw new Error(`Incorrect password.`);
 
   db.query("UPDATE users SET last_login = $1 WHERE user_id = $2", [
@@ -50,12 +49,12 @@ export async function login({ email, password }: LoginInfo) {
   return user;
 }
 
-export async function getUserDataFromGoogle(access_token: any) {
+export async function getUserDataFromGoogle(access_token: any): Promise<any> {
+  console.log("access token: ", access_token)
   const response = await fetch(
-    `https://www.googleapis.com/oauth2/v3/userinfo?access_token${access_token}`
+    `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
   )
-  console.log(response);
 
-  const data = await response.json();
-  console.log(`data: ${data}`);
+  const data: any = await response.json();
+  return data;
 }

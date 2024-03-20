@@ -31,7 +31,7 @@ function MainNavigation(){
                     {!token &&
                         <li>
                             <NavLink
-                                to="/auth"
+                                to="/auth?mode=login"
                                 className={( { isActive }) => 
                                     isActive ? classes.active : undefined
                                 }   
@@ -43,7 +43,7 @@ function MainNavigation(){
                     {!token && 
                          <li>
                          <NavLink
-                             to="/auth/sign-up"
+                             to="/auth/signup"
                              className={( { isActive }) => 
                                  isActive ? classes.active : undefined
                              }   

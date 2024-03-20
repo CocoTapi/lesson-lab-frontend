@@ -1,12 +1,12 @@
 import { redirect, json } from "react-router-dom";
-import LoginForm from "../../components/forms/LoginForm";
+import AuthForm from "../../components/forms/AuthForm";
 import { API_URL } from "../../App";
 
 function LoginPage() {
     
 
     return (
-         <div><LoginForm /></div>
+         <div><AuthForm /></div>
     )
 };
 
@@ -15,17 +15,14 @@ export default LoginPage;
 
 
 export async function action ({ request }) {
-    console.log("submitting");
-
-    const data = await request.formData();
+   const data = await request.formData();
     const loginData = {
         email: data.get('email'),
         password: data.get('password')
     };
-
     console.log(loginData);
 
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
             'Content-type' : 'application/json'
@@ -33,7 +30,7 @@ export async function action ({ request }) {
         body: JSON.stringify(loginData)
     })
     console.log(response.data);
-
+    
     //error handling
     if (response.status === 422 || response.status === 401) {
         return response;

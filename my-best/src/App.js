@@ -44,7 +44,7 @@ const router = createBrowserRouter([
             action: googleOAuthAction
           },
           {
-            path: 'sign-up',
+            path: 'signup',
             element: <SignUpPage />,
             action: signUpAction
           }

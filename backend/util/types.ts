@@ -17,3 +17,5 @@ export interface UserInfo {
     last_update: Date,
     last_login: Date
 }
+
+
