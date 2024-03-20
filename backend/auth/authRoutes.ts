@@ -3,7 +3,7 @@ import { signUp, login, getUserDataFromGoogle } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo } from "../util/types";
 import { OAuth2Client } from 'google-auth-library';
-import env from "dotenv"
+import env from "dotenv";
 
 env.config();
 
@@ -11,6 +11,7 @@ const router = express.Router();
 
 router.post("/signup", asyncHandler(async (req, res) => {
     const signUpInfo: SignUpInfo = req.body;
+    console.log(signUpInfo);
     await signUp(signUpInfo);
     res.status(200).json({ message: 'Successfully created user.' })
 }));

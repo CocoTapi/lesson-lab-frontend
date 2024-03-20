@@ -19,7 +19,7 @@ export async function action ({ request }) {
         password: data.get('password')
     };
 
-    console.log(signUpData);
+    console.log("sign Up data: ", signUpData);
 
     const response = await fetch(`${API_URL}/signup`, {
         method: "POST",
@@ -28,7 +28,8 @@ export async function action ({ request }) {
         },
         body: JSON.stringify(signUpData)
     })
-    console.log(response.data);
+    
+    console.log("response data: ", response);
 
     //error handling
     if (response.status === 422 || response.status === 401) {

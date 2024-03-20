@@ -13,11 +13,11 @@ export async function signUp({ email, password, firstName, lastName }: SignUpInf
   const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
     email,
   ]);
-
+  
   if (checkResult.rows.length > 0) throw new Error("User already exists.");
 
   const date = new Date();
-  const hashResult = await bcrypt.hash(password, saltRounds);
+  const hashResult = bcrypt.hashSync(password, saltRounds);
   if (!hashResult) throw new Error('Password hash fail. User not created')
 
   await db.query(
@@ -25,6 +25,7 @@ export async function signUp({ email, password, firstName, lastName }: SignUpInf
     [email, hashResult, firstName, lastName, date, date]
   );
 
+  console.log(email, hashResult, firstName, lastName, date, date);
 }
 
 export async function login({ email, password }: LoginInfo) {
