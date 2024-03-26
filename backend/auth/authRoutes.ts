@@ -1,5 +1,5 @@
 import express from "express";
-import { signUp, login, getUserDataFromGoogle, oAuthLogin } from "./auth";
+import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo } from "../util/types";
 import env from "dotenv";
@@ -27,32 +27,29 @@ router.post("/login", asyncHandler(async (req, res) => {
 
 //create the url for google login and send it back to the frontend
 router.post("/oauth", asyncHandler(async (req, res) => {
-    // res.header('Access-Control-Allow-Origin', 'http://localhost:3000/auth');
-    // res.header("Referrer-Policy", 'no-referrer-when-downgrade');
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/auth');
+    res.header("Referrer-Policy", 'no-referrer-when-downgrade');
 
-    const redirectUrl = await oAuthLogin()
-    res.status(200).json({ redirectUrl })
-    // res.json({ url: authorizeUrl });
+    const authUrl = await oAuthLogin()
+    res.status(200).json({ authUrl })
 }));
 
+
+
 router.get("/auth/google", asyncHandler(async function (req, res) {
-    // const code: string = req.query.code as string;
-    // if (!code) res.status(400).json({ message: 'Authorization code is missing' });
+    const code: string = req.query.code as string;
+    if (!code) res.status(400).json({ message: 'Authorization code is missing' });
 
-    // const token = await oAuth2Client.getToken(code);
+    const tokens = await generateTokens(code);
 
-    // //allows the client to use the access token
-    // // await oAuth2Client.setCredentials(token.tokens);
+    const userData = await getUserDataFromGoogle(tokens.id_token);
 
-    // const user = oAuth2Client.credentials;
-    // const userData = await getUserDataFromGoogle(user.access_token);
+    //await oAuthToDB(userData);
 
-    // //await oAuthToDB(userData);
-
-    // res.status(200).json({
-    //     message: "Success",
-    //     data: userData.given_name
-    // })
+    res.status(200).json({
+        message: "Success",
+        data: userData
+    })
 }))
 
 export default router;
