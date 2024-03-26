@@ -1,5 +1,5 @@
 import express from "express";
-import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens } from "./auth";
+import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens, checkOAuthData } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo } from "../util/types";
 import env from "dotenv";
@@ -27,11 +27,11 @@ router.post("/login", asyncHandler(async (req, res) => {
 
 //create the url for google login and send it back to the frontend
 router.post("/oauth", asyncHandler(async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/auth');
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.header("Referrer-Policy", 'no-referrer-when-downgrade');
 
-    const authUrl = await oAuthLogin()
-    res.status(200).json({ authUrl })
+    const authUrl = await oAuthLogin();
+    res.status(200).json({ authUrl });
 }));
 
 
@@ -42,13 +42,15 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
 
     const tokens = await generateTokens(code);
 
-    const userData = await getUserDataFromGoogle(tokens.id_token);
+    const {email, firstName, lastName} = await getUserDataFromGoogle(tokens.id_token);
+    
+    const password = "google";
 
-    //await oAuthToDB(userData);
+    await checkOAuthData({email, password, firstName, lastName});
 
     res.status(200).json({
         message: "Success",
-        data: userData
+        data: firstName
     })
 }))
 

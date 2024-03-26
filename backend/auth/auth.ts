@@ -112,47 +112,47 @@ export async function getUserDataFromGoogle(token: any): Promise<any> {
     console.log("payload", payload);
 
     // Here, payload contains user information
-    const userEmail = payload['email'];
+    const email = payload['email'];
     const firstName = payload['given_name'];
     const lastName = payload['family_name'];
 
     const isExpired = payload.exp < Date.now() / 1000;
 	  if (!payload.exp || isExpired) throw new Error('Token expired');
 
-  //using access_token
-  // const response = await fetch(
-  //   `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
-  // )
-  // const data: GoogleUser = await response.json() as GoogleUser;
-  // console.log("data: ", data);
-  // return data 
+    //using access_token
+    // const response = await fetch(
+    //   `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`
+    // )
+    // const data: GoogleUser = await response.json() as GoogleUser;
+    // const email = data.email;
+    // const firstName = data.given_name;
+    // const lastName = data.family_name;
 
-  return {userEmail, firstName, lastName};
+  return {email, firstName, lastName};
 }
 
 
-// export async function oAuthToDB(userData){
-//   const { email,  given_name, family_name }: GoogleUser = userData;
-//   const date = new Date();
+export async function checkOAuthData({email, password, firstName, lastName}: SignUpInfo){
+  const date = new Date();
 
-//   const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
-//     email,
-//   ]);
+  const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
+    email,
+  ]);
   
   
-//   if (checkResult.rows.length > 0) {
-//     const user = checkResult.rows[0];
-//     db.query("UPDATE users SET last_login = $1 WHERE user_id = $2", [
-//      date, user.user_id
-//     ]);
-//     console.log("Updated login date.")
-//   } else {
-//     await db.query(
-//       "INSERT INTO users (email, password, first_name, last_name, created_date, last_update) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-//       [email, "google", given_name, family_name, date, date]
-//     );
+  if (checkResult.rows.length > 0) {
+    const user = checkResult.rows[0];
+    db.query("UPDATE users SET last_login = $1 WHERE user_id = $2", [
+     date, user.user_id
+    ]);
+    console.log("Updated login date.")
+  } else {
+    await db.query(
+      "INSERT INTO users (email, password, first_name, last_name, created_date, last_update) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [email, password, firstName, lastName, date, date]
+    );
   
-//     console.log("registered User:", email,  given_name, family_name, date, date);
-//   }
+    console.log("registered User:", email, password, firstName, lastName, date, date);
+  }
 
-//}
+}
