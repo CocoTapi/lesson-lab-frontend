@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ActivityNavigation from "../components/ActivityNavigation";
+import ActivityNavigation from "../../components/ActivityNavigation"
 
 function ActivitiesRootLayout(){
     return (
