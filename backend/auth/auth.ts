@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { LoginInfo, SignUpInfo, UserInfo, GoogleUser } from "../util/types";
+import { LoginInfo, SignUpInfo } from "../util/types";
 import env from 'dotenv';
 import { OAuth2Client } from "google-auth-library";
 
