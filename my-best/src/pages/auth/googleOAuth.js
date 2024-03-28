@@ -3,11 +3,11 @@ import { json } from "react-router-dom";
 //import OAuthRedirectPage from "./OAuthRedirectPage";
 import { handleGoogleAuthEvent } from "../util/checkAuth";
 
-function GoogleOAuthPage() {
-    return <div>Processing Google OAuth redirection...</div>
-}
+// function GoogleOAuthPage() {
+//     return <div>Processing Google OAuth redirection...</div>
+// }
 
-export default GoogleOAuthPage;
+// export default GoogleOAuthPage;
 
 
 function navigate(url) {
@@ -46,10 +46,6 @@ export async function action() {
         console.log(data);
         console.log(data.authUrl);
 
-        
-
-        // After successful login, redirect to home page
-        // navigate('/home');
         navigate(data.authUrl);
     } catch (error) {
         console.error('Error during Google OAuth login:', error);

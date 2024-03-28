@@ -42,7 +42,6 @@ const router = createBrowserRouter([
           },
           {
             path: 'google',
-            element: <GoogleOAuthPage />,
             action: googleOAuthAction
           },
           {

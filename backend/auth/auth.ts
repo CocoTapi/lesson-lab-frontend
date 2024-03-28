@@ -142,7 +142,7 @@ export async function checkOAuthData({email, password, firstName, lastName}: Sig
   
   if (checkResult.rows.length > 0) {
     const user = checkResult.rows[0];
-    db.query("UPDATE users SET last_login = $1 WHERE user_id = $2", [
+    await db.query("UPDATE users SET last_login = $1 WHERE user_id = $2", [
      date, user.user_id
     ]);
     console.log("Updated login date.")

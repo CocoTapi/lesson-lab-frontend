@@ -51,5 +51,5 @@ export function handleGoogleAuthEvent(event) {
          */
         console.log("redirect!!!!!!")
         window.location.href = "/";
-    }
+    } 
 }

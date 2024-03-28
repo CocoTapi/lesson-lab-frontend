@@ -51,6 +51,7 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
     const password = "google";
 
     await checkOAuthData({email, password, firstName, lastName});
+
     const token = "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5";
     const filePath = path.join(__dirname, '../redirect.html');
 
@@ -61,7 +62,7 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
             return res.status(500).send('Error loading the authentication page.');
         }
 
-        // Replace the placeholder with the actual idToken
+        // Replace the placeholder with the actual token
         const updatedHtmlContent = htmlContent.replace('RETRIEVED_ID_TOKEN', token);
 
         // Send the modified HTML content as the response
