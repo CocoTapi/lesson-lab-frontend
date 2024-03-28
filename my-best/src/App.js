@@ -7,11 +7,12 @@ import ActivitiesRootLayout from './pages/activities/ActivitiesRootLayout';
 import ActivitiesPage from './pages/activities/ActivitiesPage';
 import MyPage from './pages/MyPage';
 import LoginPage, { action as loginAction } from './pages/auth/LoginPage';
-import { action as googleOAuthAction } from './pages/auth/googleOAuth';
+import GoogleOAuthPage, { action as googleOAuthAction } from './pages/auth/googleOAuth';
 import LoginLayout from './pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from './pages/auth/SignUpPage';
 import { action as logoutAction } from './pages/auth/logout';
 import { checkAuthLoader, loader as tokenLoader } from './pages/util/checkAuth';
+import OAuthRedirectPage from './pages/auth/OAuthRedirectPage';
 
 
 const router = createBrowserRouter([
@@ -41,12 +42,17 @@ const router = createBrowserRouter([
           },
           {
             path: 'google',
+            element: <GoogleOAuthPage />,
             action: googleOAuthAction
           },
           {
             path: 'signup',
             element: <SignUpPage />,
             action: signUpAction
+          },
+          {
+            path: 'callback',
+            element: <OAuthRedirectPage />
           }
         ]
       },

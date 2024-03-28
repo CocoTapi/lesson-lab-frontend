@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Authentication Success</title>
+</head>
+<body>
+  <h1> Authorization Successful</h1>
+  
+  <script>
+    (function() {
+      const token = 'RETRIEVED_ID_TOKEN'; // dynamically replaced with the actual token value.
+
+      if (window.opener) {
+        window.opener.postMessage({ token }, '*'); 
+      }
+
+      // Close the current window
+      window.close();
+    })();
+  </script>
+</body>
+</html>

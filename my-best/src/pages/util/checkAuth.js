@@ -38,3 +38,18 @@ export function checkAuthLoader() {
 
     return null;
 }
+
+
+export function handleGoogleAuthEvent(event) {
+
+    console.log("call the function!!!!!");
+    if (event.data && event.data.token) {
+        localStorage.setItem('token', event.data.token); // Store the token
+        //perform all other logic
+        /**
+         * redirect to another page
+         */
+        console.log("redirect!!!!!!")
+        window.location.href = "/";
+    }
+}

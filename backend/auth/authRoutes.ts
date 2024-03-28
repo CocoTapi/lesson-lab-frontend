@@ -4,6 +4,10 @@ import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo } from "../util/types";
 import env from "dotenv";
 
+const fs = require('fs');
+const path = require('path');
+
+
 env.config();
 
 const router = express.Router();
@@ -47,11 +51,27 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
     const password = "google";
 
     await checkOAuthData({email, password, firstName, lastName});
+    const token = "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5";
+    const filePath = path.join(__dirname, '../redirect.html');
 
-    res.status(200).json({
-        message: "Success",
-        data: firstName
-    })
+    // Read in the HTML file content
+    fs.readFile(filePath, { encoding: 'utf-8' }, (err: any, htmlContent: string) => {
+        if (err) {
+            console.error('Error reading the HTML file:', err);
+            return res.status(500).send('Error loading the authentication page.');
+        }
+
+        // Replace the placeholder with the actual idToken
+        const updatedHtmlContent = htmlContent.replace('RETRIEVED_ID_TOKEN', token);
+
+        // Send the modified HTML content as the response
+        res.send(updatedHtmlContent);
+    });
+    // res.send(`<script>window.opener.postMessage({ token: '${token}' }, window.origin); window.close();</script>`);
+    // res.status(200).json({
+    //     message: "Success",
+    //     token: "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5"
+    // })
 }))
 
 export default router;
