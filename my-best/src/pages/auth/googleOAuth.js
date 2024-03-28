@@ -1,13 +1,6 @@
 import { API_URL } from "../../App";
 import { json } from "react-router-dom";
-//import OAuthRedirectPage from "./OAuthRedirectPage";
 import { handleGoogleAuthEvent } from "../util/checkAuth";
-
-// function GoogleOAuthPage() {
-//     return <div>Processing Google OAuth redirection...</div>
-// }
-
-// export default GoogleOAuthPage;
 
 
 function navigate(url) {
@@ -27,7 +20,7 @@ function navigate(url) {
     
 }
 
-export async function action() {
+export async function googleOAuthAction() {
     try {
         console.log("Google auth submitted");
 
