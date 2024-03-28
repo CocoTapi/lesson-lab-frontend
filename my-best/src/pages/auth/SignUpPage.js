@@ -9,14 +9,17 @@ function SignUpPage(){
 export default SignUpPage;
 
 export async function action ({ request }) {
-    console.log("submitting");
-
     const data = await request.formData();
+    const firstName = data.get('firstName');
+    const lastName = data.get('lastName');
+    const email = data.get('email');
+    const password = data.get('password');
+
     const signUpData = {
-        firstName: data.get('firstName'),
-        lastName: data.get('lastName'),
-        email: data.get('email'),
-        password: data.get('password')
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
     };
 
     console.log("sign Up data: ", signUpData);
@@ -41,5 +44,5 @@ export async function action ({ request }) {
     }
 
 
-    return redirect('/auth');
+    return redirect('/');
 }

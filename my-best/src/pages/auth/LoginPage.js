@@ -17,7 +17,7 @@ function LoginPage() {
         {isLoading ? (
             <div>
                 <p>Check new window!</p>
-                <p>Processing google sign in...</p>
+                <p>Processing google sign...</p>
             </div>
         ) : (
             <div>
@@ -35,7 +35,7 @@ export default LoginPage;
 
 
 export async function action ({ request }) {
-   const data = await request.formData();
+    const data = await request.formData();
     const loginData = {
         email: data.get('email'),
         password: data.get('password')
