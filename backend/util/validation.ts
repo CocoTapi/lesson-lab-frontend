@@ -1,19 +1,23 @@
-export function isValidText(value, minLength = 1): string {
+import { ValidationErrorBoolean } from "./types";
+
+export function isValidText(value: string, minLength: number = 1){
     return value && value.trim().length >= minLength;
 };
 
-export function isValidEmail(value): string {
+export function isValidEmail(value: string) {
     return value && value.includes("@");
 };
 
-export function isValidPassword(value,minLength = 8): string {
-    let length = false;
-    let simbol = false;
-    let num = false;
+export function isValidPassword(value: string, minLength: number = 8) {
+    let validity: ValidationErrorBoolean = {
+        length: false,
+        simbol: false,
+        num: false
+    };
 
-    if (value.trim().length >= minLength) length = true; 
-    if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value) === true) simbol = true;
-    if (/\d/.test(value) === true) num = true;
+    if (value && value.trim().length >= minLength) validity.length = true; 
+    if (value && /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value) === true) validity.simbol = true;
+    if (value && /\d/.test(value) === true) validity.num = true;
 
-    return value && length && simbol && num;
+    return validity;
 }

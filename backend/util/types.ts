@@ -18,15 +18,20 @@ export interface UserInfo {
     last_login: Date
 }
 
-// export interface GoogleUser {
-//     sub?: string,
-//     name?: string,
-//     given_name: string,
-//     family_name: string,
-//     picture?: string,
-//     email?: string,
-//     email_verified?: boolean,
-//     locale?: string
-// }
+export interface ValidationErrorMessage {
+    email?: string,
+    length?: string,
+    simbol?: string,
+    num?: string
+};
+
+
+export interface ValidationErrorBoolean {
+    length?: boolean,
+    simbol?: boolean,
+    num?: boolean
+  }
+
+
 
 

@@ -32,7 +32,9 @@ const domainRedirect = {
 const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
+
 export async function signUp({ email, password, firstName, lastName }: SignUpInfo) {
+
 
   const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
     email,
