@@ -1,9 +1,9 @@
 import express from "express";
-import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens, checkOAuthData } from "./auth";
+import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens, checkOAuthData, checkValidation } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo, ValidationErrorMessage } from "../util/types";
 import env from "dotenv";
-import { isValidEmail, isValidPassword } from "../util/validation";
+import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
 const fs = require('fs');
 const path = require('path');
@@ -17,18 +17,8 @@ const router = express.Router();
 
 router.post("/signup", asyncHandler(async (req, res) => {
     const signUpInfo: SignUpInfo = req.body;
-    let errors : ValidationErrorMessage = {};
-    const emailValidity = !isValidEmail(signUpInfo.email)
-    const passwordValidity = isValidPassword(signUpInfo.password, 8);
-
-    if (emailValidity === false) errors.email = "Invalid email.";
+    const errors : ValidationErrorMessage = await checkValidation(signUpInfo);
     
-
-    if (passwordValidity.length === false) errors.length = "Invalid password. Must be at least 8 characters long.";
-    if (passwordValidity.simbol === false) errors.simbol = "Invalid password. Must be at least one simbol in your password.";
-    if (passwordValidity.num === false) errors.num = "Invalid password. Must be at least one number in your password."
-    console.log("validity", isValidPassword(signUpInfo.password, 8));
-
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({
             message: "User signup failed due to validation errors.",
@@ -36,7 +26,6 @@ router.post("/signup", asyncHandler(async (req, res) => {
         })
     }
 
-    console.log(signUpInfo);
     await signUp(signUpInfo);
     res.status(200).json({ message: 'Successfully created user.' })
 }));

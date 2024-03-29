@@ -22,7 +22,9 @@ export interface ValidationErrorMessage {
     email?: string,
     length?: string,
     simbol?: string,
-    num?: string
+    num?: string,
+    firstName?: string,
+    lastName?: string,
 };
 
 

@@ -1,8 +1,9 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { LoginInfo, SignUpInfo } from "../util/types";
+import { LoginInfo, SignUpInfo, ValidationErrorMessage } from "../util/types";
 import env from 'dotenv';
 import { OAuth2Client } from "google-auth-library";
+import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
 env.config();
 
@@ -32,6 +33,28 @@ const domainRedirect = {
 const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
+export async function checkValidation({ email, password, firstName, lastName }: SignUpInfo) {
+  const errors : ValidationErrorMessage = {};
+
+  const emailValidity = isValidEmail(email);
+  const passwordValidity = isValidPassword(password, 8);
+  const firstNameValidity = isValidText(firstName);
+  const lastNameValidity = isValidText(lastName);
+
+  if (!emailValidity) errors.email = "Invalid email.";
+
+  if (passwordValidity.length === false) errors.length = "Invalid password length. Must be at least 8 characters long.";
+  if (passwordValidity.simbol === false) errors.simbol = "Invalid password. Must be at least one simbol in your password.";
+  if (passwordValidity.num === false) errors.num = "Invalid password. Must be at least one number in your password."
+
+  if(!firstNameValidity) errors.firstName = "Invalid first name."
+  if(!lastNameValidity) errors.lastName = "Invalid last name."
+
+  if (Object.keys(errors).length > 0) return errors;
+
+  console.log("Passed all validations!");
+  return {};
+}
 
 export async function signUp({ email, password, firstName, lastName }: SignUpInfo) {
 
