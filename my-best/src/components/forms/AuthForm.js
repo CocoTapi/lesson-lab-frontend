@@ -9,6 +9,8 @@ function AuthForm(){
     const [ searchParams ] = useSearchParams();
     const isLogin = searchParams.get('mode') === 'login';
 
+    console.log("data.errors", data && data.errors);
+
     return (
         <Form method='post'>
             <h1>{isLogin ? 'Log In' : 'Create a new user'}</h1>
@@ -23,20 +25,29 @@ function AuthForm(){
             {!isLogin && 
             <>
                 <div>
-                    <label htmlFor="firstName">First Name</label>
+                    {data && data.errors.firstName && <span> * </span>}                       
+                    <label htmlFor="firstName">
+                        First Name
+                    </label>
                     <input id='firstName' type='firstName' name='firstName' placeholder='First Name' required/>
                 </div>
                 <div>
+                    {data && data.errors.lastName && <span> * </span>} 
                     <label htmlFor="lastName">Last Name</label>
                     <input id='lastName' type='lastName' name='lastName' placeholder='Last Name' required/>
                 </div>
             </>
             }
             <div>
+                {data && data.errors.email && <span> * </span>
+                }
                 <label htmlFor="email">Email</label>
                 <input id='email' type='email' name='email' required/>
             </div>
             <div>
+                {data && ( data.errors.length ||data.errors.simbol || data.errors.num )
+                    && <span> * </span>
+                }
                 <label htmlFor="password">Password</label>
                 <input id='password' type='password' name='password' required/>
             </div>
