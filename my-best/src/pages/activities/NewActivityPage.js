@@ -1,5 +1,7 @@
+import NewActivityForm from "../../components/activities/NewActivityForm";
+
 function NewActivityPage(){
-    return <div>New Activity</div>
+    return <div><NewActivityForm /></div>
 }
 
 export default NewActivityPage;

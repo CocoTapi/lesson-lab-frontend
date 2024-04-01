@@ -1,5 +1,7 @@
+import ActivityList from "../../components/activities/ActivityList";
+
 function ActivitiesPage() {
-    return <div>Activity list</div>
+    return <div><ActivityList /></div>
 };
 
 export default ActivitiesPage;

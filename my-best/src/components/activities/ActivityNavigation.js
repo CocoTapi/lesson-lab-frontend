@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteLoaderData } from "react-router-dom";
 
 function ActivityNavigation(){
+    const token = useRouteLoaderData('root');
+
     return (
         <header>
             <nav>
@@ -12,6 +14,13 @@ function ActivityNavigation(){
                             All Activities
                         </NavLink>
                     </li>
+                    {token &&
+                        <NavLink
+                            to="/activities/new"
+                        >
+                            Add Activity
+                        </NavLink>
+                    }
                 </ul>
             </nav>
         </header>
