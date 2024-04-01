@@ -1,5 +1,5 @@
 import { redirect, json } from "react-router-dom";
-import AuthForm from "../../components/forms/AuthForm";
+import AuthForm from "../../components/auth/AuthForm";
 import { API_URL } from "../../App";
 
 function SignUpPage(){

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { redirect, json } from "react-router-dom";
-import AuthForm from "../../components/forms/AuthForm";
+import AuthForm from "../../components/auth/AuthForm";
 import { API_URL } from "../../App";
 import { googleOAuthAction } from "./googleOAuth";
 
@@ -17,7 +17,7 @@ function LoginPage() {
         {isLoading ? (
             <div>
                 <p>Check new window!</p>
-                <p>Processing google sign...</p>
+                <p>Processing google sign in ...</p>
             </div>
         ) : (
             <div>
