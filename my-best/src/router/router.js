@@ -12,7 +12,7 @@ import { action as logoutAction } from '../pages/auth/logout';
 import { checkAuthLoader, loader as tokenLoader } from '../pages/util/checkAuth';
 import ActivityDetailPage from '../pages/activities/ActivityDetailPage';
 import EditActivityPage from '../pages/activities/EditActivityPage';
-import NewActivityPage from '../pages/activities/NewActivityPage';
+import NewActivityPage, {action as newActivityAction} from '../pages/activities/NewActivityPage';
 
 export const router = createBrowserRouter([
     {
@@ -44,7 +44,8 @@ export const router = createBrowserRouter([
             },
             {
               path: 'new',
-              element: <NewActivityPage />
+              element: <NewActivityPage />,
+              action: newActivityAction
             }
           ]
         },

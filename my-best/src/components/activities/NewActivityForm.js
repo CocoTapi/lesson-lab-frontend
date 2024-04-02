@@ -1,11 +1,36 @@
+import { useState } from "react";
 import { useNavigation, useActionData, Form } from "react-router-dom";
 
 function NewActivityForm() {
+    const [fileInputs, setFileInputs] = useState([]);
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
 
-    //TODO: add a function to upload more files
+    const handleAddFile = (event) => {
+        event.preventDefault();
+        setFileInputs((prevFileInputs) => [...prevFileInputs, 
+            <div key={prevFileInputs.length}>
+                <button onClick={() => handleDeleteFile(prevFileInputs.length)}>X</button>
+                <label htmlFor={`file${prevFileInputs.length}`} >Upload file {prevFileInputs.length}</label>
+                <input id={`file${prevFileInputs.length}`} type='file' name={`file${prevFileInputs.length}`} /><br/>
+            </div>
+        ] );
+    }
+
+    const handleDeleteFile = (index) => {
+       
+        setFileInputs((prevFileInputs) => {
+            const inputs = [...prevFileInputs];
+            console.log(inputs);
+            inputs.splice(index, 1);
+            console.log(index, inputs)
+
+            return inputs;
+        })
+    }
+
+    //TODO: fix add and delete file function
 
     return (
         <Form method='post'>
@@ -19,18 +44,18 @@ function NewActivityForm() {
             }
             {data && data.message && <p>{data.message}</p>}
             {/* title */}
-            <div>
+            <div>  
                 {data && data.errors.title && <span> * </span>}                       
                 <label htmlFor="title">
                     Title
                 </label>
-                <input id='title' type='title' name='titlee' placeholder='title' required/>
+                <input id='title' type='text' name='title' placeholder='title' required/>
             </div>
 
             {/* duration */}
             <div>
                 {data && data.errors.duration && <span> * </span>} 
-                <label htmlFor="duration">Duration</label>
+                <label htmlFor="duration">Duration</label><br/>
                 <select id='duration' type='duration' name='duration' placeholder='duration' multiple required>
                     <option value="~10">Less than 10 mins</option>
                     <option value="11~20">11 ~ 20 mins</option>
@@ -41,30 +66,34 @@ function NewActivityForm() {
 
             {/* age group */}
             <div>
+                <div>Target Age Group</div>
                 {data && data.errors.ageGroup && <span> * </span>}
-                <label htmlFor="ageGroup">This activity is for ...</label>
-                <select id='ageGroup' type='ageGroup' name='ageGroup' required>
-                    <option value="allAge">for all age group!</option>
-                    <option value="olderThanYoungAdults">for older than young adults</option>
-                    <option value="kids">Especially for kids</option>
-                    <option value="youngAdults">Especially for young adults</option>
-                    <option value="adults">Only for adults</option>
-                </select>
+                <input type="radio" id="allAge" name="ageGroup" value="allAge" />
+                    <label htmlFor="allAge">all age group!</label><br/>
+                <input type="radio" id="TeensAndAdults" name="ageGroup" value="TeensAndAdults" />
+                    <label htmlFor="TeensAndAdults">teenagers and adults</label><br/>
+                <input type="radio" id="kids" name="ageGroup" value="kids" />
+                    <label htmlFor="kids">kids</label><br/>
+                <input type="radio" id="teens" name="ageGroup" value="teens" />
+                    <label htmlFor="teens">teenagers</label><br/>
+                <input type="radio" id="adults" name="ageGroup" value="adults" />
+                    <label htmlFor="adults">adults</label>
             </div>
 
             {/* instructions */}
             <div>
-                {data && data.errors.instructions && <span> * </span>}  
-                <label htmlFor="instructions">Instructions</label>
-                <input id='instructions' type='instructions' name='instructions' required/>
+                {data && data.errors.instruction && <span> * </span>}  
+                <label htmlFor="instruction">Instruction</label>
+                <input id='instruction' type='text' name='instruction' required/>
             </div>
 
-            {/* handout */}
+            {/* file Upload */}
             <div>
-                {data && data.errors.handout && <span> * </span>}  
-                <label htmlFor="handout">Upload file</label>
-                <input id='handout' type='handout' name='handout' />
+                {data && data.errors.files && <span> * </span>}  
+                {fileInputs}
             </div>
+            <button onClick={handleAddFile}>Add file</button><br />
+
             <button disabled={isSubmitting}>Submit</button>
             {isSubmitting && <p>Submitting...</p>}
         </Form>
