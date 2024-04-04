@@ -1,11 +1,40 @@
 import Card from "../../components/UI/Card";
 import NewActivityForm from "../../components/activities/NewActivityForm";
+import { API_URL } from "../../App";
+import { defer, json, useLoaderData, Await } from "react-router-dom";
+import { Suspense } from "react";
 
 function NewActivityPage(){
-    return <Card><NewActivityForm /></Card>
+    const { tags } = useLoaderData();
+    return (
+        <Card>
+            <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
+                <Await resolve={tags} >
+                    {(loadedTags) => <NewActivityForm existingTags={loadedTags} />}
+                </Await>
+            </Suspense>
+        </Card>
+    )
 }
 
 export default NewActivityPage;
+
+async function loadTags(){
+    const response = await fetch(`${API_URL}/tags`);
+
+    if(!response.ok) {
+        throw json({message: "Could not fetch tags."}, { status: 500})
+    }
+
+    const resData = await response.json();
+    return resData.tags;
+}
+
+export function loader(){
+    return defer({
+        tags: ["icebreaker", "fun", "interactive", "group work"]
+    })
+}
 
 export async function action({ request }){
     const data = await request.formData();
@@ -13,15 +42,12 @@ export async function action({ request }){
     const duration = data.get('duration');
     const ageGroup = data.get('ageGroup');
     const instruction = data.get('instruction');
-    const file0 = data.get('file0');
-    const file1 = data.get('file1');
+   
 
     console.log(data);
     console.log("title:", title);
     console.log("duration:", duration);
     console.log("ageGroup:", ageGroup);
     console.log("instruction:", instruction);
-    console.log("file0:", file0);
-    console.log("file1:", file1);
-
+    
 }
