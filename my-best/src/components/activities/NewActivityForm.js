@@ -38,6 +38,12 @@ function NewActivityForm({ existingTags }) {
         setTypedTags('');
     }
 
+    const handleDeleteTag = (e, index) => {
+        e.preventDefault();
+        console.log("index: ", index);
+        setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
+    }
+
     console.log(chosenTags);
 
     //TODO: tags
@@ -107,11 +113,7 @@ function NewActivityForm({ existingTags }) {
             value={typedTags} 
             onChange={handleTypedTagsChange} 
             /><br />
-            <p>This activity's tags: 
-            {chosenTags.map(tag => (
-                <span key={tag}>#{tag} </span>
-            ))}
-            </p>
+         
 
             {typedTags.length > 0 && (
                 <div>
@@ -127,6 +129,18 @@ function NewActivityForm({ existingTags }) {
                     </p>
                 </div>
             )}
+
+            <div>This activity's tags:
+                {chosenTags.map((tag, index) => (
+                    <div key={tag}>
+                        <span>#{tag} </span>
+                        <button onClick={(e) => handleDeleteTag(e, index)}>X</button>
+                    </div>
+                ))}
+            </div>
+
+            {/* hidden input for chosenTags */}
+            <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
 
             <br/><button disabled={isSubmitting}>Submit</button><br />
             {isSubmitting && <p>Submitting...</p>}

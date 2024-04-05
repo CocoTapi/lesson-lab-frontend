@@ -42,6 +42,7 @@ export async function action({ request }){
     const duration = data.get('duration');
     const ageGroup = data.get('ageGroup');
     const instruction = data.get('instruction');
+    const tags = data.get('chosenTags')
    
 
     console.log(data);
@@ -49,5 +50,6 @@ export async function action({ request }){
     console.log("duration:", duration);
     console.log("ageGroup:", ageGroup);
     console.log("instruction:", instruction);
+    console.log("tags: ", tags);
     
 }
