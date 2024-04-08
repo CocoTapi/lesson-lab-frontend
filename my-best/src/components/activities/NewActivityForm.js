@@ -65,7 +65,7 @@ function NewActivityForm({ existingTags }) {
                 <label htmlFor="title">
                     Title
                 </label>
-                <input id='title' type='text' name='title' placeholder='title' required/>
+                <input id='title' type='text' name='title' placeholder='Title is here' required/>
             </div>
 
             {/* duration */}
@@ -96,28 +96,77 @@ function NewActivityForm({ existingTags }) {
                     <label htmlFor="adults">adults</label>
             </div>
 
+            {/* Objectives */}
+            <div>
+                {data && data.errors.objectives && <span> * </span>}  
+                <label htmlFor="objectives">Objectives / Target skills</label><br />
+                <textarea 
+                    id='objectives' 
+                    name='objectives' 
+                    rows="2" 
+                    cols="60" 
+                    placeholder="communication skill, planning skill"
+                    required/>
+            </div>
+
+              {/* Summary */}
+              <div>
+                {data && data.errors.summary && <span> * </span>}  
+                <label htmlFor="summary">One Sentence Summary</label><br />
+                <textarea 
+                    id='summary' 
+                    name='summary' 
+                    rows="2" 
+                    cols="60" 
+                    placeholder="This is a game where groups make a five-item list regarding various topics."
+                    required/>
+            </div>
+
+             {/* Materials */}
+             <div>
+                {data && data.errors.materials && <span> * </span>}  
+                <label htmlFor="materials">Materials</label><br />
+                <textarea 
+                    id='materials' 
+                    name='materials' 
+                    rows="4" 
+                    cols="60"
+                    placeholder="papers, pens" 
+                    required/>
+            </div>
+
             {/* instructions */}
             <div>
-                {data && data.errors.instruction && <span> * </span>}  
-                <label htmlFor="instruction">Instruction</label><br />
-                <textarea id='instruction' name='instruction' rows="10" cols="30" required/>
+                {data && data.errors.instructions && <span> * </span>}  
+                <label htmlFor="instructions">Instructions</label><br />
+                <textarea 
+                    id='instructions' 
+                    name='instructions' 
+                    rows="10" 
+                    cols="60" 
+                    placeholder="
+                        1. Assign each group a topic.
+                        2. In the groups, participants compile a list of five items related to the given topic.
+                        3. Groups share their lists with everyone, while other participants attempt to guess the topic based on the list.
+                        4. The group that most people are able to guess correctly is the winner."
+                    required/>
             </div>
 
            {/* tags */}
             <div>Register tags</div>
             <label htmlFor="typedTags">Type your hashtags:</label><br />
             <input 
-            type="text" 
-            id="typedTags" 
-            name="typedTags" 
-            value={typedTags} 
-            onChange={handleTypedTagsChange} 
+                type="text" 
+                id="typedTags" 
+                name="typedTags" 
+                value={typedTags} 
+                onChange={handleTypedTagsChange} 
+                placeholder="icebreaker"
             /><br />
-         
 
             {typedTags.length > 0 && (
                 <div>
-                    <p>Suggesting Tags:
+                    <p>Suggesting Tags: click to add
                     {matchedTags.length > 0 && (
                         matchedTags.map(tag => (
                             <button key={tag} onClick={(e) => handleTagSelection(e, tag)}>

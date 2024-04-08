@@ -41,6 +41,8 @@ export async function action({ request }){
     const title = data.get('title');
     const duration = data.get('duration');
     const ageGroup = data.get('ageGroup');
+    const objectives = data.get('objectives');
+    const materials = data.get('materials');
     const instruction = data.get('instruction');
     const tags = data.get('chosenTags')
    
@@ -49,6 +51,8 @@ export async function action({ request }){
     console.log("title:", title);
     console.log("duration:", duration);
     console.log("ageGroup:", ageGroup);
+    console.log("objectives:", objectives);
+    console.log("materials:", materials);
     console.log("instruction:", instruction);
     console.log("tags: ", tags);
     
