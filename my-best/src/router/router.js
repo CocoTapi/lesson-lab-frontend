@@ -3,7 +3,7 @@ import RootLayout from '../pages/RootLayout';
 import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
-import ActivitiesPage from '../pages/activities/ActivitiesPage';
+import ActivitiesPage, { loader as activitiesLoader} from '../pages/activities/ActivitiesPage';
 import MyPage from '../pages/MyPage';
 import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
 import LoginLayout from '../pages/auth/LoginLayout';
@@ -27,7 +27,11 @@ export const router = createBrowserRouter([
           path: 'activities',
           element: <ActivitiesRootLayout />,
           children: [
-            { index: true, element: <ActivitiesPage />},
+            { 
+              index: true, 
+              element: <ActivitiesPage />,
+              loader: activitiesLoader
+            },
             {
               path: ':activityId',
               id: 'activity-detail',

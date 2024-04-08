@@ -46,7 +46,8 @@ export async function action({ request }){
         summary: data.get('summary'),
         objectives: data.get('objectives'),
         materials:  data.get('materials'),
-        instruction: data.get('instruction'),
+        instructions: data.get('instructions'),
+        links: data.get('links'),
         tags: data.get('chosenTags')
     };
 

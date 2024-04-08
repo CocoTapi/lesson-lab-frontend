@@ -73,10 +73,12 @@ function NewActivityForm({ existingTags }) {
                 {data && data.errors.duration && <span> * </span>} 
                 <label htmlFor="duration">Duration</label><br/>
                 <select id='duration' type='duration' name='duration' placeholder='duration' required>
-                    <option value="10">Less than 10 mins</option>
-                    <option value="11~20">11 ~ 20 mins</option>
-                    <option value="21~30">21 ~ 30 mins</option>
-                    <option value="30">More than 30 mins</option>
+                    <option value="5">less than 5 mins</option>
+                    <option value="10">about 10 mins</option>
+                    <option value="15">about 15 mins</option>
+                    <option value="20">about 20 mins</option>
+                    <option value="30">about 30 mins</option>
+                    <option value="31">30 mins and more</option>
                 </select> 
             </div>
 
@@ -105,7 +107,7 @@ function NewActivityForm({ existingTags }) {
                     name='summary' 
                     rows="2" 
                     cols="60" 
-                    placeholder="This is a game where groups make a five-item list regarding various topics."
+                    placeholder="This game involves groups making a five-item list based on a topic and guessing each other's topics."
                     required/>
             </div>
 
@@ -122,8 +124,8 @@ function NewActivityForm({ existingTags }) {
                     required/>
             </div>
 
-             {/* Materials */}
-             <div>
+            {/* Materials */}
+            <div>
                 {data && data.errors.materials && <span> * </span>}  
                 <label htmlFor="materials">Materials</label><br />
                 <textarea 
@@ -150,6 +152,19 @@ function NewActivityForm({ existingTags }) {
                         3. Groups share their lists with everyone, while other participants attempt to guess the topic based on the list.
                         4. The group that most people are able to guess correctly is the winner."
                     required/>
+            </div>
+
+             {/* Links */}
+             <div>
+                {data && data.errors.links && <span> * </span>}  
+                <label htmlFor="links">If you have reference links, add them here</label><br />
+                <textarea 
+                    id='links' 
+                    name='links' 
+                    rows="2" 
+                    cols="60"
+                    placeholder="http://....." 
+                />
             </div>
 
            {/* tags */}
