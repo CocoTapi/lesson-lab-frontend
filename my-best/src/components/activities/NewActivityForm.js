@@ -96,6 +96,19 @@ function NewActivityForm({ existingTags }) {
                     <label htmlFor="adults">adults</label>
             </div>
 
+            {/* Summary */}
+            <div>
+                {data && data.errors.summary && <span> * </span>}  
+                <label htmlFor="summary">One Sentence Summary</label><br />
+                <textarea 
+                    id='summary' 
+                    name='summary' 
+                    rows="2" 
+                    cols="60" 
+                    placeholder="This is a game where groups make a five-item list regarding various topics."
+                    required/>
+            </div>
+
             {/* Objectives */}
             <div>
                 {data && data.errors.objectives && <span> * </span>}  
@@ -106,19 +119,6 @@ function NewActivityForm({ existingTags }) {
                     rows="2" 
                     cols="60" 
                     placeholder="communication skill, planning skill"
-                    required/>
-            </div>
-
-              {/* Summary */}
-              <div>
-                {data && data.errors.summary && <span> * </span>}  
-                <label htmlFor="summary">One Sentence Summary</label><br />
-                <textarea 
-                    id='summary' 
-                    name='summary' 
-                    rows="2" 
-                    cols="60" 
-                    placeholder="This is a game where groups make a five-item list regarding various topics."
                     required/>
             </div>
 

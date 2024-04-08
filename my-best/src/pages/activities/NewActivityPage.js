@@ -1,7 +1,7 @@
 import Card from "../../components/UI/Card";
 import NewActivityForm from "../../components/activities/NewActivityForm";
 import { API_URL } from "../../App";
-import { defer, json, useLoaderData, Await } from "react-router-dom";
+import { defer, json, useLoaderData, Await, redirect } from "react-router-dom";
 import { Suspense } from "react";
 
 function NewActivityPage(){
@@ -37,23 +37,40 @@ export function loader(){
 }
 
 export async function action({ request }){
-    const data = await request.formData();
-    const title = data.get('title');
-    const duration = data.get('duration');
-    const ageGroup = data.get('ageGroup');
-    const objectives = data.get('objectives');
-    const materials = data.get('materials');
-    const instruction = data.get('instruction');
-    const tags = data.get('chosenTags')
-   
+    const data = await request.formData();   
 
-    console.log(data);
-    console.log("title:", title);
-    console.log("duration:", duration);
-    console.log("ageGroup:", ageGroup);
-    console.log("objectives:", objectives);
-    console.log("materials:", materials);
-    console.log("instruction:", instruction);
-    console.log("tags: ", tags);
+    const newActivityData = {
+        title: data.get('title'),
+        duration: data.get('title'),
+        ageGroup: data.get('ageGroup'),
+        summary: data.get('summary'),
+        objectives: data.get('objectives'),
+        materials:  data.get('materials'),
+        instruction: data.get('instruction'),
+        tags: data.get('chosenTags')
+    };
+
+    console.log("new activity data: ", newActivityData);
+
+    const response = await fetch(`${API_URL}/new-activity`, {
+        method: "POST",
+        headers: {
+            'Content-type' : 'application/json'
+        },
+        body: JSON.stringify(newActivityData)
+    })
     
+    console.log("response data: ", response);
+
+    //error handling
+    if (response.status === 422 || response.status === 401) {
+        return response;
+    };
+
+    if (!response.ok){
+        throw json({ message: 'Could not add activity.'}, { status: 500 });
+    }
+
+
+    return redirect('/activities');
 }
