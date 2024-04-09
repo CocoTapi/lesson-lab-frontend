@@ -1,13 +1,22 @@
 import ActivityList from "../../components/activities/ActivityList";
 import { API_URL } from "../../App";
+import { json, defer, useLoaderData, Await } from "react-router-dom";
+import { Suspense } from "react";
 
 function ActivitiesPage() {
-    return <div><ActivityList /></div>
+    const { activities } = useLoaderData();
+    return (
+        <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
+            <Await resolve={activities}>
+                {(loadedActivities) => <ActivityList activities={loadedActivities} />}
+            </Await>
+        </Suspense>
+    )
 };
 
 export default ActivitiesPage;
 
-async function loadActivities() {
+export async function loadActivities() {
     const response = await fetch(`${API_URL}/activities`);
 
     if(!response.ok) {
