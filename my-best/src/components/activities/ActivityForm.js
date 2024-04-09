@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { useNavigation, useActionData, Form } from "react-router-dom";
+import classes from '../css/ActivityForm.module.css'
 
-function NewActivityForm({ existingTags }) {
+
+function ActivityForm({ existingTags, method, activity }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
+
     const [typedTags, setTypedTags] = useState('');
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
+
+    if (activity && activity.tags) {
+        setChosenTags(activity.tags);
+    }
 
     const handleTypedTagsChange = (event) => {
         const typedValue = event.target.value;
@@ -46,10 +53,8 @@ function NewActivityForm({ existingTags }) {
 
     console.log(chosenTags);
 
-    //TODO: tags
-
     return (
-        <Form method='post'>
+        <Form method={method} >
             <h1>Add Activity</h1>
             {data && data.errors &&
                 <ul>
@@ -65,14 +70,20 @@ function NewActivityForm({ existingTags }) {
                 <label htmlFor="title">
                     Title
                 </label>
-                <input id='title' type='text' name='title' placeholder='Title is here' required/>
+                <input 
+                    id='title' 
+                    type='text' 
+                    name='title'
+                    defaultChecked={activity ? activity.title : ''} 
+                    placeholder='Title is here' 
+                    required/>
             </div>
 
             {/* duration */}
             <div>
                 {data && data.errors.duration && <span> * </span>} 
                 <label htmlFor="duration">Duration</label><br/>
-                <select id='duration' type='duration' name='duration' placeholder='duration' required>
+                <select id='duration' type='duration' name='duration' defaultValue={activity ? activity.duration : ''} required>
                     <option value="5">less than 5 mins</option>
                     <option value="10">about 10 mins</option>
                     <option value="15">about 15 mins</option>
@@ -86,15 +97,15 @@ function NewActivityForm({ existingTags }) {
             <div>
                 <div>Target Age Group</div>
                 {data && data.errors.ageGroup && <span> * </span>}
-                <input type="radio" id="allAge" name="ageGroup" value="allAge" />
+                <input type="radio" id="allAge" name="ageGroup" value="allAge" checked={activity && activity.ageGroup === "allAge"}/>
                     <label htmlFor="allAge">all age group!</label>
-                <input type="radio" id="TeensAndAdults" name="ageGroup" value="TeensAndAdults" />
+                <input type="radio" id="TeensAndAdults" name="ageGroup" value="TeensAndAdults" checked={activity && activity.ageGroup === "TeensAndAdults"}/>
                     <label htmlFor="TeensAndAdults">teenagers and adults</label>
-                <input type="radio" id="kids" name="ageGroup" value="kids" />
+                <input type="radio" id="kids" name="ageGroup" value="kids"  checked={activity && activity.ageGroup === "kids"}/>
                     <label htmlFor="kids">kids</label>
-                <input type="radio" id="teens" name="ageGroup" value="teens" />
+                <input type="radio" id="teens" name="ageGroup" value="teens"  checked={activity && activity.ageGroup === "teens"}/>
                     <label htmlFor="teens">teenagers</label>
-                <input type="radio" id="adults" name="ageGroup" value="adults" />
+                <input type="radio" id="adults" name="ageGroup" value="adults"  checked={activity && activity.ageGroup === "adults"}/>
                     <label htmlFor="adults">adults</label>
             </div>
 
@@ -107,6 +118,7 @@ function NewActivityForm({ existingTags }) {
                     name='summary' 
                     rows="2" 
                     cols="60" 
+                    defaultValue={activity ? activity.summary : ''}
                     placeholder="This game involves groups making a five-item list based on a topic and guessing each other's topics."
                     required/>
             </div>
@@ -120,6 +132,7 @@ function NewActivityForm({ existingTags }) {
                     name='objectives' 
                     rows="2" 
                     cols="60" 
+                    defaultValue={activity ? activity.objectives : ''}
                     placeholder="communication skill, planning skill"
                     required/>
             </div>
@@ -133,6 +146,7 @@ function NewActivityForm({ existingTags }) {
                     name='materials' 
                     rows="4" 
                     cols="60"
+                    defaultValue={activity ? activity.materials : ''}
                     placeholder="papers, pens" 
                     required/>
             </div>
@@ -146,6 +160,7 @@ function NewActivityForm({ existingTags }) {
                     name='instructions' 
                     rows="10" 
                     cols="60" 
+                    defaultValue={activity ? activity.instructions : ''}
                     placeholder="
                         1. Assign each group a topic.
                         2. In the groups, participants compile a list of five items related to the given topic.
@@ -163,6 +178,7 @@ function NewActivityForm({ existingTags }) {
                     name='links' 
                     rows="2" 
                     cols="60"
+                    defaultValue={activity ? activity.links : ''}
                     placeholder="http://....." 
                 />
             </div>
@@ -212,4 +228,4 @@ function NewActivityForm({ existingTags }) {
     )
 };
 
-export default NewActivityForm;
+export default ActivityForm;

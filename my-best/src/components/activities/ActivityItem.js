@@ -1,11 +1,18 @@
-import { useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 
 function ActivityItem({ activity }){
     const token = useRouteLoaderData();
+    const submit = useSubmit();
 
     const handleLike = (e) => {
         e.preventDefault();
         console.log("ADD LIKE!");
+    }
+
+    const handleDeleteActivity = (title) => {
+        const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
+
+        if(proceed) submit(null, { method: 'DELETE'});
     }
 
     return (
@@ -19,7 +26,11 @@ function ActivityItem({ activity }){
             <p>{activity.instructions}</p>
             <div>{activity.links}</div>
             {token &&
-                <button onClick={handleLike}>Like!!!</button>
+                <div>
+                    <button onClick={handleLike}>Like!!!</button>
+                    <Link to="edit" >Edit</Link>
+                    <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
+                </div>                
             }
         </article>
     )

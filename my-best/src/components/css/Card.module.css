@@ -1,6 +1,6 @@
 .card {
     position: fixed;
-    top: 20%;
+    top: 10%;
     left: 20%;
     padding: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -9,4 +9,16 @@
     width: 30rem;
     align-items: center;
     justify-content: center;
+    animation: slide-down 300ms ease-out forwards;
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-3rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
