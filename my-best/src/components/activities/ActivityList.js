@@ -7,15 +7,15 @@ function ActivityList({ activities }){
             <ul>
                 {activities.map((activity) => (
                     <li key={activity.activity_id}>
-                            <div>
+                            <Link to={`/activities/${activity.activity_id}`}>
                                 <h2>{activity.title}</h2>
                                 <div>{activity.duration}</div>
-                                <div>{activity.ageGroup}</div>
+                                <div>{activity.age_group}</div>
                                 <div>{activity.summary}</div>
                                 {activity.tags.map((tag) => (
                                     <span key={tag}>{tag} </span>
                                 ))}
-                            </div>
+                            </Link>
                     </li>
                 ))}
             </ul>

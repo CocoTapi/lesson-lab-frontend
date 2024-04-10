@@ -25,6 +25,9 @@ function ActivityItem({ activity }){
             <div>{activity.materials}</div>
             <p>{activity.instructions}</p>
             <div>{activity.links}</div>
+            {activity.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+            ))}
             {token &&
                 <div>
                     <button onClick={handleLike}>Like!!!</button>

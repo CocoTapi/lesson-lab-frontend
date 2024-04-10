@@ -28,8 +28,8 @@ export async function loadActivities() {
     return resData.activities;
 }
 
-export function loader(){
+export async function loader(){
     return defer({
-        activities: loadActivities()
+        activities: await loadActivities()
     })
 }
