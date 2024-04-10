@@ -24,6 +24,7 @@ export async function loadActivities() {
     }
 
     const resData = await response.json();
+    console.log(resData.activities);
     return resData.activities;
 }
 

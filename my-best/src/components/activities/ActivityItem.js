@@ -19,7 +19,7 @@ function ActivityItem({ activity }){
         <article>
             <h1>{activity.title}</h1>
             <div>{activity.duration}</div>
-            <div>{activity.ageGroup}</div>
+            <div>{activity.age_group}</div>
             <div>{activity.summary}</div>
             <div>{activity.objectives}</div>
             <div>{activity.materials}</div>

@@ -96,16 +96,16 @@ function ActivityForm({ existingTags, method, activity }) {
             {/* age group */}
             <div>
                 <div>Target Age Group</div>
-                {data && data.errors.ageGroup && <span> * </span>}
-                <input type="radio" id="allAge" name="ageGroup" value="allAge" checked={activity && activity.ageGroup === "allAge"}/>
+                {data && data.errors.age_group && <span> * </span>}
+                <input type="radio" id="allAge" name="age_group" value="allAge" checked={activity && activity.age_group === "allAge"}/>
                     <label htmlFor="allAge">all age group!</label>
-                <input type="radio" id="TeensAndAdults" name="ageGroup" value="TeensAndAdults" checked={activity && activity.ageGroup === "TeensAndAdults"}/>
-                    <label htmlFor="TeensAndAdults">teenagers and adults</label>
-                <input type="radio" id="kids" name="ageGroup" value="kids"  checked={activity && activity.ageGroup === "kids"}/>
+                <input type="radio" id="teensAndAdults" name="age_group" value="teensAndAdults" checked={activity && activity.age_group === "teensAndAdults"}/>
+                    <label htmlFor="teensAndAdults">teenagers and adults</label>
+                <input type="radio" id="kids" name="age_group" value="kids"  checked={activity && activity.age_group === "kids"}/>
                     <label htmlFor="kids">kids</label>
-                <input type="radio" id="teens" name="ageGroup" value="teens"  checked={activity && activity.ageGroup === "teens"}/>
+                <input type="radio" id="teens" name="age_group" value="teens"  checked={activity && activity.age_group === "teens"}/>
                     <label htmlFor="teens">teenagers</label>
-                <input type="radio" id="adults" name="ageGroup" value="adults"  checked={activity && activity.ageGroup === "adults"}/>
+                <input type="radio" id="adults" name="age_group" value="adults"  checked={activity && activity.age_group === "adults"}/>
                     <label htmlFor="adults">adults</label>
             </div>
 

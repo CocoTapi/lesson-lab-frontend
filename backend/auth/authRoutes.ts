@@ -63,6 +63,7 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
 
     await checkOAuthData({email, password, firstName, lastName});
 
+    //TODO: setup token
     const token = "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5";
     const filePath = path.join(__dirname, '../redirect.html');
 

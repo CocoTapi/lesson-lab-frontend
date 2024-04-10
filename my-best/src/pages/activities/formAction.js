@@ -10,7 +10,7 @@ export async function action({ request, params }){
     const activityData = {
         title: data.get('title'),
         duration: data.get('title'),
-        ageGroup: data.get('ageGroup'),
+        age_group: data.get('age_group'),
         summary: data.get('summary'),
         objectives: data.get('objectives'),
         materials:  data.get('materials'),
