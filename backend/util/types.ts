@@ -18,21 +18,28 @@ export interface UserInfo {
     last_login: Date
 }
 
-export interface ValidationErrorMessage {
-    email?: string,
-    length?: string,
-    simbol?: string,
-    num?: string,
-    firstName?: string,
-    lastName?: string,
+export interface ErrorMessage {
+    [key: string]: string;
 };
 
-
-export interface ValidationErrorBoolean {
+export interface AuthValidationErrorBoolean {
     length?: boolean,
     simbol?: boolean,
     num?: boolean
-  }
+}
+
+export interface ActivityFormInfo {
+    userId: number,
+    title: string, 
+    summary: string, 
+    duration: number, 
+    age_group: string, 
+    objectives: string, 
+    materials: string, 
+    instructions: string, 
+    links: string, 
+    tags: string[]
+}
 
 
 

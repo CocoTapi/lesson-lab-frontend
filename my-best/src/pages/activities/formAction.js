@@ -8,14 +8,14 @@ export async function action({ request, params }){
     const token = getAuthToken();
 
     const activityData = {
-        title: data.get('title'),
-        duration: data.get('title'),
+        title: data.get('title').trim(),
+        duration: data.get('duration'),
         age_group: data.get('age_group'),
-        summary: data.get('summary'),
-        objectives: data.get('objectives'),
-        materials:  data.get('materials'),
-        instructions: data.get('instructions'),
-        links: data.get('links'),
+        summary: data.get('summary').trim(),
+        objectives: data.get('objectives').trim(),
+        materials:  data.get('materials').trim(),
+        instructions: data.get('instructions').trim(),
+        links: data.get('links').trim() || "null",
         tags: data.get('chosenTags')
     };
 

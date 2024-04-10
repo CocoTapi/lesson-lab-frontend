@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { LoginInfo, SignUpInfo, ValidationErrorMessage } from "../util/types";
+import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
 import env from 'dotenv';
 import { OAuth2Client } from "google-auth-library";
 import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
@@ -34,7 +34,7 @@ const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
 export async function checkValidation({ email, password, firstName, lastName }: SignUpInfo) {
-  const errors : ValidationErrorMessage = {};
+  const errors : ErrorMessage = {};
 
   const emailValidity = isValidEmail(email);
   const passwordValidity = isValidPassword(password, 8);

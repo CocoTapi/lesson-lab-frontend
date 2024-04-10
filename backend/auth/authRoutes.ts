@@ -1,9 +1,8 @@
 import express from "express";
 import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens, checkOAuthData, checkValidation } from "./auth";
 import { asyncHandler } from "../util/route-util";
-import { LoginInfo, SignUpInfo, ValidationErrorMessage } from "../util/types";
+import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
 import env from "dotenv";
-import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +16,7 @@ const router = express.Router();
 
 router.post("/signup", asyncHandler(async (req, res) => {
     const signUpInfo: SignUpInfo = req.body;
-    const errors : ValidationErrorMessage = await checkValidation(signUpInfo);
+    const errors : ErrorMessage = await checkValidation(signUpInfo);
     
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({
