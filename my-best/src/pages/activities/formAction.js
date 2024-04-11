@@ -7,7 +7,10 @@ export async function action({ request, params }){
     const method = request.method;
     const token = getAuthToken();
 
+    // TODO: get user id
+
     const activityData = {
+        userId: 1,
         title: data.get('title').trim(),
         duration: data.get('duration'),
         age_group: data.get('age_group'),
@@ -64,6 +67,6 @@ async function loadTags(){
 
 export function loader(){
     return defer({
-        tags: ["icebreaker", "fun", "interactive", "group work"]
+        tags: loadTags()
     })
 }

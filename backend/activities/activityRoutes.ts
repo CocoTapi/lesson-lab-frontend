@@ -1,6 +1,13 @@
 import express from "express";
 import { asyncHandler } from "../util/route-util";
-import { getAllActivities, getActivityDetail, checkAFormValidation, addActivity, editActivity, removeActivity } from "./activity";
+import { 
+    getAllActivities, 
+    getActivityDetail, 
+    checkAFormValidation, 
+    addActivity, 
+    editActivity, 
+    removeActivity,
+} from "./activity";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 
 
