@@ -245,10 +245,57 @@ export async function addActivity({userId, title, summary, duration, age_group, 
 
 
     console.log("Added activity");
+};
+
+function generateUpdateStatement(id: number, prevData: ActivityFormInfo, updateData: ActivityFormInfo){
+    let statements: string[] = []
+    let updateParameters: string[] = []    
+
+   for (let key in prevData){
+        if (prevData[key] !== updateData[key]){
+            statements.push(`${key} = ${statements.length + 1}`);
+            updateParameters.push(updateData[key]);
+        }
+   }
+
+   if (statements.length === 0) return {updateStatement: '', updateParameters: []};
+
+   const updateStatement = `
+        UPDATE activities
+        SET ${statements.join(', ')}
+        WHERE activity_id = ${id}
+   `
+   return { updateStatement, updateParameters };  
 }
 
-export async function editActivity(activity_id: number, {userId, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
-   //TODO: update activity info
+export async function editActivity(activity_id: number, updateData: ActivityFormInfo){
+   //check if there is the activity added by same user
+   const checkActivityQuery = `
+        SELECT * FROM activities
+        WHERE user_id = $1 AND activity_id = $2
+   `
+   const checkResult = await db.query(checkActivityQuery, [updateData.userId, activity_id]);
+   const verifiedId = checkResult.rows[0].activity_id;
+   if (!verifiedId) throw Error("Could not find activity for activity_id:" + activity_id);
+   
+   //use the activity_id to update
+   const prevData: ActivityFormInfo = checkResult.rows[0];
+
+   const { updateStatement, updateParameters } = await generateUpdateStatement(verifiedId, prevData, updateData)
+
+   //Fpr activity table update
+   if(updateStatement.length > 0) {
+    await db.query(updateStatement, updateParameters);
+   }
+
+   //duration update
+
+   //age_group update
+
+   //tags update
+
+   
+
 }
 
 export async function removeActivity(id: number){
