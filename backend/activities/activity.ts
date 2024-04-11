@@ -4,8 +4,10 @@ import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidTex
 
 const db = Database.db;
 
+//TODO: can I add "asyncHandler" here?
+
 export async function getAllActivities(){
-    const query = `
+    const getSummaryQuery = `
         SELECT 
             a.activity_id,
             a.title, 
@@ -31,7 +33,7 @@ export async function getAllActivities(){
             age.name
         `
 
-    const result = await db.query(query);
+    const result = await db.query(getSummaryQuery);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
 
@@ -40,7 +42,7 @@ export async function getAllActivities(){
 }
 
 export async function getActivityDetail(id: string){
-    const query = `
+    const getDetailQuery = `
         SELECT 
             a.title, 
             a.user_id, 
@@ -72,7 +74,7 @@ export async function getActivityDetail(id: string){
             a.links
         `
     
-    const result = await db.query(query);
+    const result = await db.query(getDetailQuery);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
 
@@ -105,7 +107,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     //insert everything except duration, age_group, tags
     console.log("start adding activity");
     const date = new Date();
-    const queryForActivity = `
+    const addActivitiesQuery = `
         INSERT INTO activities (
             user_id, 
             title, 
@@ -122,19 +124,19 @@ export async function addActivity({userId, title, summary, duration, age_group, 
         RETURNING
             activity_id
         `
-    await db.query(queryForActivity, [
+    await db.query(addActivitiesQuery, [
         userId, title, summary, objectives, materials,
         instructions, links, date, date
     ])
 
     //get activity_id
     console.log("start getting activity_id");
-    const queryForId = `
+    const getActivityIdQuery = `
         SELECT activity_id 
         FROM activities 
         WHERE user_id = $1 AND title = $2
     `
-    const result = await db.query(queryForId, [
+    const result = await db.query(getActivityIdQuery, [
         userId, title
     ]);
 
@@ -144,7 +146,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
 
     //insert duration
     console.log("start adding duration");
-    const queryForDuration =  `
+    const addDurationQuery =  `
         INSERT INTO activity_durations (
             activity_id, 
             duration_id,
@@ -156,13 +158,13 @@ export async function addActivity({userId, title, summary, duration, age_group, 
             $3
         );`
     
-    await db.query(queryForDuration, [
+    await db.query(addDurationQuery, [
         activity_id, duration, date
     ]) 
 
     //insert age_group
     console.log("start adding age_group");
-    const queryForAgeGroup = `
+    const addAgeGroupQuery = `
         INSERT INTO activity_age_groups (
             activity_id, 
             age_group_id,
@@ -174,7 +176,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
             $3
         );`
     
-    await db.query(queryForAgeGroup, [
+    await db.query(addAgeGroupQuery, [
         activity_id, age_group, date
     ]) 
     
@@ -183,17 +185,17 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     try {
         if (tags && tags.length > 0) {
             for (let tag of tags) {
-                const queryForExistingTag = `
+                const getTagIdQuery = `
                     SELECT tag_id 
                     FROM tags 
                     WHERE tag_name = $1
                 `
 
-                const tagResult = await db.query(queryForExistingTag, [tag]);
+                const tagResult = await db.query(getTagIdQuery, [tag]);
                 
                 if(tagResult.rows[0]) {
                     const tag_id = tagResult.rows[0].tag_id;
-                    const queryForInsertTag = `
+                    const addTagQuery = `
                         INSERT INTO activity_tags (
                             tag_id,
                             activity_id,
@@ -205,9 +207,9 @@ export async function addActivity({userId, title, summary, duration, age_group, 
                             $3
                         );
                     `
-                    await db.query(queryForInsertTag, [tag_id, activity_id, date])
+                    await db.query(addTagQuery, [tag_id, activity_id, date])
                 } else {
-                    const queryForCreateTag = `
+                    const createTagIdQuery = `
                         WITH inserted_tag AS (
                             INSERT INTO tags (
                                 tag_name,
@@ -231,7 +233,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
                             $4
                         );
                     `
-                    await db.query(queryForCreateTag, [tag, date, activity_id, date]);
+                    await db.query(createTagIdQuery, [tag, date, activity_id, date]);
                 }
             }
         }
@@ -250,25 +252,40 @@ export async function editActivity(activity_id: number, {userId, title, summary,
 }
 
 export async function removeActivity(id: number){
-    const query = `
+    const deleteDurationQuery = `
         DELETE FROM 
             activity_durations
         WHERE 
             activity_id = $1
+    `
+    const deleteAgeGroupQuery = `
         DELETE FROM 
             activity_age_groups
         WHERE 
             activity_id = $1
+    `
+    const deleteTagsQuery = `     
         DELETE FROM
             activity_tags
         WHERE 
             activity_id = $1
+    `
+    const deleteActivityQuery = `
         DELETE FROM 
             activities
         WHERE 
             activity_id = $1
     `
 
-    await db.query(query, [id])
+    try {
+        await db.query(deleteDurationQuery, [id]);
+        await db.query(deleteAgeGroupQuery, [id]);
+        await db.query(deleteTagsQuery, [id]);
+        await db.query(deleteActivityQuery, [id]);
+    } catch(error){
+        console.log("Error deleting activity:", error)
+        throw Error("deleting activity failed.")
+    } 
+
     console.log("deleted activity.")
 }
