@@ -102,6 +102,8 @@ export async function checkAFormValidation({title, summary, duration, age_group,
 export async function addActivity({userId, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
     //TODO: check trim or formatting the data? 
 
+    //insert everything except duration, age_group, tags
+    console.log("start adding activity");
     const date = new Date();
     const queryForActivity = `
         INSERT INTO activities (
@@ -116,19 +118,129 @@ export async function addActivity({userId, title, summary, duration, age_group, 
             last_update
         ) 
         VALUES
-           ($1, $2, $3, $4, $5, $6, $7, &8, &9)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING
             activity_id
-    `
-
-
-    const result = await db.query(queryForActivity, [
-        userId, title, summary, objectives, materials, instructions, links, date, date
+        `
+    await db.query(queryForActivity, [
+        userId, title, summary, objectives, materials,
+        instructions, links, date, date
     ])
 
-    const activity_id = result.rows[0];
+    //get activity_id
+    console.log("start getting activity_id");
+    const queryForId = `
+        SELECT activity_id 
+        FROM activities 
+        WHERE user_id = $1 AND title = $2
+    `
+    const result = await db.query(queryForId, [
+        userId, title
+    ]);
+
+    const activity_id: number = result.rows[0].activity_id;
+    if(!activity_id) throw Error("activity doesn't exist in db.");
+    console.log("activity_id: ", activity_id);
+
+    //insert duration
+    console.log("start adding duration");
+    const queryForDuration =  `
+        INSERT INTO activity_durations (
+            activity_id, 
+            duration_id,
+            last_update
+        ) 
+        VALUES (
+            $1, 
+            (SELECT duration_id FROM durations WHERE duration = $2),
+            $3
+        );`
     
-    // TODO: add duration, age_group, tags
+    await db.query(queryForDuration, [
+        activity_id, duration, date
+    ]) 
+
+    //insert age_group
+    console.log("start adding age_group");
+    const queryForAgeGroup = `
+        INSERT INTO activity_age_groups (
+            activity_id, 
+            age_group_id,
+            last_update
+        ) 
+        VALUES (
+            $1, 
+            (SELECT age_group_id FROM age_groups WHERE name = $2),
+            $3
+        );`
+    
+    await db.query(queryForAgeGroup, [
+        activity_id, age_group, date
+    ]) 
+    
+    //insurt tags into db
+    console.log("start inserting tags");
+    try {
+        if (tags && tags.length > 0) {
+            for (let tag of tags) {
+                const queryForExistingTag = `
+                    SELECT tag_id 
+                    FROM tags 
+                    WHERE tag_name = $1
+                `
+
+                const tagResult = await db.query(queryForExistingTag, [tag]);
+                
+                if(tagResult.rows[0]) {
+                    const tag_id = tagResult.rows[0].tag_id;
+                    const queryForInsertTag = `
+                        INSERT INTO activity_tags (
+                            tag_id,
+                            activity_id,
+                            last_update
+                        ) 
+                        VALUES (
+                            $1,
+                            $2,
+                            $3
+                        );
+                    `
+                    await db.query(queryForInsertTag, [tag_id, activity_id, date])
+                } else {
+                    const queryForCreateTag = `
+                        WITH inserted_tag AS (
+                            INSERT INTO tags (
+                                tag_name,
+                                last_update
+                            )
+                            VALUES (
+                                $1,
+                                $2
+                            )
+                            RETURNING 
+                                tag_id
+                        ) 
+                        INSERT INTO activity_tags (
+                            tag_id,
+                            activity_id,
+                            last_update
+                        )
+                        VALUES (
+                            (SELECT tag_id FROM inserted_tag),
+                            $3,
+                            $4
+                        );
+                    `
+                    await db.query(queryForCreateTag, [tag, date, activity_id, date]);
+                }
+            }
+        }
+    } catch (error) {
+        console.log("Error inserting tags:", error)
+        throw Error("inserting tags failed.")
+    }
+
+
 
     console.log("Added activity");
 }
@@ -140,10 +252,6 @@ export async function editActivity(activity_id: number, {userId, title, summary,
 export async function removeActivity(id: number){
     const query = `
         DELETE FROM 
-            activities
-        WHERE 
-            activity_id = $1
-        DELETE FROM 
             activity_durations
         WHERE 
             activity_id = $1
@@ -153,6 +261,10 @@ export async function removeActivity(id: number){
             activity_id = $1
         DELETE FROM
             activity_tags
+        WHERE 
+            activity_id = $1
+        DELETE FROM 
+            activities
         WHERE 
             activity_id = $1
     `
