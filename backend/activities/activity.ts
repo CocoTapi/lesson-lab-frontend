@@ -1,6 +1,7 @@
 import Database from "../database/Database";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidText, isValidUrl } from "../util/validation";
+import { getDeleteAllColumnQuery, getTagId, insertTags } from "./util";
 
 const db = Database.db;
 
@@ -184,58 +185,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     console.log("start inserting tags");
     try {
         if (tags && tags.length > 0) {
-            for (let tag of tags) {
-                const getTagIdQuery = `
-                    SELECT tag_id 
-                    FROM tags 
-                    WHERE tag_name = $1
-                `
-
-                const tagResult = await db.query(getTagIdQuery, [tag]);
-                
-                if(tagResult.rows[0]) {
-                    const tag_id = tagResult.rows[0].tag_id;
-                    const addTagQuery = `
-                        INSERT INTO activity_tags (
-                            tag_id,
-                            activity_id,
-                            last_update
-                        ) 
-                        VALUES (
-                            $1,
-                            $2,
-                            $3
-                        );
-                    `
-                    await db.query(addTagQuery, [tag_id, activity_id, date])
-                } else {
-                    const createTagIdQuery = `
-                        WITH inserted_tag AS (
-                            INSERT INTO tags (
-                                tag_name,
-                                last_update
-                            )
-                            VALUES (
-                                $1,
-                                $2
-                            )
-                            RETURNING 
-                                tag_id
-                        ) 
-                        INSERT INTO activity_tags (
-                            tag_id,
-                            activity_id,
-                            last_update
-                        )
-                        VALUES (
-                            (SELECT tag_id FROM inserted_tag),
-                            $3,
-                            $4
-                        );
-                    `
-                    await db.query(createTagIdQuery, [tag, date, activity_id, date]);
-                }
-            }
+            await insertTags(tags, activity_id)
         }
     } catch (error) {
         console.log("Error inserting tags:", error)
@@ -248,82 +198,25 @@ export async function addActivity({userId, title, summary, duration, age_group, 
 };
 
 export async function editActivity(activity_id: number, updateData: ActivityFormInfo){
-   //check if there is the activity added by same user
-   const checkActivityQuery = `
+    //check if there is the activity added by same user
+    const checkActivityQuery = `
         SELECT * FROM activities
         WHERE user_id = $1 AND activity_id = $2
-   `
-   const checkResult = await db.query(checkActivityQuery, [updateData.userId, activity_id]);
-   const verifiedId = checkResult.rows[0].activity_id;
-   if (!verifiedId) throw Error("Could not find activity for activity_id:" + activity_id);
-   
-   //use the activity_id to update
-   const prevData: ActivityFormInfo = checkResult.rows[0];
+    `
+    const checkResult = await db.query(checkActivityQuery, [updateData.userId, activity_id]);
+    const verifiedId = checkResult.rows[0].activity_id;
+    if (!verifiedId) throw Error("Could not find activity for activity_id:" + activity_id);
 
-   
-   const {
-    durationQuery,
-    durationParameters,
-    ageGroupQuery,
-    ageGroupParameters,
-    tagsAddQuery,
-    tagsParameters,
-    tagsDeleteQuery,
-    otherQuery,
-    otherParameters
-    } = generateUpdateQueries(verifiedId,  prevData, updateData)
+    //use the activity_id to update
+    const prevData: ActivityFormInfo = checkResult.rows[0];
 
-    console.log(`
-        durationQuery: ${durationQuery},
-        durationParameters: ${durationParameters},
-        ageGroupQuery: ${ageGroupQuery},
-        ageGroupParameters: ${ageGroupParameters},
-        tagsAddQuery: ${tagsAddQuery},
-        tagsParameters: ${tagsParameters},
-        tagsDeleteQuery: ${tagsDeleteQuery},
-        otherQuery: ${otherQuery},
-        otherParameters: ${otherParameters}
-    `);
-
-   //update duration
-   if(durationQuery.length > 0) {
-    await db.query(durationQuery, durationParameters);
-   }
-
-   //update age_group 
-   if(ageGroupQuery.length > 0) {
-    await db.query(ageGroupQuery, ageGroupParameters);
-   }
-
-   //add tags
-   if(tagsAddQuery.length > 0) {
-    await db.query(tagsAddQuery, tagsParameters);
-   }
-
-   //delete tags
-   if(tagsDeleteQuery.length > 0) {
-    await db.query(tagsDeleteQuery);
-   }
-
-   //update other
-   if(otherQuery.length > 0) {
-    await db.query(otherQuery, otherParameters);
-   }
-   
-
-}
-
-function generateUpdateQueries(id: number, prevData: ActivityFormInfo, updateData: ActivityFormInfo) {
     let durationQuery = '';
     let ageGroupQuery = '';
-    let tagsAddQuery = '';
-    let tagsDeleteQuery= '';
     let statements: string[] = [];
     let otherQuery = '';
 
     let durationParameters: number[] = [];
     let ageGroupParameters: any[] = [];
-    let tagsParameters: any[] = [];
     let otherParameters: any[] = [];
 
     for (const key in prevData) {
@@ -331,18 +224,18 @@ function generateUpdateQueries(id: number, prevData: ActivityFormInfo, updateDat
             switch (key) {
                 case 'duration':
                     durationQuery = `UPDATE activity_durations SET duration = $1 WHERE activity_id = $2`;
-                    durationParameters = [updateData.duration, id];
+                    durationParameters = [updateData.duration, activity_id];
+
+                    await db.query(durationQuery, durationParameters);
                     break;
                 case 'age_group':
                     ageGroupQuery = `UPDATE activity_age_groups SET age_group = $1 WHERE activity_id = $2`;
-                    ageGroupParameters = [updateData.age_group, id];
+                    ageGroupParameters = [updateData.age_group, activity_id];
+
+                    await db.query(ageGroupQuery, ageGroupParameters);
                     break;
                 case 'tags':
-                    const data: any = tagsUpdate(id, prevData[key], updateData[key]);
-                    tagsAddQuery = data[0];
-                    tagsParameters = data[1];
-                    tagsDeleteQuery = data[3];
-
+                    await tagsUpdate(activity_id, prevData[key], updateData[key]);
                     break;
                 default:
                     statements.push(`${key} = $${statements.length + 1}`);
@@ -359,57 +252,52 @@ function generateUpdateQueries(id: number, prevData: ActivityFormInfo, updateDat
             SET ${statements.join(', ')}
             WHERE activity_id = $${otherParameters.length + 1}
         `;
-        otherParameters.push(id);
+        otherParameters.push(activity_id);
+    };
+};
+
+async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
+    let addedTags: string[] = [];
+    let removedTags: string[] = [];
+
+    for (let tag of updateData){
+        if (!prevData.includes(tag)) {
+            addedTags.push(tag);
+        }
     };
 
-    return {
-        durationQuery,
-        durationParameters,
-        ageGroupQuery,
-        ageGroupParameters,
-        tagsAddQuery,
-        tagsParameters,
-        tagsDeleteQuery,
-        otherQuery,
-        otherParameters
+    for (let tag of prevData) {
+        if (!updateData.includes(tag)){
+            removedTags.push(tag)
+        }
     };
-}
 
-function tagsUpdate(id: number, prevData: string[], updateData: string[]){
-    //TODO
-    let addQuery = '';
-    let arr = [];
-    let deleteQuery = '';
+    if (addedTags.length > 0) {
+        insertTags(addedTags, id)
+    }
 
-    return [addQuery, arr, deleteQuery]
+    if (removedTags.length > 0) {
+        for (let tag of removedTags){
+            const tag_id = await getTagId(tag);
+
+            if(tag_id) {
+                const deleteTagQuery = `
+                    DELETE FROM activity_tags
+                    WHERE activity_id = $1 
+                    AND tag_id = $2
+                `
+                await db.query(deleteTagQuery, [id, tag_id]);
+            }
+        }
+    }
 }
 
 
 export async function removeActivity(id: number){
-    const deleteDurationQuery = `
-        DELETE FROM 
-            activity_durations
-        WHERE 
-            activity_id = $1
-    `
-    const deleteAgeGroupQuery = `
-        DELETE FROM 
-            activity_age_groups
-        WHERE 
-            activity_id = $1
-    `
-    const deleteTagsQuery = `     
-        DELETE FROM
-            activity_tags
-        WHERE 
-            activity_id = $1
-    `
-    const deleteActivityQuery = `
-        DELETE FROM 
-            activities
-        WHERE 
-            activity_id = $1
-    `
+    const deleteDurationQuery = getDeleteAllColumnQuery("activity_durations")
+    const deleteAgeGroupQuery = getDeleteAllColumnQuery("activity_age_groups") 
+    const deleteTagsQuery = getDeleteAllColumnQuery("activity_tags")
+    const deleteActivityQuery = getDeleteAllColumnQuery("activities");
 
     try {
         await db.query(deleteDurationQuery, [id]);

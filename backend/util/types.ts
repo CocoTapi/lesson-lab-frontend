@@ -38,7 +38,8 @@ export interface ActivityFormInfo {
     materials: string, 
     instructions: string, 
     links: string, 
-    tags: string[]
+    tags: string[],
+    [key: string]: string | number | string[]
 }
 
 
