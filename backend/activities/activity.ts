@@ -42,7 +42,7 @@ export async function getAllActivities(){
     return result.rows
 }
 
-export async function getActivityDetail(id: string){
+export async function getActivityDetail(id: number){
     const getDetailQuery = `
         SELECT 
             a.title, 
@@ -63,6 +63,8 @@ export async function getActivityDetail(id: string){
             JOIN tags AS t ON t.tag_id = at.tag_id 
             JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
             JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
+        WHERE 
+            a.activity_id = $1
         GROUP BY 
             a.title, 
             a.user_id, 
@@ -75,7 +77,7 @@ export async function getActivityDetail(id: string){
             a.links
         `
     
-    const result = await db.query(getDetailQuery);
+    const result = await db.query(getDetailQuery, [id]);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
 

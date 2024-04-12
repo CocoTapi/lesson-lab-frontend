@@ -20,7 +20,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }))
 
 router.get('/:id', asyncHandler(async (req, res) => {
-    const id: string = req.params.id;
+    const id: number = parseInt(req.params.id);
     const activity = await getActivityDetail(id);
     res.status(200).json({ activity: activity });
 }))
