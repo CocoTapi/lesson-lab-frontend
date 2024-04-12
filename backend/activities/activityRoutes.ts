@@ -3,7 +3,7 @@ import { asyncHandler } from "../util/route-util";
 import { 
     getAllActivities, 
     getActivityDetail, 
-    checkAFormValidation, 
+    checkFormValidation, 
     addActivity, 
     editActivity, 
     removeActivity,
@@ -31,7 +31,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 router.post('/', asyncHandler(async (req, res) => {
     //consloe.log(req.token);
     const formData: ActivityFormInfo = req.body;
-    const errors: ErrorMessage = await checkAFormValidation(formData);
+    const errors: ErrorMessage = await checkFormValidation(formData);
 
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({
@@ -47,7 +47,7 @@ router.post('/', asyncHandler(async (req, res) => {
 router.patch('/:id', asyncHandler(async (req, res) => {
     const formData: ActivityFormInfo = req.body;
     const activity_id: number = parseInt(req.params.id);
-    const errors: ErrorMessage = await checkAFormValidation(formData);
+    const errors: ErrorMessage = await checkFormValidation(formData);
 
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({

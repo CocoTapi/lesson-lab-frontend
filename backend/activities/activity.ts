@@ -85,7 +85,7 @@ export async function getActivityDetail(id: number){
 }
 
 
-export async function checkAFormValidation({title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
+export async function checkFormValidation({title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
     let errors: ErrorMessage = {};
 
     if(!isValidText(title)) errors.title = "Invalid title.";
