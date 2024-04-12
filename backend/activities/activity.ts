@@ -247,27 +247,6 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     console.log("Added activity");
 };
 
-function generateUpdateStatement(id: number, prevData: ActivityFormInfo, updateData: ActivityFormInfo){
-    let statements: string[] = []
-    let updateParameters: string[] = []    
-
-   for (let key in prevData){
-        if (prevData[key] !== updateData[key]){
-            statements.push(`${key} = ${statements.length + 1}`);
-            updateParameters.push(updateData[key]);
-        }
-   }
-
-   if (statements.length === 0) return {updateStatement: '', updateParameters: []};
-
-   const updateStatement = `
-        UPDATE activities
-        SET ${statements.join(', ')}
-        WHERE activity_id = ${id}
-   `
-   return { updateStatement, updateParameters };  
-}
-
 export async function editActivity(activity_id: number, updateData: ActivityFormInfo){
    //check if there is the activity added by same user
    const checkActivityQuery = `
@@ -281,22 +260,130 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
    //use the activity_id to update
    const prevData: ActivityFormInfo = checkResult.rows[0];
 
-   const { updateStatement, updateParameters } = await generateUpdateStatement(verifiedId, prevData, updateData)
+   
+   const {
+    durationQuery,
+    durationParameters,
+    ageGroupQuery,
+    ageGroupParameters,
+    tagsAddQuery,
+    tagsParameters,
+    tagsDeleteQuery,
+    otherQuery,
+    otherParameters
+    } = generateUpdateQueries(verifiedId,  prevData, updateData)
 
-   //Fpr activity table update
-   if(updateStatement.length > 0) {
-    await db.query(updateStatement, updateParameters);
+    console.log(`
+        durationQuery: ${durationQuery},
+        durationParameters: ${durationParameters},
+        ageGroupQuery: ${ageGroupQuery},
+        ageGroupParameters: ${ageGroupParameters},
+        tagsAddQuery: ${tagsAddQuery},
+        tagsParameters: ${tagsParameters},
+        tagsDeleteQuery: ${tagsDeleteQuery},
+        otherQuery: ${otherQuery},
+        otherParameters: ${otherParameters}
+    `);
+
+   //update duration
+   if(durationQuery.length > 0) {
+    await db.query(durationQuery, durationParameters);
    }
 
-   //duration update
+   //update age_group 
+   if(ageGroupQuery.length > 0) {
+    await db.query(ageGroupQuery, ageGroupParameters);
+   }
 
-   //age_group update
+   //add tags
+   if(tagsAddQuery.length > 0) {
+    await db.query(tagsAddQuery, tagsParameters);
+   }
 
-   //tags update
+   //delete tags
+   if(tagsDeleteQuery.length > 0) {
+    await db.query(tagsDeleteQuery);
+   }
 
+   //update other
+   if(otherQuery.length > 0) {
+    await db.query(otherQuery, otherParameters);
+   }
    
 
 }
+
+function generateUpdateQueries(id: number, prevData: ActivityFormInfo, updateData: ActivityFormInfo) {
+    let durationQuery = '';
+    let ageGroupQuery = '';
+    let tagsAddQuery = '';
+    let tagsDeleteQuery= '';
+    let statements: string[] = [];
+    let otherQuery = '';
+
+    let durationParameters: number[] = [];
+    let ageGroupParameters: any[] = [];
+    let tagsParameters: any[] = [];
+    let otherParameters: any[] = [];
+
+    for (const key in prevData) {
+        if (prevData[key] !== updateData[key]) {
+            switch (key) {
+                case 'duration':
+                    durationQuery = `UPDATE activity_durations SET duration = $1 WHERE activity_id = $2`;
+                    durationParameters = [updateData.duration, id];
+                    break;
+                case 'age_group':
+                    ageGroupQuery = `UPDATE activity_age_groups SET age_group = $1 WHERE activity_id = $2`;
+                    ageGroupParameters = [updateData.age_group, id];
+                    break;
+                case 'tags':
+                    const data: any = tagsUpdate(id, prevData[key], updateData[key]);
+                    tagsAddQuery = data[0];
+                    tagsParameters = data[1];
+                    tagsDeleteQuery = data[3];
+
+                    break;
+                default:
+                    statements.push(`${key} = $${statements.length + 1}`);
+                    otherParameters.push(updateData[key]);
+            }
+        }
+    }
+
+    if (statements.length === 0) {
+        otherQuery = '';
+    } else {
+        otherQuery = `
+            UPDATE activities
+            SET ${statements.join(', ')}
+            WHERE activity_id = $${otherParameters.length + 1}
+        `;
+        otherParameters.push(id);
+    };
+
+    return {
+        durationQuery,
+        durationParameters,
+        ageGroupQuery,
+        ageGroupParameters,
+        tagsAddQuery,
+        tagsParameters,
+        tagsDeleteQuery,
+        otherQuery,
+        otherParameters
+    };
+}
+
+function tagsUpdate(id: number, prevData: string[], updateData: string[]){
+    //TODO
+    let addQuery = '';
+    let arr = [];
+    let deleteQuery = '';
+
+    return [addQuery, arr, deleteQuery]
+}
+
 
 export async function removeActivity(id: number){
     const deleteDurationQuery = `
