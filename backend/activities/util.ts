@@ -2,27 +2,31 @@ import Database from "../database/Database";
 
 const db = Database.db;
 
-export async function getTagId(tagName: string) {
+export async function getTagId(tag: string) {
     const getTagIdQuery = `
         SELECT tag_id 
-        FROM tags 
-        WHERE tag_name = $1
+        FROM tags
+        WHERE tag_title = $1
     `
 
-    const tagResult = await db.query(getTagIdQuery, [tagName]);
+    const result = await db.query(getTagIdQuery, [tag]);
+    console.log("result:", result.rows);
 
-    const tagId = tagResult.rows[0].tag_id;
-    if (!tagId) return null;
-    return tagId
+    if (result.rows.length === 0) {
+       return 0;
+    } 
+
+    const id = result.rows[0].tag_id;
+    return id;
 }
 
 export async function insertTags(tags: string[], activity_id: number){
     const date = new Date;
 
     for (let tag of tags) {
-        const tag_id = await getTagId(tag) ;
+        const tag_id: number = await getTagId(tag) ;
             
-        if(tag_id) {
+        if(tag_id > 0) {
             const addTagQuery = `
                 INSERT INTO activity_tags (
                     tag_id,
@@ -36,11 +40,11 @@ export async function insertTags(tags: string[], activity_id: number){
                 );
             `
             await db.query(addTagQuery, [tag_id, activity_id, date])
-        } else {
+        } else if(tag_id === 0){
             const createTagIdQuery = `
                 WITH inserted_tag AS (
                     INSERT INTO tags (
-                        tag_name,
+                        tag_title,
                         last_update
                     )
                     VALUES (
@@ -66,6 +70,15 @@ export async function insertTags(tags: string[], activity_id: number){
     }
 }
 
+export function getUpdateQueryForNestedTable(subject: string) {
+        const updateQuery = `
+        UPDATE activity_${subject}s
+        SET ${subject}_id = (SELECT ${subject}_id FROM ${subject}s WHERE ${subject}_title = $1)
+        WHERE activity_id = $2
+    `;
+    return updateQuery;
+}
+
 export function getDeleteAllColumnQuery(table: string){
     const deleteQuery = `
         DELETE FROM 
@@ -75,4 +88,6 @@ export function getDeleteAllColumnQuery(table: string){
     `
     return deleteQuery;
 }
+
+
 

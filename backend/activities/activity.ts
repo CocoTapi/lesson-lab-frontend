@@ -1,7 +1,7 @@
 import Database from "../database/Database";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidText, isValidUrl } from "../util/validation";
-import { getDeleteAllColumnQuery, getTagId, insertTags } from "./util";
+import { getDeleteAllColumnQuery, getUpdateQueryForNestedTable, insertTags } from "./util";
 
 const db = Database.db;
 
@@ -11,12 +11,12 @@ export async function getAllActivities(){
     const getSummaryQuery = `
         SELECT 
             a.activity_id,
-            a.title, 
             a.user_id, 
+            a.title, 
             a.summary, 
-            d.duration, 
-            age.name AS age_group,
-            ARRAY_AGG(tag_name) AS tags
+            d.duration_title, 
+            age.age_group_title AS age_group,
+            ARRAY_AGG(tag_title) AS tags
         FROM 
             activities AS a 
             JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
@@ -27,11 +27,11 @@ export async function getAllActivities(){
             JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
         GROUP BY 
             a.activity_id,
-            a.title, 
             a.user_id, 
+            a.title, 
             a.summary, 
-            d.duration,
-            age.name
+            d.duration_title,
+            age.age_group_title
         `
 
     const result = await db.query(getSummaryQuery);
@@ -45,16 +45,16 @@ export async function getAllActivities(){
 export async function getActivityDetail(id: number){
     const getDetailQuery = `
         SELECT 
-            a.title, 
             a.user_id, 
+            a.title, 
             a.summary, 
-            d.duration, 
-            age.name AS age_group,
+            d.duration_title AS duration, 
+            age.age_group_title AS age_group,
             a.objectives,
             a.materials,
             a.instructions,
             a.links,
-            ARRAY_AGG(tag_name) AS tags
+            ARRAY_AGG(tag_title) AS tags
         FROM 
             activities AS a 
             JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
@@ -66,11 +66,11 @@ export async function getActivityDetail(id: number){
         WHERE 
             a.activity_id = $1
         GROUP BY 
-            a.title, 
             a.user_id, 
+            a.title, 
             a.summary, 
-            d.duration,
-            age.name,
+            d.duration_title,
+            age.age_group_title,
             a.objectives,
             a.materials,
             a.instructions,
@@ -157,7 +157,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
         ) 
         VALUES (
             $1, 
-            (SELECT duration_id FROM durations WHERE duration = $2),
+            (SELECT duration_id FROM durations WHERE duration_title = $2),
             $3
         );`
     
@@ -175,7 +175,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
         ) 
         VALUES (
             $1, 
-            (SELECT age_group_id FROM age_groups WHERE name = $2),
+            (SELECT age_group_id FROM age_groups WHERE age_group_title = $2),
             $3
         );`
     
@@ -185,59 +185,51 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     
     //insurt tags into db
     console.log("start inserting tags");
-    try {
-        if (tags && tags.length > 0) {
-            await insertTags(tags, activity_id)
-        }
-    } catch (error) {
-        console.log("Error inserting tags:", error)
-        throw Error("inserting tags failed.")
+    
+    if (tags && tags.length > 0) {
+        await insertTags(tags, activity_id)
     }
-
-
 
     console.log("Added activity");
 };
 
 export async function editActivity(activity_id: number, updateData: ActivityFormInfo){
+    console.log("start editting");
+    //get previous Data from activity_id
+    const result = await getActivityDetail(activity_id);
+    const prevData = result[0];
+    const date = new Date();
+
+    console.log("prevData:", prevData);
+    console.log("updateData:", updateData);
+
     //check if there is the activity added by same user
-    const checkActivityQuery = `
-        SELECT * FROM activities
-        WHERE user_id = $1 AND activity_id = $2
-    `
-    const checkResult = await db.query(checkActivityQuery, [updateData.userId, activity_id]);
-    const verifiedId = checkResult.rows[0].activity_id;
-    if (!verifiedId) throw Error("Could not find activity for activity_id:" + activity_id);
-
-    //use the activity_id to update
-    const prevData: ActivityFormInfo = checkResult.rows[0];
-
-    let durationQuery = '';
-    let ageGroupQuery = '';
+    if (prevData.user_id !== updateData.user_id) throw Error("Could not find activity to edit for current user")
+    
     let statements: string[] = [];
-    let otherQuery = '';
-
-    let durationParameters: number[] = [];
-    let ageGroupParameters: any[] = [];
-    let otherParameters: any[] = [];
+    let otherParameters:any[] = [];
 
     for (const key in prevData) {
         if (prevData[key] !== updateData[key]) {
             switch (key) {
                 case 'duration':
-                    durationQuery = `UPDATE activity_durations SET duration = $1 WHERE activity_id = $2`;
-                    durationParameters = [updateData.duration, activity_id];
+                    const durationQuery: string = getUpdateQueryForNestedTable('duration');
+                    const durationParameters: number[] = [updateData.duration, activity_id];
 
                     await db.query(durationQuery, durationParameters);
+                    console.log("done duration");
                     break;
                 case 'age_group':
-                    ageGroupQuery = `UPDATE activity_age_groups SET age_group = $1 WHERE activity_id = $2`;
-                    ageGroupParameters = [updateData.age_group, activity_id];
+                    const ageGroupQuery : string = getUpdateQueryForNestedTable('age_group');
+                    const ageGroupParameters: [string, number] = [updateData.age_group, activity_id];
 
                     await db.query(ageGroupQuery, ageGroupParameters);
+                    console.log("done age_group");
                     break;
                 case 'tags':
                     await tagsUpdate(activity_id, prevData[key], updateData[key]);
+                    console.log("done tags");
+
                     break;
                 default:
                     statements.push(`${key} = $${statements.length + 1}`);
@@ -246,19 +238,23 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
         }
     }
 
-    if (statements.length === 0) {
-        otherQuery = '';
-    } else {
-        otherQuery = `
-            UPDATE activities
-            SET ${statements.join(', ')}
-            WHERE activity_id = $${otherParameters.length + 1}
-        `;
-        otherParameters.push(activity_id);
-    };
+    //update activity table
+    if (statements.length === 0) return
+   
+    const activityUpdateQuery = `
+        UPDATE activities
+        SET ${statements.join(', ')}
+        WHERE activity_id = $${otherParameters.length + 1}
+    `;
+    otherParameters.push(activity_id);
+
+    await db.query(activityUpdateQuery, otherParameters);
+
+    console.log("edit done");
 };
 
 async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
+    console.log("start tags update")
     let addedTags: string[] = [];
     let removedTags: string[] = [];
 
@@ -273,6 +269,9 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
             removedTags.push(tag)
         }
     };
+    console.log("addedTags:", addedTags);
+    console.log("removedTags:", removedTags);
+
 
     if (addedTags.length > 0) {
         insertTags(addedTags, id)
@@ -280,36 +279,29 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
 
     if (removedTags.length > 0) {
         for (let tag of removedTags){
-            const tag_id = await getTagId(tag);
-
-            if(tag_id) {
-                const deleteTagQuery = `
-                    DELETE FROM activity_tags
-                    WHERE activity_id = $1 
-                    AND tag_id = $2
-                `
-                await db.query(deleteTagQuery, [id, tag_id]);
-            }
+            const deleteTagQuery = `
+                DELETE FROM activity_tags
+                WHERE activity_id = $1 
+                AND tag_id = (SELECT tag_id FROM tags WHERE tag_title = $2)
+            `
+            await db.query(deleteTagQuery, [id, tag]);
+        
         }
     }
+    console.log("tag updae done");
 }
 
 
-export async function removeActivity(id: number){
+export async function  removeActivity(id: number){
     const deleteDurationQuery = getDeleteAllColumnQuery("activity_durations")
     const deleteAgeGroupQuery = getDeleteAllColumnQuery("activity_age_groups") 
     const deleteTagsQuery = getDeleteAllColumnQuery("activity_tags")
     const deleteActivityQuery = getDeleteAllColumnQuery("activities");
 
-    try {
-        await db.query(deleteDurationQuery, [id]);
-        await db.query(deleteAgeGroupQuery, [id]);
-        await db.query(deleteTagsQuery, [id]);
-        await db.query(deleteActivityQuery, [id]);
-    } catch(error){
-        console.log("Error deleting activity:", error)
-        throw Error("deleting activity failed.")
-    } 
-
+    await db.query(deleteDurationQuery, [id]);
+    await db.query(deleteAgeGroupQuery, [id]);
+    await db.query(deleteTagsQuery, [id]);
+    await db.query(deleteActivityQuery, [id]);
+   
     console.log("deleted activity.")
 }
