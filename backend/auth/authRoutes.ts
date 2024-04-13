@@ -29,14 +29,12 @@ router.post("/signup", asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Successfully created user.' })
 }));
 
+
 router.post("/login", asyncHandler(async (req, res) => {
     const loginInfo: LoginInfo = req.body;
     const userDetails = await login(loginInfo);
-    res.status(200).json({ message: 'Successfully logged in with user credentials.', userDetails })
+    res.status(200).json({ message: 'Successfully logged in with user credentials.', data: userDetails })
 }));
-
-//cliant info
-
 
 
 //create the url for google login and send it back to the frontend

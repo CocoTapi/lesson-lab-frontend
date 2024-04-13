@@ -59,6 +59,11 @@ export async function action ({ request }) {
     if (!response.ok){
         throw json({ message: 'Could not authenticate user.'}, { status: 500 });
     }
+    
+    const resData = await response.json();
+    console.log("resData:", resData);
+
+    const user_id = resData.data.user_id;
 
     // TODO: setup token
     const token = Math.floor(Math.random() * 10);

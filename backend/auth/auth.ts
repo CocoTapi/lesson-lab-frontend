@@ -96,6 +96,7 @@ export async function login({ email, password }: LoginInfo) {
   ]);
 
   delete user.password;
+
   return user;
 }
 
