@@ -4,7 +4,6 @@ import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader} from '../pages/activities/ActivitiesPage';
-import MyPage from '../pages/MyPage';
 import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
 import LoginLayout from '../pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
@@ -14,6 +13,8 @@ import ActivityDetailPage, { loader as activityLoader, action as deleteActivityA
 import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
+import UserMainPage from "../pages/user_page/UserMainPage";
+import UserPage, { loader as userDetailLoader } from "../pages/user_page/UserPage";
 
 export const router = createBrowserRouter([
     {
@@ -77,11 +78,17 @@ export const router = createBrowserRouter([
           ]
         },
         {
-          path: 'my-page',
+          path: 'mypage',
           errorElement: <ErrorPage />,
           loader: checkAuthLoader,
           children: [
-            { index: true, element: <MyPage /> }
+            { index: true, element: <UserMainPage />},
+            {
+              path: ':userId',
+              id: 'user-detail',
+              element: <UserPage />,
+              loader: userDetailLoader
+            }
           ]
         },
         {

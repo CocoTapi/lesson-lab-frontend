@@ -6,6 +6,7 @@ import { googleOAuthAction } from "./googleOAuth";
 
 function LoginPage() {
     const [isLoading, setLoading] = useState(false);
+    
 
     const googleLoginHandler = () => {
         setLoading(true);
@@ -63,8 +64,10 @@ export async function action ({ request }) {
     const resData = await response.json();
     console.log("resData:", resData);
 
+    //TODO: Store userData 
     const user_id = resData.data.user_id;
-
+    const user_name = resData.data.user_name;
+ 
     // TODO: setup token
     const token = Math.floor(Math.random() * 10);
 
@@ -73,6 +76,6 @@ export async function action ({ request }) {
     expiration.setHours(expiration.getHours() + 1);
     localStorage.setItem('expiration', expiration.toISOString());
 
-    return redirect('/');
+    return redirect(`/${user_id}-${user_name}`);
 }
 
