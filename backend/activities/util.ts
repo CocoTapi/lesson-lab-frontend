@@ -20,9 +20,7 @@ export async function getTagId(tag: string) {
     return id;
 }
 
-export async function insertTags(tags: string[], activity_id: number){
-    const date = new Date;
-
+export async function insertTags(tags: string[], activity_id: number, date: Date){
     for (let tag of tags) {
         const tag_id: number = await getTagId(tag) ;
             
@@ -88,9 +86,12 @@ export function getInsertQueryForNestedTable(subject: string){
 
 export function getUpdateQueryForNestedTable(subject: string) {
         const updateQuery = `
-        UPDATE activity_${subject}s
-        SET ${subject}_id = (SELECT ${subject}_id FROM ${subject}s WHERE ${subject}_title = $1)
-        WHERE activity_id = $2
+        UPDATE 
+            activity_${subject}s
+        SET 
+            ${subject}_id = (SELECT ${subject}_id FROM ${subject}s WHERE ${subject}_title = $1),
+            last_update = $2
+        WHERE activity_id = $3
     `;
     return updateQuery;
 }

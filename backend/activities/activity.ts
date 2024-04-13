@@ -167,7 +167,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
     console.log("start inserting tags");
     
     if (tags && tags.length > 0) {
-        await insertTags(tags, activity_id)
+        await insertTags(tags, activity_id, date)
     }
 
     console.log("Added activity");
@@ -189,25 +189,26 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     let statements: string[] = [];
     let otherParameters:any[] = [];
 
+    //if new input is different from previous data, update
     for (const key in prevData) {
         if (prevData[key] !== updateData[key]) {
             switch (key) {
                 case 'duration':
                     const durationQuery: string = getUpdateQueryForNestedTable('duration');
-                    const durationParameters: number[] = [updateData.duration, activity_id];
+                    const durationParameters = [updateData.duration, date, activity_id];
 
                     await db.query(durationQuery, durationParameters);
                     console.log("done duration");
                     break;
                 case 'age_group':
                     const ageGroupQuery : string = getUpdateQueryForNestedTable('age_group');
-                    const ageGroupParameters: [string, number] = [updateData.age_group, activity_id];
+                    const ageGroupParameters = [updateData.age_group, date, activity_id];
 
                     await db.query(ageGroupQuery, ageGroupParameters);
                     console.log("done age_group");
                     break;
                 case 'tags':
-                    await tagsUpdate(activity_id, prevData[key], updateData[key]);
+                    await tagsUpdate(activity_id, prevData[key], updateData[key], date);
                     console.log("done tags");
 
                     break;
@@ -222,10 +223,14 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     if (statements.length === 0) return
    
     const activityUpdateQuery = `
-        UPDATE activities
-        SET ${statements.join(', ')}
-        WHERE activity_id = $${otherParameters.length + 1}
+        UPDATE 
+            activities
+        SET 
+            ${statements.join(', ')},
+            last_update = $${otherParameters.length + 1}
+        WHERE activity_id = $${otherParameters.length + 2}
     `;
+    otherParameters.push(date);
     otherParameters.push(activity_id);
 
     await db.query(activityUpdateQuery, otherParameters);
@@ -233,7 +238,7 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     console.log("edit done");
 };
 
-async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
+async function tagsUpdate(id: number, prevData: string[], updateData: string[], date: Date){
     console.log("start tags update")
     let addedTags: string[] = [];
     let removedTags: string[] = [];
@@ -254,7 +259,7 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[]){
 
 
     if (addedTags.length > 0) {
-        insertTags(addedTags, id)
+        insertTags(addedTags, id, date);
     }
 
     if (removedTags.length > 0) {
