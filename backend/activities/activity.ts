@@ -1,7 +1,7 @@
 import Database from "../database/Database";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidText, isValidUrl } from "../util/validation";
-import { getDeleteAllColumnQuery, getUpdateQueryForNestedTable, insertTags } from "./util";
+import { getDeleteAllColumnQuery, getInsertQueryForNestedTable, getUpdateQueryForNestedTable, insertTags } from "./util";
 
 const db = Database.db;
 
@@ -149,35 +149,15 @@ export async function addActivity({userId, title, summary, duration, age_group, 
 
     //insert duration
     console.log("start adding duration");
-    const addDurationQuery =  `
-        INSERT INTO activity_durations (
-            activity_id, 
-            duration_id,
-            last_update
-        ) 
-        VALUES (
-            $1, 
-            (SELECT duration_id FROM durations WHERE duration_title = $2),
-            $3
-        );`
+    const durationQuery = getInsertQueryForNestedTable("duration");
     
-    await db.query(addDurationQuery, [
+    await db.query(durationQuery, [
         activity_id, duration, date
     ]) 
 
     //insert age_group
     console.log("start adding age_group");
-    const addAgeGroupQuery = `
-        INSERT INTO activity_age_groups (
-            activity_id, 
-            age_group_id,
-            last_update
-        ) 
-        VALUES (
-            $1, 
-            (SELECT age_group_id FROM age_groups WHERE age_group_title = $2),
-            $3
-        );`
+    const addAgeGroupQuery = getInsertQueryForNestedTable("age_group");
     
     await db.query(addAgeGroupQuery, [
         activity_id, age_group, date

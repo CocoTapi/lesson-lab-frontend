@@ -70,6 +70,22 @@ export async function insertTags(tags: string[], activity_id: number){
     }
 }
 
+export function getInsertQueryForNestedTable(subject: string){
+    const query =  `
+    INSERT INTO activity_${subject}s (
+        activity_id, 
+        ${subject}_id,
+        last_update
+    ) 
+    VALUES (
+        $1, 
+        (SELECT${subject}_id FROM ${subject}s WHERE ${subject}_title = $2),
+        $3
+    );`
+
+   return query
+}
+
 export function getUpdateQueryForNestedTable(subject: string) {
         const updateQuery = `
         UPDATE activity_${subject}s
