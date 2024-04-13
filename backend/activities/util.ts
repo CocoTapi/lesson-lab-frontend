@@ -79,7 +79,7 @@ export function getInsertQueryForNestedTable(subject: string){
     ) 
     VALUES (
         $1, 
-        (SELECT${subject}_id FROM ${subject}s WHERE ${subject}_title = $2),
+        (SELECT ${subject}_id FROM ${subject}s WHERE ${subject}_title = $2),
         $3
     );`
 
