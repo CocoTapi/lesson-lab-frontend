@@ -1,12 +1,14 @@
 import { Form, Link, useActionData, useNavigation, useSearchParams } from 'react-router-dom';
 
-function AuthForm(){
+
+
+function AuthForm() {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
     //console.log(data);
 
-    const [ searchParams ] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const isLogin = searchParams.get('mode') === 'login';
 
     console.log("data.errors", data && data.errors);
@@ -22,34 +24,34 @@ function AuthForm(){
                 </ul>
             }
             {data && data.message && <p>{data.message}</p>}
-            {!isLogin && 
-            <>
-                <div>
-                    {data && data.errors.firstName && <span> * </span>}                       
-                    <label htmlFor="firstName">
-                        First Name
-                    </label>
-                    <input id='firstName' type='firstName' name='firstName' placeholder='First Name' required/>
-                </div>
-                <div>
-                    {data && data.errors.lastName && <span> * </span>} 
-                    <label htmlFor="lastName">Last Name</label>
-                    <input id='lastName' type='lastName' name='lastName' placeholder='Last Name' required/>
-                </div>
-            </>
+            {!isLogin &&
+                <>
+                    <div>
+                        {data && data.errors.firstName && <span> * </span>}
+                        <label htmlFor="firstName">
+                            First Name
+                        </label>
+                        <input id='firstName' type='firstName' name='firstName' placeholder='First Name' required />
+                    </div>
+                    <div>
+                        {data && data.errors.lastName && <span> * </span>}
+                        <label htmlFor="lastName">Last Name</label>
+                        <input id='lastName' type='lastName' name='lastName' placeholder='Last Name' required />
+                    </div>
+                </>
             }
             <div>
                 {data && data.errors.email && <span> * </span>
                 }
                 <label htmlFor="email">Email</label>
-                <input id='email' type='email' name='email' required/>
+                <input id='email' type='email' name='email' required />
             </div>
             <div>
-                {data && ( data.errors.length ||data.errors.simbol || data.errors.num )
+                {data && (data.errors.length || data.errors.simbol || data.errors.num)
                     && <span> * </span>
                 }
                 <label htmlFor="password">Password</label>
-                <input id='password' type='password' name='password' required/>
+                <input id='password' type='password' name='password' required />
             </div>
             <div>
                 {isLogin ? (

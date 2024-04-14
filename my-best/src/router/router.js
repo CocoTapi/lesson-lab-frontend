@@ -16,7 +16,7 @@ import { action as activityFormAction, loader as tagsLoader} from '../pages/acti
 import UserMainPage from "../pages/user_page/UserMainPage";
 import UserPage, { loader as userDetailLoader } from "../pages/user_page/UserPage";
 
-export const router = createBrowserRouter([
+export const createRouter = (setUserInfo) => createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />,
@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
             {
               index: true,
               element: <LoginPage />,
-              action: loginAction
+              action: ({ request}) => loginAction({request, setUserInfo})
             },
             {
               path: 'signup',
@@ -77,20 +77,20 @@ export const router = createBrowserRouter([
             },
           ]
         },
-        {
-          path: 'mypage',
-          errorElement: <ErrorPage />,
-          loader: checkAuthLoader,
-          children: [
-            { index: true, element: <UserMainPage />},
-            {
-              path: ':userId',
-              id: 'user-detail',
-              element: <UserPage />,
-              loader: userDetailLoader
-            }
-          ]
-        },
+        // {
+        //   path: 'mypage',
+        //   errorElement: <ErrorPage />,
+        //   loader: checkAuthLoader,
+        //   children: [
+        //     { index: true, element: <UserMainPage />},
+        //     {
+        //       path: ':userId',
+        //       id: 'user-detail',
+        //       element: <UserPage />,
+        //       loader: userDetailLoader
+        //     }
+        //   ]
+        // },
         {
           path: 'logout',
           action: logoutAction,
@@ -98,3 +98,5 @@ export const router = createBrowserRouter([
       ],
     }
   ]);
+
+ 
