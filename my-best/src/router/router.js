@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import RootLayout from '../pages/RootLayout';
+import RootLayout from '../pages/home/RootLayout';
 import ErrorPage from '../pages/util/ErrorPage';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/home/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader} from '../pages/activities/ActivitiesPage';
 import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
