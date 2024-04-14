@@ -104,7 +104,7 @@ export async function checkFormValidation({title, summary, duration, age_group, 
     return {}; 
 }
 
-export async function addActivity({userId, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
+export async function addActivity({user_Id, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
     //TODO: check trim or formatting the data? 
 
     //insert everything except duration, age_group, tags
@@ -128,7 +128,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
             activity_id
         `
     await db.query(addActivitiesQuery, [
-        userId, title, summary, objectives, materials,
+        user_Id, title, summary, objectives, materials,
         instructions, links, date, date
     ])
 
@@ -140,7 +140,7 @@ export async function addActivity({userId, title, summary, duration, age_group, 
         WHERE user_id = $1 AND title = $2
     `
     const result = await db.query(getActivityIdQuery, [
-        userId, title
+        user_Id, title
     ]);
 
     const activity_id: number = result.rows[0].activity_id;

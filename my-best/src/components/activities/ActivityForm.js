@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { useNavigation, useActionData, Form } from "react-router-dom";
+import { useUserContext } from "../../pages/util/UserProvider";
 import classes from '../css/ActivityForm.module.css'
 
 
 function ActivityForm({ existingTags, method, activity }) {
+    const token = useRouteLoaderData('root');
+
+    const { userInfo } = useUserContext();
+    const user_name = userInfo.user_name;
+    const user_id = userInfo.user_id;
+
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
@@ -51,6 +58,8 @@ function ActivityForm({ existingTags, method, activity }) {
         setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
     }
 
+    // TODO: setup change user name button
+
     console.log(chosenTags);
 
     return (
@@ -64,6 +73,13 @@ function ActivityForm({ existingTags, method, activity }) {
                 </ul>
             }
             {data && data.message && <p>{data.message}</p>}
+
+             {/* user name */}
+             <div>  
+                <div>{`User name: ${user_name}`}</div> 
+                <button>Change user name</button>             
+            </div>
+            
             {/* title */}
             <div>  
                 {data && data.errors.title && <span> * </span>}                       
@@ -219,8 +235,9 @@ function ActivityForm({ existingTags, method, activity }) {
                 ))}
             </div>
 
-            {/* hidden input for chosenTags */}
+            {/* hidden input */}
             <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
+            <input type="hidden" name="user_id" value={user_id} />
 
             <br/><button disabled={isSubmitting}>Submit</button><br />
             {isSubmitting && <p>Submitting...</p>}

@@ -29,7 +29,7 @@ export interface AuthValidationErrorBoolean {
 }
 
 export interface ActivityFormInfo {
-    userId: number,
+    user_Id: number,
     title: string, 
     summary: string, 
     duration: number, 
