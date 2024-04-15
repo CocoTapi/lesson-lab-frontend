@@ -1,9 +1,12 @@
 import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
+import { useUserContext } from "../../pages/util/UserProvider";
 
 function ActivityItem({ activity }){
     const token = useRouteLoaderData('root');
     const submit = useSubmit();
-    
+    const { userInfo } = useUserContext();
+    const user_id = userInfo.user_id;
+    console.log("user_id:", user_id )
 
     // TODO: setup like button
     const handleLike = (e) => {
@@ -37,6 +40,7 @@ function ActivityItem({ activity }){
             }
             {
                 token && 
+                activity.user_id === user_id &&
                 <div>
                     <Link to="edit" >Edit</Link>
                     <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
