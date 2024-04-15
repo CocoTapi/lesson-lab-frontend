@@ -1,9 +1,11 @@
 import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 
 function ActivityItem({ activity }){
-    const token = useRouteLoaderData();
+    const token = useRouteLoaderData('root');
     const submit = useSubmit();
+    
 
+    // TODO: setup like button
     const handleLike = (e) => {
         e.preventDefault();
         console.log("ADD LIKE!");
@@ -26,14 +28,19 @@ function ActivityItem({ activity }){
             <p>{activity.instructions}</p>
             <div>{activity.links}</div>
             {activity.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
+                <span key={tag}>#{tag}</span>
             ))}
             {token &&
                 <div>
                     <button onClick={handleLike}>Like!!!</button>
+                </div>                
+            }
+            {
+                token && 
+                <div>
                     <Link to="edit" >Edit</Link>
                     <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
-                </div>                
+                </div>
             }
         </article>
     )
