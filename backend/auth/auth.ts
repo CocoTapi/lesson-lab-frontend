@@ -104,7 +104,7 @@ export async function getUserDataFromEmail(email: string){
   const query = `
     SELECT 
       user_id,
-      email
+      user_name
     FROM 
       users
     WHERE 
