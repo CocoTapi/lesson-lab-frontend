@@ -1,35 +1,57 @@
 import { NotAuthError } from "./errors";
+import { sign, verify, Secret } from "jsonwebtoken";
 import env from 'dotenv'; 
+import { NextFunction } from "express";
+import { AuthRequest } from "./types";
 
 env.config();
 
-const KEY = process.env.TOKEN_KEY;
+const KEY: Secret | undefined = process.env.TOKEN_KEY;
 
-//TODO: token setup 
-
-export function checkAuthMiddleware(req, res, next) {
-    if(req.method === 'OPTIONS ') return next();
-
-    if(!req.Headers.authorization) {
-        console.log("Auth header missing.");
-        return next(new NotAuthError('Not authenticated.'));
+export function createJSONToken(email: string) {
+    if (!KEY) {
+        throw new Error("Token key is not defined.");
     }
-
-    const authFragments = req.headers.authentication.split(' '); 
-
-    if (authFragments.length !== 2) {
-        console.log("Auth header invalid.")
-        return next(new NotAuthError('Not authenticated.'));
-    }
-
-    const authToken = authFragments[1];
-
-    try{
-        //const validatedToken = validateJSONToken(authToken);
-    } catch(error) {
-        console.log("Token invalid.");
-        return next(new NotAuthError('Not authenticated.'))
-    }
-
-    next();
+    return sign({ email }, KEY, { expiresIn: '1h' });
 }
+
+function validateJSONToken(token: any) {
+    if (!KEY) {
+        throw new Error("Token key is not defined.");
+    }
+    return verify(token, KEY);
+}
+
+// export function checkAuthMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+//       if(req.method === 'OPTIONS ') return next();
+  
+//       const authHeader = req.headers.get('authorization'); 
+//       if (!authHeader) {
+//           console.log("Auth header missing.");
+//           return next(new NotAuthError('Not authenticated.'));
+//       }
+  
+//       if(!authHeader) {
+//           console.log("Auth header missing.");
+//           return next(new NotAuthError('Not authenticated.'));
+//       }
+  
+//       const authFragments = authHeader.split(' '); 
+  
+//       if (authFragments.length !== 2) {
+//           console.log("Auth header invalid.")
+//           return next(new NotAuthError('Not authenticated.'));
+//       }
+  
+//       const authToken = authFragments[1];
+
+//       try {
+//         const decoded = validateJSONToken(authToken);
+//         req.email = decoded.email;
+//       } catch (error){
+//         return next(new NotAuthError('Not authenticated.'))
+//       }
+//   }
+
+
+

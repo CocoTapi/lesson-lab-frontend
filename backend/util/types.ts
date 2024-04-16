@@ -18,6 +18,10 @@ export interface UserInfo {
     last_login: Date
 }
 
+export interface AuthRequest extends Request {
+    email?: string; 
+}
+
 export interface ErrorMessage {
     [key: string]: string;
 };

@@ -180,5 +180,4 @@ export async function checkOAuthData({email, password, firstName, lastName}: Sig
   
     console.log("registered User:", email, password, firstName, lastName, date, date);
   }
-
 }

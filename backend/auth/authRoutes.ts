@@ -1,7 +1,16 @@
 import express from "express";
-import { signUp, login, getUserDataFromGoogle, oAuthLogin, generateTokens, checkOAuthData, checkValidation } from "./auth";
+import { 
+    signUp, 
+    login,
+    getUserDataFromGoogle, 
+    oAuthLogin, 
+    generateTokens, 
+    checkOAuthData, 
+    checkValidation 
+} from "./auth";
 import { asyncHandler } from "../util/route-util";
-import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
+import { LoginInfo, SignUpInfo, ErrorMessage, AuthRequest } from "../util/types";
+import { createJSONToken } from "../util/auth";
 import env from "dotenv";
 
 const fs = require('fs');
@@ -29,12 +38,27 @@ router.post("/signup", asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Successfully created user.' })
 }));
 
-
 router.post("/login", asyncHandler(async (req, res) => {
     const loginInfo: LoginInfo = req.body;
     const userDetails = await login(loginInfo);
-    res.status(200).json({ message: 'Successfully logged in with user credentials.', data: userDetails })
+    const token = createJSONToken(userDetails.email);
+
+    res.status(200).json({ 
+        message: 'Successfully logged in with user credentials.', 
+        data: userDetails,
+        token: token
+    })
 }));
+
+
+// //user info retrieval
+// router.get('/user', asyncHandler(async (req, res) => {
+//     console.log(req.email)
+//     const user_email = req.email;
+
+//     const userInfo = await getUserInfo();
+//     res.status(200).json({ userInfo: userInfo});
+// }))
 
 
 //create the url for google login and send it back to the frontend
@@ -83,5 +107,7 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
     //     token: "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5"
     // })
 }))
+
+
 
 export default router;
