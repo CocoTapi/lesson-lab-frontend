@@ -6,7 +6,6 @@ import classes from '../css/ActivityForm.module.css'
 
 function ActivityForm({ existingTags, method, activity }) {
     const token = useRouteLoaderData('root');
-
     const { userInfo } = useUserContext();
     const user_name = userInfo.user_name;
     const user_id = userInfo.user_id;

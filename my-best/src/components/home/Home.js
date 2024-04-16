@@ -6,16 +6,14 @@ function Home() {
 
     const { userInfo } = useUserContext();
     const user_name = userInfo.user_name;
-    const user_id = userInfo.user_id;
-    // const { userData } = {userId: 100, userName:'Dodger'};
-    // const { userId, userName } = userData;
+   
     console.log(userInfo)
     return (
         <div>
             {!token && <div>Home</div>}
             {token &&
                 <div>
-                    <hi>{`Welcome back ${user_name}`}</hi>
+                    <h1>{`Welcome back ${user_name}`}</h1>
                 </div>
             }
         </div>

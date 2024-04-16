@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 function NewActivityPage(){
     const { tags } = useRouteLoaderData('tags');
+    
     return (
         <Card>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
