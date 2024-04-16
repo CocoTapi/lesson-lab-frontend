@@ -57,7 +57,13 @@ export function handleGoogleAuthEvent(event) {
 }
 
 export async function getUserInfoFromToken(token){
-    const response = await fetch(`${API_URL}/user_info`);
+    const response = await fetch(`${API_URL}/user`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
 
     if(!response.ok) {
         return redirect('./auth?mode=login');
@@ -66,7 +72,6 @@ export async function getUserInfoFromToken(token){
     const resData = await response.json();
     console.log("resData:", resData);
 
-    //TODO: Store userData 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
     setUserInfo({user_id, user_name});
