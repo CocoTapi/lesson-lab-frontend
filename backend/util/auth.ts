@@ -15,43 +15,34 @@ export function createJSONToken(email: string) {
     return sign({ email }, KEY, { expiresIn: '1h' });
 }
 
-function validateJSONToken(token: any) {
+export function validateJSONToken(token: any) {
     if (!KEY) {
         throw new Error("Token key is not defined.");
     }
     return verify(token, KEY);
 }
 
-// export function checkAuthMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
-//       if(req.method === 'OPTIONS ') return next();
+export async function verifyToken(authHeader: string) {
+    const authFragments = authHeader.split(' '); 
   
-//       const authHeader = req.headers.get('authorization'); 
-//       if (!authHeader) {
-//           console.log("Auth header missing.");
-//           return next(new NotAuthError('Not authenticated.'));
-//       }
-  
-//       if(!authHeader) {
-//           console.log("Auth header missing.");
-//           return next(new NotAuthError('Not authenticated.'));
-//       }
-  
-//       const authFragments = authHeader.split(' '); 
-  
-//       if (authFragments.length !== 2) {
-//           console.log("Auth header invalid.")
-//           return next(new NotAuthError('Not authenticated.'));
-//       }
-  
-//       const authToken = authFragments[1];
+    if (authFragments.length !== 2) {
+        throw Error('Auth header invalid. Not authenticated.');
+    }
 
-//       try {
-//         const decoded = validateJSONToken(authToken);
-//         req.email = decoded.email;
-//       } catch (error){
-//         return next(new NotAuthError('Not authenticated.'))
-//       }
-//   }
+    const authToken = authFragments[1];
+
+    const decoded = validateJSONToken(authToken);
+    console.log("decoded:", decoded);
+
+   // Check if decoded is an object (JwtPayload)
+    if (typeof decoded !== 'object' || decoded === null) {
+        throw Error('decoded is not object.')
+    } 
+
+    const firstKey = Object.keys(decoded)[0];
+    const user_email: string = decoded[firstKey];
+    return user_email;
+  }
 
 
 

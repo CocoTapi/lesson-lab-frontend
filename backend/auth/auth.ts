@@ -100,6 +100,23 @@ export async function login({ email, password }: LoginInfo) {
   return user;
 }
 
+export async function getUserDataFromEmail(email: string){
+  const query = `
+    SELECT 
+      user_id,
+      email
+    FROM 
+      users
+    WHERE 
+      email = $1
+  `
+  const result = await db.query(query, [email]);
+  if (!(result.rows.length > 0)) throw Error("User doesn't exist.");
+
+  const userInfo = result.rows[0];
+  return userInfo;
+}
+
 export async function oAuthLogin(){
   const authUrl = oAuth2Client.generateAuthUrl(domainRedirect);
   if(!authUrl) throw new Error ("Auth URL could not be generated");
