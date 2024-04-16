@@ -64,7 +64,7 @@ router.get('/user', asyncHandler(async (req, res) => {
     const userInfo = await getUserDataFromEmail(user_email);
     res.status(200).json({ 
         message: 'Successfully got user data from token',
-        userInfo: userInfo
+        data: userInfo
      });
 }))
 
