@@ -66,16 +66,14 @@ export async function action ( {request, setUserInfo} ) {
     const resData = await response.json();
     console.log("resData:", resData);
 
-    //TODO: Store userData 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
+    const token = resData.token;
 
     console.log(user_id, user_name)
-    setUserInfo({user_id, user_name});
+    console.log('token:', token);
 
- 
-    // TODO: setup token
-    const token = Math.floor(Math.random() * 10);
+    setUserInfo({user_id, user_name});
 
     localStorage.setItem('token', token);
     const expiration = new Date();

@@ -1,4 +1,6 @@
 import { redirect } from 'react-router-dom'
+import { API_URL } from '../../App';
+import setUserInfo from './UserProvider'
 
 //TODO token stores in local storage or cookies?
 
@@ -33,7 +35,7 @@ export function checkAuthLoader() {
     const token = getAuthToken();
 
     if (!token) {
-        return redirect("./auth")
+        return redirect("./auth?mode=login")
     }
 
     return null;
@@ -52,4 +54,21 @@ export function handleGoogleAuthEvent(event) {
         console.log("redirect!!!!!!")
         window.location.href = "/";
     } 
+}
+
+export async function getUserInfoFromToken(token){
+    const response = await fetch(`${API_URL}/user_info`);
+
+    if(!response.ok) {
+        return redirect('./auth?mode=login');
+    }
+
+    const resData = await response.json();
+    console.log("resData:", resData);
+
+    //TODO: Store userData 
+    const user_id = resData.data.user_id;
+    const user_name = resData.data.user_name;
+    setUserInfo({user_id, user_name});
+    return { user_id, user_name };
 }
