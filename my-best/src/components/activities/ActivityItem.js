@@ -36,16 +36,18 @@ function ActivityItem({ activity }){
             {token &&
                 <div>
                     <button onClick={handleLike}>Like!!!</button>
+                    <Link to="edit" >Edit</Link>
+                    <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
                 </div>                
             }
-            {
+            {/* {
                 token && 
                 activity.user_id === user_id &&
                 <div>
                     <Link to="edit" >Edit</Link>
                     <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
                 </div>
-            }
+            } */}
         </article>
     )
 }

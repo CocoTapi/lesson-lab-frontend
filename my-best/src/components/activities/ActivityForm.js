@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation, useActionData, Form, Link, useRouteLoaderData } from "react-router-dom";
 import { useUserContext } from "../../pages/util/UserProvider";
 import classes from '../css/ActivityForm.module.css'
@@ -19,9 +19,12 @@ function ActivityForm({ existingTags, method, activity }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
 
-    if (activity && activity.tags) {
-        setChosenTags(activity.tags);
-    }
+    useEffect(() => {
+        if (activity && activity.tags) {
+            setChosenTags(activity.tags);
+        }
+    }, [activity]);
+    
 
     const handleTypedTagsChange = (event) => {
         const typedValue = event.target.value;
@@ -71,7 +74,7 @@ function ActivityForm({ existingTags, method, activity }) {
             </div>  
         }
         {token && 
-            <Form method={method} >
+            <Form method={method} className={classes.form}>
                 <h1>Add Activity</h1>
                 {data && data.errors &&
                     <ul>
@@ -98,7 +101,7 @@ function ActivityForm({ existingTags, method, activity }) {
                         id='title' 
                         type='text' 
                         name='title'
-                        defaultChecked={activity ? activity.title : ''} 
+                        defaultValue={activity ? activity.title : ''} 
                         placeholder='Title is here' 
                         required/>
                 </div>

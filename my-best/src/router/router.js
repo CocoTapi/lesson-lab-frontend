@@ -46,6 +46,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 },
                 {
                   path: 'edit',
+                  id: 'edit-tags',
                   element: <EditActivityPage />,
                   loader: tagsLoader,
                   action: activityFormAction

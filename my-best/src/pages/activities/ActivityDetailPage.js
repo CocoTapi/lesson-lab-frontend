@@ -35,7 +35,6 @@ async function loadActivity(id) {
     }
 
     const resData = await response.json();
-    console.log("resData.activity:", resData)
     return resData.activity[0];
 }
 
