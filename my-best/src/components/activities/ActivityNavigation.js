@@ -1,7 +1,9 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteLoaderData } from "react-router-dom";
 
 function ActivityNavigation(){
-    //const token = useRouteLoaderData('root');
+    const user = useRouteLoaderData('root');
+    let token;
+    if(user) token = user.token;
 
     return (
         <header>
@@ -14,12 +16,24 @@ function ActivityNavigation(){
                             All Activities
                         </NavLink>
                     </li>
-                    
+                    {token && 
+                    <li>
                         <NavLink
                             to="/activities/new"
                         >
                             Add Activity
                         </NavLink>
+                    </li>
+                    }
+                    {!token &&
+                    <li>
+                        <NavLink
+                            to="../auth?mode=login"
+                        >
+                            Add Activity
+                        </NavLink>
+                    </li>
+                    }
                     
                 </ul>
             </nav>

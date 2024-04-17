@@ -1,6 +1,5 @@
 import { redirect } from 'react-router-dom'
 import { API_URL } from '../../App';
-import setUserInfo from './UserProvider'
 
 //TODO token stores in local storage or cookies?
 
@@ -27,8 +26,15 @@ export function getAuthToken() {
     return token;
 };
 
-export function loader () {
-    return getAuthToken();
+export async function loader () {
+    const token = getAuthToken();
+    if(token){
+        const { user_id, user_name } = await getUserInfoFromToken(token);
+        return { token: token, user_id: user_id, user_name: user_name};
+    } else {
+        return token
+    }
+
 };
 
 export function checkAuthLoader() {
@@ -37,7 +43,7 @@ export function checkAuthLoader() {
     if (!token) {
         return redirect("./auth?mode=login")
     }
-
+    
     return null;
 }
 
@@ -66,7 +72,7 @@ export async function getUserInfoFromToken(token){
     });
 
     if(!response.ok) {
-        return redirect('./auth?mode=login');
+        throw Error('Could not fetch user info.')
     }
 
     const resData = await response.json();
@@ -74,6 +80,6 @@ export async function getUserInfoFromToken(token){
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
-    setUserInfo({user_id, user_name});
+    //setUserInfo({user_id, user_name});
     return { user_id, user_name };
 }

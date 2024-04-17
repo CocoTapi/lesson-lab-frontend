@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useActionData, Form, Link, useRouteLoaderData } from "react-router-dom";
-import { useUserContext } from "../../pages/util/UserProvider";
 import classes from '../css/ActivityForm.module.css'
 
 
 function ActivityForm({ existingTags, method, activity }) {
-    const token = useRouteLoaderData('root');
-    const { userInfo } = useUserContext();
-    const user_name = userInfo.user_name;
-    const user_id = userInfo.user_id;
-
+    const user = useRouteLoaderData('root');
+    let token;
+    if(user) token = user.token;
+    const user_name = user.user_name;
+    const user_id = user.user_id;
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
@@ -24,7 +23,6 @@ function ActivityForm({ existingTags, method, activity }) {
         }
     }, [activity]);
     
-
     const handleTypedTagsChange = (event) => {
         const typedValue = event.target.value;
         setTypedTags(typedValue);

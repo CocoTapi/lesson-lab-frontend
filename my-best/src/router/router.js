@@ -8,7 +8,7 @@ import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
 import LoginLayout from '../pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
 import { action as logoutAction } from '../pages/auth/logout';
-import { checkAuthLoader, loader as tokenLoader } from '../pages/util/checkAuth';
+import { checkAuthLoader, loader as userLoader } from '../pages/util/checkAuth';
 import ActivityDetailPage, { loader as activityDetailLoader, action as deleteActivityAction } from '../pages/activities/ActivityDetailPage';
 import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
@@ -22,7 +22,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
       element: <RootLayout />,
       errorElement: <ErrorPage />,
       id: 'root',
-      loader: tokenLoader,
+      loader: userLoader,
       children: [
         { index: true, element: <HomePage /> },
         { 
