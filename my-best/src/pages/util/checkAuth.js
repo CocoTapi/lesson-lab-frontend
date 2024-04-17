@@ -80,6 +80,6 @@ export async function getUserInfoFromToken(token){
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
-    //setUserInfo({user_id, user_name});
+   
     return { user_id, user_name };
 }

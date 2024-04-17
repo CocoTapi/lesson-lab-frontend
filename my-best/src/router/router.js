@@ -8,19 +8,18 @@ import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
 import LoginLayout from '../pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
 import { action as logoutAction } from '../pages/auth/logout';
-import { checkAuthLoader, loader as userLoader } from '../pages/util/checkAuth';
+import { loader as userLoader } from '../pages/util/checkAuth';
 import ActivityDetailPage, { loader as activityDetailLoader, action as deleteActivityAction } from '../pages/activities/ActivityDetailPage';
 import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
-import UserMainPage from "../pages/user_page/UserMainPage";
-import UserPage, { loader as userDetailLoader } from "../pages/user_page/UserPage";
+import UserLayout from "../pages/user_page/UserLayout";
+import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
 
 export const createRouter = (setUserInfo) => createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />,
-      errorElement: <ErrorPage />,
       id: 'root',
       loader: userLoader,
       children: [
@@ -78,20 +77,23 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
             },
           ]
         },
-        // {
-        //   path: 'mypage',
-        //   errorElement: <ErrorPage />,
-        //   loader: checkAuthLoader,
-        //   children: [
-        //     { index: true, element: <UserMainPage />},
-        //     {
-        //       path: ':userId',
-        //       id: 'user-detail',
-        //       element: <UserPage />,
-        //       loader: userDetailLoader
-        //     }
-        //   ]
-        // },
+        {
+          path: 'mypage',
+          errorElement: <ErrorPage />,
+          children: [
+            { index: true, element: <UserLayout />},
+            {
+              path: ':userId',
+              id: 'user-detail',
+              children: [
+                { index: true,
+                  element: <UserMainPage />,
+                  loader: userDetailLoader
+                }
+              ]
+            }
+          ]
+        },
         {
           path: 'logout',
           action: logoutAction,
