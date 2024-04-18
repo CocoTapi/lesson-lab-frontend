@@ -3,11 +3,12 @@ import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 function ActivityItem({ activity }){
     const user = useRouteLoaderData('root');
     let token;
-    if(user) token = user.token;
-    const user_id = user.user_id;
+    let user_id;
+    if(user){
+        token = user.token;
+        user_id = user.user_id;
+    }
     const submit = useSubmit();
-    
-    console.log("user_id:", user_id )
 
     // TODO: setup like button
     const handleLike = (e) => {
@@ -39,8 +40,7 @@ function ActivityItem({ activity }){
                     <button onClick={handleLike}>Like!!!</button>
                 </div>                
             }
-            {
-                token && 
+            {token && 
                 activity.user_id === user_id &&
                 <div>
                     <Link to="edit" >Edit</Link>

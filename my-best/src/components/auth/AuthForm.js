@@ -6,12 +6,9 @@ function AuthForm() {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    //console.log(data);
 
     const [searchParams] = useSearchParams();
     const isLogin = searchParams.get('mode') === 'login';
-
-    console.log("data.errors", data && data.errors);
 
     return (
         <Form method='post'>

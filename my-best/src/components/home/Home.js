@@ -6,7 +6,7 @@ function Home() {
     const user = useRouteLoaderData('root');
     let token;
     if(user) token = user.token;
-    console.log(token);
+    //console.log(token);
     
 
     // const { userInfo } = useUserContext();

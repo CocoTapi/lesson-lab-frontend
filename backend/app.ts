@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import authRoutes from './auth/authRoutes';
 import activityRoutes from './activities/activityRoutes';
 import tagRoutes from './tags/tagRoutes';
+import userRoutes from './user/userRoutes';
 
 const app = express();
 const port = 8080;
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use('/activities', activityRoutes);
 app.use('/tags', tagRoutes)
+app.use('/user', userRoutes)
 
 // Custom error handling middleware
 app.use((error: any, req: any, res: any, next: any) => {

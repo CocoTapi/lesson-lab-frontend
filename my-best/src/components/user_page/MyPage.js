@@ -1,13 +1,18 @@
+import { Link } from "react-router-dom";
+
 function MyPage({ userDetail }){
+   
+    //const user_id = user.user_id;
+
     return (
         <div>
             {/* User Name */}
-            <div>{userDetail.user_name}</div>
-            <button>Edit Acount Profile</button>
-            <div>{userDetail.first_name}</div>
-            <div>{userDetail.last_name}</div>
-            <div>{userDetail.last_login}</div>
-            <div>{userDetail.email}</div>
+            <div>My Page</div>
+            <div>{userDetail}</div>
+            {/* last login */}
+
+            <Link to='edit'>Edit Acount Profile</Link>
+          
 
         {/* Favorites */}
             {/* activity likes list */}

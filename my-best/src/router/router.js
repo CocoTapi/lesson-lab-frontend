@@ -15,6 +15,7 @@ import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
 import UserLayout from "../pages/user_page/UserLayout";
 import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
+import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
 
 export const createRouter = (setUserInfo) => createBrowserRouter([
     {
@@ -79,9 +80,8 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
         },
         {
           path: 'mypage',
-          errorElement: <ErrorPage />,
+          element: <UserLayout />,
           children: [
-            { index: true, element: <UserLayout />},
             {
               path: ':userId',
               id: 'user-detail',
@@ -89,6 +89,12 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 { index: true,
                   element: <UserMainPage />,
                   loader: userDetailLoader
+                },
+                {
+                  path: 'edit',
+                  id: 'profile-edit',
+                  element: <EditProfilePage />,
+                  action: profileEditAction,
                 }
               ]
             }

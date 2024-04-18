@@ -76,7 +76,7 @@ export async function getUserInfoFromToken(token){
     }
 
     const resData = await response.json();
-    console.log("resData:", resData);
+    //console.log("resData:", resData);
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;

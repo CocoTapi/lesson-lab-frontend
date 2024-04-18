@@ -4,8 +4,10 @@ import classes from '../css/MainNavigation.module.css';
 function MainNavigation(){
     const user = useRouteLoaderData('root');
     let token;
+    let user_id;
     if(user){ 
-        token = user.token
+        token = user.token;
+        user_id = user.user_id;
     } 
    
 
@@ -72,7 +74,7 @@ function MainNavigation(){
                      {token && 
                          <li>
                          <NavLink
-                             to="/my-page"
+                             to={`/mypage/${user_id}`}
                              className={( { isActive }) => 
                                  isActive ? classes.active : undefined
                              }   
