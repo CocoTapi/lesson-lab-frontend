@@ -42,7 +42,19 @@ export async function verifyToken(authHeader: string) {
     const firstKey = Object.keys(decoded)[0];
     const user_email: string = decoded[firstKey];
     return user_email;
-  }
+}
+
+export async function checkAuth(method: string, authHeader: string | undefined){
+    if(method === 'OPTIONS ') throw Error('Method is invalid.');
+
+    if (!authHeader || typeof authHeader === 'undefined') {
+        throw Error('Auth header missing. Not authenticated.');
+    }
+
+    const user_email = await verifyToken(authHeader);
+    return user_email
+}
+
 
 
 

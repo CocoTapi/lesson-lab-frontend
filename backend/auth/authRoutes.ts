@@ -2,7 +2,6 @@ import express from "express";
 import { 
     signUp, 
     login,
-    getUserDataFromEmail,
     getUserDataFromGoogle, 
     oAuthLogin, 
     generateTokens, 
@@ -11,7 +10,7 @@ import {
 } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
-import { createJSONToken, verifyToken } from "../util/auth";
+import { createJSONToken } from "../util/auth";
 import env from "dotenv";
 
 const fs = require('fs');
@@ -51,22 +50,6 @@ router.post("/login", asyncHandler(async (req, res) => {
     })
 }));
 
-//user info retrieval
-router.get('/user', asyncHandler(async (req, res) => {
-    if(req.method === 'OPTIONS ') throw Error('Method is invalid.');
-
-    const authHeader = req.headers.authorization;
-    if (!req.headers.authorization || typeof authHeader === 'undefined') {
-        throw Error('Auth header missing. Not authenticated.');
-    }
-
-    const user_email = await verifyToken(authHeader);
-    const userInfo = await getUserDataFromEmail(user_email);
-    res.status(200).json({ 
-        message: 'Successfully got user data from token',
-        data: userInfo
-     });
-}))
 
 
 //create the url for google login and send it back to the frontend
