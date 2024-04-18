@@ -50,6 +50,11 @@ router.post('/', asyncHandler(async (req, res) => {
 }))
 
 router.patch('/:id', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+    console.log("Pass Authorization. verifiedEmail:", verifiedEmail);
+
     const formData: ActivityFormInfo = req.body;
     const activity_id: number = parseInt(req.params.id);
     const errors: ErrorMessage = await checkFormValidation(formData);
