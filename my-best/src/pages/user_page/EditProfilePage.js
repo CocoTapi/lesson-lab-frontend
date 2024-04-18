@@ -22,14 +22,16 @@ export async function action({ request, params }){
     const data = await request.formData();   
     const method = request.method;
     const token = getAuthToken();
+    const user_id = data.get('user_id');
     const firstName = data.get('firstName').trim();
     const lastName = data.get('lastName').trim();
     const email = data.get('email').trim();
     const password = data.get('password').trim();
 
     const profileData = {
-        firstName: firstName,
-        lastName: lastName,
+        user_id: user_id,
+        first_name: firstName,
+        last_name: lastName,
         email: email,
         password: password,
     };

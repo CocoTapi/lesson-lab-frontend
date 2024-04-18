@@ -1,8 +1,9 @@
 import express from "express";
 import { asyncHandler } from "../util/route-util";
-import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
+import { ProfileInfo, ErrorMessage } from "../util/types";
 import { checkAuth } from "../util/auth";
-import { getUserDataFromEmail, getUserFavorites, getUserProfile } from "./user";
+import { getUserDataFromEmail, getUserFavorites, getUserProfile, editProfile } from "./user";
+import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
 
 env.config();
@@ -43,20 +44,23 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 //edit user profile
 router.patch('/:id', asyncHandler(async (req, res) => {
-    // const formData: SignUpInfo = req.body;
-    // const user_id: number = parseInt(req.params.id);
-    // console.log("formData", formData);
-    // console.log("user_id:", user_id)
-    // const errors: ErrorMessage = await checkFormValidation(formData);
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+    
+    const formData: ProfileInfo = req.body;
+    const user_id: number = parseInt(req.params.id);
+    
+    const errors: ErrorMessage = await checkProfileValidation(formData);
 
-    // if (Object.keys(errors).length > 0) {
-    //     return res.status(422).json({
-    //         message: "Edit profile failed due to validation errors.",
-    //         errors,
-    //     })
-    // }
+    if (Object.keys(errors).length > 0) {
+        return res.status(422).json({
+            message: "Edit profile failed due to validation errors.",
+            errors,
+        })
+    }
 
-    // await editProfile(activity_id, formData);
+    await editProfile(verifiedEmail, formData);
     res.status(200).json({ userDetail: 'uploaded user detail' });
 }))
 

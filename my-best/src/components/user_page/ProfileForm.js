@@ -5,6 +5,7 @@ import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
 function ProfileForm({ userDetail }) {
     const data = useActionData();
     const navigation = useNavigation();
+    const user_id = userDetail.user_id;
 
     const isSubmitting = navigation.state === 'submitting'
 
@@ -51,6 +52,8 @@ function ProfileForm({ userDetail }) {
                 <label htmlFor="password">Password</label>
                 <input id='password' type='password' name='password' defaultValue={userDetail.email} required />
             </div>
+
+            <input type="hidden" name="user_id" value={user_id} />
             
             <button disabled={isSubmitting}>Edit Profile</button>
             {isSubmitting && <p>Submitting...</p>}

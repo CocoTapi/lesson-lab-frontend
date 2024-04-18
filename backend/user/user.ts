@@ -1,12 +1,12 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
+import { ProfileInfo } from "../util/types";
 import env from 'dotenv';
 import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
 env.config();
 const db = Database.db;
-
+const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
 export async function getUserDataFromEmail(email: string){
     const query = `
@@ -87,3 +87,34 @@ export async function getUserFavorites(user_id: number) {
     const userFavorites = result.rows;
     return userFavorites;
 }
+
+
+export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
+    const date = new Date();
+    const hashResult = bcrypt.hashSync(updateData.password, saltRounds);
+    if (!hashResult) throw new Error('Password hash fail. User not created')
+    
+        const updateProfileQuery = `
+        UPDATE 
+            users
+        SET
+            email = $1,
+            password = $2,
+            first_name = $3,
+            last_name = $4,
+            last_update = $5
+        WHERE
+            email = $6    
+    `;
+
+    await db.query(updateProfileQuery, [
+        updateData.email,
+        hashResult,
+        updateData.firstName,
+        updateData.lastName,
+        date,
+        prevEmail
+    ])
+
+    console.log("Update Profile Completed.");
+} 

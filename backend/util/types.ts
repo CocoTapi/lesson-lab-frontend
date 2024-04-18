@@ -46,7 +46,15 @@ export interface ActivityFormInfo {
     [key: string]: string | number | string[]
 }
 
+export interface ProfileInfo {
+    user_id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+}
 
+//TODO: make all keys of ProfileInfo, SignupInfo, UserInfo same
 
 
 

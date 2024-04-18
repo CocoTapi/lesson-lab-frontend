@@ -6,7 +6,7 @@ import {
     oAuthLogin, 
     generateTokens, 
     checkOAuthData, 
-    checkValidation 
+    checkProfileValidation 
 } from "./auth";
 import { asyncHandler } from "../util/route-util";
 import { LoginInfo, SignUpInfo, ErrorMessage } from "../util/types";
@@ -25,7 +25,7 @@ const router = express.Router();
 
 router.post("/signup", asyncHandler(async (req, res) => {
     const signUpInfo: SignUpInfo = req.body;
-    const errors : ErrorMessage = await checkValidation(signUpInfo);
+    const errors : ErrorMessage = await checkProfileValidation(signUpInfo);
     
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({

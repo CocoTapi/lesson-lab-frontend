@@ -33,7 +33,7 @@ const domainRedirect = {
 const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
-export async function checkValidation({ email, password, firstName, lastName }: SignUpInfo) {
+export async function checkProfileValidation({ email, password, firstName, lastName }: SignUpInfo) {
   const errors : ErrorMessage = {};
 
   const emailValidity = isValidEmail(email);

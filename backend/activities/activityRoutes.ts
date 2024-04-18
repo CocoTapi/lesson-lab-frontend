@@ -26,8 +26,6 @@ router.get('/:id', asyncHandler(async (req, res) => {
     res.status(200).json({ activity: activity });
 }))
 
-//TODO: add token check
-//router.use(checkAuth)
 
 router.post('/', asyncHandler(async (req, res) => {
     const method = req.method;
