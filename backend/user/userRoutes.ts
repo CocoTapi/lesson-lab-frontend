@@ -12,8 +12,8 @@ const router = express.Router();
 //user info retrieval using token
 router.get('/', asyncHandler(async (req, res) => {
     const method = req.method;
-    const authHeader = req.headers.authorization
-    const verifiedEmail = await checkAuth(method, authHeader)
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
 
     const userInfo = await getUserDataFromEmail(verifiedEmail);
 
@@ -28,8 +28,8 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:id', asyncHandler(async (req, res) => {
     const id: number = parseInt(req.params.id);
     const method = req.method;
-    const authHeader = req.headers.authorization
-    const verifiedEmail = await checkAuth(method, authHeader)
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
 
     //check token
     const userProfile = await getUserProfile(verifiedEmail);

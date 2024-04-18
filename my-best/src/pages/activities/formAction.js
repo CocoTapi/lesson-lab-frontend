@@ -10,7 +10,7 @@ export async function action({ request, params }){
     // TODO: get user id
 
     const activityData = {
-        user_Id: data.get('user_id'),
+        user_id: data.get('user_id'),
         title: data.get('title').trim(),
         duration: data.get('duration'),
         age_group: data.get('age_group'),

@@ -9,6 +9,7 @@ import {
     removeActivity,
 } from "./activity";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
+import { checkAuth } from "../util/auth";
 
 
 
@@ -29,7 +30,11 @@ router.get('/:id', asyncHandler(async (req, res) => {
 //router.use(checkAuth)
 
 router.post('/', asyncHandler(async (req, res) => {
-    //consloe.log(req.token);
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+    console.log("Pass Authorization. verifiedEmail:", verifiedEmail);
+    
     const formData: ActivityFormInfo = req.body;
     const errors: ErrorMessage = await checkFormValidation(formData);
 
