@@ -1,9 +1,15 @@
-function FavoriteList({ userFavorites }){
+function UserActivityList(props){
+
+    const deleteHandler = (id, title) => {
+        props.onDeleteActivity(id, title);
+    }
+    
+
     return (
         <div>
-        <h1>♥ Likes</h1>
+        <h1>{props.title}</h1>
         <ul>
-            {userFavorites.map((activity) => (
+            {props.userActivityList.map((activity) => (
                 <li key={activity.activity_id}>
                     <h2>{activity.title}</h2>
                     <div>{activity.duration}</div>
@@ -12,6 +18,7 @@ function FavoriteList({ userFavorites }){
                     {activity.tags.map((tag) => (
                         <span key={tag}>{tag} </span>
                     ))}
+                    <button onClick={() => deleteHandler(activity.activity_id, activity.title)}>Remove</button>
                 </li>
             ))}
         </ul>
@@ -19,4 +26,4 @@ function FavoriteList({ userFavorites }){
     )
 };
 
-export default FavoriteList;
+export default UserActivityList;

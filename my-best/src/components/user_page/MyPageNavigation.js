@@ -22,16 +22,9 @@ function MyPageNavigation(){
                     </li>
                     <li>
                         <NavLink
-                            to={token ? `/mypage/${user_id}/upload`: '../auth?mode=login'}
+                            to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
                             >
                             My Uploads
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to={token ? `/mypage/${user_id}/playlist`: '../auth?mode=login'}
-                            >
-                            My Playlists
                         </NavLink>
                     </li>
                     <li>

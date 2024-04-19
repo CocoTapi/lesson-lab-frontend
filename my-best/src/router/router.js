@@ -16,6 +16,7 @@ import { action as activityFormAction, loader as tagsLoader} from '../pages/acti
 import UserLayout from "../pages/user_page/UserLayout";
 import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
 import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
+import UserUploadsPage, { loader as userUploadsLoader } from "../pages/user_page/UserUploadsPage";
 
 export const createRouter = (setUserInfo) => createBrowserRouter([
     {
@@ -95,6 +96,12 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                   id: 'profile-edit',
                   element: <EditProfilePage />,
                   action: profileEditAction,
+                },
+                {
+                  path: 'uploads',
+                  id: 'user-uploads',
+                  element: <UserUploadsPage />,
+                  loader: userUploadsLoader,
                 }
               ]
             }

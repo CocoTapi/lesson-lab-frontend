@@ -48,11 +48,10 @@ export async function action ( {request, setUserInfo} ) {
     const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
-            'Content-type' : 'application/json'
+            'Content-Type' : 'application/json'
         },
         body: JSON.stringify(loginData)
     })
-    console.log(response.data);
     
     //error handling
     if (response.status === 422 || response.status === 401) {

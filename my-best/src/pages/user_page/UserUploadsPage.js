@@ -1,30 +1,30 @@
 import { json, defer, Await, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";
-import MyPage from '../../components/user_page/MyPage';
 import { API_URL } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
+import MyUploads from "../../components/user_page/MyUploads";
 
 
 
-function UserMainPage(){
-    const { data } = useRouteLoaderData('user-detail');
-    console.log("data:", data);
+function UserUploads(){
+    const { data } = useRouteLoaderData('user-uploads');
+    
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={data}>
-                    {(loadedData) => <MyPage data={loadedData} />}
+                    {(loadedData) => <MyUploads data={loadedData} />}
                 </Await>
             </Suspense>
         </>
     )
 };
 
-export default UserMainPage;
+export default UserUploads;
 
-async function loadUserDetail(id) {
+async function loadUserUploads(id) {
     const token = getAuthToken();
-    const response = await fetch(`${API_URL}/user/${id}`, {
+    const response = await fetch(`${API_URL}/user/${id}/uploads`, {
         method: "GET",
         headers: {
             'Content-Type' : 'application/json',
@@ -33,16 +33,15 @@ async function loadUserDetail(id) {
     });
 
     if(!response.ok) {
-        throw json({message: "Could not fetch user detail."}, { status: 500})
+        throw json({message: "Could not fetch user uploads."}, { status: 500})
     }
 
     const resData = await response.json();
     //console.log("resData:", resData)
-    const userProfile = resData.userProfile;
-    const userFavorites = resData.userFavorites
-    console.log("userProfile:", userProfile);
-    console.log("userFavorites:", userFavorites)
-    return { userProfile, userFavorites };
+    let userUploads = resData.userUploads;
+    console.log("userUploads:", userUploads);
+
+    return { userUploads };
 }
 
 export async function loader({ request, params }){
@@ -50,7 +49,7 @@ export async function loader({ request, params }){
     console.log("loader id", id);
 
     return defer({
-        data: await loadUserDetail(id),
+        data: await loadUserUploads(id),    
     })
 }
 
