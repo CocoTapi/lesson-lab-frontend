@@ -50,6 +50,9 @@ export async function getUserProfile(email: string){
     if (!(result.rows.length > 0)) throw Error("Could not get user profile.");
   
     const userProfile = result.rows[0];
+
+    delete userProfile.password;
+    
     return userProfile;
 }
 
