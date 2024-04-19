@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { ProfileInfo } from "../util/types";
+import { ErrorMessage, ProfileInfo } from "../util/types";
 import env from 'dotenv';
 import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
@@ -30,6 +30,7 @@ export async function getUserProfile(email: string){
     const userProfileQuery = `
     SELECT 
         user_id,
+        user_name,
         email, 
         password,
         first_name,
@@ -43,6 +44,8 @@ export async function getUserProfile(email: string){
     `;
 
     const result = await db.query(userProfileQuery, [email]);
+    //console.log("email:", email);
+    //console.log("result:", result);
 
     if (!(result.rows.length > 0)) throw Error("Could not get user profile.");
   
@@ -83,9 +86,55 @@ export async function getUserFavorites(user_id: number) {
 
     const result = await db.query(userFavoritesQuery, [user_id]);
 
-    if (!(result.rows.length > 0)) throw Error("User doesn't exist.");
-    const userFavorites = result.rows;
+    let userFavorites = {};
+
+    //when user does not have any favorite activities
+    if (!(result.rows.length > 0)) return userFavorites;
+    
+    userFavorites = result.rows;
     return userFavorites;
+}
+
+export async function checkUserNameValidation(formData: string, user_id: number) {
+    const errors: ErrorMessage = {};
+
+    const textValidity = isValidText(formData, 2);
+
+    if(!textValidity) {
+        errors.user_name = "Invalid user name.";
+        return errors;
+    }
+    
+    const sameCount: number = await isTextUnique(formData, user_id);
+    console.log("same count", sameCount);
+
+    if(sameCount > 0) {
+        errors.user_name = "This user name is already used. Try different name.";
+        return errors
+    }
+
+    console.log("Pass Unique user name check.")
+    return {}
+}
+
+async function isTextUnique(user_name: string, user_id: number){
+    const countSameTextQuery = `
+        SELECT 
+            COUNT(*) 
+        FROM users
+        WHERE 
+            user_name = $1 
+        AND 
+            user_id != $2;
+    `;
+
+    const result = await db.query(countSameTextQuery, [user_name, user_id]);
+    if (!(result.rows.length > 0)) throw Error("Could not fetch the number of same text columns.");
+
+    const sameCount: number = result.rows[0].count;
+    console.log(sameCount);
+
+    return sameCount;
 }
 
 
@@ -98,23 +147,39 @@ export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
         UPDATE 
             users
         SET
-            email = $1,
-            password = $2,
-            first_name = $3,
-            last_name = $4,
-            last_update = $5
+            user_name = $1,
+            first_name = $2,
+            last_name = $3,
+            email = $4,
+            password = $5,
+            last_update = $6
         WHERE
-            email = $6    
+            email = $7    
     `;
 
     await db.query(updateProfileQuery, [
-        updateData.email,
-        hashResult,
+        updateData.user_name,
         updateData.firstName,
         updateData.lastName,
+        updateData.email,
+        hashResult,
         date,
         prevEmail
     ])
 
     console.log("Update Profile Completed.");
 } 
+
+export async function removeProfile(user_id: number, email: string) {
+    const deleteProfileQuery = `
+        DELETE FROM 
+            users
+        WHERE 
+            user_id = $1 
+        AND
+            email = $2
+    `
+    await db.query(deleteProfileQuery, [user_id, email]);
+
+    console.log("deleted profile.")
+}

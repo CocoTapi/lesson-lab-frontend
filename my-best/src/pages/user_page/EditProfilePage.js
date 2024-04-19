@@ -23,6 +23,7 @@ export async function action({ request, params }){
     const method = request.method;
     const token = getAuthToken();
     const user_id = data.get('user_id');
+    const user_name = data.get('user_name').trim();
     const firstName = data.get('firstName').trim();
     const lastName = data.get('lastName').trim();
     const email = data.get('email').trim();
@@ -30,6 +31,7 @@ export async function action({ request, params }){
 
     const profileData = {
         user_id: user_id,
+        user_name: user_name,
         first_name: firstName,
         last_name: lastName,
         email: email,

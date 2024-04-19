@@ -21,6 +21,14 @@ function ProfileForm({ userDetail }) {
                 </ul>
             }
             {data && data.message && <p>{data.message}</p>}
+
+             {/* user name */}
+             <div>
+                {data && data.errors.user_name && <span> * </span>
+                }
+                <label htmlFor="user_name">User name</label>
+                <input id='user_name' type='text' name='user_name'  defaultValue={userDetail.user_name} required />
+            </div>
     
             {/* name */}
             <div>
@@ -28,12 +36,12 @@ function ProfileForm({ userDetail }) {
                 <label htmlFor="firstName">
                     First Name
                 </label>
-                <input id='firstName' type='firstName' name='firstName' defaultValue={userDetail.first_name} required />
+                <input id='firstName' type='text' name='firstName' defaultValue={userDetail.first_name} required />
             </div>
             <div>
                 {data && data.errors.lastName && <span> * </span>}
                 <label htmlFor="lastName">Last Name</label>
-                <input id='lastName' type='lastName' name='lastName'  defaultValue={userDetail.last_name} required />
+                <input id='lastName' type='text' name='lastName'  defaultValue={userDetail.last_name} required />
             </div> 
 
             {/* email */}

@@ -48,6 +48,7 @@ export interface ActivityFormInfo {
 
 export interface ProfileInfo {
     user_id: number,
+    user_name: string,
     firstName: string,
     lastName: string,
     email: string,

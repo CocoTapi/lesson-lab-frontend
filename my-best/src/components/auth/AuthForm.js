@@ -28,12 +28,12 @@ function AuthForm() {
                         <label htmlFor="firstName">
                             First Name
                         </label>
-                        <input id='firstName' type='firstName' name='firstName' placeholder='First Name' required />
+                        <input id='firstName' type='text' name='firstName' placeholder='First Name' required />
                     </div>
                     <div>
                         {data && data.errors.lastName && <span> * </span>}
                         <label htmlFor="lastName">Last Name</label>
-                        <input id='lastName' type='lastName' name='lastName' placeholder='Last Name' required />
+                        <input id='lastName' type='text' name='lastName' placeholder='Last Name' required />
                     </div>
                 </>
             }

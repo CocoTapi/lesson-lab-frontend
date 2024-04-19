@@ -1,8 +1,15 @@
 import express from "express";
 import { asyncHandler } from "../util/route-util";
 import { ProfileInfo, ErrorMessage } from "../util/types";
-import { checkAuth } from "../util/auth";
-import { getUserDataFromEmail, getUserFavorites, getUserProfile, editProfile } from "./user";
+import { checkAuth, createJSONToken } from "../util/auth";
+import { 
+    getUserDataFromEmail, 
+    getUserFavorites, 
+    getUserProfile, 
+    editProfile, 
+    removeProfile,
+    checkUserNameValidation 
+} from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
 
@@ -52,6 +59,11 @@ router.patch('/:id', asyncHandler(async (req, res) => {
     const user_id: number = parseInt(req.params.id);
     
     const errors: ErrorMessage = await checkProfileValidation(formData);
+    const userNameError: ErrorMessage = await checkUserNameValidation(formData.user_name, user_id);
+    
+    if(Object.keys(userNameError).length > 0) {
+        errors.user_name = userNameError.user_name;
+    }
 
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({
@@ -61,14 +73,20 @@ router.patch('/:id', asyncHandler(async (req, res) => {
     }
 
     await editProfile(verifiedEmail, formData);
-    res.status(200).json({ userDetail: 'uploaded user detail' });
+
+    const token = createJSONToken(formData.email);
+
+    res.status(200).json({ message: 'uploaded user detail' , token: token});
 }))
 
-// router.delete('/:id', asyncHandler(async (req, res) => {
-//     const user_id: number = parseInt(req.params.id);
+router.delete('/:id', asyncHandler(async (req, res) => {
+    const user_id: number = parseInt(req.params.id);
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
 
-//     await removeProfile(user_id);
-//     res.status(200).json({ message: 'Profile deleted.'});
-// }))
+    await removeProfile(user_id, verifiedEmail);
+    res.status(200).json({ message: 'Profile deleted.'});
+}))
 
 export default router;
