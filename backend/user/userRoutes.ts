@@ -9,7 +9,8 @@ import {
     editProfile, 
     removeProfile,
     checkUserNameValidation,
-    addFavorites 
+    addFavorites,
+    getUserUploads 
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -48,6 +49,18 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const userFavorites = await getUserFavorites(verifiedId);
 
     res.status(200).json({ userProfile: userProfile, userFavorites: userFavorites });
+}))
+
+//get user uploads
+router.get('/:id/uploads', asyncHandler(async (req, res) => {
+    const user_id: number = parseInt(req.params.id);
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const userUploads = await getUserUploads(verifiedEmail);
+
+    res.status(200).json({ userUploads: userUploads });
 }))
 
 //add user's favorite activity
