@@ -14,7 +14,7 @@ import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
 import UserLayout from "../pages/user_page/UserLayout";
-import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
+import UserMainPage, { loader as userDetailLoader, action as removeFavoriteActivity } from "../pages/user_page/UserMainPage";
 import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
 import UserUploadsPage, { loader as userUploadsLoader } from "../pages/user_page/UserUploadsPage";
 
@@ -90,6 +90,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
               children: [
                 { index: true,
                   element: <UserMainPage />,
+                  action: removeFavoriteActivity,
                 },
                 {
                   path: 'edit',

@@ -11,7 +11,6 @@ function MyUploads({ data }){
         content =  <UserActivityList title='Uploaded Activities' userActivityList={userUploads} />
     }
 
-    console.log("content". content);
     return (
         <div>
             {content}

@@ -1,29 +1,34 @@
 import UserActivityList from "./UserActivityList";
-//import { useSubmit } from "react-router-dom";
+import { useSubmit } from "react-router-dom";
 
 function MyPage({ data }){
     console.log(data)
     const userProfile = data.userProfile;
     const userFavorites = data.userFavorites;
-    console.log("userFavorite:", userFavorites);
-    //const submit = useSubmit();
+    const user_id = userProfile.user_id;
+    const submit = useSubmit();
 
-    const handleDeleteActivity = (id, title) => {
-        console.log("handle delete", id, title)
-        // const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
+    const handleRemoveActivity = (id, title) => {
+        // console.log("handle remove", id, title)
+        // const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
 
-        // if(proceed) submit(null, { method: 'DELETE', activity_id: id});
+        // if(proceed) submit(null, { method: 'DELETE', activity_id: id, user_id: user_id});
+
+        console.log("handle remove", id, title);
+        const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
+        
+        if (proceed) {
+            submit({ activity_id: id, user_id: user_id}, { method: "DELETE" });
+        }
     };
 
     let content;
     if (Object.keys(userFavorites).length === 0) {
         console.log("No content")
-        content = "You haven't add likes."
+        content = "You haven't add favorites."
     } else {
-        content = <UserActivityList title='♥ Likes' userActivityList={userFavorites} onDeleteActivity={handleDeleteActivity} />
+        content = <UserActivityList title='♥ Favorites' userActivityList={userFavorites} onDeleteActivity={handleRemoveActivity} />
     }
-
-    console.log("content". content);
 
     return (
         <div>

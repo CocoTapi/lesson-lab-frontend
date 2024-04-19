@@ -2,7 +2,7 @@ import { API_URL } from "../../App";
 import { json, defer, Await, redirect, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import ActivityItem from "../../components/activities/ActivityItem";
-import ActivityList from "../../components/activities/ActivityList";
+//import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
 
