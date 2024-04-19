@@ -9,7 +9,7 @@ import LoginLayout from '../pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
 import { action as logoutAction } from '../pages/auth/logout';
 import { loader as userLoader } from '../pages/util/checkAuth';
-import ActivityDetailPage, { loader as activityDetailLoader, action as deleteActivityAction } from '../pages/activities/ActivityDetailPage';
+import ActivityDetailPage, { loader as activityDetailLoader, action as activityItemAction } from '../pages/activities/ActivityDetailPage';
 import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
@@ -43,7 +43,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 {
                   index: true,
                   element: <ActivityDetailPage /> ,
-                  action: deleteActivityAction
+                  action: activityItemAction
                 },
                 {
                   path: 'edit',

@@ -49,14 +49,42 @@ export async function loader({ request, params }){
 
 export async function action({ params, request }) {
     const activityId = params.activityId;
-
+    const method = request.method;
+   
     const token = getAuthToken();
-    const response = await fetch(`${API_URL}/activities/` + activityId, {
-        method: request.method,
-        headers: {
-            "Authorization": 'Bearer' + token
+
+    let response;
+
+    if(method === "DELETE") {
+        response = await fetch(`${API_URL}/activities/${activityId}`, {
+            method: method,
+            headers: {
+                "Authorization": 'Bearer' + token
+            }
+        });
+
+    } else if (method === "POST") {
+        const formData = await request.formData();
+        const user_id = parseInt(formData.get("user_id"))
+
+        const favData = {
+            user_id: user_id,
+            activity_id: parseInt(activityId)
         }
-    });
+        console.log("favData:", favData);
+
+        response = await fetch(`${API_URL}/user/${user_id}`, {
+            method: method,
+            headers: {
+                'Content-Type' : 'application/json',
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(favData)
+        });
+    } else {
+        console.log('method is missing.');
+    }
+
 
     if(!response.ok) {
         throw json({message: "Could not delete activity."}, { status: 500})

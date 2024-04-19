@@ -10,10 +10,8 @@ function ActivityItem({ activity }){
     }
     const submit = useSubmit();
 
-    // TODO: setup like button
-    const handleLike = (e) => {
-        e.preventDefault();
-        console.log("ADD LIKE!");
+    const handleAddFavorite = (user_id) => {
+        submit({ user_id: user_id}, { method: "POST" });
     }
 
     const handleDeleteActivity = (title) => {
@@ -37,7 +35,7 @@ function ActivityItem({ activity }){
             ))}
             {token &&
                 <div>
-                    <button onClick={handleLike}>Like!!!</button>
+                    <button onClick={() => handleAddFavorite(user_id)}>♥</button>
                 </div>                
             }
             {token && 
