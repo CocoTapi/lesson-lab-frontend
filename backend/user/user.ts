@@ -3,14 +3,20 @@ import bcrypt from "bcrypt";
 import { ErrorMessage, FavoritesInfo, ProfileInfo } from "../util/types";
 import env from 'dotenv';
 import { isValidText } from "../util/validation";
-import { getUserFavoritesQuery, getUserUploadsQuery } from "./util";
+import { 
+    getUserFavoritesQuery, 
+    getUserUploadsQuery,
+    userProfileQuery,
+    countSameTextQuery,
+    updateProfileQuery
+} from "./util";
 
 env.config();
 const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
 export async function getUserDataFromEmail(email: string){
-    const query = `
+    const minimumUserData = `
       SELECT 
         user_id,
         user_name
@@ -19,7 +25,7 @@ export async function getUserDataFromEmail(email: string){
       WHERE 
         email = $1
     `;
-    const result = await db.query(query, [email]);
+    const result = await db.query(minimumUserData, [email]);
 
     if (!(result.rows.length > 0)) throw Error("User doesn't exist.");
   
@@ -28,23 +34,7 @@ export async function getUserDataFromEmail(email: string){
 }
 
 export async function getUserProfile(email: string){
-    const userProfileQuery = `
-    SELECT 
-        user_id,
-        user_name,
-        email, 
-        password,
-        first_name,
-        last_name,
-        last_login,
-        user_name
-    FROM 
-        users
-    WHERE 
-        email = $1
-    `;
-
-    const result = await db.query(userProfileQuery, [email]);
+  const result = await db.query(userProfileQuery, [email]);
     //console.log("email:", email);
     //console.log("result:", result);
 
@@ -108,16 +98,6 @@ export async function checkUserNameValidation(formData: string, user_id: number)
 }
 
 async function isTextUnique(user_name: string, user_id: number){
-    const countSameTextQuery = `
-        SELECT 
-            COUNT(*) 
-        FROM users
-        WHERE 
-            user_name = $1 
-        AND 
-            user_id != $2;
-    `;
-
     const result = await db.query(countSameTextQuery, [user_name, user_id]);
     if (!(result.rows.length > 0)) throw Error("Could not fetch the number of same text columns.");
 
@@ -132,20 +112,6 @@ export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
     const date = new Date();
     const hashResult = bcrypt.hashSync(updateData.password, saltRounds);
     if (!hashResult) throw new Error('Password hash fail. User not created')
-    
-        const updateProfileQuery = `
-        UPDATE 
-            users
-        SET
-            user_name = $1,
-            first_name = $2,
-            last_name = $3,
-            email = $4,
-            password = $5,
-            last_update = $6
-        WHERE
-            email = $7    
-    `;
 
     await db.query(updateProfileQuery, [
         updateData.user_name,
@@ -175,6 +141,12 @@ export async function addFavorites({user_id, activity_id}: FavoritesInfo){
 }
 
 export async function removeProfile(user_id: number, email: string) {
+    const deleteFavQuery = `
+        DELETE FROM 
+            user_favorites
+        WHERE
+            user_id = $1 
+    `;   
     const deleteProfileQuery = `
         DELETE FROM 
             users
@@ -183,6 +155,8 @@ export async function removeProfile(user_id: number, email: string) {
         AND
             email = $2
     `;
+
+    await db.query(deleteFavQuery, [user_id]);
     await db.query(deleteProfileQuery, [user_id, email]);
 
     console.log("deleted profile.")

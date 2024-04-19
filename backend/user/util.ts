@@ -1,3 +1,29 @@
+export const userProfileQuery: string = `
+    SELECT 
+        user_id,
+        user_name,
+        email, 
+        password,
+        first_name,
+        last_name,
+        last_login,
+        user_name
+    FROM 
+        users
+    WHERE 
+        email = $1
+    `;
+
+export const countSameTextQuery: string = `
+    SELECT 
+        COUNT(*) 
+    FROM users
+    WHERE 
+        user_name = $1 
+    AND 
+        user_id != $2;
+`;
+
 export function getUserFavoritesQuery(){
     const query = `
         SELECT 
@@ -61,4 +87,19 @@ export function getUserUploadsQuery(){
     `;
 
     return query;
-}
+};
+
+export const updateProfileQuery: string = `
+    UPDATE 
+        users
+    SET
+        user_name = $1,
+        first_name = $2,
+        last_name = $3,
+        email = $4,
+        password = $5,
+        last_update = $6
+    WHERE
+        email = $7    
+    `;
+

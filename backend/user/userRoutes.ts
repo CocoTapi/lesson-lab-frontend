@@ -67,7 +67,7 @@ router.get('/:id/uploads', asyncHandler(async (req, res) => {
 }))
 
 //add user's favorite activity
-router.post('/:id', asyncHandler(async (req, res) => {
+router.post('/:user_id/activity_id', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);

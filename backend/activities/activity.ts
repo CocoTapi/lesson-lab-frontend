@@ -1,82 +1,30 @@
 import Database from "../database/Database";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidText, isValidUrl } from "../util/validation";
-import { getDeleteAllColumnQuery, getInsertQueryForNestedTable, getUpdateQueryForNestedTable, insertTags } from "./util";
+import { 
+    getDeleteAllColumnQuery, 
+    getInsertQueryForNestedTable, 
+    getUpdateQueryForNestedTable, 
+    insertTags,
+    deleteUserFavQuery,
+    getSummaryQuery,
+    getDetailQuery,
+    addActivitiesQuery 
+} from "./util";
 
 const db = Database.db;
 
 //TODO: can I add "asyncHandler" here?
 
 export async function getAllActivities(){
-    const getSummaryQuery = `
-        SELECT 
-            a.activity_id,
-            a.user_id, 
-            a.title, 
-            a.summary, 
-            d.duration_title, 
-            age.age_group_title AS age_group,
-            ARRAY_AGG(tag_title) AS tags
-        FROM 
-            activities AS a 
-            JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-            JOIN durations As d ON d.duration_id = ad.duration_id 
-            JOIN activity_tags As at ON a.activity_id = at.activity_id 
-            JOIN tags AS t ON t.tag_id = at.tag_id 
-            JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
-            JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
-        GROUP BY 
-            a.activity_id,
-            a.user_id, 
-            a.title, 
-            a.summary, 
-            d.duration_title,
-            age.age_group_title
-        `
-
     const result = await db.query(getSummaryQuery);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
-
 
     return result.rows
 }
 
 export async function getActivityDetail(id: number){
-    const getDetailQuery = `
-        SELECT 
-            a.user_id, 
-            a.title, 
-            a.summary, 
-            d.duration_title AS duration, 
-            age.age_group_title AS age_group,
-            a.objectives,
-            a.materials,
-            a.instructions,
-            a.links,
-            ARRAY_AGG(tag_title) AS tags
-        FROM 
-            activities AS a 
-            JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-            JOIN durations As d ON d.duration_id = ad.duration_id 
-            JOIN activity_tags As at ON a.activity_id = at.activity_id 
-            JOIN tags AS t ON t.tag_id = at.tag_id 
-            JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
-            JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
-        WHERE 
-            a.activity_id = $1
-        GROUP BY 
-            a.user_id, 
-            a.title, 
-            a.summary, 
-            d.duration_title,
-            age.age_group_title,
-            a.objectives,
-            a.materials,
-            a.instructions,
-            a.links
-        `
-    
     const result = await db.query(getDetailQuery, [id]);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
@@ -104,29 +52,15 @@ export async function checkFormValidation({title, summary, duration, age_group, 
     return {}; 
 }
 
+
+
 export async function addActivity({user_id, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
     //TODO: check trim or formatting the data? 
 
-    //insert everything except duration, age_group, tags
     console.log("start adding activity");
     const date = new Date();
-    const addActivitiesQuery = `
-        INSERT INTO activities (
-            user_id, 
-            title, 
-            summary, 
-            objectives, 
-            materials, 
-            instructions, 
-            links, 
-            create_date, 
-            last_update
-        ) 
-        VALUES
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        RETURNING
-            activity_id
-        `
+
+    //insert everything except duration, age_group, tags
     await db.query(addActivitiesQuery, [
         user_id, title, summary, objectives, materials,
         instructions, links, date, date
@@ -271,7 +205,6 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[], 
                 AND tag_id = (SELECT tag_id FROM tags WHERE tag_title = $2)
             `
             await db.query(deleteTagQuery, [id, tag]);
-        
         }
     }
     console.log("tag updae done");
@@ -284,6 +217,7 @@ export async function  removeActivity(id: number){
     const deleteTagsQuery = getDeleteAllColumnQuery("activity_tags")
     const deleteActivityQuery = getDeleteAllColumnQuery("activities");
 
+    await db.query(deleteUserFavQuery, [id]);
     await db.query(deleteDurationQuery, [id]);
     await db.query(deleteAgeGroupQuery, [id]);
     await db.query(deleteTagsQuery, [id]);
