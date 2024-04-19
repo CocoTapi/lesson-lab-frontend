@@ -4,7 +4,7 @@ function MyUploads({ data }){
     const userUploads = data.userUploads;
 
     let content;
-    if (Object.keys(userUploads)) {
+    if (Object.keys(userUploads).length === 0) {
         console.log("No content")
         content = "You haven't uploaded any activity yet."
     } else {

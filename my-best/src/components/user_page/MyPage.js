@@ -15,6 +15,16 @@ function MyPage({ data }){
         // if(proceed) submit(null, { method: 'DELETE', activity_id: id});
     };
 
+    let content;
+    if (Object.keys(userFavorites).length === 0) {
+        console.log("No content")
+        content = "You haven't add likes."
+    } else {
+        content = <UserActivityList title='♥ Likes' userActivityList={userFavorites} onDeleteActivity={handleDeleteActivity} />
+    }
+
+    console.log("content". content);
+
     return (
         <div>
             {/* User Name */}
@@ -22,8 +32,7 @@ function MyPage({ data }){
             <div>{userProfile.user_name}</div>         
 
         {/* Favorites */}
-            <UserActivityList title='♥ Likes' userActivityList={userFavorites} onDeleteActivity={handleDeleteActivity} />
-
+            <div>{content}</div>
         {/* uploaded activities */}
 
         </div>
