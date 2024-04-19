@@ -55,6 +55,10 @@ export interface ProfileInfo {
     password: string
 }
 
+export interface FavoritesInfo {
+    [key: string]: number
+}
+
 
 
 

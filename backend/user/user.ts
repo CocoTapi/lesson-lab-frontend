@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { ErrorMessage, ProfileInfo } from "../util/types";
+import { ErrorMessage, FavoritesInfo, ProfileInfo } from "../util/types";
 import env from 'dotenv';
 import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
 
@@ -173,6 +173,20 @@ export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
 
     console.log("Update Profile Completed.");
 } 
+
+export async function addFavorites({user_id, activity_id}: FavoritesInfo){
+    const date = new Date();
+    const addFavoriteQuery = `
+        INSERT INTO user_favorites
+            ( user_id, activity_id,last_update )
+        VALUES
+            ($1, $2, $3)
+    `;
+
+    await db.query(addFavoriteQuery, [user_id, activity_id, date]);
+
+    console.log("add activity in user_favorites")
+}
 
 export async function removeProfile(user_id: number, email: string) {
     const deleteProfileQuery = `

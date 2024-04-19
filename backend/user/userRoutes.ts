@@ -1,6 +1,6 @@
 import express from "express";
 import { asyncHandler } from "../util/route-util";
-import { ProfileInfo, ErrorMessage } from "../util/types";
+import { ProfileInfo, ErrorMessage, FavoritesInfo } from "../util/types";
 import { checkAuth, createJSONToken } from "../util/auth";
 import { 
     getUserDataFromEmail, 
@@ -8,7 +8,8 @@ import {
     getUserProfile, 
     editProfile, 
     removeProfile,
-    checkUserNameValidation 
+    checkUserNameValidation,
+    addFavorites 
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -47,6 +48,18 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const userFavorites = await getUserFavorites(verifiedId);
 
     res.status(200).json({ userProfile: userProfile, userFavorites: userFavorites });
+}))
+
+//add usr's favorite activity
+router.post('/:id', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const formData: FavoritesInfo = req.body;
+
+    await addFavorites(formData);
+    res.status(200).json({ message: 'add activity in user favorites.'});
 }))
 
 //edit user profile
