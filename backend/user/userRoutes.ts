@@ -61,7 +61,7 @@ router.get('/:id/uploads', asyncHandler(async (req, res) => {
 
     const user_id: number = parseInt(req.params.id);
 
-    const userUploads = await getUserUploads(verifiedEmail);
+    const userUploads = await getUserUploads(user_id);
 
     res.status(200).json({ userUploads: userUploads });
 }))

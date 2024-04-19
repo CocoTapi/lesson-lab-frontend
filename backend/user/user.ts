@@ -2,8 +2,8 @@ import Database from "../database/Database";
 import bcrypt from "bcrypt";
 import { ErrorMessage, FavoritesInfo, ProfileInfo } from "../util/types";
 import env from 'dotenv';
-import { isValidEmail, isValidPassword, isValidText } from "../util/validation";
-import { getUserActivityQuery } from "./util";
+import { isValidText } from "../util/validation";
+import { getUserFavoritesQuery, getUserUploadsQuery } from "./util";
 
 env.config();
 const db = Database.db;
@@ -58,33 +58,29 @@ export async function getUserProfile(email: string){
 }
 
 export async function getUserFavorites(user_id: number) {
-    const condition = `uf.user_id = $1`;
-    const userFavoritesQuery = getUserActivityQuery(condition);
+    const userFavoritesQuery = getUserFavoritesQuery();
 
     const result = await db.query(userFavoritesQuery, [user_id]);
 
     let userFavorites = {};
 
     //when user does not have any favorite activities
-    if (!(result.rows.length > 0)) return userFavorites;
+    if (result.rows.length === 0) return userFavorites;
     
     userFavorites = result.rows;
  
     return userFavorites;
 }
 
-export async function getUserUploads(verifiedEmail: string){
-    const condition = `
-    a.user_id = (SELECT user_id FROM users WHERE email = $1)
-    `
-    const userUploadsQuery = getUserActivityQuery(condition);
-    const result = await db.query(userUploadsQuery, [verifiedEmail]);
+export async function getUserUploads(user_id: number){
+    const userUploadsQuery = getUserUploadsQuery();
+
+    const result = await db.query(userUploadsQuery, [user_id]);
 
     let userUploads = {};
 
     //when user does not have any uploads
-    if (!(result.rows.length > 0)) return userUploads;
-    
+    if (result.rows.length === 0) return userUploads;
     userUploads = result.rows;
     return userUploads;
 }
