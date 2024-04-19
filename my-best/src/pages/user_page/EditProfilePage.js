@@ -80,7 +80,7 @@ export async function action({ request, params }){
     //store new token in local storage
     await setupToken(newToken);
 
-    return redirect(`/user/${user_id}`);
+    return redirect(`/mypage/${user_id}`);
 }
 
 async function removeToken(){

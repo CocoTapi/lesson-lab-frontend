@@ -70,7 +70,7 @@ export async function action({ request }) {
     const response = await fetch(`${API_URL}/user/${user_id}/favorites/${activity_id}`, {
         method: request.method,
         headers: {
-            "Authorization": 'Bearer' + token
+            "Authorization": `Bearer ${token}`
         }
     });
 
@@ -78,6 +78,6 @@ export async function action({ request }) {
         throw json({message: "Could not remove favorite activity."}, { status: 500})
     }
 
-    return redirect(`/user/${user_id}`);
+    return redirect(`/mypage/${user_id}`);
 }
 
