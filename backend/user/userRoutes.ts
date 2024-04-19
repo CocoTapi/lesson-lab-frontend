@@ -10,7 +10,8 @@ import {
     removeProfile,
     checkUserNameValidation,
     addFavorites,
-    getUserUploads 
+    getUserUploads,
+    removeFavoriteActivity 
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -36,10 +37,11 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //get user profile and favorites
 router.get('/:id', asyncHandler(async (req, res) => {
-    const id: number = parseInt(req.params.id);
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
+
+    const id: number = parseInt(req.params.id);
 
     //check token
     const userProfile = await getUserProfile(verifiedEmail);
@@ -53,10 +55,11 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 //get user uploads
 router.get('/:id/uploads', asyncHandler(async (req, res) => {
-    const user_id: number = parseInt(req.params.id);
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
+
+    const user_id: number = parseInt(req.params.id);
 
     const userUploads = await getUserUploads(verifiedEmail);
 
@@ -105,14 +108,30 @@ router.patch('/:id', asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'uploaded user profile' , token: token});
 }))
 
+
+//delete user profile
 router.delete('/:id', asyncHandler(async (req, res) => {
-    const user_id: number = parseInt(req.params.id);
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
 
+    const user_id: number = parseInt(req.params.id);
+
     await removeProfile(user_id, verifiedEmail);
     res.status(200).json({ message: 'Profile deleted.'});
+}))
+
+//remove user's favorite activity
+router.delete('/:user_id/favorites/:activity_id', asyncHandler(async(req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const user_id: number = parseInt(req.params.user_id);
+    const activity_id: number = parseInt(req.params.activity_id);
+
+    await removeFavoriteActivity(user_id, activity_id);
+    res.status(200).json({ message: 'Favorite activity deleted.'});
 }))
 
 export default router;

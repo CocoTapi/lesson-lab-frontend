@@ -186,8 +186,22 @@ export async function removeProfile(user_id: number, email: string) {
             user_id = $1 
         AND
             email = $2
-    `
+    `;
     await db.query(deleteProfileQuery, [user_id, email]);
 
     console.log("deleted profile.")
 }
+
+export async function removeFavoriteActivity(user_id: number, activity_id: number){
+    const deleteUserActivityQuery = `
+        DELETE FROM
+            user_favorites
+        WHERE
+            user_id = $1
+        AND 
+            activity_id = $2
+    `;
+    await db.query(deleteUserActivityQuery, [user_id, activity_id]);
+
+    console.log("deleted favorite activity.")
+};
