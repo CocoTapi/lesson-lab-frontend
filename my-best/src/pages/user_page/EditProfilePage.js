@@ -5,8 +5,8 @@ import { getAuthToken } from "../util/checkAuth";
 import { API_URL } from "../../App";
 
 function EditProfilePage(){
-    const { userProfileAndFav } = useRouteLoaderData('user-detail');
-    const userProfile = userProfileAndFav.userProfile;
+    const { data } = useRouteLoaderData('user-detail');
+    const userProfile = data.userProfile;
 
     return (
         <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
