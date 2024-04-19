@@ -10,16 +10,16 @@ export async function action({ request, params }){
     // TODO: get user id
 
     const activityData = {
-        user_id: data.get('user_id'),
+        user_id: parseInt(data.get('user_id')),
         title: data.get('title').trim(),
-        duration: data.get('duration'),
+        duration: parseInt(data.get('duration')),
         age_group: data.get('age_group'),
         summary: data.get('summary').trim(),
         objectives: data.get('objectives').trim(),
         materials:  data.get('materials').trim(),
         instructions: data.get('instructions').trim(),
         links: data.get('links').trim() || "null",
-        tags: data.get('chosenTags')
+        tags: JSON.parse(data.get('chosenTags'))
     };
 
     console.log("activity data: ", activityData);
@@ -34,8 +34,8 @@ export async function action({ request, params }){
     const response = await fetch(url, {
         method: method,
         headers: {
-            'Content-type' : 'application/json',
-            'Authorization': 'Bearer' + token,
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(activityData)
     })

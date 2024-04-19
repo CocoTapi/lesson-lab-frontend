@@ -9,12 +9,6 @@ function MyPage({ data }){
     const submit = useSubmit();
 
     const handleRemoveActivity = (id, title) => {
-        // console.log("handle remove", id, title)
-        // const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
-
-        // if(proceed) submit(null, { method: 'DELETE', activity_id: id, user_id: user_id});
-
-        console.log("handle remove", id, title);
         const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
         
         if (proceed) {
@@ -27,7 +21,11 @@ function MyPage({ data }){
         console.log("No content")
         content = "You haven't add favorites."
     } else {
-        content = <UserActivityList title='♥ Favorites' userActivityList={userFavorites} onDeleteActivity={handleRemoveActivity} />
+        content = <UserActivityList 
+            title='♥ Favorites' 
+            userActivityList={userFavorites} 
+            onDeleteActivity={handleRemoveActivity} 
+        />
     }
 
     return (

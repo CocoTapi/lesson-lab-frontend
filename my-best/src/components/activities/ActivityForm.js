@@ -6,9 +6,13 @@ import classes from '../css/ActivityForm.module.css'
 function ActivityForm({ existingTags, method, activity }) {
     const user = useRouteLoaderData('root');
     let token;
-    if(user) token = user.token;
-    const user_name = user.user_name;
-    const user_id = user.user_id;
+    let user_name;
+    let user_id;
+    if(user) {
+        token = user.token;
+        user_name = user.user_name
+        user_id = user.user_id;
+    }
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
@@ -121,9 +125,9 @@ function ActivityForm({ existingTags, method, activity }) {
                 <div>
                     <div>Target Age Group</div>
                     {data && data.errors.age_group && <span> * </span>}
-                    <input type="radio" id="allAge" name="age_group" value="allAge" checked={activity && activity.age_group === "allAge"}/>
+                    <input type="radio" id="allAge" name="age_group" value="all age" checked={activity && activity.age_group === "allAge"}/>
                         <label htmlFor="allAge">all age group!</label>
-                    <input type="radio" id="teensAndAdults" name="age_group" value="teensAndAdults" checked={activity && activity.age_group === "teensAndAdults"}/>
+                    <input type="radio" id="teensAndAdults" name="age_group" value="teens and adults" checked={activity && activity.age_group === "teensAndAdults"}/>
                         <label htmlFor="teensAndAdults">teenagers and adults</label>
                     <input type="radio" id="kids" name="age_group" value="kids"  checked={activity && activity.age_group === "kids"}/>
                         <label htmlFor="kids">kids</label>

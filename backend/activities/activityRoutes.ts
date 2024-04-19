@@ -34,6 +34,7 @@ router.post('/', asyncHandler(async (req, res) => {
     console.log("Pass Authorization. verifiedEmail:", verifiedEmail);
     
     const formData: ActivityFormInfo = req.body;
+    console.log(formData);
     const errors: ErrorMessage = await checkFormValidation(formData);
 
     if (Object.keys(errors).length > 0) {

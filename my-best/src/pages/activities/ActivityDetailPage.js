@@ -8,7 +8,7 @@ import { getAuthToken } from "../util/checkAuth";
 
 
 function ActivityDetailPage(){
-    const { activity, activities } = useRouteLoaderData('activity-detail');
+    const { activity } = useRouteLoaderData('activity-detail');
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>

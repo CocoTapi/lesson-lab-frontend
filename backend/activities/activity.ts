@@ -157,6 +157,7 @@ export async function addActivity({user_id, title, summary, duration, age_group,
 
     //insert age_group
     console.log("start adding age_group");
+    console.log(age_group);
     const addAgeGroupQuery = getInsertQueryForNestedTable("age_group");
     
     await db.query(addAgeGroupQuery, [

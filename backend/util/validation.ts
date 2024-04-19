@@ -39,8 +39,8 @@ export function isValidDuration(value: number) {
 export function isValidAgeGroup(value: string) {
     if (
         value &&
-        value === "allAge" ||
-        value === "teensAndAdults" ||
+        value === "all age" ||
+        value === "teens and adults" ||
         value === "teens" ||
         value === "kids" ||
         value === "adults"
