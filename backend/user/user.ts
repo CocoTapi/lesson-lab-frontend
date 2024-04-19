@@ -92,6 +92,7 @@ export async function getUserFavorites(user_id: number) {
     if (!(result.rows.length > 0)) return userFavorites;
     
     userFavorites = result.rows;
+
     return userFavorites;
 }
 
@@ -159,8 +160,8 @@ export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
 
     await db.query(updateProfileQuery, [
         updateData.user_name,
-        updateData.firstName,
-        updateData.lastName,
+        updateData.first_name,
+        updateData.last_name,
         updateData.email,
         hashResult,
         date,

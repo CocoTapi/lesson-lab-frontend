@@ -33,13 +33,13 @@ const domainRedirect = {
 const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
-export async function checkProfileValidation({ email, password, firstName, lastName }: SignUpInfo) {
+export async function checkProfileValidation({ email, password, first_name, last_name }: SignUpInfo) {
   const errors : ErrorMessage = {};
 
   const emailValidity = isValidEmail(email);
   const passwordValidity = isValidPassword(password, 8);
-  const firstNameValidity = isValidText(firstName);
-  const lastNameValidity = isValidText(lastName);
+  const first_nameValidity = isValidText(first_name);
+  const last_nameValidity = isValidText(last_name);
 
   if (!emailValidity) errors.email = "Invalid email.";
 
@@ -47,8 +47,8 @@ export async function checkProfileValidation({ email, password, firstName, lastN
   if (passwordValidity.simbol === false) errors.simbol = "Invalid password. Must be at least one simbol in your password.";
   if (passwordValidity.num === false) errors.num = "Invalid password. Must be at least one number in your password."
 
-  if(!firstNameValidity) errors.firstName = "Invalid first name."
-  if(!lastNameValidity) errors.lastName = "Invalid last name."
+  if(!first_nameValidity) errors.first_name = "Invalid first name."
+  if(!last_nameValidity) errors.last_name = "Invalid last name."
 
   if (Object.keys(errors).length > 0) return errors;
 
@@ -56,7 +56,7 @@ export async function checkProfileValidation({ email, password, firstName, lastN
   return {};
 }
 
-export async function signUp({ email, password, firstName, lastName }: SignUpInfo) {
+export async function signUp({ email, password, first_name, last_name }: SignUpInfo) {
 
 
   const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
@@ -71,10 +71,10 @@ export async function signUp({ email, password, firstName, lastName }: SignUpInf
 
   await db.query(
     "INSERT INTO users (email, password, first_name, last_name, created_date, last_update) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [email, hashResult, firstName, lastName, date, date]
+    [email, hashResult, first_name, last_name, date, date]
   );
 
-  console.log(email, hashResult, firstName, lastName, date, date);
+  console.log(email, hashResult, first_name, last_name, date, date);
 }
 
 export async function login({ email, password }: LoginInfo) {
@@ -82,7 +82,7 @@ export async function login({ email, password }: LoginInfo) {
   const result = await db.query("SELECT * FROM users WHERE email = $1", [
     email,
   ]);
-
+  
   if (!(result.rows.length > 0)) throw Error("User doesn't exist.");
 
   const user = result.rows[0];
@@ -140,8 +140,8 @@ export async function getUserDataFromGoogle(token: any): Promise<any> {
 
     // Here, payload contains user information
     const email = payload['email'];
-    const firstName = payload['given_name'];
-    const lastName = payload['family_name'];
+    const first_name = payload['given_name'];
+    const last_name = payload['family_name'];
 
     const isExpired = payload.exp < Date.now() / 1000;
 	  if (!payload.exp || isExpired) throw new Error('Token expired');
@@ -152,14 +152,14 @@ export async function getUserDataFromGoogle(token: any): Promise<any> {
     // )
     // const data: GoogleUser = await response.json() as GoogleUser;
     // const email = data.email;
-    // const firstName = data.given_name;
-    // const lastName = data.family_name;
+    // const first_name = data.given_name;
+    // const last_name = data.family_name;
 
-  return {email, firstName, lastName};
+  return {email, first_name, last_name};
 }
 
 
-export async function checkOAuthData({email, password, firstName, lastName}: SignUpInfo){
+export async function checkOAuthData({email, password, first_name, last_name}: SignUpInfo){
   const date = new Date();
 
   const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
@@ -176,9 +176,9 @@ export async function checkOAuthData({email, password, firstName, lastName}: Sig
   } else {
     await db.query(
       "INSERT INTO users (email, password, first_name, last_name, created_date, last_update) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [email, password, firstName, lastName, date, date]
+      [email, password, first_name, last_name, date, date]
     );
   
-    console.log("registered User:", email, password, firstName, lastName, date, date);
+    console.log("registered User:", email, password, first_name, last_name, date, date);
   }
 }

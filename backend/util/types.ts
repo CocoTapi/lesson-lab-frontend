@@ -1,6 +1,6 @@
 export interface SignUpInfo extends LoginInfo {
-    firstName: string,
-    lastName: string,
+    first_name: string,
+    last_name: string,
 }
 
 export interface LoginInfo {
@@ -49,13 +49,12 @@ export interface ActivityFormInfo {
 export interface ProfileInfo {
     user_id: number,
     user_name: string,
-    firstName: string,
-    lastName: string,
+    first_name: string,
+    last_name: string,
     email: string,
     password: string
 }
 
-//TODO: make all keys of ProfileInfo, SignupInfo, UserInfo same
 
 
 

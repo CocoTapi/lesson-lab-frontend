@@ -69,11 +69,11 @@ router.get("/auth/google", asyncHandler(async function (req, res) {
 
     const tokens = await generateTokens(code);
 
-    const {email, firstName, lastName} = await getUserDataFromGoogle(tokens.id_token);
+    const {email, first_name, last_name} = await getUserDataFromGoogle(tokens.id_token);
     
     const password = "google";
 
-    await checkOAuthData({email, password, firstName, lastName});
+    await checkOAuthData({email, password, first_name, last_name});
 
     //TODO: setup token
     const token = "1345rhgdfjhgav4yug1q4hetkqh345y134thqekrjhvgtkq3h5";
