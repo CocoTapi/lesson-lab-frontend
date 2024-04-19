@@ -20,6 +20,8 @@ function ActivityItem({ activity }){
         if(proceed) submit(null, { method: 'DELETE'});
     }
 
+    // TODO: when user already added the activity as favorite, changed color and avoide action
+
     return (
         <article>
             <h1>{activity.title}</h1>

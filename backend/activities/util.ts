@@ -97,7 +97,8 @@ export const getSummaryQuery: string = `
     `;
 
 export const getDetailQuery: string = `
-    SELECT 
+    SELECT
+        a.activity_id, 
         a.user_id, 
         a.title, 
         a.summary, 
@@ -119,6 +120,7 @@ export const getDetailQuery: string = `
     WHERE 
         a.activity_id = $1
     GROUP BY 
+        a.activity_id,
         a.user_id, 
         a.title, 
         a.summary, 

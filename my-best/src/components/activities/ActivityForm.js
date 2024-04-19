@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigation, useActionData, Form, Link, useRouteLoaderData } from "react-router-dom";
+import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation } from "react-router-dom";
 import classes from '../css/ActivityForm.module.css'
 
 
@@ -13,6 +13,8 @@ function ActivityForm({ existingTags, method, activity }) {
         user_name = user.user_name
         user_id = user.user_id;
     }
+    const location = useLocation();
+    const currentPath = location.pathname;
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
@@ -58,13 +60,12 @@ function ActivityForm({ existingTags, method, activity }) {
 
     const handleDeleteTag = (e, index) => {
         e.preventDefault();
-        console.log("index: ", index);
+        //console.log("index: ", index);
         setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
     }
 
-    // TODO: setup change user name button
-
-    console.log(chosenTags);
+    console.log("currentPath", currentPath)
+    console.log("activity:", activity);
 
     return (
         <>
@@ -76,7 +77,7 @@ function ActivityForm({ existingTags, method, activity }) {
         }
         {token && 
             <Form method={method} className={classes.form}>
-                <h1>Add Activity</h1>
+                <h1>{activity ? 'Edit Activity' : 'Add Activity'}</h1>
                 {data && data.errors &&
                     <ul>
                         {Object.values(data.errors).map((err) => (
@@ -89,7 +90,12 @@ function ActivityForm({ existingTags, method, activity }) {
                 {/* user name */}
                 <div>  
                     <div>{`User name: ${user_name}`}</div> 
-                    <button>Change user name</button>             
+                    {currentPath === '/activities/new' && 
+                        <Link to={`../../mypage/${user_id}`}>Change user name</Link>
+                    }
+                    {activity && currentPath === `/activities/${activity.activity_id}/edit` && 
+                        <Link to={`../../../mypage/${user_id}`}>Change user name</Link>
+                    }
                 </div>
                 
                 {/* title */}
