@@ -1,21 +1,24 @@
 import { Link } from "react-router-dom";
+import FavoriteList from "./FavoriteList";
 
-function MyPage({ userDetail }){
-   
-    //const user_id = user.user_id;
+function MyPage({ userProfileAndFav }){
+    console.log(userProfileAndFav)
+   const userProfile = userProfileAndFav.userProfile;
+   const userFavorites = userProfileAndFav.userFavorites;
 
     return (
         <div>
             {/* User Name */}
             <div>My Page</div>
-            <div>{userDetail}</div>
+            <div>{userProfile.user_name}</div>
+
             {/* last login */}
 
-            <Link to='edit'>Edit Acount Profile</Link>
+            <Link to='edit'>Edit Profile</Link>
           
 
         {/* Favorites */}
-            {/* activity likes list */}
+            <FavoriteList userFavorites={userFavorites} />
 
         {/* uploaded activities */}
 

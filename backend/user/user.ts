@@ -64,7 +64,7 @@ export async function getUserFavorites(user_id: number) {
             a.user_id,
             a.title, 
             a.summary, 
-            d.duration_title, 
+            d.duration_title AS duration, 
             age.age_group_title AS age_group,
             ARRAY_AGG(tag_title) AS tags
         FROM 

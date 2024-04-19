@@ -2,16 +2,16 @@ import { Form, Link, useActionData, useNavigation } from 'react-router-dom';
 
 
 
-function ProfileForm({ userDetail }) {
+function ProfileForm({ userProfile }) {
     const data = useActionData();
     const navigation = useNavigation();
-    const user_id = userDetail.user_id;
+    const user_id = userProfile.user_id;
 
     const isSubmitting = navigation.state === 'submitting'
 
     return (
         <>
-        <Form method='post'>
+        <Form method='patch'>
             <h1>Profile</h1>
             {data && data.errors &&
                 <ul>
@@ -27,21 +27,21 @@ function ProfileForm({ userDetail }) {
                 {data && data.errors.user_name && <span> * </span>
                 }
                 <label htmlFor="user_name">User name</label>
-                <input id='user_name' type='text' name='user_name'  defaultValue={userDetail.user_name} required />
+                <input id='user_name' type='text' name='user_name'  defaultValue={userProfile.user_name} required />
             </div>
     
             {/* name */}
             <div>
-                {data && data.errors.firstName && <span> * </span>}
-                <label htmlFor="firstName">
+                {data && data.errors.first_name && <span> * </span>}
+                <label htmlFor="first_name">
                     First Name
                 </label>
-                <input id='firstName' type='text' name='firstName' defaultValue={userDetail.first_name} required />
+                <input id='first_name' type='text' name='first_name' defaultValue={userProfile.first_name} required />
             </div>
             <div>
-                {data && data.errors.lastName && <span> * </span>}
-                <label htmlFor="lastName">Last Name</label>
-                <input id='lastName' type='text' name='lastName'  defaultValue={userDetail.last_name} required />
+                {data && data.errors.last_name && <span> * </span>}
+                <label htmlFor="last_name">Last Name</label>
+                <input id='last_name' type='text' name='last_name'  defaultValue={userProfile.last_name} required />
             </div> 
 
             {/* email */}
@@ -49,7 +49,7 @@ function ProfileForm({ userDetail }) {
                 {data && data.errors.email && <span> * </span>
                 }
                 <label htmlFor="email">Email</label>
-                <input id='email' type='email' name='email'  defaultValue={userDetail.email} required />
+                <input id='email' type='email' name='email'  defaultValue={userProfile.email} required />
             </div>
 
             {/* password */}
@@ -58,7 +58,7 @@ function ProfileForm({ userDetail }) {
                     && <span> * </span>
                 }
                 <label htmlFor="password">Password</label>
-                <input id='password' type='password' name='password' defaultValue={userDetail.email} required />
+                <input id='password' type='password' name='password' defaultValue={userProfile.email} required />
             </div>
 
             <input type="hidden" name="user_id" value={user_id} />

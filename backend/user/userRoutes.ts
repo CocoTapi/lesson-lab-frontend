@@ -50,7 +50,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
     res.status(200).json({ userProfile: userProfile, userFavorites: userFavorites });
 }))
 
-//add usr's favorite activity
+//add user's favorite activity
 router.post('/:id', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
@@ -89,7 +89,7 @@ router.patch('/:id', asyncHandler(async (req, res) => {
 
     const token = createJSONToken(formData.email);
 
-    res.status(200).json({ message: 'uploaded user detail' , token: token});
+    res.status(200).json({ message: 'uploaded user profile' , token: token});
 }))
 
 router.delete('/:id', asyncHandler(async (req, res) => {

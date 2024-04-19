@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from '../pages/home/RootLayout';
-import ErrorPage from '../pages/util/ErrorPage';
+// import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/home/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader} from '../pages/activities/ActivitiesPage';
@@ -83,12 +83,12 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
           element: <UserLayout />,
           children: [
             {
-              path: ':userId',
+              path: ':user_id',
               id: 'user-detail',
+              loader: userDetailLoader,
               children: [
                 { index: true,
                   element: <UserMainPage />,
-                  loader: userDetailLoader
                 },
                 {
                   path: 'edit',

@@ -73,7 +73,9 @@ export async function action ( {request, setUserInfo} ) {
     console.log(user_id, user_name)
     console.log('token:', token);
 
-    setUserInfo({user_id, user_name});
+    //setUserInfo({user_id, user_name});
+
+    //await setupToken();
 
     localStorage.setItem('token', token);
     const expiration = new Date();
@@ -82,4 +84,6 @@ export async function action ( {request, setUserInfo} ) {
 
     return redirect(`/`);
 }
+
+
 

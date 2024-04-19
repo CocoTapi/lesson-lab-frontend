@@ -16,25 +16,13 @@ function ActivityNavigation(){
                             All Activities
                         </NavLink>
                     </li>
-                    {token && 
                     <li>
                         <NavLink
-                            to="/activities/new"
+                            to={token ? "/activities/new" : "../auth?mode=login"}
                         >
                             Add Activity
                         </NavLink>
                     </li>
-                    }
-                    {!token &&
-                    <li>
-                        <NavLink
-                            to="../auth?mode=login"
-                        >
-                            Add Activity
-                        </NavLink>
-                    </li>
-                    }
-                    
                 </ul>
             </nav>
         </header>

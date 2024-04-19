@@ -5,12 +5,13 @@ import { getAuthToken } from "../util/checkAuth";
 import { API_URL } from "../../App";
 
 function EditProfilePage(){
-    const { userDetail } = useRouteLoaderData('user-detail');
+    const { userProfileAndFav } = useRouteLoaderData('user-detail');
+    const userProfile = userProfileAndFav.userProfile;
 
     return (
         <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
-            <Await resolve={userDetail} >
-                {(loadedData) => <ProfileForm method="PATCH" userDetail={loadedData} />}
+            <Await resolve={userProfile} >
+                {(loadedData) => <ProfileForm method="PATCH" userProfile={loadedData} />}
             </Await>
         </Suspense>
     )
@@ -24,41 +25,41 @@ export async function action({ request, params }){
     const token = getAuthToken();
     const user_id = data.get('user_id');
     const user_name = data.get('user_name').trim();
-    const firstName = data.get('firstName').trim();
-    const lastName = data.get('lastName').trim();
+    const first_name = data.get('first_name').trim();
+    const last_name = data.get('last_name').trim();
     const email = data.get('email').trim();
     const password = data.get('password').trim();
 
     const profileData = {
         user_id: user_id,
         user_name: user_name,
-        first_name: firstName,
-        last_name: lastName,
+        first_name: first_name,
+        last_name: last_name,
         email: email,
         password: password,
     };
 
     console.log("profile data: ", profileData);
 
-    let url = `${API_URL}/user`;
+    let url;
 
     if (method === 'PATCH') {
         const user_id = params.user_id;
-        url = `${API_URL}/user` + user_id;
+        url = `${API_URL}/user/` + user_id;
     } else {
         throw Error('Could not edit. Change to PATCH request.')
     }
 
+    console.log("method:", method);
+
     const response = await fetch(url, {
         method: method,
         headers: {
-            'Content-type' : 'application/json',
-            'Authorization': 'Bearer' + token,
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(profileData)
     })
-    
-    console.log("response data: ", response)
 
     if (response.status === 422 || response.status === 401) {
         return response;
@@ -67,7 +68,29 @@ export async function action({ request, params }){
     if (!response.ok){
         throw json({ message: 'Could not save profile change.'}, { status: 500 });
     }
+    
+    const resData = await response.json();
+    console.log("resData after edit profile", resData);
 
+    const newToken = resData.token;
 
-    return redirect('/user');
+    //delete current token from local storage
+    await removeToken();
+
+    //store new token in local storage
+    await setupToken(newToken);
+
+    return redirect(`/user/${user_id}`);
+}
+
+async function removeToken(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+}
+
+async function setupToken(token){
+    localStorage.setItem('token', token);
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    localStorage.setItem('expiration', expiration.toISOString());
 }

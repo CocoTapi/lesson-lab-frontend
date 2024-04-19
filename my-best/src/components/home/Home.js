@@ -1,25 +1,13 @@
-import { useRouteLoaderData } from "react-router-dom";
-// import { useUserContext } from "../../pages/util/UserProvider";
+//import { useRouteLoaderData } from "react-router-dom";
 
 function Home() {
-    //const token = useRouteLoaderData('root');
-    const user = useRouteLoaderData('root');
-    let token;
-    if(user) token = user.token;
-    //console.log(token);
-    
-
-    // const { userInfo } = useUserContext();
-    // const user_name = userInfo.user_name;
+    // const user = useRouteLoaderData('root');
+    // let token;
+    // if(user) token = user.token;    
    
     return (
         <div>
             <div>Home</div>
-            {/* {token &&
-                <div>
-                    <h1>{`Welcome back ${user_name}`}</h1>
-                </div>
-            } */}
         </div>
     )
 };
