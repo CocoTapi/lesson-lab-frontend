@@ -23,6 +23,10 @@ function ActivityForm({ existingTags, method, activity }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
 
+    let defaultLinks = '';
+    if(activity && activity.links !== "null") defaultLinks = activity.links;
+    
+
     useEffect(() => {
         if (activity && activity.tags) {
             setChosenTags(activity.tags);
@@ -62,10 +66,7 @@ function ActivityForm({ existingTags, method, activity }) {
         e.preventDefault();
         //console.log("index: ", index);
         setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
-    }
-
-    console.log("currentPath", currentPath)
-    console.log("activity:", activity);
+    };
 
     return (
         <>
@@ -131,15 +132,15 @@ function ActivityForm({ existingTags, method, activity }) {
                 <div>
                     <div>Target Age Group</div>
                     {data && data.errors.age_group && <span> * </span>}
-                    <input type="radio" id="allAge" name="age_group" value="all age" checked={activity && activity.age_group === "allAge"}/>
+                    <input type="radio" id="allAge" name="age_group" value="all age" defaultChecked={activity && activity.age_group === "all age" }/>
                         <label htmlFor="allAge">all age group!</label>
-                    <input type="radio" id="teensAndAdults" name="age_group" value="teens and adults" checked={activity && activity.age_group === "teensAndAdults"}/>
+                    <input type="radio" id="teensAndAdults" name="age_group" value="teens and adults" defaultChecked={activity && activity.age_group === "teens and adults"}/>
                         <label htmlFor="teensAndAdults">teenagers and adults</label>
-                    <input type="radio" id="kids" name="age_group" value="kids"  checked={activity && activity.age_group === "kids"}/>
+                    <input type="radio" id="kids" name="age_group" value="kids"  defaultChecked={activity && activity.age_group === "kids"}/>
                         <label htmlFor="kids">kids</label>
-                    <input type="radio" id="teens" name="age_group" value="teens"  checked={activity && activity.age_group === "teens"}/>
+                    <input type="radio" id="teens" name="age_group" value="teens"  defaultChecked={activity && activity.age_group === "teens"}/>
                         <label htmlFor="teens">teenagers</label>
-                    <input type="radio" id="adults" name="age_group" value="adults"  checked={activity && activity.age_group === "adults"}/>
+                    <input type="radio" id="adults" name="age_group" value="adults"  defaultChecked={activity && activity.age_group === "adults"}/>
                         <label htmlFor="adults">adults</label>
                 </div>
     
@@ -212,7 +213,7 @@ function ActivityForm({ existingTags, method, activity }) {
                         name='links' 
                         rows="2" 
                         cols="60"
-                        defaultValue={activity ? activity.links : ''}
+                        defaultValue={defaultLinks}
                         placeholder="http://....." 
                     />
                 </div>

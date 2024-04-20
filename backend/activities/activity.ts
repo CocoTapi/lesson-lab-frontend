@@ -14,8 +14,6 @@ import {
 
 const db = Database.db;
 
-//TODO: can I add "asyncHandler" here?
-
 export async function getAllActivities(){
     const result = await db.query(getSummaryQuery);
 
@@ -155,7 +153,13 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     }
 
     //update activity table
-    if (statements.length === 0) return
+    if (statements.length === 0) {
+        console.log('update done.')
+        return
+    }
+
+    console.log("statements.join", statements.join(', '));
+    console.log("lastUpdateNum", otherParameters.length + 1)
    
     const activityUpdateQuery = `
         UPDATE 
@@ -163,10 +167,13 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
         SET 
             ${statements.join(', ')},
             last_update = $${otherParameters.length + 1}
-        WHERE activity_id = $${otherParameters.length + 2}
+        WHERE 
+            activity_id = $${otherParameters.length + 2}
     `;
     otherParameters.push(date);
     otherParameters.push(activity_id);
+
+    console.log("otherParameters:", otherParameters);
 
     await db.query(activityUpdateQuery, otherParameters);
 

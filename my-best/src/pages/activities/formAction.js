@@ -28,7 +28,7 @@ export async function action({ request, params }){
 
     if (method === 'PATCH') {
         const activityId = params.activityId;
-        url = `${API_URL}/activities` + activityId;
+        url = `${API_URL}/activities/${activityId}` 
     }
 
     const response = await fetch(url, {

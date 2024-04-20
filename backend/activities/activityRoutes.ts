@@ -65,6 +65,8 @@ router.patch('/:id', asyncHandler(async (req, res) => {
         })
     }
 
+    formData.activity_id = activity_id;
+
     await editActivity(activity_id, formData);
     res.status(200).json({ message: 'Activity Updated.' });
 }))
