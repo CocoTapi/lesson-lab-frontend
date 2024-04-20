@@ -31,8 +31,8 @@ function MyPage({ data }){
     return (
         <div>
             {/* User Name */}
-            <div>My Page</div>
-            <div>{userProfile.user_name}</div>         
+            <div>My Profile</div>
+            <div>User Name : {userProfile.user_name}</div>      
 
         {/* Favorites */}
             <div>{content}</div>
