@@ -1,20 +1,20 @@
 import Database from "../database/Database";
 import { ActivityFormInfo, ErrorMessage } from "../util/types";
 import { isValidAgeGroup, isValidDuration, isValidLinks, isValidTags, isValidText, isValidUrl } from "../util/validation";
-import { 
-    getDeleteAllColumnQuery, 
-    getInsertQueryForNestedTable, 
-    getUpdateQueryForNestedTable, 
+import {
+    getDeleteAllColumnQuery,
+    getInsertQueryForNestedTable,
+    getUpdateQueryForNestedTable,
     insertTags,
     deleteUserFavQuery,
     getSummaryQuery,
-    getDetailQuery,
-    addActivitiesQuery 
+    addActivitiesQuery,
+    getUserActivityRelationQuery
 } from "./util";
 
 const db = Database.db;
 
-export async function getAllActivities(){
+export async function getAllActivities() {
     const result = await db.query(getSummaryQuery);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
@@ -22,37 +22,53 @@ export async function getAllActivities(){
     return result.rows
 }
 
-export async function getActivityDetail(id: number){
-    const result = await db.query(getDetailQuery, [id]);
+export async function getActivityDetailUser(activity_id: number, verifiedEmail?: string) {
+    let query; let parameters: any[] = [activity_id];
+
+    query = getUserActivityRelationQuery(verifiedEmail);
+    if (verifiedEmail) {
+        parameters.push(verifiedEmail);
+    }
+
+    const result = await db.query(query, parameters);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
 
     return result.rows;
 }
 
+export async function getActivityDetail(activity_id: number) {
+    let parameters: any[] = [activity_id];
+    const query = getUserActivityRelationQuery();
 
-export async function checkFormValidation({title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
+    const result = await db.query(query, parameters);
+
+    if (result.rows.length <= 0) throw new Error("Activities does not exist")
+
+    return result.rows;
+}
+
+export async function checkFormValidation({ title, summary, duration, age_group, objectives, materials, instructions, links, tags }: ActivityFormInfo) {
     let errors: ErrorMessage = {};
-
-    if(!isValidText(title)) errors.title = "Invalid title.";
-    if(!isValidText(summary)) errors.summary = "Invalid summary.";
-    if(!isValidDuration(duration)) errors.duration = "Invalid duration. Choose one from selections";
-    if(!isValidAgeGroup(age_group)) errors.age_group = "Invalid age group. Choose one from selections.";
-    if(!isValidText(objectives)) errors.objectives = "Invalid objectives.";
-    if(!isValidText(materials)) errors.materials = "Invalid materials.";
-    if(!isValidText(instructions)) errors.instructions = "Invalid instructions.";
-    if(isValidLinks(links) === false) errors.links = "Invalid links";
-    if(!isValidTags(tags)) errors.tags = "Invalid tags. Add at least one tag.";
+    if (!isValidText(title)) errors.title = "Invalid title.";
+    if (!isValidText(summary)) errors.summary = "Invalid summary.";
+    if (!isValidDuration(duration)) errors.duration = "Invalid duration. Choose one from selections";
+    if (!isValidAgeGroup(age_group)) errors.age_group = "Invalid age group. Choose one from selections.";
+    if (!isValidText(objectives)) errors.objectives = "Invalid objectives.";
+    if (!isValidText(materials)) errors.materials = "Invalid materials.";
+    if (!isValidText(instructions)) errors.instructions = "Invalid instructions.";
+    if (isValidLinks(links) === false) errors.links = "Invalid links";
+    if (!isValidTags(tags)) errors.tags = "Invalid tags. Add at least one tag.";
 
     if (Object.keys(errors).length > 0) return errors;
 
     console.log("Passed all form validations!");
-    return {}; 
+    return {};
 }
 
 
 
-export async function addActivity({user_id, title, summary, duration, age_group, objectives, materials, instructions, links, tags}: ActivityFormInfo){
+export async function addActivity({ user_id, title, summary, duration, age_group, objectives, materials, instructions, links, tags }: ActivityFormInfo) {
     //TODO: check trim or formatting the data? 
 
     console.log("start adding activity");
@@ -63,7 +79,7 @@ export async function addActivity({user_id, title, summary, duration, age_group,
         user_id, title, summary, objectives, materials,
         instructions, links, date, date
     ])
-    
+
     //get activity_id
     console.log("start getting activity_id");
     const getActivityIdQuery = `
@@ -76,29 +92,29 @@ export async function addActivity({user_id, title, summary, duration, age_group,
     ]);
 
     const activity_id: number = result.rows[0].activity_id;
-    if(!activity_id) throw Error("activity doesn't exist in db.");
+    if (!activity_id) throw Error("activity doesn't exist in db.");
     console.log("activity_id: ", activity_id);
 
     //insert duration
     console.log("start adding duration");
     const durationQuery = getInsertQueryForNestedTable("duration");
-    
+
     await db.query(durationQuery, [
         activity_id, duration, date
-    ]) 
+    ])
 
     //insert age_group
     console.log("start adding age_group");
     console.log(age_group);
     const addAgeGroupQuery = getInsertQueryForNestedTable("age_group");
-    
+
     await db.query(addAgeGroupQuery, [
         activity_id, age_group, date
-    ]) 
-    
+    ])
+
     //insurt tags into db
     console.log("start inserting tags");
-    
+
     if (tags && tags.length > 0) {
         await insertTags(tags, activity_id, date)
     }
@@ -106,7 +122,7 @@ export async function addActivity({user_id, title, summary, duration, age_group,
     console.log("Added activity");
 };
 
-export async function editActivity(activity_id: number, updateData: ActivityFormInfo){
+export async function editActivity(activity_id: number, updateData: ActivityFormInfo) {
     console.log("start editting");
     //get previous Data from activity_id
     const result = await getActivityDetail(activity_id);
@@ -114,13 +130,13 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     const date = new Date();
 
     console.log("prevData:", prevData);
-    console.log("updateData:", updateData);
+    console.log("user sent form:", updateData);
 
     //check if there is the activity added by same user
     if (prevData.user_id !== updateData.user_id) throw Error("Could not find activity to edit for current user")
-    
+
     let statements: string[] = [];
-    let otherParameters:any[] = [];
+    let otherParameters: any[] = [];
 
     //if new input is different from previous data, update
     for (const key in prevData) {
@@ -134,7 +150,7 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
                     console.log("done duration");
                     break;
                 case 'age_group':
-                    const ageGroupQuery : string = getUpdateQueryForNestedTable('age_group');
+                    const ageGroupQuery: string = getUpdateQueryForNestedTable('age_group');
                     const ageGroupParameters = [updateData.age_group, date, activity_id];
 
                     await db.query(ageGroupQuery, ageGroupParameters);
@@ -145,6 +161,8 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
                     console.log("done tags");
 
                     break;
+                case 'like_count':
+                    break
                 default:
                     statements.push(`${key} = $${statements.length + 1}`);
                     otherParameters.push(updateData[key]);
@@ -160,7 +178,7 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
 
     console.log("statements.join", statements.join(', '));
     console.log("lastUpdateNum", otherParameters.length + 1)
-   
+
     const activityUpdateQuery = `
         UPDATE 
             activities
@@ -173,6 +191,7 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     otherParameters.push(date);
     otherParameters.push(activity_id);
 
+    console.log("activityUpdateParameter:", activityUpdateQuery);
     console.log("otherParameters:", otherParameters);
 
     await db.query(activityUpdateQuery, otherParameters);
@@ -180,19 +199,19 @@ export async function editActivity(activity_id: number, updateData: ActivityForm
     console.log("edit done");
 };
 
-async function tagsUpdate(id: number, prevData: string[], updateData: string[], date: Date){
+async function tagsUpdate(id: number, prevData: string[], updateData: string[], date: Date) {
     console.log("start tags update")
     let addedTags: string[] = [];
     let removedTags: string[] = [];
 
-    for (let tag of updateData){
+    for (let tag of updateData) {
         if (!prevData.includes(tag)) {
             addedTags.push(tag);
         }
     };
 
     for (let tag of prevData) {
-        if (!updateData.includes(tag)){
+        if (!updateData.includes(tag)) {
             removedTags.push(tag)
         }
     };
@@ -205,7 +224,7 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[], 
     }
 
     if (removedTags.length > 0) {
-        for (let tag of removedTags){
+        for (let tag of removedTags) {
             const deleteTagQuery = `
                 DELETE FROM activity_tags
                 WHERE activity_id = $1 
@@ -218,9 +237,9 @@ async function tagsUpdate(id: number, prevData: string[], updateData: string[], 
 }
 
 
-export async function  removeActivity(id: number){
+export async function removeActivity(id: number) {
     const deleteDurationQuery = getDeleteAllColumnQuery("activity_durations")
-    const deleteAgeGroupQuery = getDeleteAllColumnQuery("activity_age_groups") 
+    const deleteAgeGroupQuery = getDeleteAllColumnQuery("activity_age_groups")
     const deleteTagsQuery = getDeleteAllColumnQuery("activity_tags")
     const deleteActivityQuery = getDeleteAllColumnQuery("activities");
 
@@ -229,6 +248,6 @@ export async function  removeActivity(id: number){
     await db.query(deleteAgeGroupQuery, [id]);
     await db.query(deleteTagsQuery, [id]);
     await db.query(deleteActivityQuery, [id]);
-   
+
     console.log("deleted activity.")
 }

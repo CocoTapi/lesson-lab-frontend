@@ -19,7 +19,7 @@ export interface UserInfo {
 }
 
 export interface AuthRequest extends Request {
-    email?: string; 
+    email?: string;
 }
 
 export interface ErrorMessage {
@@ -34,16 +34,18 @@ export interface AuthValidationErrorBoolean {
 
 export interface ActivityFormInfo {
     user_id: number,
-    title: string, 
-    summary: string, 
-    duration: number, 
-    age_group: string, 
-    objectives: string, 
-    materials: string, 
-    instructions: string, 
-    links: string, 
+    title: string,
+    summary: string,
+    duration: number,
+    age_group: string,
+    objectives: string,
+    materials: string,
+    instructions: string,
+    links: string,
     tags: string[],
-    [key: string]: string | number | string[]
+    [key: string]: string | number | string[] | boolean | undefined,
+    is_favorited?: boolean
+    likes_count?: number
 }
 
 export interface ProfileInfo {

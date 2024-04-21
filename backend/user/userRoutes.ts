@@ -67,7 +67,7 @@ router.get('/:id/uploads', asyncHandler(async (req, res) => {
 }))
 
 //add user's favorite activity
-router.post('/:user_id/activity_id', asyncHandler(async (req, res) => {
+router.post('/', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
@@ -75,7 +75,7 @@ router.post('/:user_id/activity_id', asyncHandler(async (req, res) => {
     const formData: FavoritesInfo = req.body;
 
     await addFavorites(formData);
-    res.status(200).json({ message: 'add activity in user favorites.'});
+    res.status(200).json({ message: 'activity in user_favorites successfully updated.'});
 }))
 
 //edit user profile

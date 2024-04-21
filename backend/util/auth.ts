@@ -45,7 +45,7 @@ export async function verifyToken(authHeader: string) {
 }
 
 export async function checkAuth(method: string, authHeader: string | undefined){
-    if(method === 'OPTIONS ') throw Error('Method is invalid.');
+    if(method === 'OPTIONS') throw Error('Method is invalid.');
 
     if (!authHeader || typeof authHeader === 'undefined') {
         throw Error('Auth header missing. Not authenticated.');

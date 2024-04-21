@@ -13,18 +13,18 @@ export async function getTagId(tag: string) {
     console.log("result:", result.rows);
 
     if (result.rows.length === 0) {
-       return 0;
-    } 
+        return 0;
+    }
 
     const id = result.rows[0].tag_id;
     return id;
 }
 
-export async function insertTags(tags: string[], activity_id: number, date: Date){
+export async function insertTags(tags: string[], activity_id: number, date: Date) {
     for (let tag of tags) {
-        const tag_id: number = await getTagId(tag) ;
-            
-        if(tag_id > 0) {
+        const tag_id: number = await getTagId(tag);
+
+        if (tag_id > 0) {
             const addTagQuery = `
                 INSERT INTO activity_tags (
                     tag_id,
@@ -38,7 +38,7 @@ export async function insertTags(tags: string[], activity_id: number, date: Date
                 );
             `
             await db.query(addTagQuery, [tag_id, activity_id, date])
-        } else if(tag_id === 0){
+        } else if (tag_id === 0) {
             const createTagIdQuery = `
                 WITH inserted_tag AS (
                     INSERT INTO tags (
@@ -78,12 +78,18 @@ export const getSummaryQuery: string = `
         a.summary, 
         d.duration_title, 
         age.age_group_title AS age_group,
-        ARRAY_AGG(tag_title) AS tags
+        ARRAY_AGG(DISTINCT tag_title) AS tags,
+        CAST(
+            (SELECT COUNT(*)
+             FROM user_favorites uf
+             WHERE uf.activity_id = a.activity_id
+            ) AS INTEGER
+        ) AS like_count
     FROM 
         activities AS a 
         JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-        JOIN durations As d ON d.duration_id = ad.duration_id 
-        JOIN activity_tags As at ON a.activity_id = at.activity_id 
+        JOIN durations AS d ON d.duration_id = ad.duration_id 
+        JOIN activity_tags AS at ON a.activity_id = at.activity_id 
         JOIN tags AS t ON t.tag_id = at.tag_id 
         JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
         JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
@@ -96,41 +102,65 @@ export const getSummaryQuery: string = `
         age.age_group_title
     `;
 
-export const getDetailQuery: string = `
-    SELECT
-        a.activity_id, 
-        a.user_id, 
-        a.title, 
-        a.summary, 
-        d.duration_title AS duration, 
-        age.age_group_title AS age_group,
-        a.objectives,
-        a.materials,
-        a.instructions,
-        a.links,
-        ARRAY_AGG(tag_title) AS tags
-    FROM 
-        activities AS a 
-        JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-        JOIN durations As d ON d.duration_id = ad.duration_id 
-        JOIN activity_tags As at ON a.activity_id = at.activity_id 
-        JOIN tags AS t ON t.tag_id = at.tag_id 
-        JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
-        JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
-    WHERE 
-        a.activity_id = $1
-    GROUP BY 
-        a.activity_id,
-        a.user_id, 
-        a.title, 
-        a.summary, 
-        d.duration_title,
-        age.age_group_title,
-        a.objectives,
-        a.materials,
-        a.instructions,
-        a.links
-    `;
+export function getUserActivityRelationQuery(verifiedEmail?: string) {
+    let exists = '';
+    if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might
+        exists = `,
+        EXISTS (
+            SELECT 1
+            FROM user_favorites uf
+            JOIN users u ON u.user_id = uf.user_id
+            WHERE uf.activity_id = a.activity_id AND u.email = $2
+        ) AS is_favorited`;
+    }
+
+    const query: string =
+        `
+        SELECT
+            a.activity_id, 
+            a.user_id, 
+            a.title, 
+            a.summary, 
+            d.duration_title AS duration, 
+            age.age_group_title AS age_group,
+            a.objectives,
+            a.materials,
+            a.instructions,
+            a.links,
+            ARRAY_AGG(tag_title) AS tags,
+            ARRAY_AGG(DISTINCT tag_title) AS tags,
+            CAST(
+                (SELECT COUNT(*)
+                 FROM user_favorites uf
+                 WHERE uf.activity_id = a.activity_id
+                ) AS INTEGER
+            ) AS like_count
+            ${exists}
+        FROM 
+            activities AS a 
+            JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
+            JOIN durations As d ON d.duration_id = ad.duration_id 
+            JOIN activity_tags As at ON a.activity_id = at.activity_id 
+            JOIN tags AS t ON t.tag_id = at.tag_id 
+            JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
+            JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
+        WHERE 
+            a.activity_id = $1
+        GROUP BY 
+            a.activity_id,
+            a.user_id, 
+            a.title, 
+            a.summary, 
+            d.duration_title,
+            age.age_group_title,
+            a.objectives,
+            a.materials,
+            a.instructions,
+            a.links
+        `
+
+    return query;
+}
 
 export const addActivitiesQuery: string = `
     INSERT INTO activities (
@@ -151,8 +181,8 @@ export const addActivitiesQuery: string = `
     `
 
 
-export function getInsertQueryForNestedTable(subject: string){
-    const query =  `
+export function getInsertQueryForNestedTable(subject: string) {
+    const query = `
     INSERT INTO activity_${subject}s (
         activity_id, 
         ${subject}_id,
@@ -164,11 +194,11 @@ export function getInsertQueryForNestedTable(subject: string){
         $3
     );`
 
-   return query
+    return query
 }
 
 export function getUpdateQueryForNestedTable(subject: string) {
-        const updateQuery = `
+    const updateQuery = `
         UPDATE 
             activity_${subject}s
         SET 
@@ -179,7 +209,7 @@ export function getUpdateQueryForNestedTable(subject: string) {
     return updateQuery;
 }
 
-export function getDeleteAllColumnQuery(table: string){
+export function getDeleteAllColumnQuery(table: string) {
     const deleteQuery = `
         DELETE FROM 
            ${table}

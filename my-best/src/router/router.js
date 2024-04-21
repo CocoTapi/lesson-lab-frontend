@@ -32,6 +32,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
           children: [
             { 
               index: true, 
+              id: 'activities',
               element: <ActivitiesPage />,
               loader: activitiesLoader
             },

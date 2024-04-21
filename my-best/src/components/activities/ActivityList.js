@@ -9,6 +9,7 @@ function ActivityList({ activities }){
                     <li key={activity.activity_id}>
                             <Link to={`/activities/${activity.activity_id}`}>
                                 <h2>{activity.title}</h2>
+                                <div>likes: {activity.like_count}</div>
                                 <div>{activity.duration}</div>
                                 <div>{activity.age_group}</div>
                                 <div>{activity.summary}</div>
