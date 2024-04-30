@@ -1,99 +1,76 @@
-import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import classes from '../css/MainNavigation.module.css';
 
-function MainNavigation(){
-    const user = useRouteLoaderData('root');
-    let token;
-    let user_id;
-    if(user){ 
-        token = user.token;
-        user_id = user.user_id;
-    } 
-   
+function MainNavigation() {
+    const user = useLoaderData();  // Assuming user data is correctly provided
+    const token = user ? user.token : null;
+    const user_id = user ? user.user_id : null;
+    const user_name = user ? user.user_name : null;
+    const user_initial = user_name ? user_name.split('')[0] : null;
 
     return (
         <header className={classes.header}>
-            <nav className={classes.list}>
-                <ul  className={classes.list}>
-                    <li>
-                        <NavLink
-                            to="/"
-                            className={( { isActive }) => 
-                                isActive ? classes.active : undefined
-                            }   
+            <div className={classes.left}>
+                <NavLink to="/" className={classes.logo}>
+                    LessonLab
+                </NavLink>
+                <NavLink
+                    to="/"
+                    className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                >
+                    Home
+                </NavLink>
+                <NavLink
+                    to="/activities"
+                    className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                >
+                    Activities
+                </NavLink>
+                {token &&
+                    <NavLink
+                        to={`/mypage/${user_id}`}
+                        className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
                         >
-                            Home
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to="/activities"
-                            className={( { isActive }) => 
-                                isActive ? classes.active : undefined
-                            }   
-                        >
-                            Activities
-                        </NavLink>
-                    </li>
-                    {!token &&
-                        <li>
+                            My Page
+                    </NavLink>
+                }
+            </div>
+            <div className={classes.right}>
+                {!token && (
+                    <div className={classes.rightContent}> 
+                        
                             <NavLink
                                 to="/auth?mode=login"
-                                className={( { isActive }) => 
-                                    isActive ? classes.active : undefined
-                                }   
+                                className={classes.login}
                             >
-                                Log In
+                                Login
                             </NavLink>
-                        </li>
-                    }
-                    {!token && 
-                         <li>
-                         <NavLink
-                             to="/auth/signup"
-                             className={( { isActive }) => 
-                                 isActive ? classes.active : undefined
-                             }   
-                         >
-                             Sign Up
-                         </NavLink>
-                     </li>
-                    }
-                    {token && 
-                         <li>
-                         <NavLink
-                             to="/activities/new"
-                             className={( { isActive }) => 
-                                 isActive ? classes.active : undefined
-                             }   
-                         >
-                             Add Activity
-                         </NavLink>
-                     </li>
-                    }
-                     {token && 
-                         <li>
-                         <NavLink
-                             to={`/mypage/${user_id}`}
-                             className={( { isActive }) => 
-                                 isActive ? classes.active : undefined
-                             }   
-                         >
-                             My Page
-                         </NavLink>
-                     </li>
-                    }
-                    {token && 
-                        <li>
-                        <Form action='/logout' method='post'>
-                            <button>Logout</button>
-                        </Form>
-                        </li>
-                    }
-                </ul>
-            </nav>
+                       
+                        <button className={classes.signupButton}>
+                            <NavLink to="/auth/signup" >
+                                Sign Up
+                            </NavLink>
+                        </button>
+                    </div>
+                )}
+                {token && (
+                    <div className={classes.rightContent}>
+                        <form action='/logout' method='post' className={classes.form}>
+                            <button type="submit" className={classes.logoutButton}>Logout</button>
+                        </form>
+                        <button className={classes.signupButton}>
+                            <NavLink
+                                to={`/mypage/${user_id}`}
+                                >
+                                    {user_initial}
+                            </NavLink>
+                        </button>  
+                    </div>
+                )}
+            </div>
         </header>
-    )
+    );
 }
 
 export default MainNavigation;
