@@ -81,6 +81,10 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
           ]
         },
         {
+          path: 'logout',
+          action: logoutAction,
+        },
+        {
           path: 'mypage',
           element: <UserLayout />,
           children: [
@@ -110,11 +114,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
             }
           ]
         },
-        {
-          path: 'logout',
-          action: logoutAction,
-        },
-      ],
+      ]
     }
   ]);
 

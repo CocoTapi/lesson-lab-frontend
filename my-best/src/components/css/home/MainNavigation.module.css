@@ -16,9 +16,9 @@
   
   .logo {
     font-size: 32px;
-    font-weight: 700;
+    font-weight: bold;
     font-family: 'DM Sans';
-    color: #315079;
+    color: var(--color-primary-700);
     text-decoration: none;
   }
   
@@ -34,7 +34,7 @@
   .link:hover,
   .active {
     background-color: #DEE6FF;
-    color: #315079;
+    color: var(--color-primary-700);
     transform: scale(1.05); /* Slight increase in size */
   }
 
@@ -57,13 +57,13 @@
 }
 
   .login:hover, .logoutButton:hover {
-    background-color: #DEE6FF; /* Darker shade on hover */
-    color: #315079;
+    background-color: #DEE6FF; 
+    color: var(--color-primary-700);
     transform: scale(1.05); /* Slight increase in size */
   }
   
   .signupButton {
-    background-color: #315079;
+    background-color: var(--color-primary-700);
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
@@ -72,7 +72,7 @@
   }
   
   .signupButton:hover {
-    background-color: #293952; /* Darker shade on hover */
+    background-color: var(--color-primary-900); /* Darker shade on hover */
     transform: scale(1.05); /* Slight increase in size */
   }
   

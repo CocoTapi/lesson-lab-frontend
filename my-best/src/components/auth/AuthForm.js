@@ -1,6 +1,5 @@
 import { Form, Link, useActionData, useNavigation, useSearchParams } from 'react-router-dom';
-
-
+import ButtonM from '../UI/ButtonM';
 
 function AuthForm() {
     const data = useActionData();
@@ -57,7 +56,7 @@ function AuthForm() {
                     <Link to='/auth?mode=login'>Log In</Link>
                 )}
             </div>
-            <button disabled={isSubmitting}>{isLogin ? 'Log In' : 'Sign Up'}</button>
+            <ButtonM disabled={isSubmitting}>{isLogin ? 'Log In' : 'Sign Up' }</ButtonM>
             {isSubmitting && <p>Submitting...</p>}
         </Form>
     )

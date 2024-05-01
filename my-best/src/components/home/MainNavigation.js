@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
-import classes from '../css/MainNavigation.module.css';
+import classes from '../css/home/MainNavigation.module.css';
 
 function MainNavigation() {
     const user = useLoaderData();  // Assuming user data is correctly provided
