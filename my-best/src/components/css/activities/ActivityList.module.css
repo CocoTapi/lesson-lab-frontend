@@ -11,54 +11,24 @@
 }
 
 .list {
-   width: 999px;
-   display: flex;
-   flex-wrap: wrap; 
-   justify-content: space-between;
-   float: right;
-}
-
-ul {
-    list-style-type: none; /* Removes bullets */
-    padding: 0; /* Optional: Removes padding */
-    margin: 0; /* Optional: Removes margin */
-}
-
-li {
-    margin-bottom: 20px;
-}
-
-.card {
-    padding-top: 15px;
-    width: 100%;
-}
-
-.card a {
-    text-decoration: none;
-    color: black;
-}
-
-.duration {
-    padding-bottom: 15px;
-}
-.card h2 {
-    font-size: 24px;
-    padding: 15px 0;
-    margin: 0;
-}
-
-.card p {
-    font-size: 16px;
-    padding-bottom: 0px;
-    margin: 7px 0;
-}
-
-.icons {
-    margin: 0;
-    padding: 0;
+    width: 999px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    font-size: 18px;
-}
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    float: right;
+ }
+ 
+ ul {
+     list-style-type: none; /* Removes bullets */
+     padding: 0; /* Optional: Removes padding */
+     margin: 0; /* Optional: Removes margin */
+ }
+ 
+ li {
+     margin-bottom: 20px;
+ }
+
+
+
+
 

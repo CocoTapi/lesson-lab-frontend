@@ -1,6 +1,11 @@
 import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
+import classes from '../css/activities/ActivityItem.module.css';
+import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
+import ButtonS from "../UI/ButtonS";
+import SortBar from "../UI/SortBar";
+import SummaryCard from "./SummaryCard";
 
-function ActivityItem({ activity }) {
+function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
     let token;
     let user_id;
@@ -20,47 +25,94 @@ function ActivityItem({ activity }) {
         if (proceed) submit(null, { method: 'DELETE' });
     }
 
-    // TODO: when user already added the activity as favorite, changed color and avoide action
-    console.log(activity)
+    console.log(activities);
+
+    // TODO: passing is_saved
+    //TODO: sort
+
     return (
-        <article>
-            <h1>{activity.title}</h1>
-            <div>{activity.duration}</div>
-            <div>{activity.age_group}</div>
-            <div>{activity.summary}</div>
-            <div>{activity.objectives}</div>
-            <div>{activity.materials}</div>
-            <p>{activity.instructions}</p>
-            <div>{activity.links}</div>
-            {activity.tags.map((tag) => (
-                <span key={tag}>#{tag}</span>
-            ))}
-            {activity.is_favorited &&
-                <div>
-                    <button
-                        style={{ color: 'red' }}
-                        onClick={() => handleAddFavorite(user_id, false)}
-                    >
-                        ♥
-                    </button>
-                </div>
-            }
-            {!activity.is_favorited &&
-                <div>
-                    <button onClick={() => handleAddFavorite(user_id, true)}>♥</button>
-                </div>
-            }
-            <div>
-                likes: {activity.like_count}
+        <div className={classes.frame}>
+            <div className={classes.left}>
+                <SortBar size='short' />
+                <ul>
+                    {activities.map((item) => (
+                        <li key={item.activity_id}>
+                            <SummaryCard activity={item} link={`./activities/${activity.activity_id}`}/>
+                        </li>
+                    ))}
+                </ul>
             </div>
-            {token &&
-                activity.user_id === user_id &&
-                <div>
-                    <Link to="edit" >Edit</Link>
-                    <button onClick={() => handleDeleteActivity(activity.title)}>Delete</button>
+
+            <div className={classes.right}>
+            <div className={classes.detailCard}>
+                <div className={classes.detailContent}>
+                    <img src='/images/large/1.png' alt="example" />
+                    <h1>{activity.title}</h1>
+                    <div className={classes.detailIcons}>
+                        {activity.is_favorited ? <GoHeartFill /> : <GoHeart />}
+                        {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> }
+                    </div>
+                    <div className={classes.createrInfo}>
+                        <p>{activity.like_count} likes</p>
+                        <p>user name here</p>
+                    </div>
+                    <div className={classes.itemContainer}>
+                        <div className={classes.detailLeft}>
+                            <div className={classes.leftItem}>
+                                <p>Durations :</p>
+                                <p>{activity.duration}</p>
+                            </div>
+                            <div className={classes.leftItem}>
+                                <p>Age group :</p>
+                                <p>{activity.age_group}</p>
+                            </div>
+                            <div className={classes.leftItem}>
+                                <p>Materials :</p>
+                                <p>{activity.materials}</p>
+                            </div>
+                            <div className={classes.leftTags}>
+                                {activity.tags.map((tag) => (
+                                <span key={tag} className={classes.tagFrame}># {tag}</span>
+                                ))}
+                            </div>
+                        </div>
+                        <div className={classes.detailRight}>
+                            <div className={classes.rightItem}>
+                                <p>Summary :</p>
+                                <p>{activity.summary}</p>
+                            </div>
+                            <div className={classes.rightItem}>
+                                <p>Objectives:</p>
+                                <p>{activity.objectives}</p>
+                            </div>
+                            <div className={classes.rightItem}>
+                                <p>Instructions :</p>
+                                <p>{activity.instructions}</p>
+                            </div>
+                            <div className={classes.rightItem}>
+                                <p>References :</p>
+                                <p className={classes.reference}>
+                                    <Link to={activity.links}>
+                                        {activity.links}
+                                    </Link>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className={classes.backButton}>
+                    <Link to='../' >
+                        <ButtonS colorScheme='primaryBorder'>
+                            Back
+                        </ButtonS>
+                    </Link>
+                    </div>
                 </div>
-            }
-        </article>
+            </div>
+        </div>
+        </div>
+       
+        
     )
 }
 

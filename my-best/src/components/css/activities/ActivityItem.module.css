@@ -1,0 +1,112 @@
+.frame {
+    width:1440px;
+    display: flex;
+    justify-content: space-between;
+}
+.left {
+    width: 315px;
+    margin-left: 30px;
+}
+
+.right {
+    float: right;
+    margin-right: 30px;
+}
+
+.detailCard {
+    width: 999px;
+    border: 3px solid var(--color-primary-700);
+    border-radius: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailContent {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    margin: 6rem
+}
+
+
+.detailCard h1 {
+    font-size: 48px;
+    font-weight: 600;
+    padding: 20px 0;
+}
+
+.detailIcons {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 35px;
+    padding-bottom: 5px;
+}
+
+.createrInfo {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.itemContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+.detailLeft {
+    width: 200px;
+    padding: 0;
+    margin: 0;
+}
+
+.leftItem, .rightItem {
+    width: 100%;
+    font-size: 20px;
+    padding-bottom: 5px
+}
+
+
+.leftTags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tagFrame {
+    display: flex;
+    height: 30px;
+    background-color: white;
+    border: 1px solid var(--color-primary-700);
+    border-radius: 10px;
+    align-items: center;
+    padding: 0 1rem;
+    margin: 0.4rem;
+    color:  var(--color-primary-700);
+}
+
+.detailRight {
+    width: 580px;
+    padding: 0;
+    margin: 0;
+}
+
+.reference {
+    font-size: 13px;
+}
+
+.backButton {
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary-700);
+}
+

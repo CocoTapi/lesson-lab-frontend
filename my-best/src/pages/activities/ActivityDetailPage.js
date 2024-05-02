@@ -2,23 +2,26 @@ import { API_URL } from "../../App";
 import { json, defer, Await, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import ActivityItem from "../../components/activities/ActivityItem";
-//import ActivityList from "../../components/activities/ActivityList";
+// import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
 
 
+
 function ActivityDetailPage() {
-    const { activity } = useRouteLoaderData('activity-detail');
+    const { activity, activities } = useRouteLoaderData('activity-detail');
+    
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
-                <Await resolve={activity}>
-                    {(loadedActivity) => <ActivityItem activity={loadedActivity} />}
+                <Await resolve={{activity, activities}}>
+                    {({activity: loadedActivity, activities: loadedActivities}) => 
+                        <ActivityItem activity={loadedActivity} activities={loadedActivities} />}
                 </Await>
             </Suspense>
             {/* <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={activities}>
-                    {(loadedActivities) => <ActivityList activities={loadedActivities} />}
+                    {(loadedActivities) => <ActivityItem activities={loadedActivities} />}
                 </Await>
             </Suspense> */}
         </>
@@ -55,7 +58,7 @@ export async function loader({ request, params }) {
 
     return defer({
         activity: await loadActivity(id),
-        activities: loadActivities()
+        activities: await loadActivities()
     })
 }
 
