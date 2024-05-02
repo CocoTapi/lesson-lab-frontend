@@ -1,0 +1,60 @@
+.box {
+    width: 295px;
+    height: 593px;
+    border: 1px solid var(--color-primary-700);
+    border-radius: 10px;
+    margin-left: 30px;
+    padding: 20px;
+}
+
+.box h1 {
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.box h2 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.radio {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Makes 2 columns each taking half the space */
+    gap: 10px 0px;
+    margin-bottom: 30px;
+}
+
+.view {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 200px;
+    justify-content: space-between;
+}
+
+.clear {
+    width: 92px;
+    height: 39px;
+    padding: 0 15px;  /* Adjusted padding for better fitting */
+    border-radius: 10px;
+    border: 2px solid black;
+    background-color: white;
+    font-size: 13px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.clear:hover,
+.clear:active {
+    border-color: #D7B7FF;
+    transform: scale(1.1);
+}
+
+.clear:focus {
+    outline: none;
+}
+
+

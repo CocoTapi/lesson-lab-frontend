@@ -1,4 +1,4 @@
-import Card from "../../components/UI/Card";
+import Card from "../../components/UI/SmallCard";
 import ActivityForm from "../../components/activities/ActivityForm";
 import { Await, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";

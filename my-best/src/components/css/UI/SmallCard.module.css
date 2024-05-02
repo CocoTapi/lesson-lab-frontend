@@ -1,0 +1,10 @@
+.card {
+  width: 315px;
+  height: 516px;
+  border: 3px solid var(--color-primary-700);
+  border-radius: 20px;
+}
+
+.contents {
+  padding: 0 30px;
+}

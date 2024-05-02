@@ -76,7 +76,7 @@ export const getSummaryQuery: string = `
         a.user_id, 
         a.title, 
         a.summary, 
-        d.duration_title, 
+        d.duration_title AS duration, 
         age.age_group_title AS age_group,
         ARRAY_AGG(DISTINCT tag_title) AS tags,
         CAST(

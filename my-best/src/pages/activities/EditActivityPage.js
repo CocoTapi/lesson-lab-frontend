@@ -2,7 +2,7 @@ import { useRouteLoaderData } from "react-router-dom";
 import ActivityForm from "../../components/activities/ActivityForm";
 import { Await } from "react-router-dom";
 import { Suspense } from "react";
-import Card from "../../components/UI/Card";
+import Card from "../../components/UI/SmallCard";
 
 function EditActivityPage(){
     const { activity } = useRouteLoaderData('activity-detail');
