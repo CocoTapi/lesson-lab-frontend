@@ -13,7 +13,6 @@ function ActivityList({ activities }){
    
     return (
         <div className={classes.frame}>
-            <h1>All Activities</h1>
             <div>
                 <Filter />
             </div>

@@ -1,3 +1,10 @@
+.frame {
+    width:1440px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
 .right {
     float: right;
     margin-right: 30px
