@@ -2,6 +2,7 @@
     width:1440px;
     display: flex;
     justify-content: space-between;
+    margin: auto;
 }
 .left {
     width: 315px;

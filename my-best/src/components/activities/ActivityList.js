@@ -9,6 +9,7 @@ function ActivityList({ activities }){
     const [sortOption, setSortOption] = useState('shortToLong'); 
 
     //TODO: handle sortOption
+
    
     return (
         <div className={classes.frame}>

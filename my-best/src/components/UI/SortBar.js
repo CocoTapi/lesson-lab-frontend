@@ -6,7 +6,7 @@ const barLength = {
         width: '999px'
     },
     short: {
-        width: '315px'
+        width: '320px'
     }
 };
 

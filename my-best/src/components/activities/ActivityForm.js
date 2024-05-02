@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation } from "react-router-dom";
-import classes from '../css/activities/ActivityForm.module.css'
+import classes from '../css/activities/ActivityForm.module.css';
+import { FaCheck } from "react-icons/fa";
+import ButtonS from "../UI/ButtonS";
 
 
 function ActivityForm({ existingTags, method, activity }) {
@@ -69,7 +71,7 @@ function ActivityForm({ existingTags, method, activity }) {
     };
 
     return (
-        <>
+        <div className={classes.frame}>
         {!token && 
             <div>
                 <h1>Please log in!</h1>
@@ -87,20 +89,9 @@ function ActivityForm({ existingTags, method, activity }) {
                     </ul>
                 }
                 {data && data.message && <p>{data.message}</p>}
-    
-                {/* user name */}
-                <div>  
-                    <div>{`User name: ${user_name}`}</div> 
-                    {currentPath === '/activities/new' && 
-                        <Link to={`../../mypage/${user_id}`}>Change user name</Link>
-                    }
-                    {activity && currentPath === `/activities/${activity.activity_id}/edit` && 
-                        <Link to={`../../../mypage/${user_id}`}>Change user name</Link>
-                    }
-                </div>
                 
                 {/* title */}
-                <div>  
+                <div className={classes.formGroup}>  
                     {data && data.errors.title && <span> * </span>}                       
                     <label htmlFor="title">
                         Title
@@ -117,7 +108,7 @@ function ActivityForm({ existingTags, method, activity }) {
                 {/* duration */}
                 <div>
                     {data && data.errors.duration && <span> * </span>} 
-                    <label htmlFor="duration">Duration</label><br/>
+                    <label htmlFor="duration">Duration</label>
                     <select id='duration' type='duration' name='duration' defaultValue={activity ? activity.duration : ''} required>
                         <option value="5">less than 5 mins</option>
                         <option value="10">about 10 mins</option>
@@ -127,100 +118,77 @@ function ActivityForm({ existingTags, method, activity }) {
                         <option value="31">30 mins and more</option>
                     </select> 
                 </div>
+                
     
                 {/* age group */}
                 <div>
-                    <div>Target Age Group</div>
                     {data && data.errors.age_group && <span> * </span>}
-                    <input type="radio" id="allAge" name="age_group" value="all age" defaultChecked={activity && activity.age_group === "all age" }/>
-                        <label htmlFor="allAge">all age group!</label>
-                    <input type="radio" id="teensAndAdults" name="age_group" value="teens and adults" defaultChecked={activity && activity.age_group === "teens and adults"}/>
-                        <label htmlFor="teensAndAdults">teenagers and adults</label>
-                    <input type="radio" id="kids" name="age_group" value="kids"  defaultChecked={activity && activity.age_group === "kids"}/>
-                        <label htmlFor="kids">kids</label>
-                    <input type="radio" id="teens" name="age_group" value="teens"  defaultChecked={activity && activity.age_group === "teens"}/>
-                        <label htmlFor="teens">teenagers</label>
-                    <input type="radio" id="adults" name="age_group" value="adults"  defaultChecked={activity && activity.age_group === "adults"}/>
-                        <label htmlFor="adults">adults</label>
+                    <label htmlFor="age_group">Age group</label>
+                    <select id='age_group' type='age_group' name='age_group' defaultValue={activity ? activity.age_group : ''} required>
+                        <option value="all age">all age</option>
+                        <option value="teens and adults">teens and adults</option>
+                        <option value="kids">kids</option>
+                        <option value="teens">teens</option>
+                        <option value="adults">adults</option>
+                    </select> 
                 </div>
     
                 {/* Summary */}
-                <div>
+                <div className={classes.formGroup}>
                     {data && data.errors.summary && <span> * </span>}  
-                    <label htmlFor="summary">One Sentence Summary</label><br />
+                    <label htmlFor="summary">Summary</label>
                     <textarea 
                         id='summary' 
                         name='summary' 
-                        rows="2" 
-                        cols="60" 
                         defaultValue={activity ? activity.summary : ''}
-                        placeholder="This game involves groups making a five-item list based on a topic and guessing each other's topics."
+                        placeholder="A short one sentence summary"
                         required/>
                 </div>
     
                 {/* Objectives */}
-                <div>
+                <div className={classes.formGroup}>
                     {data && data.errors.objectives && <span> * </span>}  
-                    <label htmlFor="objectives">Objectives / Target skills</label><br />
+                    <label htmlFor="objectives">Objectives / Target Skills</label>
                     <textarea 
                         id='objectives' 
                         name='objectives' 
-                        rows="2" 
-                        cols="60" 
                         defaultValue={activity ? activity.objectives : ''}
-                        placeholder="communication skill, planning skill"
+                        placeholder="Objectives and/or target skills"
                         required/>
                 </div>
     
                 {/* Materials */}
-                <div>
+                <div className={classes.formGroup}>
                     {data && data.errors.materials && <span> * </span>}  
                     <label htmlFor="materials">Materials</label><br />
                     <textarea 
                         id='materials' 
                         name='materials' 
-                        rows="4" 
-                        cols="60"
                         defaultValue={activity ? activity.materials : ''}
                         placeholder="papers, pens" 
                         required/>
                 </div>
     
                 {/* instructions */}
-                <div>
+                <div className={classes.formGroup}>
                     {data && data.errors.instructions && <span> * </span>}  
-                    <label htmlFor="instructions">Instructions</label><br />
+                    <label htmlFor="instructions">Instructions</label>
                     <textarea 
                         id='instructions' 
                         name='instructions' 
-                        rows="10" 
-                        cols="60" 
                         defaultValue={activity ? activity.instructions : ''}
                         placeholder="
-                            1. Assign each group a topic.
-                            2. In the groups, participants compile a list of five items related to the given topic.
-                            3. Groups share their lists with everyone, while other participants attempt to guess the topic based on the list.
-                            4. The group that most people are able to guess correctly is the winner."
+                            1. first step
+                            2. second step
+                            3. third step
+                            4. forth step
+                            5. fifth step ..."
                         required/>
                 </div>
     
-                {/* Links */}
-                <div>
-                    {data && data.errors.links && <span> * </span>}  
-                    <label htmlFor="links">If you have reference links, add them here</label><br />
-                    <textarea 
-                        id='links' 
-                        name='links' 
-                        rows="2" 
-                        cols="60"
-                        defaultValue={defaultLinks}
-                        placeholder="http://....." 
-                    />
-                </div>
-    
                 {/* tags */}
-                    <div>Register tags</div>
-                    <label htmlFor="typedTags">Type your hashtags:</label><br />
+                <div className={classes.tagInput}>
+                <label htmlFor="typedTags">Type tag name that you want to add</label><br />
                     <input 
                         type="text" 
                         id="typedTags" 
@@ -228,11 +196,13 @@ function ActivityForm({ existingTags, method, activity }) {
                         value={typedTags} 
                         onChange={handleTypedTagsChange} 
                         placeholder="icebreaker"
-                    /><br />
+                    />
+                </div>
+                    
     
                 {typedTags.length > 0 && (
-                    <div>
-                        <p>Suggesting Tags: click to add
+                    <div className={classes.tagSelection}>
+                        <p>Click tags to select: 
                         {matchedTags.length > 0 && (
                             matchedTags.map(tag => (
                                 <button key={tag} onClick={(e) => handleTagSelection(e, tag)}>
@@ -245,7 +215,7 @@ function ActivityForm({ existingTags, method, activity }) {
                     </div>
                 )}
     
-                <div>This activity's tags:
+                <div>Registered tags:
                     {chosenTags.map((tag, index) => (
                         <div key={tag}>
                             <span>#{tag} </span>
@@ -253,16 +223,31 @@ function ActivityForm({ existingTags, method, activity }) {
                         </div>
                     ))}
                 </div>
+
+                {/* Links */}
+                <div className={classes.formGroup}>
+                    {data && data.errors.links && <span> * </span>}  
+                    <label htmlFor="links">Reference URLs</label><br />
+                    <textarea 
+                        id='links' 
+                        name='links' 
+                        defaultValue={defaultLinks}
+                        placeholder="http://....." 
+                    />
+                </div>
     
                 {/* hidden input */}
                 <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
                 <input type="hidden" name="user_id" value={user_id} />
     
-                <br/><button disabled={isSubmitting}>Submit</button><br />
+                <ButtonS disabled={isSubmitting}>
+                    <FaCheck />
+                    <h4>Submit</h4>
+                </ButtonS>
                 {isSubmitting && <p>Submitting...</p>}
             </Form>
         }
-        </>
+        </div>
        
     )
 };
