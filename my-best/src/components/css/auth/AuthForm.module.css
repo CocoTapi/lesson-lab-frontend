@@ -20,20 +20,21 @@
 
 .form label,
 .form input,
-.form textarea,
 .form p {
     color: black;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 400;
     display: block;
     width: 100%;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 
-.form input,
-.form textarea {
-    font: inherit;
-    padding: 0.25rem;
+.form input {
+    font: 16px;
+    padding: 0 0.5rem;
+    border: none;
+    height: 37px;
+    margin-bottom: 20px;
 }
 
 .name {
@@ -48,6 +49,7 @@
 
 
 .form p {
+    margin-top: 0;
     margin-bottom: 100px;
 }
 
