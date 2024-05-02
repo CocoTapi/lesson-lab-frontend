@@ -1,60 +1,55 @@
   .header {
     color: black;
     background-color: white;
-    height: 5.6rem;
+    height: 5.5rem;
     display: flex;
     justify-content: space-between; /* Adjusts items between left and right */
     align-items: center;
-    padding: 0 1.6rem;
   }
   
   .left, .right {
+    padding: 0 30px;
     display: flex;
     align-items: center;
-    gap: 20px; /* Space between navigation items */
+    gap: 7px
   }
   
   .logo {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: bold;
-    font-family: 'DM Sans';
     color: var(--color-primary-700);
     text-decoration: none;
+    padding-right: 14px;
   }
   
   .link {
     font-size: 20px;
     font-weight: 400;
-    font-family: 'DM Sans';
     color: black;
     text-decoration: none;
+    padding: 6px 15px;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
   
   .link:hover,
   .active {
+    border-radius: 6px;
     background-color: #DEE6FF;
     color: var(--color-primary-700);
     transform: scale(1.05); /* Slight increase in size */
   }
 
-  .login {
+  .login, .logoutButton {
+    font-size: 20px;
+    text-decoration: none;
     background-color: white; 
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 15px 20px;
     color: black;
+    justify-content: center;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
-
-  .logoutButton {
-    background-color: white; 
-    border: none;
-    border-radius: 10px; /* Rounded corners like login */
-    padding: 10px 20px;
-    color: black; 
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
-}
 
   .login:hover, .logoutButton:hover {
     background-color: #DEE6FF; 
@@ -66,8 +61,9 @@
     background-color: var(--color-primary-700);
     border: none;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 15px 40px;
     color: white;
+    font-size: 20px;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
   

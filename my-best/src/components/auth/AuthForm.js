@@ -1,64 +1,104 @@
 import { Form, Link, useActionData, useNavigation, useSearchParams } from 'react-router-dom';
 import ButtonM from '../UI/ButtonM';
+import classes from '../css/auth/AuthForm.module.css';
+import { useState } from 'react';
+import { googleOAuthAction } from '../../pages/auth/googleOAuth';
+import { FcGoogle } from "react-icons/fc";
 
 function AuthForm() {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
+    const [isLoading, setLoading] = useState(false);
+    
+
+    const googleLoginHandler = () => {
+        setLoading(true);
+        googleOAuthAction();
+    }
 
     const [searchParams] = useSearchParams();
     const isLogin = searchParams.get('mode') === 'login';
 
     return (
-        <Form method='post'>
-            <h1>{isLogin ? 'Log In' : 'Create a new user'}</h1>
-            {data && data.errors &&
-                <ul>
-                    {Object.values(data.errors).map((err) => (
-                        <li key={err}>{err}</li>
-                    ))}
-                </ul>
-            }
-            {data && data.message && <p>{data.message}</p>}
-            {!isLogin &&
-                <>
-                    <div>
-                        {data && data.errors.firstName && <span> * </span>}
-                        <label htmlFor="firstName">
-                            First Name
-                        </label>
-                        <input id='firstName' type='text' name='firstName' placeholder='First Name' required />
-                    </div>
-                    <div>
-                        {data && data.errors.lastName && <span> * </span>}
-                        <label htmlFor="lastName">Last Name</label>
-                        <input id='lastName' type='text' name='lastName' placeholder='Last Name' required />
-                    </div>
-                </>
-            }
-            <div>
-                {data && data.errors.email && <span> * </span>
+            <Form method='post' className={classes.form}>
+                <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+                {data && data.errors &&
+                    <ul>
+                        {Object.values(data.errors).map((err) => (
+                            <li key={err}>{err}</li>
+                        ))}
+                    </ul>
                 }
-                <label htmlFor="email">Email</label>
-                <input id='email' type='email' name='email' required />
-            </div>
-            <div>
-                {data && (data.errors.length || data.errors.simbol || data.errors.num)
-                    && <span> * </span>
-                }
-                <label htmlFor="password">Password</label>
-                <input id='password' type='password' name='password' required />
-            </div>
-            <div>
-                {isLogin ? (
-                    <Link to='/auth/signup'>Sign Up</Link>
-                ) : (
-                    <Link to='/auth?mode=login'>Log In</Link>
-                )}
-            </div>
-            <ButtonM disabled={isSubmitting}>{isLogin ? 'Log In' : 'Sign Up' }</ButtonM>
-            {isSubmitting && <p>Submitting...</p>}
-        </Form>
+                {data && data.message && <p>{data.message}</p>}
+                    {!isLogin &&
+                        <div className={classes.name}>
+                            <div className={classes.formName}>
+                                {data && data.errors.firstName && <span> * </span>}
+                                <label htmlFor="firstName">
+                                    First Name
+                                </label>
+                                <input id='firstName' type='text' name='firstName' placeholder='First Name' required />
+                            </div>
+                            <div className={classes.formName}>
+                                {data && data.errors.lastName && <span> * </span>}
+                                <label htmlFor="lastName">
+                                    Last Name 
+                                </label>
+                                <input id='lastName' type='text' name='lastName' placeholder='Last Name' required />
+                            </div>
+                        </div>
+                    }
+
+                    {/* e-mail */}
+                    <div className={classes.formGroup}>
+                        {data && data.errors.email && <span> * </span>}
+                        <label htmlFor="email">E-mail</label>
+                        <input id='email' type='email' name='email' placeholder='E-mail' required />
+                    </div>
+                    {!isLogin &&
+                        <div className={classes.formGroup}>
+                            <label htmlFor="confirmEmail">Confirm e-mail</label>
+                            <input id='confirmEmail' type='confirmEmail' name='confirmEmail' placeholder='E-mail' required />
+                        </div>
+                    }
+                
+                    {/* password */}
+                    <div className={classes.formGroup}>
+                        {data && (data.errors.length || data.errors.simbol || data.errors.num)
+                            && <span> * </span>
+                        }
+                        <label htmlFor="password">Password</label>
+                        <input id='password' type='password' name='password' placeholder='password' required />
+                    </div>
+                    {!isLogin &&
+                        <div className={classes.formGroup}>
+                            <label htmlFor="confirmPassword">Confirm password</label>
+                            <input id='confirmPassword' type='confirmPassword' name='confirmPassword' placeholder='password' required />
+                        </div>
+                    }
+                    <div>
+                    {isLogin ? (
+                        <p>Haven't signed up yet? <Link to='/auth/signup'>Sign up</Link> instead.</p>
+                    ) : (
+                        <p>Already signed up? <Link to='/auth?mode=login'>Login</Link> instead.</p>
+                    )}
+                </div>
+                <div className={classes.centerGroup}>
+                    <ButtonM disabled={isSubmitting}>{isLogin ? 'Login' : 'Sign Up' }</ButtonM>
+                    {isLogin && 
+                    <>
+                        <h3>or</h3>
+                        <button className={classes.googleButton} onClick={googleLoginHandler}>
+                            <FcGoogle className={classes.icon} /> 
+                            <span>Sign in with Google</span>
+                        </button>
+                    </>
+                    }
+                    {isSubmitting && <p>Submitting...</p>}
+                </div>
+                
+            </Form>
     )
 }
 

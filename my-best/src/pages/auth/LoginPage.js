@@ -1,36 +1,10 @@
-import { useState } from "react";
 import { redirect, json } from "react-router-dom";
 import AuthForm from "../../components/auth/AuthForm";
 import { API_URL } from "../../App";
-import { googleOAuthAction } from "./googleOAuth";
 
 function LoginPage() {
-    const [isLoading, setLoading] = useState(false);
-    
 
-    const googleLoginHandler = () => {
-        setLoading(true);
-        googleOAuthAction();
-    }
-
-
-
-    return (
-        <>
-        {isLoading ? (
-            <div>
-                <p>Check new window!</p>
-                <p>Processing google sign in ...</p>
-            </div>
-        ) : (
-            <div>
-                <div><AuthForm /></div>
-                <button onClick={googleLoginHandler}>Google Login</button>
-            </div>
-        )         
-        }
-        </>
-    )
+    return <AuthForm />
 };
 
 export default LoginPage;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation } from "react-router-dom";
-import classes from '../css/ActivityForm.module.css'
+import classes from '../css/activities/ActivityForm.module.css'
 
 
 function ActivityForm({ existingTags, method, activity }) {
