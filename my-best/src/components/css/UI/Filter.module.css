@@ -1,15 +1,23 @@
 .box {
-    width: 295px;
+    width: 300px;
     height: 593px;
     border: 1px solid var(--color-primary-700);
     border-radius: 10px;
     margin-left: 30px;
-    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contents {
+    width: 100%;
 }
 
 .box h1 {
     font-size: 21px;
     font-weight: 400;
+    padding-bottom: 5px;
 }
 
 .box h2 {
@@ -21,17 +29,17 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Makes 2 columns each taking half the space */
     gap: 10px 0px;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-.view {
+.viewButtons {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 200px;
-    justify-content: space-between;
+    margin-top: 80px;
+    gap: 27px
 }
 
-.clear {
+.clearButton {
     width: 92px;
     height: 39px;
     padding: 0 15px;  /* Adjusted padding for better fitting */
@@ -45,16 +53,18 @@
     justify-content: center;
     cursor: pointer;
     transform: scale(1.05);
+    margin-left: 5px;
 }
 
-.clear:hover,
-.clear:active {
-    border-color: #D7B7FF;
+.clearButton:hover,
+.clearButton:active {
     transform: scale(1.1);
 }
 
-.clear:focus {
+.clearButton:focus {
     outline: none;
 }
+
+
 
 
