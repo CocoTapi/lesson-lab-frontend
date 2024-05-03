@@ -4,6 +4,7 @@ import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go"
 import ButtonS from "../UI/ButtonS";
 import SortBar from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";
+import Tag from "../UI/Tag";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -29,6 +30,7 @@ function ActivityItem({ activity, activities }) {
 
     // TODO: passing is_saved
     //TODO: sort
+
 
     return (
         <div className={classes.frame}>
@@ -72,7 +74,7 @@ function ActivityItem({ activity, activities }) {
                             </div>
                             <div className={classes.leftTags}>
                                 {activity.tags.map((tag) => (
-                                <span key={tag} className={classes.tagFrame}># {tag}</span>
+                                <Tag key={tag} className={classes.tagFrame}>{tag}</Tag>
                                 ))}
                             </div>
                         </div>

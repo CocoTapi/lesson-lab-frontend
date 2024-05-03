@@ -2,7 +2,7 @@
 .button {
     height: 2rem;
     padding: 0 1rem;
-    border-radius: 9px;
+    border-radius: 10px;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -15,3 +15,6 @@
     margin-bottom: 1rem;
     box-sizing: border-box; 
 }
+
+
+
