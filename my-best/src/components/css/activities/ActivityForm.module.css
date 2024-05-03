@@ -4,7 +4,7 @@
     border: 3px solid var(--color-primary-700);
     border-radius: 30px;
     background-color: var(--color-grey-100);
-    padding: 30px;
+    padding: 3rem;
 }
 
 .frame h1 {
@@ -12,8 +12,18 @@
     font-weight: 600;
 }
 
-.formGroup label {
-    padding-bottom: 15px;
+.login {
+    display: block;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.login h1 {
+    padding-bottom: 30px;
+}
+
+.form {
+    padding-bottom: 80px;
 }
 
 .form h1 {
@@ -23,21 +33,101 @@
     padding-bottom: 20px;
 }
 
-.formGroup label,
+.form label,
 .form input,
-.form p {
+.form h2 {
     color: black;
     font-size: 20px;
     font-weight: 400;
     display: block;
     width: 100%;
-    padding-bottom: 10px;
+    padding: 10px 0;
 }
 
 .form input {
-    font: 16px;
+    font-size: 18px;
     padding: 0 0.5rem;
     border: none;
     height: 37px;
     margin-bottom: 20px;
+}
+
+.form textarea {
+    padding: 0.5rem 0.5rem;
+    border: none;
+    display: block;
+    margin-bottom: 20px;
+    width: 100%; 
+}
+
+.summary {
+    font-size: 18px;
+    height: 3rem;
+}
+
+.objectives {
+    font-size: 18px;
+    height: 4.5rem;
+}
+
+.references {
+    font-size: 15px;
+    height: 1rem;
+}
+
+.instructions {
+    font-size: 18px;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    display: block;
+    height: 37px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 12rem;
+}
+
+.formSelect {
+    width: 225px;
+    height: 30px; 
+    line-height: 25px; 
+    text-align: center;
+    background-color: white; 
+    border: none;
+    padding: 0 15px; 
+    cursor: pointer; 
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    transform: scale(1.05); 
+}
+
+.formSelect:hover {
+    transform: scale(1.1); 
+}
+
+.tagInput {
+    width: 40%;
+}
+
+
+.beforeTag:hover,
+.deleteTag:hover {
+    transform: scale(1.1); 
+    cursor: pointer;  
+}
+
+.deleteTag:hover {
+    color: red;
+    transform: scale(1.5)
+}
+
+.left {
+    padding-bottom: 30px;
+}
+
+.right {
+    float: right;
+    padding-top: 30px;
 }

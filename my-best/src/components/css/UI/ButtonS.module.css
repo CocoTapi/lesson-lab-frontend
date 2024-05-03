@@ -16,8 +16,9 @@
 
 .button:hover,
 .button:active {
-    border-color: #D7B7FF; /* Darker shade on hover */
+    border-color: #D7B7FF; 
     transform: scale(1.1); /* Slight increase in size */
+    cursor: pointer;  
 }
 
 .button:focus {
