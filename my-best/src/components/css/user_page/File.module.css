@@ -1,0 +1,8 @@
+.file {
+    min-height: 874px;
+    width: 1280px;
+    margin: auto;
+    background-image: linear-gradient(to top right, #033b70, #9853a0af );
+    border: 5px solid var(--color-primary-700);
+    border-radius: 0 0 20px 20px;
+}

@@ -1,4 +1,5 @@
 //import { useRouteLoaderData } from "react-router-dom";
+import File from "../user_page/File";
 
 
 function Home() {
@@ -9,6 +10,9 @@ function Home() {
     return (
         <div >
             <div>Home</div>
+            <File>
+                <div>Profile</div>
+            </File>
     
         </div>
     )
