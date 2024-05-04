@@ -1,0 +1,32 @@
+.label {
+    display: flex;
+    width: 1290px;
+    margin: auto;
+    
+}
+
+.labelItem {
+    flex: 1;
+    background-color: var(--color-primary-300);
+    height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    border: 5px solid  #D7B7FF;
+    border-bottom: 0;
+    border-radius: 20px 20px 0 0;
+    font-size:30px;
+    font-weight: 600;
+}
+
+.labelItem h4 {
+    padding-right: 10px;
+    padding-top: 10px;
+    color: red;
+}
+
+.labelItem:hover {
+    border-color:var(--color-primary-700);
+    cursor: pointer;  
+}
