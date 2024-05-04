@@ -1,3 +1,57 @@
+.accordionDetail {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.activityLeft {
+    width: 21%;
+    margin-right: 2.5%;
+}
+
+.activityRight {
+    width: 70%
+}
+
+.accordionReference {
+    font-size: 70%;
+    padding-bottom: 7%;
+}
+
+.deleteButton {
+    height: 2rem;
+    padding: 0 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    display: inline-flex;
+    transform: scale(1.05); 
+    font-size: inherit;
+    font-weight: 400;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box; 
+    background-color: var(var(--color-grey-100));
+    border: 1px solid var(--color-primary-700);
+}
+
+.deleteButton:hover {
+    color: red;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+
+
+
+
+
+
+
+
+
+
 .frame {
     width:1440px;
     display: flex;
@@ -41,9 +95,12 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    font-size: 35px;
-    padding-bottom: 5px;
+    /* gap: 20px; */
+    /* font-size: 35px; */
+    /* padding-bottom: 5px; */
+    font-size: 17.5px;
+    padding-bottom: 0;
+    gap: 10px;
 }
 
 .createrInfo {

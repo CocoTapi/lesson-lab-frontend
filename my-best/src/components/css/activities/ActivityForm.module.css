@@ -22,10 +22,6 @@
     padding-bottom: 30px;
 }
 
-.form {
-    padding-bottom: 80px;
-}
-
 .form h1 {
     color: black;
     font-size: 32px;
@@ -128,6 +124,7 @@
 }
 
 .right {
-    float: right;
+    display: flex;
+    justify-content: end;
     padding-top: 30px;
 }

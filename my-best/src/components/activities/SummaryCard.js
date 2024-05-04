@@ -10,7 +10,7 @@ function SummaryCard({ activity, link }) {
             <div className={classes.card}>
                 <Link to={link}>
                     <div className={classes.duration}>Duration: {activity.duration} min</div>
-                    <img src='/images/small/1.png' alt="example" />
+                    <img src='/images/small/1.png' alt="example" style={{ borderRadius: '12px' }} />
                     <h2>{activity.title}</h2>
                     <div className={classes.icons}>
                         <GoHeart />

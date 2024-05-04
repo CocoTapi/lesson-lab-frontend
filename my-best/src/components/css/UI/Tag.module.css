@@ -9,7 +9,7 @@
     gap: 5px;
     display: inline-flex;
     transform: scale(1.05); 
-    font-size: 16.5px;
+    font-size: inherit;
     font-weight: 400;
     margin-right: 1rem;
     margin-bottom: 1rem;

@@ -1,0 +1,48 @@
+.frame {
+    /* change width to 100% later */
+    width: 742px;
+    border: 2px solid var(--color-primary-700);
+    border-radius: 20px;   
+}
+
+.header {
+    display: flex;
+    padding: 2%;
+}
+
+
+.topImage {
+    /* padding-top: 3.3%; */
+    display: flex;
+    align-items: center;
+    padding-right: 4%;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    font-size: 200%;
+    font-weight: 900;
+    margin-left: auto;
+    padding: 0 1%;
+}
+
+.detailFrame {
+    padding: 0 2% 2% 2%;
+}
+
+.headerItem {
+    
+}
+
+
+.detailButton {
+    display: flex;
+    justify-content: end;
+    margin-right: 6%;
+    margin-top: 5%;
+}
+
+
+
+

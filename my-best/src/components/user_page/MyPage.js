@@ -1,3 +1,4 @@
+import Accordion from "../UI/Accordion";
 import UserActivityList from "./UserActivityList";
 import { useSubmit } from "react-router-dom";
 
@@ -27,6 +28,7 @@ function MyPage({ data }){
             onDeleteActivity={handleRemoveActivity} 
         />
     }
+
 
     return (
         <div>

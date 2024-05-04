@@ -1,0 +1,29 @@
+.detailIcons {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 17.5px;
+    padding-bottom: 0;
+    gap: 10px;
+}
+
+.accordionDetail {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.activityLeft {
+    background-color: aqua;
+    width: 18%;
+    margin-right: 2.5%;
+}
+
+.activityRight {
+    background-color: rgb(255, 0, 98);
+    width: 73.6%
+}
+
+.accordionReference {
+    font-size: 70%;
+    padding-bottom: 7%;
+}

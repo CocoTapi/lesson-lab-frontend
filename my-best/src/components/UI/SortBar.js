@@ -1,24 +1,13 @@
 import classes from '../css/UI/SortBar.module.css'
 import { colorSchemes } from './colorSchemes';
 
-const barLength = {
-    long: {
-        width: '999px'
-    },
-    short: {
-        width: '320px'
-    }
-};
-
-function SortBar ({ colorScheme = 'primary', size = 'long', onSortChange }) {
+function SortBar ({ colorScheme = 'primary', onSortChange }) {
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primary;
-    const { width } = barLength[size] || barLength.long;
     
     const barStyle = {
         color: textColor,
         backgroundColor: backgroundColor,
         borderColor: borderColor,
-        width: width
     };
 
     const changeHandler = (event) => {
