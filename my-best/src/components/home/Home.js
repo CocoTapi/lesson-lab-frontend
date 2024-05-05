@@ -2,6 +2,8 @@
 import File from "../user_page/File";
 import classes from '../css/home/home.module.css';
 import { GoHeartFill } from "react-icons/go";
+import ButtonS from "../UI/ButtonS";
+import { FaEdit } from "react-icons/fa";
 
 
 function Home() {
@@ -21,7 +23,32 @@ function Home() {
                 <div className={classes.labelItem}>Profile</div>
             </header>
             <File>
-                <div>Profile</div>
+                <div className={classes.box}>
+                    <div className={classes.contents}>
+                       <div className={classes.item}>
+                            <h3>User name:</h3>
+                            <h3>E-mail:</h3>
+                            <h3>Password:</h3>
+                            <h3>First name</h3>
+                            <h3>Last name:</h3>
+                            <h3>Last login:</h3>
+                       </div>
+                       <div className={classes.item}>
+                        <h3>All Might!</h3>
+                            <h3>email@gmail.com</h3>
+                            <h3>password</h3>
+                            <h3>first name</h3>
+                            <h3>last name</h3>
+                            <h3>04/04/2024</h3>
+                       </div>                           
+                    </div>
+                    <div className={classes.editButton}>
+                        <ButtonS>
+                            <h4><FaEdit /></h4>
+                            <h4>Edit</h4>
+                        </ButtonS>
+                    </div>
+                </div>
             </File>
     
         </div>
