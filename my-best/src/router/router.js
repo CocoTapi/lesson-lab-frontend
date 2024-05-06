@@ -14,9 +14,11 @@ import EditActivityPage from '../pages/activities/EditActivityPage';
 import NewActivityPage from '../pages/activities/NewActivityPage';
 import { action as activityFormAction, loader as tagsLoader} from '../pages/activities/formAction';
 import UserLayout from "../pages/user_page/UserLayout";
-import UserMainPage, { loader as userDetailLoader, action as removeFavoriteActivity } from "../pages/user_page/UserMainPage";
+import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
 import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
 import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
+import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
+import UserGoToListsPage from "../pages/user_page/UserGoToListsPage";
 
 export const createRouter = (setUserInfo) => createBrowserRouter([
     {
@@ -94,8 +96,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
               loader: userDetailLoader,
               children: [
                 { index: true,
-                  element: <UserMainPage />,
-                  action: removeFavoriteActivity,
+                  element: <UserMainPage />
                 },
                 {
                   path: 'edit',
@@ -104,11 +105,23 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                   action: profileEditAction,
                 },
                 {
+                  path: 'favorites',
+                  id: 'user-favorites',
+                  element: <UserFavoritesPage />,
+                  loader: userFavoritesLoader,
+                  action: removeFavoriteActivity,
+                },
+                {
                   path: 'uploads',
                   id: 'user-uploads',
                   element: <UserUploadsPage />,
                   loader: userUploadsLoader,
                   action: deleteUserActivityAction,
+                },
+                {
+                  path: 'go-to-lists',
+                  id: 'user-go-to-lists',
+                  element: <UserGoToListsPage />
                 }
               ]
             }

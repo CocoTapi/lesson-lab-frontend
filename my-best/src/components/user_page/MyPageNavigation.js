@@ -26,7 +26,7 @@ function MyPageNavigation(){
                     </NavLink>
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}/likes`: '../auth?mode=login'}
+                            to={token ? `/mypage/${user_id}/favorites`: '../auth?mode=login'}
                     >
                             <h4><GoHeartFill /></h4>
                             Likes

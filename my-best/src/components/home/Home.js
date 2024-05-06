@@ -1,5 +1,5 @@
 //import { useRouteLoaderData } from "react-router-dom";
-import File from "../user_page/File";
+import File from '../UI/File';
 import classes from '../css/home/home.module.css';
 import { GoHeartFill } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
