@@ -30,7 +30,8 @@
     color: red;
 }
 
-.labelItem:hover {
+.labelItem:hover,
+.active {
     border-color:var(--color-primary-700);
     cursor: pointer;  
     transform: translateY(-5px);
