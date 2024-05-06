@@ -12,7 +12,7 @@ function Home() {
     // if(user) token = user.token;  
    
     return (
-        <div >
+        <div className={classes.container}>
             <header className={classes.label}>
                 <div className={classes.labelItem}>
                     <h4><GoHeartFill /></h4>
@@ -26,12 +26,12 @@ function Home() {
                 <div className={classes.box}>
                     <div className={classes.contents}>
                        <div className={classes.item}>
-                            <h3>User name:</h3>
-                            <h3>E-mail:</h3>
-                            <h3>Password:</h3>
-                            <h3>First name</h3>
-                            <h3>Last name:</h3>
-                            <h3>Last login:</h3>
+                            <h3>User name :</h3>
+                            <h3>E-mail :</h3>
+                            <h3>Password :</h3>
+                            <h3>First name :</h3>
+                            <h3>Last name :</h3>
+                            <h3>Last login :</h3>
                        </div>
                        <div className={classes.item}>
                         <h3>All Might!</h3>

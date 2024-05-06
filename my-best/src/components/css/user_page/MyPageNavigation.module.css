@@ -37,35 +37,3 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
     
 }
-
-.box {
-    margin: auto;
-    width: 1100px;
-    background-color: white;
-    margin-top: 4rem;
-}
-
-.contents {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.item {
-   display: flex;
-   flex-direction: column;
-   padding-left: 30px;
-   padding-top: 3rem;
-}
-
-.item:first-child {
-    padding-right: 2%;
-    text-align: end;
-}
-
-.editButton {
-    display: flex;
-    justify-content: end;
-    padding: 3rem
-    
-}

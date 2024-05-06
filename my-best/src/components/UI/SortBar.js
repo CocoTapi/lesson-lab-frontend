@@ -30,6 +30,11 @@ function SortBar ({ colorScheme = 'primary', onSortChange }) {
                     <option value="New">New Arrivals</option>
                 </select> 
             </form>
+              {/* <div>
+                <form>
+                    <input className={classes.inputFrame} value={searchTerm} onChange={handleSearchTermChange} placeholder="Search"/>
+                </form>
+            </div> */}
         </div>
     )
 }

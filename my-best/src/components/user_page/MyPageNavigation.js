@@ -1,4 +1,7 @@
 import { NavLink, useRouteLoaderData } from "react-router-dom";
+import { GoHeartFill } from "react-icons/go";
+import classes from '../css/user_page/MyPageNavigation.module.css'
+import PageHeader from "../UI/PageHeader";
 
 function MyPageNavigation(){
     const user = useRouteLoaderData('root');
@@ -13,31 +16,34 @@ function MyPageNavigation(){
 
     return (
         <header>
-            <h1>My Page</h1>
-            <nav>
-                <ul>
-                    <li>
-                        <NavLink
+           <PageHeader title='My Page' token={token} link={'/mypage'} />
+            <nav className={classes.label}>
+                    <NavLink
+                            className={classes.labelItem}
                             to={token ? `/mypage/${user_id}`: '../auth?mode=login'}
                         >
-                            ♥ Likes
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
-                            >
-                            My Uploads
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to={token ? `/mypage/${user_id}/edit`: '../auth?mode=login'}
-                            >
-                            Edit Profile
-                        </NavLink>
-                    </li>
-                </ul>
+                           Profile
+                    </NavLink>
+                    <NavLink
+                        className={classes.labelItem}
+                        to={token ? `/mypage/${user_id}/likes`: '../auth?mode=login'}
+                    >
+                            <h4><GoHeartFill /></h4>
+                            Likes
+                    </NavLink>
+                    <NavLink
+                        className={classes.labelItem}
+                        to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
+                        >
+                        My Uploads
+
+                    </NavLink>       
+                    <NavLink
+                        className={classes.labelItem}
+                        to={token ? `/mypage/${user_id}/go-to-lists`: '../auth?mode=login'}
+                        >
+                        Go-to-lists
+                    </NavLink>
             </nav>
         </header>
     )
