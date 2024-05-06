@@ -3,7 +3,7 @@ import Tag from "../UI/Tag"
 import { IoTrashBinSharp } from "react-icons/io5"
 import Accordion from "../UI/Accordion"
 
-function MyPlaylist () {
+function GoToLists () {
     const image = (
         <img src='/images/accordionsmall/1.png' alt="example" style={{ borderRadius: '10px' }}/>
 
@@ -76,4 +76,4 @@ function MyPlaylist () {
     )
 }
 
-export default MyPlaylist;
+export default GoToLists;
