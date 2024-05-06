@@ -1,8 +1,8 @@
 import { json, defer, Await, useRouteLoaderData, redirect } from "react-router-dom";
 import { Suspense } from "react";
-import MyPage from '../../components/user_page/MyPage';
 import { API_URL } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
+import MyFavorites from "../../components/user_page/MyFavorites";
 
 
 
@@ -13,7 +13,7 @@ function UserFavoritesPage(){
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={data}>
-                    {(loadedData) => <MyPage data={loadedData} />}
+                    {(loadedData) => <MyFavorites data={loadedData} />}
                 </Await>
             </Suspense>
         </>

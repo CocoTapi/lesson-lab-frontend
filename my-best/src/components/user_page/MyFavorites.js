@@ -2,7 +2,7 @@ import Accordion from "../UI/Accordion";
 import UserActivityList from "./UserActivityList";
 import { useSubmit } from "react-router-dom";
 
-function MyPage({ data }){
+function MyFavorites({ data }){
     console.log(data)
     const userProfile = data.userProfile;
     const userFavorites = data.userFavorites;
@@ -44,4 +44,4 @@ function MyPage({ data }){
     )
 }
 
-export default MyPage;
+export default MyFavorites;
