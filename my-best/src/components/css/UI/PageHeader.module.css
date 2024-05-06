@@ -39,11 +39,13 @@
   font-weight: 600;
   color: black;
   margin: 0 50px;
+  transition: transform 0.3s ease;
 }
 
 .addButton:hover,
 .addButton:active { 
     transform: scale(1.1); /* Slight increase in size */
+    cursor: pointer;  
 }
 
 .addButton:focus {
