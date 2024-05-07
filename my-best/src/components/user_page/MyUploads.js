@@ -1,6 +1,6 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit, useRouteLoaderData, redirect } from "react-router-dom";
+import { useSubmit, useRouteLoaderData, redirect, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import classes from '../css/user_page/MyUploads.module.css';
 import File from "../UI/File";
@@ -24,19 +24,13 @@ function MyUploads({ data }){
     }
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
+    const navigate = useNavigate();
+
     //TODO: sort 
 
-    const handleRemoveActivity = (id, title) => {
-        const proceed = window.confirm(`Are you sure you want to remove ${title} in your Uploads?`);
-
-        if (proceed) {
-            submit({ activity_id: id, user_id: user_id}, { method: "DELETE" });
-        }
+    const handleEditActivity = (activity_id) => {
+        navigate(`/activities/${activity_id}/edit`, { state: { requestedUser_id: user_id } });
     }; 
-
-    const handleEditActivity = (activity_id, user_id) => {
-        
-    }
 
     console.log("userUploads: ", userUploads);
 
@@ -49,10 +43,9 @@ function MyUploads({ data }){
             <li key={activity.activity_id}>
                 <UserActivityList 
                     activity={activity}  
-                    onDeleteActivity={handleRemoveActivity}
+                    onClick={handleEditActivity}
                     icon={<FaEdit />}
                     buttonWord='Edit'
-                    onEdit={handleEditActivity}
                 />
             </li>
         ))       

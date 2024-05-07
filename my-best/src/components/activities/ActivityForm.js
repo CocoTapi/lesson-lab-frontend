@@ -28,6 +28,10 @@ function ActivityForm({ existingTags, method, activity }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
 
+    //access user_id from user upload page
+    const { requestedUser_id } = location.state || {};
+    //TODO: delete button
+
     let defaultLinks = '';
     if(activity && activity.links !== "null") defaultLinks = activity.links;
     
@@ -255,11 +259,11 @@ function ActivityForm({ existingTags, method, activity }) {
                
     
                 <div className={classes.right}>
+                    {isSubmitting && <p>Submitting...</p>}
                     <ButtonS colorScheme="primaryBorder" disabled={isSubmitting}  >
                         <h4><FaCheck /></h4>
                         <h4>Submit</h4>
                     </ButtonS>
-                    {isSubmitting && <p>Submitting...</p>}
                 </div>
                 
             </Form>
