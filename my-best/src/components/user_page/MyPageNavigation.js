@@ -43,10 +43,10 @@ function MyPageNavigation(){
                     </NavLink>       
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}/go-to-lists`: '../auth?mode=login'}
+                            to={token ? `/mypage/${user_id}/playlists`: '../auth?mode=login'}
                             end
                         >
-                        Go-to-lists
+                        Playlists
                     </NavLink>
             </nav>
         </header>

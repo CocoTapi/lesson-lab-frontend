@@ -68,7 +68,7 @@ function MyFavorites({ data }){
                        <div className={classes.goToList}>
                             <ButtonM colorScheme="secondary">
                                 <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
-                                <h3>Go-to-list</h3>
+                                <p>Create Playlists</p>
                             </ButtonM>
                        </div>
                     </div>
