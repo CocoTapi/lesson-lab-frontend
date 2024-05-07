@@ -1,7 +1,8 @@
 .frame {
     width: 100%;
     border: 2px solid var(--color-primary-700);
-    border-radius: 20px;   
+    border-radius: 10px;  
+    margin: 0;
 }
 
 .header {

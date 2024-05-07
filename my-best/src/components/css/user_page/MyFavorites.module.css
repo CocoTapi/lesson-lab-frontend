@@ -21,11 +21,22 @@
     width: 295px;
 }
 
+.filter {
+    margin: 0;
+    padding: 0
+}
+
 .goToList {
-    margin: auto;
+    text-align: center; 
+    margin-top: 10%; 
 }
 
 .right {
     width: 884px;
+}
+
+.buttonIcon {
+    display: flex;
+    text-align: center;
 }
 
