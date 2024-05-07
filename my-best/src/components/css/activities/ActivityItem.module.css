@@ -1,3 +1,12 @@
+.main {
+    width:1440px;
+    margin: auto;
+}
+
+.sortBar {
+    padding: 0 30px;
+}
+
 .accordionDetail {
     display: flex;
     flex-wrap: wrap;

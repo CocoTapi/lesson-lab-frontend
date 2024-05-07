@@ -18,12 +18,14 @@ function MainNavigation() {
                 <NavLink
                     to="/"
                     className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                    end
                 >
                     Home
                 </NavLink>
                 <NavLink
                     to="/activities"
                     className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                    end
                 >
                     Activities
                 </NavLink>
@@ -31,6 +33,7 @@ function MainNavigation() {
                     <NavLink
                         to={`/mypage/${user_id}`}
                         className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                        end
                         >
                             My Page
                     </NavLink>

@@ -21,12 +21,14 @@ function MyPageNavigation(){
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
                             to={token ? `/mypage/${user_id}`: '../auth?mode=login'}
+                            end
                         >
                            Profile
                     </NavLink>
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
                             to={token ? `/mypage/${user_id}/favorites`: '../auth?mode=login'}
+                            end
                     >
                             <h4><GoHeartFill /></h4>
                             Likes
@@ -34,6 +36,7 @@ function MyPageNavigation(){
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
                             to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
+                            end
                         >
                         My Uploads
 
@@ -41,6 +44,7 @@ function MyPageNavigation(){
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
                             to={token ? `/mypage/${user_id}/go-to-lists`: '../auth?mode=login'}
+                            end
                         >
                         Go-to-lists
                     </NavLink>

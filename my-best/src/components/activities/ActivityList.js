@@ -18,7 +18,7 @@ function ActivityList({ activities }){
                 <SortBar onSortChange={setSortOption} onSearchTermChange={setSearchterm} search='true' />
             </div>
             <div className={classes.frame}>
-                <div>
+                <div className={classes.filter}>
                     <Filter />
                 </div>
                 <div className={classes.right}>
