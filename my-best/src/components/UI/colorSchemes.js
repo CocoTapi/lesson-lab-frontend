@@ -1,3 +1,4 @@
+
 export const colorSchemes = {
     primary: {
         textColor: 'white',
@@ -9,15 +10,20 @@ export const colorSchemes = {
         backgroundColor: 'white',
         borderColor: 'var(--color-primary-700)',
     },
+    primaryLight: {
+        textColor: 'black',
+        backgroundColor: 'var(--color-primary-300)',
+        borderColor: 'var(--color-primary-700)'
+    },
     secondary: {
         textColor: 'black',
         backgroundColor: 'var(--color-secondary-500)',
         borderColor: 'var(--color-secondary-500)'
     }, 
     secondaryBorder: {
-        textColor: 'var(--color-secondary-500)',
+        textColor: 'var(--color-secondary-600)',
         backgroundColor: 'white',
-        borderColor: 'var(--color-secondary-500)' 
+        borderColor: 'var(--color-secondary-600)' 
     },
     grey: {
         textColor: 'black',

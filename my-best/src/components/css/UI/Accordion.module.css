@@ -1,6 +1,7 @@
 .frame {
     /* change width to 100% later */
-    width: 742px;
+    /* width: 742px; */
+    width: 100%;
     border: 2px solid var(--color-primary-700);
     border-radius: 20px;   
 }

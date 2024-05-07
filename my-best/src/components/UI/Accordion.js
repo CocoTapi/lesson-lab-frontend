@@ -32,6 +32,7 @@ function Accordion ({
     const handleClick = () => {
         setExpanded(!expanded);
     }
+    
 
     return (
         <div 

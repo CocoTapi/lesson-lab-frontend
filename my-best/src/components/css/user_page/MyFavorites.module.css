@@ -1,0 +1,31 @@
+.frame {
+    width: 1216px;
+    margin: auto;
+    margin-top: 0;
+}
+
+.sortBar {
+    padding-top: 50px;
+}
+
+.contents {
+    width: 1216px;
+    margin: auto;
+    margin-top: 0;
+    margin-left: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    width: 295px;
+}
+
+.goToList {
+    margin: auto;
+}
+
+.right {
+    width: 884px;
+}
+

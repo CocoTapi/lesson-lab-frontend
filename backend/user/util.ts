@@ -33,7 +33,17 @@ export function getUserFavoritesQuery(){
             a.summary, 
             d.duration_title AS duration, 
             age.age_group_title AS age_group,
-            ARRAY_AGG(tag_title) AS tags
+            ARRAY_AGG(tag_title) AS tags,
+            a.objectives,
+            a.materials,
+            a.instructions,
+            a.links,
+            CAST(
+                (SELECT COUNT(*)
+                 FROM user_favorites uf
+                 WHERE uf.activity_id = a.activity_id
+                ) AS INTEGER
+            ) AS like_count
         FROM 
             activities AS a 
             JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
@@ -51,7 +61,11 @@ export function getUserFavoritesQuery(){
             a.title, 
             a.summary, 
             d.duration_title,
-            age.age_group_title
+            age.age_group_title,
+            a.objectives,
+            a.materials,
+            a.instructions,
+            a.links
     `;
 
     return query;

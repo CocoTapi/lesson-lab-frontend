@@ -74,6 +74,27 @@ function UserActivityList(props){
     
 
     return (
+            // <div className={classes.frame}>
+            //     <div className={classes.sortBar}>
+            //         <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
+            //     </div>
+            //     <div className={classes.contents}>
+            //         <div className={classes.left}>
+            //             <div>
+            //                 <Filter />
+            //             </div>
+            //            <div className={classes.goToList}>
+            //                 <ButtonM colorScheme="secondary">
+            //                     <h3><MdOutlineAddToPhotos /></h3>
+            //                     <h3>Go-to-list</h3>
+            //                 </ButtonM>
+            //            </div>
+            //         </div>
+            //         <div className={classes.right}>
+            //             {content}
+            //         </div>
+            //     </div>
+            // </div>
         <div>
         <h1>{props.title}</h1>
         <ul>
