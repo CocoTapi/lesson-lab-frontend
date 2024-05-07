@@ -1,5 +1,5 @@
 .bar {
-    height: 44px;
+    height: 70px;
     width: 100%;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -9,21 +9,39 @@
 
 .bar h1 {
     font-size: 16px;
-    padding: 0 10px
+    padding: 0 12px
     
 }
 
 .formSelect {
     width: 225px;
-    height: 30px; /* specific height instead of percentage */
+    height: 35px; /* specific height instead of percentage */
     line-height: 25px; /* aligning line height with the height for vertical centering */
     text-align: center;
     background-color: white;
-    border-radius: 0.7rem;   
+    border-radius: 10px;   
     border: 2px solid var(--color-primary-900); /* Optional: Adds a border that might make it look more button-like */
     padding: 0 15px; /* Padding for better text visibility */
     cursor: pointer; /* Changes the cursor to indicate this is a clickable item */
 }
+
+.right {
+    margin-left: auto;
+}
+
+.inputFrame {
+    display: flex;
+    align-items: center;
+    width: 277px;
+    height: 35px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid var(--color-primary-900);
+    overflow: hidden;
+    margin-right: 15px;
+    padding: 0 10px;
+    font-size: 16px;
+  }
 
 
 

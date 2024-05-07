@@ -1,16 +1,4 @@
-.inputFrame {
-  display: flex;
-  align-items: center;
-  width: 277px;
-  height: 50px;
-  background-color: white;
-  border-radius: 10px;
-  border: 2px solid var(--color-grey-400);
-  overflow: hidden;
-  margin-right: 30px;
-  padding: 0 20px;
-  font-size: 20px;
-}
+
 
 /* .icon {
   padding: 0 10px;

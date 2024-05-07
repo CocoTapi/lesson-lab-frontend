@@ -6,7 +6,8 @@ import SortBar from '../UI/SortBar';
 
 
 function ActivityList({ activities }){
-    const [sortOption, setSortOption] = useState('shortToLong'); 
+    const [ sortOption, setSortOption ] = useState('shortToLong'); 
+    const [ searchTerm, setSearchterm ] = useState('');
 
     //TODO: handle sortOption
 
@@ -17,7 +18,7 @@ function ActivityList({ activities }){
                 <Filter />
             </div>
             <div className={classes.right}>
-                <SortBar onSortChange={setSortOption} />
+                <SortBar onSortChange={setSortOption} onSearchTermChange={setSearchterm} search='true' />
                 <ul className={classes.list}>
                     {activities.map((activity) => (
                         <li key={activity.activity_id}>
