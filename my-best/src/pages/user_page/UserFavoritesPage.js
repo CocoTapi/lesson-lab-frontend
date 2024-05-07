@@ -78,6 +78,6 @@ export async function action({ request }) {
         throw json({message: "Could not remove favorite activity."}, { status: 500})
     }
 
-    return redirect(`/mypage/${user_id}`);
+    return redirect(`/mypage/${user_id}/favorites`);
 }
 

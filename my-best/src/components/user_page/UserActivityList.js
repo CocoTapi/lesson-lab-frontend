@@ -6,10 +6,10 @@ import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
 import { IoTrashBinSharp } from 'react-icons/io5';
 
-function UserActivityList({ activity, onDeleteActivity }){
+function UserActivityList({ activity, onClick, icon, buttonWord }){
 
-    const removeHandler = (id, title) => {
-        onDeleteActivity(id, title);
+    const handleClick = (id, title) => {
+        onClick(id, title)
     }
 
 
@@ -75,9 +75,9 @@ function UserActivityList({ activity, onDeleteActivity }){
 
    
     const buttonChildren = (
-        <ButtonS onClick={removeHandler} >
-            <p><IoTrashBinSharp /></p>
-            <p>Remove</p>
+        <ButtonS onClick={() => handleClick(activity.activity_id, activity.title)} >
+            <p>{icon}</p>
+            <p>{buttonWord}</p>
         </ButtonS>
     )
     

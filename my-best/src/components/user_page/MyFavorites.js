@@ -7,6 +7,8 @@ import File from "../UI/File";
 import SortBar from "../UI/SortBar";
 import Filter from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
+import { IoTrashBinSharp } from 'react-icons/io5';
+
 
 
 function MyFavorites({ data }){
@@ -24,11 +26,11 @@ function MyFavorites({ data }){
     const [ sortOption, setSortOption ] = useState('shortToLong');
     //TODO: sort 
 
-    const handleRemoveActivity = (id, title) => {
+    const handleRemoveActivity = (activity_id, title) => {
         const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
-
+    
         if (proceed) {
-            submit({ activity_id: id, user_id: user_id}, { method: "DELETE" });
+            submit({ activity_id, user_id}, { method: "DELETE" });
         }
     }; 
 
@@ -43,7 +45,9 @@ function MyFavorites({ data }){
             <li key={activity.activity_id}>
                 <UserActivityList 
                     activity={activity}  
-                    onDeleteActivity={handleRemoveActivity}
+                    onClick={handleRemoveActivity}
+                    icon={<IoTrashBinSharp />}
+                    buttonWord='Remove'
                 />
             </li>
         ))       
