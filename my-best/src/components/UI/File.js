@@ -1,4 +1,4 @@
-import classes from '../css/user_page/File.module.css'
+import classes from '../css/UI/File.module.css'
 
 function File({children}){
     return (
