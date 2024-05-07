@@ -45,7 +45,7 @@ function ActivityItem({ activity, activities }) {
                 <ul>
                     {activities.map((item) => (
                         <li key={item.activity_id}>
-                            <SummaryCard activity={item} link={`./activities/${activity.activity_id}`}/>
+                            <SummaryCard activity={item} link={`../${item.activity_id}`}/>
                         </li>
                     ))}
                 </ul>

@@ -13,22 +13,27 @@ function ActivityList({ activities }){
 
    
     return (
-        <div className={classes.frame}>
-            <div>
-                <Filter />
-            </div>
-            <div className={classes.right}>
+        <div className={classes.main}>
+            <div className={classes.sortBar}>
                 <SortBar onSortChange={setSortOption} onSearchTermChange={setSearchterm} search='true' />
-                <ul className={classes.list}>
-                    {activities.map((activity) => (
-                        <li key={activity.activity_id}>
-                            <SummaryCard activity={activity} link={`../activities/${activity.activity_id}`}/>
-                        </li>
-                    ))}
-        </ul>
             </div>
-           
+            <div className={classes.frame}>
+                <div>
+                    <Filter />
+                </div>
+                <div className={classes.right}>
+                    <ul className={classes.list}>
+                        {activities.map((activity) => (
+                            <li key={activity.activity_id}>
+                                <SummaryCard activity={activity} link={`../activities/${activity.activity_id}`}/>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            
+            </div>
         </div>
+       
     )
 };
 

@@ -1,16 +1,17 @@
-
- .card {
+.card {
     padding-top: 15px;
     width: 100%;
+    color: black;
 }
 
 .card a {
-    text-decoration: none;
     color: black;
 }
 
 .duration {
     padding-bottom: 15px;
+    display: flex;
+    justify-content: end;
 }
 .card h2 {
     font-size: 24px;
