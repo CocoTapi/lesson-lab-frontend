@@ -47,10 +47,21 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const userProfile = await getUserProfile(verifiedEmail);
     const verifiedId = userProfile.user_id;
     if (id !== verifiedId) throw Error("Auth Error. Token and user_id doesn't match")
-    
-    const userFavorites = await getUserFavorites(verifiedId);
 
-    res.status(200).json({ userProfile: userProfile, userFavorites: userFavorites });
+    res.status(200).json({ userProfile: userProfile });
+}))
+
+//get user uploads
+router.get('/:id/favorites', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const user_id: number = parseInt(req.params.id);
+
+    const userFavorites = await getUserFavorites(user_id);
+
+    res.status(200).json({ userFavorites: userFavorites });
 }))
 
 //get user uploads

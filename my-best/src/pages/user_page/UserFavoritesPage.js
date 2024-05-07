@@ -7,7 +7,7 @@ import MyFavorites from "../../components/user_page/MyFavorites";
 
 
 function UserFavoritesPage(){
-    const { data } = useRouteLoaderData('user-detail');
+    const { data } = useRouteLoaderData('user-favorites');
     console.log("data:", data);
     return (
         <>
@@ -24,7 +24,7 @@ export default UserFavoritesPage;
 
 async function loadUserDetail(id) {
     const token = getAuthToken();
-    const response = await fetch(`${API_URL}/user/${id}`, {
+    const response = await fetch(`${API_URL}/user/${id}/favorites`, {
         method: "GET",
         headers: {
             'Content-Type' : 'application/json',
@@ -38,11 +38,11 @@ async function loadUserDetail(id) {
 
     const resData = await response.json();
     //console.log("resData:", resData)
-    const userProfile = resData.userProfile;
+   
     const userFavorites = resData.userFavorites
-    console.log("userProfile:", userProfile);
+    
     console.log("userFavorites:", userFavorites)
-    return { userProfile, userFavorites };
+    return { userFavorites };
 }
 
 export async function loader({ request, params }){

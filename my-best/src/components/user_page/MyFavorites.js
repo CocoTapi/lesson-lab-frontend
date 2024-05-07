@@ -1,6 +1,6 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit } from "react-router-dom";
+import { useSubmit, useRouteLoaderData } from "react-router-dom";
 import { useState } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
@@ -10,10 +10,16 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 
 
 function MyFavorites({ data }){
-    console.log(data)
-    const userProfile = data.userProfile;
     const userFavorites = data.userFavorites;
-    const user_id = userProfile.user_id;
+    const user = useRouteLoaderData('root');
+    let token;
+    let user_name;
+    let user_id;
+    if(user) {
+        token = user.token;
+        user_name = user.user_name
+        user_id = user.user_id;
+    }
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
     //TODO: sort 
