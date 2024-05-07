@@ -16,15 +16,13 @@ const db = Database.db;
 const saltRounds = parseInt(process.env.SALTROUNDS as string);
 
 export async function getUserDataFromEmail(email: string) {
+    console.log("email:", email)
     const minimumUserData = `
         SELECT 
             u.user_id,
-            u.user_name,
-            ARRAY_AGG(uf.activity_id) AS favorites
+            u.user_name
         FROM 
             users AS u
-        JOIN    
-            user_favorites AS uf ON u.user_id = uf.user_id
         WHERE 
             email = $1
         GROUP BY 
@@ -35,6 +33,7 @@ export async function getUserDataFromEmail(email: string) {
     if (!(result.rows.length > 0)) throw Error("User doesn't exist.");
 
     const userInfo = result.rows[0];
+    console.log("data:", userInfo);
     return userInfo;
 }
 

@@ -8,6 +8,8 @@ import { FaEdit } from "react-icons/fa";
 function Profile({ data }){
     const userProfile = data.userProfile;
     const user_id = userProfile.user_id; 
+
+    console.log(userProfile);
     
     return (
         <File>
@@ -22,12 +24,12 @@ function Profile({ data }){
                         <h3>Last login :</h3>
                     </div>
                     <div className={classes.item}>
-                        <h3>All Might!</h3>
-                        <h3>email@gmail.com</h3>
-                        <h3>password</h3>
-                        <h3>first name</h3>
-                        <h3>last name</h3>
-                        <h3>04/04/2024</h3>
+                        <h3>{userProfile.user_name}</h3>
+                        <h3>{userProfile.email}</h3>
+                        <h3>●●●●●●●</h3>
+                        <h3>{userProfile.first_name}</h3>
+                        <h3>{userProfile.last_name}</h3>
+                        <h3>{userProfile.last_login}</h3>
                     </div>                           
                 </div>
                 <div className={classes.editButton}>
