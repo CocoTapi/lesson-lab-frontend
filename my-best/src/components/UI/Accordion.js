@@ -55,10 +55,6 @@ function Accordion ({
             </div>
             {expanded && 
                 <div className={classes.detailFrame}>
-                    {/* <div className={classes.detailBox}>
-                        <div className={classes.detailLeft}>{activityLeft}</div>
-                        <div className={classes.detailRight}>{activityRight}</div>
-                    </div> */}
                     {activityDetail}
                     <div className={classes.detailButton}>
                         {buttonChildren}

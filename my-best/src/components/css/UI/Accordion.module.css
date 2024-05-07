@@ -1,6 +1,4 @@
 .frame {
-    /* change width to 100% later */
-    /* width: 742px; */
     width: 100%;
     border: 2px solid var(--color-primary-700);
     border-radius: 20px;   
@@ -13,7 +11,6 @@
 
 
 .topImage {
-    /* padding-top: 3.3%; */
     display: flex;
     align-items: center;
     padding-right: 4%;
@@ -29,11 +26,8 @@
 }
 
 .detailFrame {
-    padding: 0 2% 2% 2%;
-}
-
-.headerItem {
-    
+    margin-top: 0;
+    padding: 0 2% 2% 2.5%;
 }
 
 
@@ -41,9 +35,19 @@
     display: flex;
     justify-content: end;
     margin-right: 6%;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
+.headerItem {
+    margin: 0;
+    padding: 0;
+}
+
+.headerItem h2 {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 2%;
+}
 
 
 
