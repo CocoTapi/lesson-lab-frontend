@@ -121,12 +121,17 @@ export const updateProfileQuery: string = `
 export function getUserPlaylistsQuery() {
     const query = `
         SELECT 
+            p.playlist_id,  
             u.user_name,
             p.playlist_title,
             ARRAY_AGG(a.activity_id) AS activity_ids,
             ARRAY_AGG(a.title) AS activity_titles,
             ARRAY_AGG(a.summary) AS summaries,
             ARRAY_AGG(d.duration_title) AS durations,
+            ARRAY_AGG(a.instructions) AS instructions,
+            ARRAY_AGG(a.objectives) AS objectives,
+            ARRAY_AGG(a.materials) AS materials,
+            ARRAY_AGG(a.links) AS links,
             SUM(d.duration_title) AS total_duration
         FROM 
             users AS u
@@ -143,6 +148,7 @@ export function getUserPlaylistsQuery() {
         WHERE 
             u.user_id = $1
         GROUP BY 
+            p.playlist_id, 
             u.user_name, 
             p.playlist_title
         LIMIT 10

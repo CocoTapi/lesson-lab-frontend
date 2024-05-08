@@ -27,6 +27,7 @@
 
 .right {
     margin-left: auto;
+    margin-right: 15px;
 }
 
 .inputFrame {
@@ -38,10 +39,16 @@
     border-radius: 10px;
     border: 2px solid var(--color-primary-900);
     overflow: hidden;
-    margin-right: 15px;
     padding: 0 10px;
     font-size: 16px;
   }
+
+  .buttonIcon {
+    display: flex;
+    text-align: center;
+    padding-right: 0;
+    margin-right: 0.1rem
+}
 
 
 

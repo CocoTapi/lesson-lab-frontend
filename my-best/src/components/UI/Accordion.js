@@ -8,7 +8,7 @@ const colors = {
         backgroundColor: 'white'
     },
     grey: {
-        backgroundColor: 'var(--color-grey-100)'
+        backgroundColor: 'var(--color-grey-300)'
     }
 }
 

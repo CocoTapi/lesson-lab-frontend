@@ -1,8 +1,19 @@
-import { useState } from 'react';
 import classes from '../css/UI/SortBar.module.css'
 import { colorSchemes } from './colorSchemes';
+import ButtonM from './ButtonM';
 
-function SortBar ({ colorScheme = 'primary', onSortChange, search = 'false', onSearchTermChange }) {
+function SortBar (
+    { 
+    colorScheme = 'primary', 
+    onSortChange, 
+    search = 'false', 
+    onSearchTermChange,
+    button,
+    icon, 
+    buttonWord,
+    onClick,
+    buttonColor
+}) {
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primary;
     
     const barStyle = {
@@ -40,6 +51,14 @@ function SortBar ({ colorScheme = 'primary', onSortChange, search = 'false', onS
                 <form className={classes.right}>
                     <input className={classes.inputFrame} onChange={handleSearchTermChange} placeholder="Search"/>
                 </form>
+            }
+            {button === 'ButtonM' &&
+            <div className={classes.right}>
+                 <ButtonM colorScheme={buttonColor} onClick={onClick} >
+                    <h2 className={classes.buttonIcon}>{icon}</h2>
+                    <p>{buttonWord}</p>
+                </ButtonM>
+            </div>
             }
         </div>
     )

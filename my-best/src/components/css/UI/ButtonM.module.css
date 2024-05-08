@@ -13,6 +13,13 @@
     font-weight: 600;
 }
 
+.buttonIcon {
+    display: flex;
+    text-align: center;
+    padding-right: 0;
+    margin-right: 0.1rem
+}
+
 .button:hover,
 .button:active {
     border-color: #D7B7FF;

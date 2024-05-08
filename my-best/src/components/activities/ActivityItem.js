@@ -103,9 +103,12 @@ function ActivityItem({ activity, activities }) {
                                     <div className={classes.rightItem}>
                                         <p>References :</p>
                                         <p className={classes.reference}>
-                                            <Link to={activity.links}>
-                                                {activity.links}
-                                            </Link>
+                                            {activity.links ? 
+                                                <Link to={activity.links}>
+                                                    activity.links
+                                                </Link> 
+                                            : <p>none</p>
+                                            }
                                         </p>
                                     </div>
                                 </div>

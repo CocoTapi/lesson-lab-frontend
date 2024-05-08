@@ -61,9 +61,12 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
                 <div className={classes.detailItem}>
                     <p className={classes.labelTitle}>References :</p>
                     <p className={classes.accordionReference}>
-                        <Link to={activity.links}>
-                            {activity.links}
-                        </Link>
+                        {activity.links ? 
+                            <Link to={activity.links}>
+                                activity.links
+                            </Link> 
+                        : <p>none</p>
+                        }
                     </p>
                 </div>
                 {activity.tags.map((tag) => (

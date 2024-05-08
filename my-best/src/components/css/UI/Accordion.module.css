@@ -8,6 +8,7 @@
 .header {
     display: flex;
     padding: 2%;
+    align-items: center;
 }
 
 
@@ -42,6 +43,7 @@
 .headerItem {
     margin: 0;
     padding: 0;
+    
 }
 
 .headerItem h2 {

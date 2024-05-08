@@ -36,12 +36,16 @@ async function loadUserPlaylists(id) {
     }
 
     const resData = await response.json();
-    //console.log("resData:", resData)
+
+    console.log("resData:", resData)
    
-    const userPlaylists = resData.userPlaylists
+    const userPlaylists = resData.userPlaylists;
+    const formattedActivityData = resData.formattedActivityData;
     
-    console.log("userPlaylists:", userPlaylists)
-    return { userPlaylists };
+    console.log("userPlaylists:", userPlaylists);
+    console.log("formattedActivityData: ", formattedActivityData);
+
+    return { userPlaylists, formattedActivityData };
 }
 
 export async function loader({ request, params }){
@@ -56,6 +60,15 @@ export async function loader({ request, params }){
 export async function action({ request }) {
     const method = request.method;
     const formData = await request.formData()
+
+    //remove activity from playlist
+    if (method === 'DELETE') {
+
+    }
+
+    if (method === 'POST') {
+
+    }
     const activity_id = formData.get("activity_id");
     const user_id = formData.get("user_id");
     const token = getAuthToken();

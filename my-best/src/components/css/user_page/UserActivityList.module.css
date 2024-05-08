@@ -36,7 +36,6 @@ p {
 .group {
     display: flex;
     box-sizing: border-box;
-    padding-bottom: 10px;
 }
 
 .info {
@@ -51,3 +50,4 @@ p {
 .detailItem {
     padding-bottom: 10px;
 }
+
