@@ -86,9 +86,9 @@ router.get('/:id/playlists', asyncHandler(async (req, res) => {
 
     const user_id: number = parseInt(req.params.id);
 
-    const userPlaylists = await getUserPlaylists(user_id);
+    const playlistActivityCombo = await getUserPlaylists(user_id);
 
-    res.status(200).json({ userPlaylists: userPlaylists });
+    res.status(200).json( playlistActivityCombo );
 }))
 
 

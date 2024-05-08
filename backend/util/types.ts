@@ -61,6 +61,20 @@ export interface FavoritesInfo {
     [key: string]: number
 }
 
+export interface UserPlaylist {
+    user_name: string;
+    playlist_title: string;
+    activity_ids: number[];
+    activity_titles: string[];
+    summaries: string[];
+    durations: number[];
+    total_duration: string;
+}
+
+export interface UserPlaylistsContainer {
+    userPlaylists: UserPlaylist[];
+}
+
 
 
 

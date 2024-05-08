@@ -1,3 +1,5 @@
+import { UserPlaylist } from "../util/types";
+
 export const userProfileQuery: string = `
     SELECT 
         user_id,
@@ -23,7 +25,7 @@ export const countSameTextQuery: string = `
         user_id != $2;
 `;
 
-export function getUserFavoritesQuery(){
+export function getUserFavoritesQuery() {
     const query = `
         SELECT 
             uf.user_id,
@@ -71,7 +73,7 @@ export function getUserFavoritesQuery(){
     return query;
 }
 
-export function getUserUploadsQuery(){
+export function getUserUploadsQuery() {
     const query = `
         SELECT 
             a.activity_id,
@@ -116,7 +118,7 @@ export const updateProfileQuery: string = `
         email = $7    
     `;
 
-export function getUserPlaylistsQuery(){
+export function getUserPlaylistsQuery() {
     const query = `
         SELECT 
             u.user_name,
@@ -147,5 +149,23 @@ export function getUserPlaylistsQuery(){
     `;
 
     return query;
+}
+
+export async function reformatActivityData(playlists: UserPlaylist[]) {
+    const activities: any = [];
+    console.log(playlists)
+    playlists.forEach((playlist: UserPlaylist) => {
+        const { user_name, playlist_title, activity_ids, activity_titles, summaries, durations } = playlist;
+        activity_ids.forEach((activity_id, index) => {
+            activities.push({
+                activity_id,
+                activity_title: activity_titles[index],
+                activity_summary: summaries[index],
+                activity_duration: durations[index]
+            });
+        });
+    });
+
+    return activities;
 }
 

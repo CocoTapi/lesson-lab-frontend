@@ -12,13 +12,7 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 import classes from '../css/user_page/Playlists.module.css';
 
 function Playlists ({ data }) {
-    //const userPlaylists = data.userPlaylists;
-    const userPlaylists =[{
-        title: 'playlist 1',
-        activity_list: [],
-        total_duration: 20
-    }]
-    
+    const userPlaylists = data.userPlaylists;
     const user = useRouteLoaderData('root');
     let token;
     let user_name;

@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { ErrorMessage, FavoritesInfo, ProfileInfo } from "../util/types";
+import { ErrorMessage, FavoritesInfo, ProfileInfo, UserPlaylist } from "../util/types";
 import env from 'dotenv';
 import { isValidText } from "../util/validation";
 import {
@@ -9,7 +9,8 @@ import {
     userProfileQuery,
     countSameTextQuery,
     updateProfileQuery,
-    getUserPlaylistsQuery
+    getUserPlaylistsQuery,
+    reformatActivityData
 } from "./util";
 
 env.config();
@@ -86,13 +87,18 @@ export async function getUserPlaylists(user_id: number) {
 
     const result = await db.query(userPlaylistsQuery, [user_id]);
 
-    let userPlaylists = {};
+    let userPlaylistsResult = {};
 
     //when user does not have any playlists
-    if (result.rows.length === 0) return userPlaylists;
+    if (result.rows.length === 0) return userPlaylistsResult;
     
-    userPlaylists = result.rows;
-    return userPlaylists;
+    userPlaylistsResult = result.rows;
+
+    const userPlaylists: UserPlaylist[] = Object.values(userPlaylistsResult) as UserPlaylist[];
+
+    const formattedActivityData = await reformatActivityData(userPlaylists);
+
+    return {userPlaylists, formattedActivityData};
 }
 
 export async function checkUserNameValidation(formData: string, user_id: number) {

@@ -7,16 +7,15 @@ import Playlists from "../../components/user_page/Playlists";
 
 
 function UserPlaylistsPage(){
-    //const { data } = useRouteLoaderData('user-playlists');
+    const { data } = useRouteLoaderData('user-playlists');
     return (
-        <div><Playlists /></div>
-        // <>
-        //     <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
-        //         <Await resolve={data}>
-        //             {(loadedData) => <Playlists data={loadedData} />}
-        //         </Await>
-        //     </Suspense>
-        // </>
+        <>
+            <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
+                <Await resolve={data}>
+                    {(loadedData) => <Playlists data={loadedData} />}
+                </Await>
+            </Suspense>
+        </>
     )
 };
 
@@ -24,25 +23,25 @@ export default UserPlaylistsPage;
 
 async function loadUserPlaylists(id) {
     const token = getAuthToken();
-    // const response = await fetch(`${API_URL}/user/${id}/favorites`, {
-    //     method: "GET",
-    //     headers: {
-    //         'Content-Type' : 'application/json',
-    //         'Authorization': `Bearer ${token}`
-    //     }
-    // });
+    const response = await fetch(`${API_URL}/user/${id}/playlists`, {
+        method: "GET",
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
 
-    // if(!response.ok) {
-    //     throw json({message: "Could not fetch user playlists."}, { status: 500})
-    // }
+    if(!response.ok) {
+        throw json({message: "Could not fetch user playlists."}, { status: 500})
+    }
 
-    // const resData = await response.json();
-    // //console.log("resData:", resData)
+    const resData = await response.json();
+    //console.log("resData:", resData)
    
-    // const userFavorites = resData.userFavorites
+    const userPlaylists = resData.userPlaylists
     
-    // console.log("userFavorites:", userFavorites)
-    // return { userPlaylists };
+    console.log("userPlaylists:", userPlaylists)
+    return { userPlaylists };
 }
 
 export async function loader({ request, params }){
