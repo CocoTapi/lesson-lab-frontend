@@ -8,7 +8,8 @@ import {
     getUserUploadsQuery,
     userProfileQuery,
     countSameTextQuery,
-    updateProfileQuery
+    updateProfileQuery,
+    getUserPlaylistsQuery
 } from "./util";
 
 env.config();
@@ -75,8 +76,23 @@ export async function getUserUploads(user_id: number) {
 
     //when user does not have any uploads
     if (result.rows.length === 0) return userUploads;
+    
     userUploads = result.rows;
     return userUploads;
+}
+
+export async function getUserPlaylists(user_id: number) {
+    const userPlaylistsQuery = getUserPlaylistsQuery();
+
+    const result = await db.query(userPlaylistsQuery, [user_id]);
+
+    let userPlaylists = {};
+
+    //when user does not have any playlists
+    if (result.rows.length === 0) return userPlaylists;
+    
+    userPlaylists = result.rows;
+    return userPlaylists;
 }
 
 export async function checkUserNameValidation(formData: string, user_id: number) {

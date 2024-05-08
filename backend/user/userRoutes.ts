@@ -11,7 +11,8 @@ import {
     checkUserNameValidation,
     addFavorites,
     getUserUploads,
-    removeFavoriteActivity 
+    removeFavoriteActivity,
+    getUserPlaylists 
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -51,7 +52,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
     res.status(200).json({ userProfile: userProfile });
 }))
 
-//get user uploads
+//get user favorites
 router.get('/:id/favorites', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
@@ -76,6 +77,21 @@ router.get('/:id/uploads', asyncHandler(async (req, res) => {
 
     res.status(200).json({ userUploads: userUploads });
 }))
+
+//get user playlists
+router.get('/:id/playlists', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const user_id: number = parseInt(req.params.id);
+
+    const userPlaylists = await getUserPlaylists(user_id);
+
+    res.status(200).json({ userPlaylists: userPlaylists });
+}))
+
+
 
 //add user's favorite activity
 router.post('/', asyncHandler(async (req, res) => {

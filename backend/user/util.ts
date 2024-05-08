@@ -84,7 +84,7 @@ export function getUserUploadsQuery(){
         FROM 
             activities AS a 
             JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-            JOIN durations As d ON d.duration_id = ad.duration_id 
+            JOIN durations AS d ON d.duration_id = ad.duration_id 
             JOIN activity_tags As at ON a.activity_id = at.activity_id 
             JOIN tags AS t ON t.tag_id = at.tag_id 
             JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
@@ -115,4 +115,37 @@ export const updateProfileQuery: string = `
     WHERE
         email = $7    
     `;
+
+export function getUserPlaylistsQuery(){
+    const query = `
+        SELECT 
+            u.user_name,
+            p.playlist_title,
+            ARRAY_AGG(a.activity_id) AS activity_ids,
+            ARRAY_AGG(a.title) AS activity_titles,
+            ARRAY_AGG(a.summary) AS summaries,
+            ARRAY_AGG(d.duration_title) AS durations,
+            SUM(d.duration_title) AS total_duration
+        FROM 
+            users AS u
+        JOIN 
+            playlists AS p ON u.user_id = p.user_id
+        JOIN 
+            playlist_activities AS pa ON p.playlist_id = pa.playlist_id
+        JOIN 
+            activities AS a ON pa.activity_id = a.activity_id
+        JOIN 
+            activity_durations AS ad ON a.activity_id = ad.activity_id 
+        JOIN 
+            durations AS d ON d.duration_id = ad.duration_id 
+        WHERE 
+            u.user_id = $1
+        GROUP BY 
+            u.user_name, 
+            p.playlist_title
+        LIMIT 10
+    `;
+
+    return query;
+}
 
