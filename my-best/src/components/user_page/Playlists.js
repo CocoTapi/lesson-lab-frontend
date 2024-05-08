@@ -178,9 +178,9 @@ function Playlists ({ data }) {
                                headerTitle={
                                     <Form className={classes.playlistForm} method="POST">
                                         <input 
-                                            id='playlistTitle' 
+                                            id='playlist_title' 
                                             type='text' 
-                                            name='playlistTitle'  
+                                            name='playlist_title'  
                                             placeholder="Playlist title"
                                         />
 
