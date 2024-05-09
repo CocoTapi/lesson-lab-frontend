@@ -50,7 +50,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
     const verifiedId = userProfile.user_id;
     if (id !== verifiedId) throw Error("Auth Error. Token and user_id doesn't match")
 
-    res.status(200).json({ userProfile: userProfile });
+    res.status(200).json({ userProfile });
 }))
 
 //get user favorites
@@ -63,7 +63,7 @@ router.get('/:id/favorites', asyncHandler(async (req, res) => {
 
     const userFavorites = await getUserFavorites(user_id);
 
-    res.status(200).json({ userFavorites: userFavorites });
+    res.status(200).json({ userFavorites });
 }))
 
 //get user uploads
@@ -76,7 +76,7 @@ router.get('/:id/uploads', asyncHandler(async (req, res) => {
 
     const userUploads = await getUserUploads(user_id);
 
-    res.status(200).json({ userUploads: userUploads });
+    res.status(200).json({ userUploads });
 }))
 
 //get user playlists
@@ -87,9 +87,9 @@ router.get('/:id/playlists', asyncHandler(async (req, res) => {
 
     const user_id: number = parseInt(req.params.id);
 
-    const playlistActivityCombo = await getUserPlaylists(user_id);
+    const userPlaylists = await getUserPlaylists(user_id);
 
-    res.status(200).json( playlistActivityCombo );
+    res.status(200).json({ userPlaylists });
 }))
 
 //add user's favorite activity

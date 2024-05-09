@@ -97,9 +97,9 @@ export async function getUserPlaylists(user_id: number) {
 
     const userPlaylists: UserPlaylist[] = Object.values(userPlaylistsResult) as UserPlaylist[];
 
-    const formattedActivityData = await reformatActivityData(userPlaylists);
+    //const formattedActivityData = await reformatActivityData(userPlaylists);
 
-    return {userPlaylists, formattedActivityData};
+    return userPlaylists;
 }
 
 export async function checkUserNameValidation(formData: string, user_id: number) {

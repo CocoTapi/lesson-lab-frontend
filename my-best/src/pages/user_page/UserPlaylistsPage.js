@@ -40,12 +40,12 @@ async function loadUserPlaylists(id) {
     console.log("resData:", resData)
    
     const userPlaylists = resData.userPlaylists;
-    const formattedActivityData = resData.formattedActivityData;
+    //const formattedActivityData = resData.formattedActivityData;
     
     console.log("userPlaylists:", userPlaylists);
-    console.log("formattedActivityData: ", formattedActivityData);
+    //console.log("formattedActivityData: ", formattedActivityData);
 
-    return { userPlaylists, formattedActivityData };
+    return { userPlaylists };
 }
 
 export async function loader({ request, params }){
@@ -63,6 +63,9 @@ export async function action({ request }) {
     const formData = await request.formData()
     const user_id = formData.get("user_id");
 
+    console.log("mathod", method);
+    console.log("user_id", user_id);
+
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
@@ -71,23 +74,26 @@ export async function action({ request }) {
         const activity_id = formData.get("activity_id");
         const playlist_id = formData.get("playlist_id");
 
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`;
+
+        bodyContent = { activity_id: activity_id};
     }
 
     //create new playlist
     if (method === 'POST') {
         const playlist_title = formData.get("playlist_title");
 
-        bodyContent = JSON.stringify({ playlist_title: playlist_title}); 
+        bodyContent = { playlist_title: playlist_title}; 
     }
 
     //code here
     const response = await fetch(url, {
-        method: request.method,
+        method: method,
         headers: {
+            'Content-Type' : 'application/json',
             "Authorization": `Bearer ${token}`
         },
-        body: bodyContent
+        body: JSON.stringify(bodyContent)
     });
 
     if (response.status === 422 || response.status === 401) {

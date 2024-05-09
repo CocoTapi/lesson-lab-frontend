@@ -15,7 +15,7 @@ import ButtonS from "../UI/ButtonS";
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
-    const formattedActivityData = data.uformattedActivityData;
+    //const formattedActivityData = data.uformattedActivityData;
     const user = useRouteLoaderData('root');
     let token;
     let user_name;
@@ -68,7 +68,7 @@ function Playlists ({ data }) {
                             <p className={classes.labelTitle}>Total Duration :</p>
                             {userPlaylists[index].total_duration ? 
                                 <p className={classes.info}>{userPlaylists[index].total_duration} mins</p>
-                                : <p className={classes.labelTitle}>0 mins</p>
+                                : <p className={classes.info}> 0 mins</p>
                             }
                         </div>
                     }
@@ -79,7 +79,7 @@ function Playlists ({ data }) {
                     }
                     activityDetail={
                         <ul>
-                            {userPlaylists[index].activity_ids.map((item, i) => (
+                            {userPlaylists[index].activity_ids[0] !== null && userPlaylists[index].activity_ids.map((item, i) => (
                                 <li key={i}>   
                                     <Accordion 
                                         headerTitle={userPlaylists[index].activity_titles[i]}

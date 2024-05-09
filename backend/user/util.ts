@@ -135,15 +135,15 @@ export function getUserPlaylistsQuery() {
             SUM(d.duration_title) AS total_duration
         FROM 
             users AS u
-        JOIN 
+        LEFT JOIN 
             playlists AS p ON u.user_id = p.user_id
-        JOIN 
+        LEFT JOIN 
             playlist_activities AS pa ON p.playlist_id = pa.playlist_id
-        JOIN 
+        LEFT JOIN
             activities AS a ON pa.activity_id = a.activity_id
-        JOIN 
+        LEFT JOIN 
             activity_durations AS ad ON a.activity_id = ad.activity_id 
-        JOIN 
+        LEFT JOIN 
             durations AS d ON d.duration_id = ad.duration_id 
         WHERE 
             u.user_id = $1
