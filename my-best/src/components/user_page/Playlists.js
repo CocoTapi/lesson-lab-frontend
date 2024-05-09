@@ -36,23 +36,26 @@ function Playlists ({ data }) {
         if (proceed) {
             submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
         }
-    }; 
+    };
+    
+    const handleDeletePlaylist = (playlist_id, playlist_title) => {
+        const proceed = window.confirm(`Are you sure you want to delete ${playlist_title}?`);
+    
+        if (proceed) {
+            submit({ user_id, playlist_id }, { method: "DELETE" });
+        }
+    }
 
     const handleAddActivity = (e) => {
         e.preventDefault();
         console.log("add activity!")
+        //TODO:
     }
 
     const handleShowPlaylist = (e) => {
         e.preventDefault();
         setShowPlaylistForm(!showPlaylistForm);
     }
-
-    const buttonChildren = (
-        <button className={classes.plusButton} onClick={handleAddActivity}>
-            <p><MdAddCircle /></p>
-        </button>
-    )
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
@@ -144,7 +147,16 @@ function Playlists ({ data }) {
                             ))}  
                         </ul>
                     }
-                    buttonChildren={buttonChildren}
+                    buttonChildren={
+                        <div>
+                                <button className={classes.plusButton} onClick={handleAddActivity}>
+                                    <p><MdAddCircle /></p>
+                                </button>
+                                <button className={classes.plusButton} onClick={() => handleDeletePlaylist(list.playlist_id, list.playlist_title)}>
+                                    <p><IoTrashBinSharp /></p>
+                                </button>
+                        </div>
+                    }
                 />
             </li>
         ))       

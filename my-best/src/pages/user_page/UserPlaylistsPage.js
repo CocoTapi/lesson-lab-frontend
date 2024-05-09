@@ -69,7 +69,7 @@ export async function action({ request }) {
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
-    //remove activity from playlist
+    //remove activity from playlist or delete playlist
     if (method === 'DELETE') {
         const activity_id = formData.get("activity_id");
         const playlist_id = formData.get("playlist_id");

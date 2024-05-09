@@ -151,6 +151,8 @@ export function getUserPlaylistsQuery() {
             p.playlist_id, 
             u.user_name, 
             p.playlist_title
+        ORDER BY
+			p.playlist_id ASC
         LIMIT 10
     `;
 
