@@ -12,7 +12,8 @@ import {
     addFavorites,
     getUserUploads,
     removeFavoriteActivity,
-    getUserPlaylists 
+    getUserPlaylists,
+    addPlaylist 
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -91,10 +92,8 @@ router.get('/:id/playlists', asyncHandler(async (req, res) => {
     res.status(200).json( playlistActivityCombo );
 }))
 
-
-
 //add user's favorite activity
-router.post('/', asyncHandler(async (req, res) => {
+router.post('/:id/favorites', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
@@ -103,6 +102,19 @@ router.post('/', asyncHandler(async (req, res) => {
 
     await addFavorites(formData);
     res.status(200).json({ message: 'activity in user_favorites successfully updated.'});
+}))
+
+//create new playlist
+router.post('/:id/playlists', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const playlist_title: string = req.body.playlist_title;
+    const user_id: number = parseInt(req.params.id);
+
+    await addPlaylist(playlist_title, user_id);
+    res.status(200).json({ message: 'New playlist added.'});
 }))
 
 //edit user profile

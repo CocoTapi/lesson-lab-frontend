@@ -78,8 +78,6 @@ export async function action({ request }) {
     if (method === 'POST') {
         const playlist_title = formData.get("playlist_title");
 
-        url = `${API_URL}/user/${user_id}/playlists`;
-
         bodyContent = JSON.stringify({ playlist_title: playlist_title}); 
     }
 

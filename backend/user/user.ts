@@ -10,7 +10,8 @@ import {
     countSameTextQuery,
     updateProfileQuery,
     getUserPlaylistsQuery,
-    reformatActivityData
+    reformatActivityData,
+    addPlaylistQuery,
 } from "./util";
 
 env.config();
@@ -178,6 +179,15 @@ export async function addFavorites({ user_id, activity_id, is_favorited }: Favor
     await db.query(query, parameters);
 
     console.log("activity in user_favorites successfully updated")
+}
+
+export async function addPlaylist(playlist_titl: string, user_id: number){
+    const date = new Date();
+    const query: string = addPlaylistQuery;
+
+    await db.query(query, [user_id, playlist_titl, date]);
+
+    console.log("New playlist created.")
 }
 
 export async function removeProfile(user_id: number, email: string) {

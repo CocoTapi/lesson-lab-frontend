@@ -157,6 +157,13 @@ export function getUserPlaylistsQuery() {
     return query;
 }
 
+export const addPlaylistQuery = `
+    INSERT INTO 
+        playlists (user_id, playlist_title, create_date)
+    VALUES
+        ($1, $2, $3)
+`
+
 export async function reformatActivityData(playlists: UserPlaylist[]) {
     const activities: any = [];
     console.log(playlists)
