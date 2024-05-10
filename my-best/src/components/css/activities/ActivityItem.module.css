@@ -7,66 +7,13 @@
     padding: 0 30px;
 }
 
-.accordionDetail {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.activityLeft {
-    width: 21%;
-    margin-right: 2.5%;
-}
-
-.activityRight {
-    width: 70%
-}
-
-.accordionReference {
-    font-size: 70%;
-    padding-bottom: 7%;
-}
-
-.deleteButton {
-    height: 2rem;
-    padding: 0 1rem;
-    border-radius: 10px;
-    overflow: hidden;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    display: inline-flex;
-    transform: scale(1.05); 
-    font-size: inherit;
-    font-weight: 400;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    box-sizing: border-box; 
-    background-color: var(var(--color-grey-100));
-    border: 1px solid var(--color-primary-700);
-}
-
-.deleteButton:hover {
-    color: red;
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-
-
-
-
-
-
-
-
-
-
 .frame {
     width:1440px;
     display: flex;
     justify-content: space-between;
     margin: auto;
 }
+
 .left {
     width: 315px;
     margin-left: 30px;
@@ -97,25 +44,34 @@
 .detailCard h1 {
     font-size: 48px;
     font-weight: 600;
-    padding: 20px 0;
+    padding: 1rem 0;
 }
 
 .detailIcons {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    /* gap: 20px; */
-    /* font-size: 35px; */
-    /* padding-bottom: 5px; */
-    font-size: 17.5px;
-    padding-bottom: 0;
-    gap: 10px;
+    font-size: 30px;
+    padding-bottom: 1rem;
+    gap: 1rem;
 }
 
-.createrInfo {
+.creatorInfo {
     font-size: 20px;
     display: flex;
+    align-content: center;
+    text-align: center;
     justify-content: space-between;
+}
+
+.creator {
+    display: flex;
+}
+
+.creatorIcon {
+    display: flex;
+    text-align: center;
+    padding-right: 1rem;
 }
 
 .itemContainer {
@@ -123,31 +79,36 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0;
-    padding: 0;
+    padding-top: 2rem;
+    font-size: 20px;
 }
 
 .detailLeft {
-    width: 200px;
+    width: 25%;
     padding: 0;
     margin: 0;
 }
-
-.leftItem, .rightItem {
-    width: 100%;
-    font-size: 20px;
-    padding-bottom: 5px
-}
-
 
 .leftTags {
     display: flex;
     flex-wrap: wrap;
+    font-size: 16px;
+    padding-top: 1rem;
 }
 
 .detailRight {
-    width: 580px;
+    width: 70%;
     padding: 0;
     margin: 0;
+}
+
+.detailItem {
+    padding-bottom: 2rem;
+}
+
+.labelTitle {
+    font-weight: 600;
+    padding-bottom: 5px;
 }
 
 .reference {
@@ -155,7 +116,7 @@
 }
 
 .backButton {
-    margin-top: 6rem;
+    margin-top: 3rem;
     display: flex;
     justify-content: center;
 }
@@ -164,4 +125,6 @@ a {
     text-decoration: none;
     color: var(--color-primary-700);
 }
+
+
 

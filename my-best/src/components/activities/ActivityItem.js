@@ -8,6 +8,7 @@ import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
 import Accordion from "../UI/Accordion";
 import { IoTrashBinSharp } from "react-icons/io5";
+import { FaRegCircleUser } from "react-icons/fa6";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -63,22 +64,25 @@ function ActivityItem({ activity, activities }) {
                                 {activity.is_favorited ? <GoHeartFill /> : <GoHeart />}
                                 {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> }
                             </div>
-                            <div className={classes.createrInfo}>
+                            <div className={classes.creatorInfo}>
                                 <p>{activity.like_count} likes</p>
-                                <p>user name here</p>
+                                <div className={classes.creator} >
+                                    <p className={classes.creatorIcon} ><FaRegCircleUser /></p>
+                                    <p>{activity.user_name}</p>
+                                </div>  
                             </div>
                             <div className={classes.itemContainer}>
                                 <div className={classes.detailLeft}>
-                                    <div className={classes.leftItem}>
-                                        <p>Durations :</p>
-                                        <p>{activity.duration}</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Durations :</p>
+                                        <p>{activity.duration} mins</p>
                                     </div>
-                                    <div className={classes.leftItem}>
-                                        <p>Age group :</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Age group :</p>
                                         <p>{activity.age_group}</p>
                                     </div>
-                                    <div className={classes.leftItem}>
-                                        <p>Materials :</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Materials :</p>
                                         <p>{activity.materials}</p>
                                     </div>
                                     <div className={classes.leftTags}>
@@ -88,20 +92,20 @@ function ActivityItem({ activity, activities }) {
                                     </div>
                                 </div>
                                 <div className={classes.detailRight}>
-                                    <div className={classes.rightItem}>
-                                        <p>Summary :</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Summary :</p>
                                         <p>{activity.summary}</p>
                                     </div>
-                                    <div className={classes.rightItem}>
-                                        <p>Objectives:</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Objectives:</p>
                                         <p>{activity.objectives}</p>
                                     </div>
-                                    <div className={classes.rightItem}>
-                                        <p>Instructions :</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>Instructions :</p>
                                         <p>{activity.instructions}</p>
                                     </div>
-                                    <div className={classes.rightItem}>
-                                        <p>References :</p>
+                                    <div className={classes.detailItem}>
+                                        <p className={classes.labelTitle}>References :</p>
                                         <p className={classes.reference}>
                                             {activity.links ? 
                                                 <Link to={activity.links}>

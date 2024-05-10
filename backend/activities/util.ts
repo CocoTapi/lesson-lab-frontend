@@ -119,6 +119,7 @@ export function getUserActivityRelationQuery(verifiedEmail?: string) {
         SELECT
             a.activity_id, 
             a.user_id, 
+            u.user_name,
             a.title, 
             a.summary, 
             d.duration_title AS duration, 
@@ -138,6 +139,7 @@ export function getUserActivityRelationQuery(verifiedEmail?: string) {
             ${exists}
         FROM 
             activities AS a 
+            JOIN users AS u ON a.user_id = u.user_id
             JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
             JOIN durations As d ON d.duration_id = ad.duration_id 
             JOIN activity_tags As at ON a.activity_id = at.activity_id 
@@ -149,6 +151,7 @@ export function getUserActivityRelationQuery(verifiedEmail?: string) {
         GROUP BY 
             a.activity_id,
             a.user_id, 
+            u.user_name,
             a.title, 
             a.summary, 
             d.duration_title,
