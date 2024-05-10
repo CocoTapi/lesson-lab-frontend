@@ -199,3 +199,11 @@ export const deletePlaylistQuery = `
     AND 
         user_id = $2
 `
+export const removeActivityFromPlaylistQuery = `
+    DELETE FROM 
+        playlist_activities
+    WHERE
+        activity_id = $1
+    AND 
+        playlist_id = $2
+`

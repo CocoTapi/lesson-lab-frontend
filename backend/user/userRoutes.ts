@@ -186,7 +186,7 @@ router.delete('/:user_id/playlists', asyncHandler(async(req, res) => {
   
     await deletePlaylist(user_id, playlist_id);
 
-    res.status(200).json({ message: 'playlist deleted.'});
+    res.status(200).json({ message: 'Playlist deleted.'});
 }))
 
 //remove activity from playlist
@@ -200,7 +200,7 @@ router.patch('/:user_id/playlists', asyncHandler(async(req, res) => {
   
     await removeActivityFromPlaylist(playlist_id, activity_id);
 
-    res.status(200).json({ message: 'playlist deleted.'});
+    res.status(200).json({ message: 'Activity removed.'});
 }))
 
 export default router;

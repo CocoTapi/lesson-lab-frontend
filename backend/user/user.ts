@@ -13,7 +13,8 @@ import {
     reformatActivityData,
     addPlaylistQuery,
     deleteActivitiesQuery,
-    deletePlaylistQuery
+    deletePlaylistQuery,
+    removeActivityFromPlaylistQuery
 } from "./util";
 
 env.config();
@@ -238,4 +239,11 @@ export async function deletePlaylist(user_id: number, playlist_id: number){
     console.log('deleted playlist.')
 }
 
-export async function removeActivityFromPlaylist(playlist_id: number, activity_id){}
+export async function removeActivityFromPlaylist(playlist_id: number, activity_id: number){
+    console.log("activity_id:", activity_id)
+    const query = removeActivityFromPlaylistQuery;
+
+    await db.query(query, [activity_id, playlist_id]);
+
+    console.log("remove activity from playlist");
+}
