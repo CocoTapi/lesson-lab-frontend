@@ -28,8 +28,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
 
-    //access user_id from user upload page
-    const { requestedUser_id } = location.state || {};
+   const prev_location = locationState? locationState.pathname : '/activities';
     //TODO: delete button
 
     let defaultLinks = '';
@@ -256,7 +255,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
                     <input type="hidden" name="user_id" value={user_id} />
                     <input type="hidden" name="user_name" value={user_name} />
-                    <input type="hidden" name="prev_location" value={locationState.pathname} />
+                    <input type="hidden" name="prev_location" value={prev_location} />
 
                 </div>
                
