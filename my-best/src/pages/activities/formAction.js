@@ -3,14 +3,16 @@ import { API_URL } from "../../App";
 import { json, defer, redirect } from "react-router-dom";
 
 export async function action({ request, params }){
-    const data = await request.formData();   
+    const data = await request.formData();  
+    const redirectPath = data.get('prev_location') || '/activities';
+ console.log('action:', redirectPath);
+
     const method = request.method;
     const token = getAuthToken();
 
-    // TODO: get user id
-
     const activityData = {
         user_id: parseInt(data.get('user_id')),
+        user_name: data.get('user_name'),
         title: data.get('title').trim(),
         duration: parseInt(data.get('duration')),
         age_group: data.get('age_group'),
@@ -27,7 +29,7 @@ export async function action({ request, params }){
     let url = `${API_URL}/activities`;
 
     if (method === 'PATCH') {
-        const activityId = params.activityId;
+        const activityId = parseInt(params.activityId);
         url = `${API_URL}/activities/${activityId}` 
     }
 
@@ -51,7 +53,7 @@ export async function action({ request, params }){
     }
 
 
-    return redirect('/activities');
+    return redirect(redirectPath);
 }
 
 async function loadTags(){

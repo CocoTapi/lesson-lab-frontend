@@ -1,10 +1,13 @@
-import { redirect, json } from "react-router-dom";
+import { redirect, json, useLocation } from "react-router-dom";
 import AuthForm from "../../components/auth/AuthForm";
 import { API_URL } from "../../App";
 
 function LoginPage() {
+    const location = useLocation(); 
+    const prev_location = location.state?.prev_location || {pathname: '/'};
+    console.log("location", location);
 
-    return <AuthForm />
+    return <AuthForm locationState={prev_location} />
 };
 
 export default LoginPage;
@@ -13,6 +16,8 @@ export default LoginPage;
 
 export async function action ( {request, setUserInfo} ) {
     const data = await request.formData();
+    const redirectPath = data.get('prev_location') || '/';
+
     const loginData = {
         email: data.get('email'),
         password: data.get('password')
@@ -55,7 +60,7 @@ export async function action ( {request, setUserInfo} ) {
     expiration.setHours(expiration.getHours() + 1);
     localStorage.setItem('expiration', expiration.toISOString());
 
-    return redirect(`/`);
+    return redirect(redirectPath);
 }
 
 

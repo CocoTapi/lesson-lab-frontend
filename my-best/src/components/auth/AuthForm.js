@@ -5,11 +5,13 @@ import { useState } from 'react';
 import { googleOAuthAction } from '../../pages/auth/googleOAuth';
 import { FcGoogle } from "react-icons/fc";
 
-function AuthForm() {
+function AuthForm({ locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
     const [isLoading, setLoading] = useState(false);
+
+    console.log("Auth form locationState", locationState);
     
 
     const googleLoginHandler = () => {
@@ -71,6 +73,10 @@ function AuthForm() {
                         <label htmlFor="password">Password</label>
                         <input id='password' type='password' name='password' placeholder='password' required />
                     </div>
+
+                    {/* Hidden input for redirection path */}
+                    <input type="hidden" name="prev_location" value={locationState.pathname} />
+
                     {!isLogin &&
                         <div className={classes.formGroup}>
                             <label htmlFor="confirmPassword">Confirm password</label>

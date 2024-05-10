@@ -1,4 +1,4 @@
-import { useRouteLoaderData, useSubmit, Link, useNavigate } from "react-router-dom";
+import { useRouteLoaderData, useSubmit, Link, useNavigate, useLocation } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
@@ -17,11 +17,12 @@ function ActivityItem({ activity, activities }) {
     }
     const submit = useSubmit();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleAddFavorite = (is_favorited) => { 
         console.log("is_favorited:", is_favorited)
         if(!token) {
-            navigate('/auth?mode=login');
+            navigate('/auth?mode=login', { state: { prev_location: location }});
         } else {
             submit({ user_id, is_favorited }, { method: "POST" });
         }

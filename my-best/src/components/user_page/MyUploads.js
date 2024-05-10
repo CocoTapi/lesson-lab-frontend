@@ -1,6 +1,6 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit, useRouteLoaderData, useNavigate, Link } from "react-router-dom";
+import { useSubmit, useRouteLoaderData, useNavigate, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import classes from '../css/user_page/MyUploads.module.css';
 import File from "../UI/File";
@@ -25,11 +25,17 @@ function MyUploads({ data }){
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const navigate = useNavigate();
+    const location = useLocation();
 
     //TODO: sort 
 
     const handleEditActivity = (activity_id) => {
-        navigate(`/activities/${activity_id}/edit`, { state: { requestedUser_id: user_id } });
+        navigate(`/activities/${activity_id}/edit`, { 
+            state: { 
+                requestedUser_id: user_id, 
+                prev_location: location 
+            } 
+        });
     }; 
 
     console.log("userUploads: ", userUploads);

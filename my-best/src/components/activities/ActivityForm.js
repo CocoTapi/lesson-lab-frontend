@@ -8,7 +8,10 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 
 
-function ActivityForm({ existingTags, method, activity }) {
+function ActivityForm({ existingTags, method, activity, locationState }) {
+    console.log("Activity form locationState", locationState);
+
+    
     const user = useRouteLoaderData('root');
     let token;
     let user_name;
@@ -255,6 +258,9 @@ function ActivityForm({ existingTags, method, activity }) {
                     {/* hidden input */}
                     <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
                     <input type="hidden" name="user_id" value={user_id} />
+                    <input type="hidden" name="user_name" value={user_name} />
+                    <input type="hidden" name="prev_location" value={locationState.pathname} />
+
                 </div>
                
     
