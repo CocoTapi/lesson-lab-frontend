@@ -157,6 +157,7 @@ export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
 }
 
 export async function addFavorites({ user_id, activity_id, is_favorited }: FavoritesInfo) {
+    const date = new Date();
     let parameters: any[] = [user_id, activity_id]
     let query = `
     INSERT INTO user_favorites
@@ -164,7 +165,7 @@ export async function addFavorites({ user_id, activity_id, is_favorited }: Favor
     VALUES
         ($1, $2, $3)
 `;
-    if (!is_favorited) {
+    if (is_favorited) {
         query = `
         DELETE FROM 
             user_favorites
@@ -174,10 +175,8 @@ export async function addFavorites({ user_id, activity_id, is_favorited }: Favor
             activity_id = $2
         `
     } else {
-        const date = new Date();
         parameters.push(date)
     }
-    const date = new Date();
 
     await db.query(query, parameters);
 

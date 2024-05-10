@@ -1,13 +1,10 @@
-import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
+import { useRouteLoaderData, useSubmit, Link, useNavigate } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
-import { FaEdit } from "react-icons/fa"
 import ButtonS from "../UI/ButtonS";
 import SortBar from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
-import Accordion from "../UI/Accordion";
-import { IoTrashBinSharp } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 function ActivityItem({ activity, activities }) {
@@ -19,9 +16,15 @@ function ActivityItem({ activity, activities }) {
         user_id = user.user_id;
     }
     const submit = useSubmit();
+    const navigate = useNavigate();
 
-    const handleAddFavorite = (user_id, is_favorited) => {
-        submit({ user_id, is_favorited }, { method: "POST" });
+    const handleAddFavorite = (is_favorited) => { 
+        console.log("is_favorited:", is_favorited)
+        if(!token) {
+            navigate('/auth?mode=login');
+        } else {
+            submit({ user_id, is_favorited }, { method: "POST" });
+        }
     }
 
     const handleDeleteActivity = (title) => {
@@ -30,14 +33,10 @@ function ActivityItem({ activity, activities }) {
         if (proceed) submit(null, { method: 'DELETE' });
     }
 
-    console.log(activities);
-
     // TODO: passing is_saved
     //TODO: sort
 
-   
-
-    
+    console.log("activity_item:", activity);
 
     return (
         <div className={classes.main}>
@@ -61,7 +60,7 @@ function ActivityItem({ activity, activities }) {
                             <img src='/images/large/1.png' alt="example" style={{ borderRadius: '30px' }} />
                             <h1>{activity.title}</h1>
                             <div className={classes.detailIcons}>
-                                {activity.is_favorited ? <GoHeartFill /> : <GoHeart />}
+                                {activity.is_favorited ? <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> : <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />}
                                 {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> }
                             </div>
                             <div className={classes.creatorInfo}>

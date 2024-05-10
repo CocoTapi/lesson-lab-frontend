@@ -4,7 +4,7 @@ import { GoHeart, GoBookmark } from "react-icons/go";
 import classes from '../css/activities/SummaryCard.module.css';
 
 function SummaryCard({ activity, link }) {
-    console.log(link);
+   
     return (
         <Link to={link}>
             <SmallCard>

@@ -19,11 +19,6 @@ function ActivityDetailPage() {
                         <ActivityItem activity={loadedActivity} activities={loadedActivities} />}
                 </Await>
             </Suspense>
-            {/* <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
-                <Await resolve={activities}>
-                    {(loadedActivities) => <ActivityItem activities={loadedActivities} />}
-                </Await>
-            </Suspense> */}
         </>
     )
 };
@@ -89,7 +84,7 @@ export async function action({ params, request }) {
         }
         console.log("favData:", favData);
 
-        response = await fetch(`${API_URL}/user`, {
+        response = await fetch(`${API_URL}/user/${user_id}/favorites`, {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
