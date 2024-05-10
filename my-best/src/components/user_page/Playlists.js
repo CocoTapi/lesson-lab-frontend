@@ -161,7 +161,7 @@ function Playlists ({ data }) {
                                 <button className={classes.plusButton} onClick={handleAddActivity}>
                                     <p><MdAddCircle /></p>
                                 </button>
-                                <button className={classes.plusButton} onClick={() => handleDeletePlaylist(list.playlist_id, list.playlist_title)}>
+                                <button className={classes.trashButton} onClick={() => handleDeletePlaylist(list.playlist_id, list.playlist_title)}>
                                     <p><GoTrash /></p>
                                 </button>
                         </div>

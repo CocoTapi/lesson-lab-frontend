@@ -30,17 +30,19 @@
     color: red;
 }
 
-.labelItem:hover {
+.labelItem:not(.active):hover {
     border-color:#9853a0af;
     cursor: pointer;  
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 5px 0px var(--color-primary-300); 
 }
 
 .active {
     border-color:var(--color-primary-700);
+    background-color: var(--color-primary-700);
+    color: white;
     cursor: pointer;  
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 10px 0px var(--color-primary-700); 
     
 }

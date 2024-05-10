@@ -134,6 +134,10 @@ p {
     color:  #893392af;
 }
 
+.trashButton {
+    font-size: 1.8em;
+}
+
 .removeButton {
     font-size: 1.5em;
     color: black;

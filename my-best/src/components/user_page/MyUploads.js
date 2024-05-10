@@ -1,6 +1,6 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit, useRouteLoaderData, redirect, useNavigate } from "react-router-dom";
+import { useSubmit, useRouteLoaderData, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import classes from '../css/user_page/MyUploads.module.css';
 import File from "../UI/File";
@@ -64,10 +64,12 @@ function MyUploads({ data }){
                             <Filter />
                         </div>
                        <div className={classes.goToList}>
-                            <ButtonM colorScheme="secondary">
-                                <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
-                                <p>Create Playlist</p>
-                            </ButtonM>
+                        <Link to='../playlists' >
+                                <ButtonM colorScheme="secondary">
+                                    <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
+                                    <p>Create Playlist</p>
+                                </ButtonM>
+                            </Link>
                        </div>
                     </div>
                     <ul className={classes.right}>

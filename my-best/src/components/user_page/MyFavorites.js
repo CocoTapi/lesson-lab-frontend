@@ -1,13 +1,13 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit, useRouteLoaderData } from "react-router-dom";
+import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import { useState } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
 import SortBar from "../UI/SortBar";
 import Filter from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import { IoTrashBinSharp } from 'react-icons/io5';
+import { GoTrash } from "react-icons/go";
 
 
 
@@ -46,7 +46,7 @@ function MyFavorites({ data }){
                 <UserActivityList 
                     activity={activity}  
                     onClick={handleRemoveActivity}
-                    icon={<IoTrashBinSharp />}
+                    icon={<GoTrash />}
                     buttonWord='Remove'
                 />
             </li>
@@ -66,10 +66,12 @@ function MyFavorites({ data }){
                             <Filter />
                         </div>
                        <div className={classes.goToList}>
+                        <Link to='../playlists' >
                             <ButtonM colorScheme="secondary">
                                 <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
                                 <p>Create Playlist</p>
                             </ButtonM>
+                        </Link>
                        </div>
                     </div>
                     <ul className={classes.right}>

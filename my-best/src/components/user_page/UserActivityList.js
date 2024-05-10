@@ -79,7 +79,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
    
     const buttonChildren = (
         <ButtonS onClick={() => handleClick(activity.activity_id, activity.title)} >
-            <p>{icon}</p>
+            <p className={classes.buttonIcon}>{icon}</p>
             <p>{buttonWord}</p>
         </ButtonS>
     )
