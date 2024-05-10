@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Form } from "react-router-dom";
 import classes from '../css/home/MainNavigation.module.css';
 
 function MainNavigation() {
@@ -56,9 +56,9 @@ function MainNavigation() {
                 )}
                 {token && (
                     <div className={classes.rightContent}>
-                        <form action='/logout' method='post' className={classes.form}>
+                        <Form action='/logout' method='post' className={classes.form}>
                             <button type="submit" className={classes.logoutButton}>Logout</button>
-                        </form>
+                        </Form>
                         <button className={classes.signupButton}>
                             <NavLink
                                 to={`/mypage/${user_id}`}
