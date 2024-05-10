@@ -12,6 +12,8 @@ import {
     getUserPlaylistsQuery,
     reformatActivityData,
     addPlaylistQuery,
+    deleteActivitiesQuery,
+    deletePlaylistQuery
 } from "./util";
 
 env.config();
@@ -225,3 +227,15 @@ export async function removeFavoriteActivity(user_id: number, activity_id: numbe
 
     console.log("deleted favorite activity.")
 };
+
+export async function deletePlaylist(user_id: number, playlist_id: number){
+    const activityDelete = deleteActivitiesQuery;
+    const playlistDelete = deletePlaylistQuery;
+
+    await db.query(activityDelete, [playlist_id]);
+    await db.query(playlistDelete, [playlist_id, user_id]);
+
+    console.log('deleted playlist.')
+}
+
+export async function removeActivityFromPlaylist(playlist_id: number, activity_id){}

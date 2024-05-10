@@ -184,3 +184,18 @@ export async function reformatActivityData(playlists: UserPlaylist[]) {
     return activities;
 }
 
+export const deleteActivitiesQuery = `
+    DELETE FROM 
+        playlist_activities
+    WHERE
+        playlist_id = $1
+`
+
+export const deletePlaylistQuery = `
+    DELETE FROM 
+        playlists
+    WHERE
+        playlist_id = $1
+    AND 
+        user_id = $2
+`

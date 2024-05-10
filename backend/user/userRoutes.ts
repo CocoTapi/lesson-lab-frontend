@@ -13,7 +13,9 @@ import {
     getUserUploads,
     removeFavoriteActivity,
     getUserPlaylists,
-    addPlaylist 
+    addPlaylist,
+    deletePlaylist,
+    removeActivityFromPlaylist
 } from "./user";
 import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
@@ -171,6 +173,34 @@ router.delete('/:user_id/favorites/:activity_id', asyncHandler(async(req, res) =
 
     await removeFavoriteActivity(user_id, activity_id);
     res.status(200).json({ message: 'Favorite activity deleted.'});
+}))
+
+//delete playlist
+router.delete('/:user_id/playlists', asyncHandler(async(req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const user_id: number = parseInt(req.params.user_id);
+    const playlist_id: number = req.body.playlist_id;
+  
+    await deletePlaylist(user_id, playlist_id);
+
+    res.status(200).json({ message: 'playlist deleted.'});
+}))
+
+//remove activity from playlist
+router.patch('/:user_id/playlists', asyncHandler(async(req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const playlist_id: number = req.body.playlist_id;
+    const activity_id: number = req.body.activity_id;
+  
+    await removeActivityFromPlaylist(playlist_id, activity_id);
+
+    res.status(200).json({ message: 'playlist deleted.'});
 }))
 
 export default router;

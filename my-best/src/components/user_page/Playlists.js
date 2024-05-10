@@ -12,6 +12,7 @@ import classes from '../css/user_page/Playlists.module.css';
 import { FaStar } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import ButtonS from "../UI/ButtonS";
+import { GoTrash } from "react-icons/go";
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
@@ -138,7 +139,7 @@ function Playlists ({ data }) {
                                         }
                                         buttonChildren={
                                             <button className={classes.removeButton} onClick={() => handleRemoveActivity(userPlaylists[index].activity_ids[i], userPlaylists[index].activity_titles[i], userPlaylists[index].playlist_id, userPlaylists[index].playlist_title)} >
-                                                <p><IoTrashBinSharp /></p>
+                                                <p><GoTrash /></p>
                                             </button>
                                         }
                                         color='grey'
@@ -153,7 +154,7 @@ function Playlists ({ data }) {
                                     <p><MdAddCircle /></p>
                                 </button>
                                 <button className={classes.plusButton} onClick={() => handleDeletePlaylist(list.playlist_id, list.playlist_title)}>
-                                    <p><IoTrashBinSharp /></p>
+                                    <p><GoTrash /></p>
                                 </button>
                         </div>
                     }

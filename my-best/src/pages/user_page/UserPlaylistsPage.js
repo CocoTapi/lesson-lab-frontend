@@ -69,14 +69,18 @@ export async function action({ request }) {
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
-    //remove activity from playlist or delete playlist
+    //delete playlist
     if (method === 'DELETE') {
-        const activity_id = formData.get("activity_id");
         const playlist_id = formData.get("playlist_id");
+        
+        bodyContent = { playlist_id: playlist_id};
+    }
 
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`;
+    //remove activity from playlist
+    if (method === 'PATCH') {
+        const activity_id = formData.get("activity_id");
 
-        bodyContent = { activity_id: activity_id};
+        bodyContent = { activity_id: activity_id };
     }
 
     //create new playlist
