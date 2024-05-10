@@ -70,37 +70,54 @@ export async function insertTags(tags: string[], activity_id: number, date: Date
 
 //Queries
 
-export const getSummaryQuery: string = `
-    SELECT 
-        a.activity_id,
-        a.user_id, 
-        a.title, 
-        a.summary, 
-        d.duration_title AS duration, 
-        age.age_group_title AS age_group,
-        ARRAY_AGG(DISTINCT tag_title) AS tags,
-        CAST(
-            (SELECT COUNT(*)
-             FROM user_favorites uf
-             WHERE uf.activity_id = a.activity_id
-            ) AS INTEGER
-        ) AS like_count
-    FROM 
-        activities AS a 
-        JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-        JOIN durations AS d ON d.duration_id = ad.duration_id 
-        JOIN activity_tags AS at ON a.activity_id = at.activity_id 
-        JOIN tags AS t ON t.tag_id = at.tag_id 
-        JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
-        JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
-    GROUP BY 
-        a.activity_id,
-        a.user_id, 
-        a.title, 
-        a.summary, 
-        d.duration_title,
-        age.age_group_title
-    `;
+export function getSummaryRelationQuery(verifiedEmail?: string){
+    let exists = '';
+    if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might
+        exists = `,
+        EXISTS (
+            SELECT 1
+            FROM user_favorites uf
+            JOIN users u ON u.user_id = uf.user_id
+            WHERE uf.activity_id = a.activity_id AND u.email = $1
+        ) AS is_favorited`;
+    }
+
+    const query: string = `
+        SELECT 
+            a.activity_id,
+            a.user_id, 
+            a.title, 
+            a.summary, 
+            d.duration_title AS duration, 
+            age.age_group_title AS age_group,
+            ARRAY_AGG(DISTINCT tag_title) AS tags,
+            CAST(
+                (SELECT COUNT(*)
+                FROM user_favorites uf
+                WHERE uf.activity_id = a.activity_id
+                ) AS INTEGER
+            ) AS like_count
+            ${exists}
+        FROM 
+            activities AS a 
+            JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
+            JOIN durations AS d ON d.duration_id = ad.duration_id 
+            JOIN activity_tags AS at ON a.activity_id = at.activity_id 
+            JOIN tags AS t ON t.tag_id = at.tag_id 
+            JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
+            JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
+        GROUP BY 
+            a.activity_id,
+            a.user_id, 
+            a.title, 
+            a.summary, 
+            d.duration_title,
+            age.age_group_title
+        `;
+
+    return query;
+} 
+
 
 export function getUserActivityRelationQuery(verifiedEmail?: string) {
     let exists = '';

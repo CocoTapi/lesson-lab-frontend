@@ -2,6 +2,7 @@ import ActivityList from "../../components/activities/ActivityList";
 import { API_URL } from "../../App";
 import { json, defer, useLoaderData, Await } from "react-router-dom";
 import { Suspense } from "react";
+import { getAuthToken } from "../util/checkAuth";
 
 function ActivitiesPage() {
     const { activities } = useLoaderData();
@@ -17,7 +18,18 @@ function ActivitiesPage() {
 export default ActivitiesPage;
 
 export async function loadActivities() {
-    const response = await fetch(`${API_URL}/activities`);
+    const token = getAuthToken();
+    let tokenHeaders = null;
+    if (token) {
+        tokenHeaders = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        }
+    }
+
+    const response = await fetch(`${API_URL}/activities`, tokenHeaders);
 
     if(!response.ok) {
         throw json({message: "Could not fetch activities."}, { status: 500})

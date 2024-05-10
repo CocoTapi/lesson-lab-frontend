@@ -7,7 +7,7 @@ import {
     getUpdateQueryForNestedTable,
     insertTags,
     deleteUserFavQuery,
-    getSummaryQuery,
+    getSummaryRelationQuery,
     addActivitiesQuery,
     getUserActivityRelationQuery
 } from "./util";
@@ -15,9 +15,21 @@ import {
 const db = Database.db;
 
 export async function getAllActivities() {
-    const result = await db.query(getSummaryQuery);
+    const query = getSummaryRelationQuery();
+
+    const result = await db.query(query);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist")
+
+    return result.rows
+}
+
+export async function getAllActivitiesUser(verifiedEmail: string){
+    const query = getSummaryRelationQuery(verifiedEmail);
+
+    const result = await db.query(query, [verifiedEmail]);
+
+    if (result.rows.length <= 0) throw new Error("Activities does not exist");
 
     return result.rows
 }

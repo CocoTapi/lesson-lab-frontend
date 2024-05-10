@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SmallCard from '../UI/SmallCard';
-import { GoHeart, GoBookmark } from "react-icons/go";
+import { GoHeart, GoHeartFill, GoBookmark } from "react-icons/go";
 import classes from '../css/activities/SummaryCard.module.css';
 
 function SummaryCard({ activity, link }) {
@@ -13,7 +13,7 @@ function SummaryCard({ activity, link }) {
                         <img src='/images/small/1.png' alt="example" style={{ borderRadius: '12px' }} />
                         <h2>{activity.title}</h2>
                         <div className={classes.icons}>
-                            <GoHeart />
+                            {activity.is_favorited ? <GoHeartFill /> : <GoHeart />}
                             <GoBookmark />
                         </div>
                         <p>{activity.like_count} likes</p>

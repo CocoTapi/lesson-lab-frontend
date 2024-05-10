@@ -2,6 +2,7 @@ import express from "express";
 import { asyncHandler } from "../util/route-util";
 import {
     getAllActivities,
+    getAllActivitiesUser,
     getActivityDetail,
     checkFormValidation,
     addActivity,
@@ -17,8 +18,18 @@ import { checkAuth } from "../util/auth";
 const router = express.Router();
 
 router.get('/', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    let verifiedEmail;
+    if (authHeader)
+        verifiedEmail = await checkAuth(method, authHeader);
 
-    const activities = await getAllActivities();
+    const id: number = parseInt(req.params.id);
+    let activities;
+    if (verifiedEmail)
+        activities = await  getAllActivitiesUser(verifiedEmail);
+    else activities = await  getAllActivities();
+
     res.status(200).json({ activities: activities });
 }))
 
