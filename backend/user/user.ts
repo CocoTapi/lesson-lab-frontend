@@ -1,8 +1,8 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { ErrorMessage, FavoritesInfo, ProfileInfo, UserPlaylist } from "../util/types";
+import { EditProfileInfo, ErrorMessage, FavoritesInfo, ProfileInfo, UserPlaylist } from "../util/types";
 import env from 'dotenv';
-import { isValidText } from "../util/validation";
+import { isValidText, isValidEmail, isValidPassword } from "../util/validation";
 import {
     getUserFavoritesQuery,
     getUserUploadsQuery,
@@ -105,27 +105,43 @@ export async function getUserPlaylists(user_id: number) {
     return userPlaylists;
 }
 
-export async function checkUserNameValidation(formData: string, user_id: number) {
-    const errors: ErrorMessage = {};
+//error handling
+export async function checkEditProfileValidation({ user_id, user_name, email, password, first_name, last_name }: EditProfileInfo) {
+    const errors : ErrorMessage = {};
+    let passwordValidity;
 
-    const textValidity = isValidText(formData, 2);
+    const emailValidity = isValidEmail(email);
+    const first_nameValidity = isValidText(first_name);
+    const last_nameValidity = isValidText(last_name);
+    const textValidity = isValidText(user_name, 2);
 
-    if (!textValidity) {
-        errors.user_name = "Invalid user name.";
-        return errors;
+    if (password !== null) {
+        passwordValidity = isValidPassword(password, 8);
+
+        if (passwordValidity.length === false) errors.length = "Invalid password length. Must be at least 8 characters long.";
+        if (passwordValidity.simbol === false) errors.simbol = "Invalid password. Must be at least one simbol in your password.";
+        if (passwordValidity.num === false) errors.num = "Invalid password. Must be at least one number in your password."
     }
+ 
+    if (!emailValidity) errors.email = "Invalid email.";
+    if(!first_nameValidity) errors.first_name = "Invalid first name.";
+    if(!last_nameValidity) errors.last_name = "Invalid last name.";
+    if (!textValidity) errors.user_name = "Invalid user name.";
 
-    const sameCount: number = await isTextUnique(formData, user_id);
+    const sameCount: number = await isTextUnique(user_name, user_id);
     console.log("same count", sameCount);
 
     if (sameCount > 0) {
         errors.user_name = "This user name is already used. Try different name.";
         return errors
     }
+  
+    if (Object.keys(errors).length > 0) return errors;
+  
+    console.log("Passed all validations!");
+    return {};
+  }
 
-    console.log("Pass Unique user name check.")
-    return {}
-}
 
 async function isTextUnique(user_name: string, user_id: number) {
     const result = await db.query(countSameTextQuery, [user_name, user_id]);
@@ -138,20 +154,31 @@ async function isTextUnique(user_name: string, user_id: number) {
 }
 
 
-export async function editProfile(prevEmail: string, updateData: ProfileInfo) {
+export async function editProfile(prevEmail: string, updateData: EditProfileInfo) {
     const date = new Date();
-    const hashResult = bcrypt.hashSync(updateData.password, saltRounds);
-    if (!hashResult) throw new Error('Password hash fail. User not created')
-
-    await db.query(updateProfileQuery, [
+    let hashResult;
+    let parameters = [
         updateData.user_name,
         updateData.first_name,
         updateData.last_name,
         updateData.email,
-        hashResult,
         date,
         prevEmail
-    ])
+    ];
+
+
+    if (updateData.password !== null) {
+        hashResult = bcrypt.hashSync(updateData.password, saltRounds);
+
+        if (!hashResult) throw new Error('Password hash fail. User not created')
+
+        parameters.push(hashResult);
+    }
+
+    const query = updateProfileQuery(updateData.password);
+    
+
+    await db.query(query, parameters)
 
     console.log("Update Profile Completed.");
 }

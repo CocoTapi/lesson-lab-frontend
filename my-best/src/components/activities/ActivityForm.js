@@ -8,10 +8,7 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 
 
-function ActivityForm({ existingTags, method, activity, locationState }) {
-    console.log("Activity form locationState", locationState);
-
-    
+function ActivityForm({ existingTags, method, activity, locationState }) {   
     const user = useRouteLoaderData('root');
     let token;
     let user_name;

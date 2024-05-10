@@ -5,7 +5,6 @@ import { API_URL } from "../../App";
 function LoginPage() {
     const location = useLocation(); 
     const prev_location = location.state?.prev_location || {pathname: '/'};
-    console.log("location", location);
 
     return <AuthForm locationState={prev_location} />
 };
@@ -22,7 +21,6 @@ export async function action ( {request, setUserInfo} ) {
         email: data.get('email'),
         password: data.get('password')
     };
-    console.log(loginData);
 
     const response = await fetch(`${API_URL}/login`, {
         method: "POST",
@@ -42,14 +40,11 @@ export async function action ( {request, setUserInfo} ) {
     }
     
     const resData = await response.json();
-    console.log("resData:", resData);
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
     const token = resData.token;
 
-    console.log(user_id, user_name)
-    console.log('token:', token);
 
     //setUserInfo({user_id, user_name});
 

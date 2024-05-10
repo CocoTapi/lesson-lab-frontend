@@ -104,19 +104,31 @@ export function getUserUploadsQuery() {
     return query;
 };
 
-export const updateProfileQuery: string = `
-    UPDATE 
-        users
-    SET
-        user_name = $1,
-        first_name = $2,
-        last_name = $3,
-        email = $4,
-        password = $5,
-        last_update = $6
-    WHERE
-        email = $7    
-    `;
+export function updateProfileQuery(password: string | null){
+    let passwordChange = '';
+
+    if (password !== null) {
+        passwordChange = `,
+        password = $7
+        `;
+    }
+
+    const query: string = `
+        UPDATE 
+            users
+        SET
+            user_name = $1,
+            first_name = $2,
+            last_name = $3,
+            email = $4,
+            last_update = $5
+            ${passwordChange}
+        WHERE
+            email = $6    
+        `;
+
+        return query;
+}
 
 export function getUserPlaylistsQuery() {
     const query = `

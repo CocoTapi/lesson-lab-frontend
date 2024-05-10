@@ -28,7 +28,11 @@ export async function action({ request, params }){
     const first_name = data.get('first_name').trim();
     const last_name = data.get('last_name').trim();
     const email = data.get('email').trim();
-    const password = data.get('password').trim();
+    let password = null;
+
+    if (data.get('password')) {
+        password = data.get('password').trim()
+    }
 
     const profileData = {
         user_id: user_id,
@@ -36,7 +40,7 @@ export async function action({ request, params }){
         first_name: first_name,
         last_name: last_name,
         email: email,
-        password: password,
+        password
     };
 
     console.log("profile data: ", profileData);

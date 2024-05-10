@@ -9,10 +9,7 @@ function AuthForm({ locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    const [isLoading, setLoading] = useState(false);
-
-    console.log("Auth form locationState", locationState);
-    
+    const [isLoading, setLoading] = useState(false);    
 
     const googleLoginHandler = () => {
         setLoading(true);
@@ -61,7 +58,7 @@ function AuthForm({ locationState }) {
                     {!isLogin &&
                         <div className={classes.formGroup}>
                             <label htmlFor="confirmEmail">Confirm e-mail</label>
-                            <input id='confirmEmail' type='confirmEmail' name='confirmEmail' placeholder='E-mail' required />
+                            <input id='confirmEmail' type='email' name='confirmEmail' placeholder='E-mail' required />
                         </div>
                     }
                 
@@ -80,7 +77,7 @@ function AuthForm({ locationState }) {
                     {!isLogin &&
                         <div className={classes.formGroup}>
                             <label htmlFor="confirmPassword">Confirm password</label>
-                            <input id='confirmPassword' type='confirmPassword' name='confirmPassword' placeholder='password' required />
+                            <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
                         </div>
                     }
                     <div>

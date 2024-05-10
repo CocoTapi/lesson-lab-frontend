@@ -9,8 +9,6 @@ function EditActivityPage(){
 
     const location = useLocation();
     const prev_location = location.state?.prev_location || {pathname: '/activities'};
-
-    console.log("edit activity page prev_location:", prev_location)
       
     return (
         <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>

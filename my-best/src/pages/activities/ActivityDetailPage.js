@@ -82,7 +82,7 @@ export async function action({ params, request }) {
             activity_id: parseInt(activityId),
             is_favorited: formData.get("is_favorited") === "true"
         }
-        console.log("favData:", favData);
+        // console.log("favData:", favData);
 
         response = await fetch(`${API_URL}/user/${user_id}/favorites`, {
             method: method,

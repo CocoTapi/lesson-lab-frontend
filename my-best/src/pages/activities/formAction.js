@@ -5,7 +5,6 @@ import { json, defer, redirect } from "react-router-dom";
 export async function action({ request, params }){
     const data = await request.formData();  
     const redirectPath = data.get('prev_location') || '/activities';
- console.log('action:', redirectPath);
 
     const method = request.method;
     const token = getAuthToken();
@@ -24,7 +23,7 @@ export async function action({ request, params }){
         tags: JSON.parse(data.get('chosenTags'))
     };
 
-    console.log("activity data: ", activityData);
+    // console.log("activity data: ", activityData);
 
     let url = `${API_URL}/activities`;
 
@@ -42,7 +41,7 @@ export async function action({ request, params }){
         body: JSON.stringify(activityData)
     })
     
-    console.log("response data: ", response)
+    // console.log("response data: ", response)
 
     if (response.status === 422 || response.status === 401) {
         return response;

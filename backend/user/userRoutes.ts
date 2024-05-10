@@ -1,6 +1,6 @@
 import express from "express";
 import { asyncHandler } from "../util/route-util";
-import { ProfileInfo, ErrorMessage, FavoritesInfo } from "../util/types";
+import { ErrorMessage, FavoritesInfo, EditProfileInfo } from "../util/types";
 import { checkAuth, createJSONToken } from "../util/auth";
 import { 
     getUserDataFromEmail, 
@@ -8,7 +8,7 @@ import {
     getUserProfile, 
     editProfile, 
     removeProfile,
-    checkUserNameValidation,
+    checkEditProfileValidation,
     addFavorites,
     getUserUploads,
     removeFavoriteActivity,
@@ -17,7 +17,6 @@ import {
     deletePlaylist,
     removeActivityFromPlaylist
 } from "./user";
-import { checkProfileValidation } from "../auth/auth";
 import env from "dotenv";
 
 env.config();
@@ -125,15 +124,12 @@ router.patch('/:id', asyncHandler(async (req, res) => {
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);
     
-    const formData: ProfileInfo = req.body;
+    const formData: EditProfileInfo = req.body;
     const user_id: number = parseInt(req.params.id);
     
-    const errors: ErrorMessage = await checkProfileValidation(formData);
-    const userNameError: ErrorMessage = await checkUserNameValidation(formData.user_name, user_id);
-    
-    if(Object.keys(userNameError).length > 0) {
-        errors.user_name = userNameError.user_name;
-    }
+    const errors: ErrorMessage = await checkEditProfileValidation(formData);
+
+    console.log("password errors", errors);
 
     if (Object.keys(errors).length > 0) {
         return res.status(422).json({

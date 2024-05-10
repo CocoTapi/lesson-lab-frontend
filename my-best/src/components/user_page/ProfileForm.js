@@ -22,6 +22,7 @@ function ProfileForm({ userProfile }) {
 
     const isSubmitting = navigation.state === 'submitting';
 
+    //add invalid message styling
     return (
         <File>
             <div className={classes.box}>
@@ -57,6 +58,9 @@ function ProfileForm({ userProfile }) {
                                 && <span> * </span>
                             }
                             <label htmlFor="password"><h3>Password :</h3></label>
+                            {passwordChange &&
+                            <label htmlFor="confirmPassword"><h3>Confirm password :</h3></label>
+                            }
                         </div>
 
                         <div className={classes.item}>
@@ -68,14 +72,16 @@ function ProfileForm({ userProfile }) {
                                 <button onClick={passwordCangeHandler} className={classes.passwordButton} >Change Password</button>
                             }
                             {passwordChange && 
+                            <>
                                 <input id='password' type='password' name='password' required />
+                                <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
+                            </>
                             }
                         </div> 
 
                         <input type="hidden" name="user_id" value={user_id} />
                     </div>  
                     <div className={classes.buttons}>
-                    <p>Submitting...</p>
                         {isSubmitting && <p>Submitting...</p>}
                         <ButtonS colorScheme="primaryBorder" disabled={isSubmitting}  >
                                 <h4><FaCheck /></h4>

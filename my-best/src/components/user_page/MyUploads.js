@@ -38,7 +38,7 @@ function MyUploads({ data }){
         });
     }; 
 
-    console.log("userUploads: ", userUploads);
+    // console.log("userUploads: ", userUploads);
 
     let content;
     if (Object.keys(userUploads).length === 0) {
