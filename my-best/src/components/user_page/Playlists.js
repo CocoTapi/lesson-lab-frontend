@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { useSubmit, useRouteLoaderData, Link, Form } from "react-router-dom";
-import { IoTrashBinSharp } from "react-icons/io5";
+import { useState, useRef } from "react";
+import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import { TiPlus } from "react-icons/ti";
 import File from "../UI/File";
 import SortBar from "../UI/SortBar";
 import Filter from "../UI/Filter";
-import ButtonM from "../UI/ButtonM";
-import { MdOutlineAddToPhotos } from "react-icons/md";
 import classes from '../css/user_page/Playlists.module.css';
 import { FaStar } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
@@ -29,13 +26,14 @@ function Playlists ({ data }) {
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
+    const titleRef = useRef('');
     //TODO: sort 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
         const proceed = window.confirm(`Are you sure you want to remove ${activity_title} in your playlist, ${playlist_title}?`);
     
         if (proceed) {
-            submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
+            submit({ activity_id, user_id, playlist_id}, { method: "PATCH" });
         }
     };
     
@@ -56,6 +54,16 @@ function Playlists ({ data }) {
     const handleShowPlaylist = (e) => {
         e.preventDefault();
         setShowPlaylistForm(!showPlaylistForm);
+    }
+
+
+    const handleSubmitNewPlaylist = (e) => {
+        e.preventDefault();
+        const title = titleRef.current.value;
+        
+        submit({ user_id, playlist_title: title }, { method: "POST" });
+
+        setShowPlaylistForm(false);
     }
 
     let content;
@@ -189,22 +197,21 @@ function Playlists ({ data }) {
                         {showPlaylistForm && 
                             <Accordion 
                                headerTitle={
-                                    <Form className={classes.playlistForm} method="POST">
+                                    <form className={classes.playlistForm} method="POST" onSubmit={handleSubmitNewPlaylist}>
                                         <input 
                                             id='playlist_title' 
                                             type='text' 
                                             name='playlist_title'  
                                             placeholder="Playlist title"
+                                            ref={titleRef}
                                         />
 
-                                        {/* hidden input */}
-                                        <input type="hidden" name="user_id" value={user_id} />
                                         <div className={classes.formButton} >
                                             <ButtonS colorScheme="primary">
                                                 <p>Create</p>
                                             </ButtonS>
                                         </div>
-                                    </Form>
+                                    </form>
                                } 
                                topImage={
                                 <div className={classes.sum}>

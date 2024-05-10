@@ -73,14 +73,18 @@ export async function action({ request }) {
     if (method === 'DELETE') {
         const playlist_id = formData.get("playlist_id");
         
-        bodyContent = { playlist_id: playlist_id};
+        bodyContent = { playlist_id: playlist_id };
     }
 
     //remove activity from playlist
     if (method === 'PATCH') {
         const activity_id = formData.get("activity_id");
+        const playlist_id = formData.get("playlist_id");
 
-        bodyContent = { activity_id: activity_id };
+        bodyContent = { 
+            activity_id: activity_id,
+            playlist_id: playlist_id 
+        };
     }
 
     //create new playlist
