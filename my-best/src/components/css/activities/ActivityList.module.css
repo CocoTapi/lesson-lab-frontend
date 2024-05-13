@@ -32,9 +32,9 @@
  }
  
  ul {
-     list-style-type: none; /* Removes bullets */
-     padding: 0; /* Optional: Removes padding */
-     margin: 0; /* Optional: Removes margin */
+     list-style-type: none; 
+     padding: 0;
+     margin: 0; 
  }
  
  li {

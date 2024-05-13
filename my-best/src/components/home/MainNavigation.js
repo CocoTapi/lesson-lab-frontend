@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useLoaderData, Form } from "react-router-dom";
 import classes from '../css/home/MainNavigation.module.css';
 
@@ -42,30 +42,29 @@ function MainNavigation() {
                         
                             <NavLink
                                 to="/auth?mode=login"
-                                className={classes.login}
+                                className={classes.authFrame}
                             >
-                                Login
+                                <button className={classes.auth}>Login</button>
                             </NavLink>
-                       
-                        <button className={classes.signupButton}>
-                            <NavLink to="/auth/signup" >
+                            <Link to="/auth/signup" >
+                                <button className={classes.signupButton}>
                                 Sign Up
-                            </NavLink>
-                        </button>
+                                </button>
+                            </Link>
                     </div>
                 )}
                 {token && (
                     <div className={classes.rightContent}>
-                        <Form action='/logout' method='post' className={classes.form}>
-                            <button type="submit" className={classes.logoutButton}>Logout</button>
+                        <Form action='/logout' method='post' className={classes.authFrame}>
+                            <button type="submit" className={classes.auth}>Logout</button>
                         </Form>
-                        <button className={classes.signupButton}>
-                            <NavLink
-                                to={`/mypage/${user_id}`}
-                                >
-                                    {user_initial}
-                            </NavLink>
-                        </button>  
+                        <Link
+                            to={`/mypage/${user_id}`}
+                        >
+                            <button className={classes.signupButton}>
+                                {user_initial}
+                            </button>  
+                        </Link>
                     </div>
                 )}
             </div>

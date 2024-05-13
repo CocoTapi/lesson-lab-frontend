@@ -34,27 +34,28 @@
   .link:hover,
   .active {
     border-radius: 6px;
-    background-color: #DEE6FF;
+    background-color: var(--color-primary-300);
     color: var(--color-primary-700);
     transform: scale(1.05); /* Slight increase in size */
   }
 
-  .login, .logoutButton {
+  .auth {
     font-size: 20px;
     text-decoration: none;
     background-color: white; 
     border: none;
     border-radius: 10px;
-    padding: 15px 20px;
+    padding: 6px 15px;
     color: black;
     justify-content: center;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
 
-  .login:hover, .logoutButton:hover {
-    background-color: #DEE6FF; 
+  .auth:hover {
+    background-color: var(--color-primary-300); 
     color: var(--color-primary-700);
-    transform: scale(1.05); /* Slight increase in size */
+    transform: scale(1.05); 
+    cursor: pointer;
   }
   
   .signupButton {
@@ -70,18 +71,12 @@
   .signupButton:hover {
     background-color: var(--color-primary-900); /* Darker shade on hover */
     transform: scale(1.05); /* Slight increase in size */
+    cursor: pointer;
   }
   
-  .signupButton a, .loginButton a {
-    color: white; /* Ensures text inside the button is white */
-    text-decoration: none;
-    display: block; /* Make the link fill the entire button */
-    height: 100%; /* Ensures the link covers the full height of the button */
-    width: 100%; /* Ensures the link covers the full width of the button */
-  }
-  
-  .form {
-    display: flex; /* Ensure form is inline with other items */
+  .authFrame {
+    display: flex; 
+    align-content: center;
   } 
  
   

@@ -9,7 +9,8 @@ function AuthForm({ locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    const [isLoading, setLoading] = useState(false);    
+    const [isLoading, setLoading] = useState(false);   
+    const prev_location = locationState? locationState.pathname : '/';
 
     const googleLoginHandler = () => {
         setLoading(true);
@@ -72,7 +73,7 @@ function AuthForm({ locationState }) {
                     </div>
 
                     {/* Hidden input for redirection path */}
-                    <input type="hidden" name="prev_location" value={locationState.pathname} />
+                    <input type="hidden" name="prev_location" value={prev_location} />
 
                     {!isLogin &&
                         <div className={classes.formGroup}>
