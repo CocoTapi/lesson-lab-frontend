@@ -1,0 +1,56 @@
+.frame {
+    display: flex;
+    margin: auto;
+    background-color: var(--color-primary-700);
+    margin-top: 20rem;
+}
+
+.contents {
+    margin: auto;
+    display: grid;
+    padding: 7rem;
+}
+
+.iconGroup {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3rem;
+}
+
+.icon {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    padding: 0 0.7rem;
+}
+
+.contents p {
+    font-size: 16px;
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.contents p:last-child {
+    padding-bottom: 0;
+}
+
+.contents h3 {
+    font-size: 24px;
+    text-align: center;
+    color: white;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 3rem;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3rem;
+}
+
+.link {
+    color: white;
+    padding: 0 1rem;
+    font-weight: 600;
+}

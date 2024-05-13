@@ -56,6 +56,10 @@
     gap: 1rem;
 }
 
+.detailIcons:hover {
+    cursor: pointer;
+}
+
 .creatorInfo {
     font-size: 20px;
     display: flex;

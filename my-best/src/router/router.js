@@ -128,7 +128,7 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
               ]
             }
           ]
-        },
+        }
       ]
     }
   ]);
