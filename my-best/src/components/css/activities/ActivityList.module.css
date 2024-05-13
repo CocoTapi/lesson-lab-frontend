@@ -1,14 +1,14 @@
 .main {
-    width:1440px;
+    width:100%;
+    max-width: 1440px;
     margin: auto;
 }
 
 .sortBar {
-    padding: 0 30px;
+    padding: 0 2rem;
 }
 
-.frame {
-    width:1440px;
+.frame { 
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -41,7 +41,9 @@
      margin-bottom: 20px;
  }
 
+@media (max-width: 900px) {
 
+}
 
 
 

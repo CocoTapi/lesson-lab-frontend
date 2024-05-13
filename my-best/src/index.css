@@ -1,15 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
 :root {
-  --primary-font: 'DM Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+ font-family: 'DM Sans', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
 
   --color-primary-300: #DEE6FF;
+  --color-primary-500: #94ACCD;
   --color-primary-700: #315079;
   --color-primary-900: #293952;
 
   --color-secondary-500: #FFB650;
   --color-secondary-600: #ff9603;
+
+  --color-info-400: #9853a0af;
+  --color-info-500: #893392af;
 
   --color-grey-100: #F1F1F1;
   --color-grey-300: #D9D9D9;
@@ -21,10 +30,6 @@
 
 body {
   margin: 0;
-  font-family: var(--primary-font);
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* code {

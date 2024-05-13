@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: center;
     margin: auto;
-    border: 5px solid  #94ACCD;
+    border: 5px solid  var(--color-primary-500);
     border-bottom: 0;
     border-radius: 20px 20px 0 0;
     font-size:30px;
@@ -31,7 +31,7 @@
 }
 
 .labelItem:not(.active):hover {
-    border-color:#9853a0af;
+    border-color: var(--color-info-400);
     cursor: pointer;  
     transform: translateY(-5px);
     box-shadow: 0 5px 0px var(--color-primary-300); 

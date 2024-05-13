@@ -2,7 +2,7 @@
     min-height: 874px;
     width: 1280px;
     margin: auto;
-    background-image: linear-gradient(to bottom right, #033b70, #9853a0af );
+    background-image: linear-gradient(to bottom right, #033b70, var(--color-info-400) );
     border: 5px solid var(--color-primary-700);
     border-radius: 0 0 20px 20px;
     display: flex;

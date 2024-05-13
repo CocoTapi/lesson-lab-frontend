@@ -105,7 +105,7 @@ p {
 .sum {
     font-size: 200%;
     padding-left: 10%;
-    color:  #893392af;
+    color:  var(--color-info-500);
 }
 
 .customList {
@@ -131,7 +131,7 @@ p {
 
 .plusButton {
     font-size: 1.8em;
-    color:  #893392af;
+    color:  var(--color-info-500);
 }
 
 .trashButton {
