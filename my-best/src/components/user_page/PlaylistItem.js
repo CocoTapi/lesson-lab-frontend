@@ -70,7 +70,7 @@ function PlaylistItem({list, index, userPlaylists, onRemoveActivity, onDeletePla
                                                         <p className={classes.accordionReference}>
                                                             {userPlaylists[index].links[i] ? 
                                                                 <Link to={userPlaylists[index].links[i]}>
-                                                                    userPlaylists[index].links[i]
+                                                                    {userPlaylists[index].links[i]}
                                                                 </Link> 
                                                             : <p>none</p>
                                                             }

@@ -109,7 +109,7 @@ function ActivityItem({ activity, activities }) {
                                         <p className={classes.reference}>
                                             {activity.links ? 
                                                 <Link to={activity.links}>
-                                                    activity.links
+                                                    {activity.links}
                                                 </Link> 
                                             : <p>none</p>
                                             }

@@ -63,7 +63,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
                     <p className={classes.accordionReference}>
                         {activity.links ? 
                             <Link to={activity.links}>
-                                activity.links
+                                {activity.links}
                             </Link> 
                         : <p>none</p>
                         }
