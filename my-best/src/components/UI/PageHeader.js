@@ -7,9 +7,10 @@ function PageHeader({ title, token, link }){
     return (
         <div className={classes.frame}>
              <ul className={classes.left}>
-                <li className={classes.title}>
+                <li>
                     <NavLink
                         to={link}
+                        className={classes.title}
                     >
                         {title}
                     </NavLink>

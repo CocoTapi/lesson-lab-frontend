@@ -5,29 +5,33 @@
     display: flex;
     justify-content: space-between; /* Adjusts items between left and right */
     align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
   }
   
   .left, .right {
-    padding: 0 30px;
+    padding: 0 1.8rem;
     display: flex;
     align-items: center;
-    gap: 7px
+    gap: 0.4rem;
   }
   
   .logo {
-    font-size: 34px;
+    font-size: 2.2rem;
     font-weight: bold;
     color: var(--color-primary-700);
     text-decoration: none;
-    padding-right: 14px;
+    padding-right: 0.8rem;
   }
   
-  .link {
-    font-size: 20px;
+  .link, .auth {
+    font-size: 1.25rem;
     font-weight: 400;
     color: black;
     text-decoration: none;
-    padding: 6px 15px;
+    padding: 0.4rem 1rem;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
   
@@ -40,15 +44,11 @@
   }
 
   .auth {
-    font-size: 20px;
     text-decoration: none;
     background-color: white; 
     border: none;
     border-radius: 10px;
-    padding: 6px 15px;
-    color: black;
     justify-content: center;
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
 
   .auth:hover {
@@ -62,9 +62,9 @@
     background-color: var(--color-primary-700);
     border: none;
     border-radius: 10px;
-    padding: 15px 40px;
+    padding: 1rem 2rem;
     color: white;
-    font-size: 20px;
+    font-size: 1.25rem;
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for background color and transform */
   }
   
@@ -78,15 +78,108 @@
     display: flex; 
     align-content: center;
   } 
- 
-  
-  .right {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Reduced from 20px for tighter spacing */
-  }
 
   .rightContent {
     display: flex;
-    gap: 5px;
+    gap: 0.4rem;
+  }
+
+  .menuIconComponent {
+    padding-top: 0.6rem;
+    font-size: 2rem;
+    display: none; 
+  }
+
+
+
+  .menuComponent {
+    width: 30vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .menuItem {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .header {
+      height: 4rem;
+      display: grid
+    }
+    
+    .left, .right {
+      padding: 0 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+    }
+
+    .link, .rightContent {
+      display: none;
+    }
+
+    .menuIconComponent {
+      display: block;
+    }
+
+    .menuIconComponent:hover {
+      cursor: pointer;
+    }
+
+    .menuComponent {
+      display: grid;
+      background-color: var(--color-primary-300);
+      
+    }
+
+    .auth {
+      font-size: 1rem;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: var(--color-primary-700);
+    }
+
+    .auth:hover {
+      transform: none;
+    }
+    
+  }
+
+  @media (max-width: 1007px) {
+    .header {
+      height: 4rem;
+    }
+    
+    .left, .right {
+      padding: 0 1rem;
+      gap: 0.5rem;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      padding-right: 0;
+    }
+    
+    .link, .auth {
+      font-size: 1rem;
+      padding: 0.4rem 1rem;
+    }
+
+    .auth {
+      padding: 0;
+      margin: 0 0.4rem;
+    }
+
+    .signupButton {
+      padding: 1rem 2rem;
+      color: white;
+      font-size: 1rem;
+    }
+
   }

@@ -1,10 +1,8 @@
 .frame {
-    width:1440px;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 5.5rem;
+    margin-bottom: 1rem;
     display: flex;
-    justify-content: space-between;
+    width: 100%;
 }
   
 .frame a {
@@ -13,9 +11,9 @@
 }
 
 .title {
-  font-size: 36px;
-  font-weight: 800;
-  margin-left: 30px;
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 0 1.8rem;
 }
 
 .left {
@@ -24,27 +22,22 @@
 }
 
 .addButton {
-  width: 203px;
-  height: 50px;
+  font-size: 1.25rem;
   background-color: var(--color-secondary-500);
   border-radius: 10px;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
   border: none;
-  gap: 5px;
   display: inline-flex;
-  transform: scale(1.05); 
-  font-size: 20px;
+  transition: transform 0.3s; 
   font-weight: 600;
-  color: black;
-  margin: 0 50px;
-  transition: transform 0.3s ease;
+  padding: 1rem 2rem;
+  gap: 0.4rem;
 }
 
 .addButton:hover,
 .addButton:active { 
-    transform: scale(1.1); /* Slight increase in size */
+    transform: scale(1.05); 
     cursor: pointer;  
 }
 

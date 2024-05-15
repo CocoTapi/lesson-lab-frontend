@@ -1,6 +1,6 @@
 .frame {
-    display: flex;
-    margin: auto;
+    display: inline-block;
+    width: 100vw;
     background-color: var(--color-primary-700);
     margin-top: 20rem;
 }
@@ -8,7 +8,7 @@
 .contents {
     margin: auto;
     display: grid;
-    padding: 7rem;
+    padding: 3rem;
 }
 
 .iconGroup {
@@ -20,12 +20,12 @@
 .icon {
     text-decoration: none;
     color: black;
-    font-size: 20px;
+    font-size: 1.5rem;
     padding: 0 0.7rem;
 }
 
 .contents p {
-    font-size: 16px;
+    font-size: 1rem;
     text-align: center;
     padding-bottom: 3rem;
 }
@@ -35,7 +35,7 @@
 }
 
 .contents h3 {
-    font-size: 24px;
+    font-size: 1.5rem;
     text-align: center;
     color: white;
     padding: 0;
