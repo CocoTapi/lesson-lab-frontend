@@ -111,6 +111,11 @@
     cursor: pointer;
 }
 
+.form span {
+    font-size: 1rem;
+    color: red;
+}
+
 @media (min-width: 640px) {
     .formContainer {
         border-radius: 20px;

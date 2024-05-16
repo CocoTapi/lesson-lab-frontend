@@ -1,110 +1,122 @@
 .frame {
-    margin: auto;
-    width: 1142px;
-    border: 3px solid var(--color-primary-700);
-    border-radius: 30px;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1142px;
+    border: 2px solid var(--color-primary-700);
+    border-radius: 10px;
     background-color: var(--color-grey-100);
-    padding: 3rem;
-}
-
-.frame h1 {
-    font-size: 32px;
-    font-weight: 600;
+    transition: all 0.3s;
 }
 
 .login {
     display: block;
     text-align: center;
-    padding-bottom: 30px;
+    padding-bottom: 2rem;
 }
 
 .login h1 {
-    padding-bottom: 30px;
+    padding-bottom: 1.25rem;
+}
+
+.form {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    padding: 2rem 0;
+    padding-bottom: 3rem;
+    transition: all 0.3s;
+}
+
+.left {
+    width: 100%;
+}
+.formGroup {
+    width: 100%;
+    padding-bottom: 1rem;
 }
 
 .form h1 {
     color: black;
-    font-size: 32px;
-    font-weight: 700;
-    padding-bottom: 20px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 1.25rem;
+    transition: all 0.3s;
 }
 
 .form label,
 .form input,
 .form h2 {
     color: black;
-    font-size: 20px;
+    font-size: 1rem;
     font-weight: 400;
     display: block;
     width: 100%;
-    padding: 10px 0;
+    padding-bottom: 0.5rem;
 }
 
 .form input {
-    font-size: 18px;
+    font-size: 1rem;
     padding: 0 0.5rem;
     border: none;
-    height: 37px;
-    margin-bottom: 20px;
+    height: 2.3rem;
+    margin-bottom: 1.25rem;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .form textarea {
+    width: 95%;
     padding: 0.5rem 0.5rem;
     border: none;
     display: block;
-    margin-bottom: 20px;
-    width: 100%; 
+    margin: 0;
+    font-size: 1rem;
 }
 
 .summary {
-    font-size: 18px;
     height: 3rem;
 }
 
 .objectives {
-    font-size: 18px;
     height: 4.5rem;
 }
 
 .references {
-    font-size: 15px;
+    font-size: 0.7rem;
     height: 1rem;
 }
 
 .instructions {
-    font-size: 18px;
-    padding: 0.5rem 0.5rem;
-    border: none;
-    display: block;
-    height: 37px;
-    margin-bottom: 20px;
-    width: 100%;
     height: 12rem;
 }
 
 .formSelect {
-    width: 225px;
-    height: 30px; 
-    line-height: 25px; 
+    width: 11rem;
+    height: 2rem; 
+    line-height: 1rem; 
     text-align: center;
     background-color: white; 
     border: none;
-    padding: 0 15px; 
     cursor: pointer; 
-    font-size: 18px;
+    font-size: 1rem;
     font-weight: 400;
     display: block;
-    margin-bottom: 20px;
     margin-left: 5px;
-    transform: scale(1.05); 
+    box-sizing: border-box;
+    transition: all 0.3s ease;
 }
 
 .formSelect:hover {
     transform: scale(1.1); 
+    cursor: pointer;
 }
 
 .tagInput {
-    width: 40%;
+    width: 100%;
+}
+
+.beforeTag {
+    transition: transform 0.3s ease;
 }
 
 
@@ -120,11 +132,49 @@
 }
 
 .left {
-    padding-bottom: 30px;
+    padding-bottom: 2rem;
 }
 
 .right {
     display: flex;
     justify-content: end;
-    padding-top: 30px;
+    padding-right: 1rem;
 }
+
+@media (min-width: 640px) {
+    .frame {
+        border-radius: 20px;
+    }
+
+    .form h1 {
+        font-size: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .form textarea {
+        width: 85%;
+    }
+
+    .tagInput {
+        width: 40%;
+    }
+
+}
+
+@media (min-width: 1008px) {
+    .frame {
+        margin: 7rem auto;
+    }
+
+    .form {
+        width: 85%;
+    }
+
+    .right {
+        padding-right: 0;
+    }
+ 
+}
+
+
+

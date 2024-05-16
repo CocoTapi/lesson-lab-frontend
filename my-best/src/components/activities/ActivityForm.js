@@ -115,7 +115,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     </div>
         
                     {/* duration */}
-                    <div>
+                    <div className={classes.formGroup}>
                         {data && data.errors.duration && <span> * </span>} 
                         <label htmlFor="duration">Duration</label>
                         <select id='duration' type='duration' name='duration' defaultValue={activity ? activity.duration : ''} className={classes.formSelect} required>
@@ -130,7 +130,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     
         
                     {/* age group */}
-                    <div>
+                    <div className={classes.formGroup}>
                         {data && data.errors.age_group && <span> * </span>}
                         <label htmlFor="age_group">Age group</label>
                         <select id='age_group' type='age_group' name='age_group' defaultValue={activity ? activity.age_group : ''} className={classes.formSelect} required>
