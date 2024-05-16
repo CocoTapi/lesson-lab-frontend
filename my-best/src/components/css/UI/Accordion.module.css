@@ -7,7 +7,7 @@
 
 .header {
     display: flex;
-    padding: 2%;
+    padding: 1rem 1.5rem;
     align-items: center;
 }
 
@@ -15,41 +15,40 @@
 .topImage {
     display: flex;
     align-items: center;
-    padding-right: 4%;
+    padding-right: 1.5rem;
 }
 
 .headerRight {
     display: flex;
     align-items: center;
-    font-size: 200%;
+    font-size: 2rem;
     font-weight: 900;
     margin-left: auto;
-    padding: 0 1%;
+    padding: 0 1rem;
 }
 
 .detailFrame {
     margin-top: 0;
-    padding: 0 2% 2% 2.5%;
+    padding: 0 1.2rem 1.2rem 1.5rem;
 }
 
 
 .detailButton {
     display: flex;
     justify-content: end;
-    margin-right: 6%;
-    margin-top: 2%;
+    margin-right: 2rem;
+    margin-top: 1rem;
 }
 
 .headerItem {
     margin: 0;
     padding: 0;
-    
 }
 
 .headerItem h2 {
     margin: 0;
     padding: 0;
-    padding-bottom: 2%;
+    padding-bottom: 0.8rem;
 }
 
 

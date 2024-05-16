@@ -4,43 +4,93 @@
     margin: auto;
 }
  
-.sortBar {
-    padding: 0 1.8rem;
-    padding-bottom: 1.8rem;
-} 
-
-.frame { 
+.contents {
+    width: 96%;
     margin: auto;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 1.8rem;
 }
 
+.sortBar {
+    width: 100%;
+    margin-bottom: 1.8rem
+}
 
-
-.right {
-    width: 76%;
+.frame {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
 }
 
 .list {
-    display: flex;
-    flex-wrap: wrap; 
-   justify-content: space-between;
-   
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    padding: 0;
+    gap: 1.8rem;
+    transition: all 0.3s; 
  }
  
- li {
-     margin-bottom: 1.25rem;
+ .list li {
+    transition: all 0.3s; 
  }
 
-@media (max-width: 1348px) {
-    .filter {
-        display: none;
+ .fButton {
+    transition: transform 0.3s; 
+}
+
+ .fIcon {
+    margin-top: 2px;
+ }
+
+@media (max-width: 1352px) {
+    .list {
+        gap: 0.7rem;
+     }
+}
+
+@media (max-width: 1300px) {
+    .sortBar {
+        width: 61.5rem;
+        margin: auto;
+        margin-bottom: 0.7rem;
     }
 
-    .right {
-        width: 100%;
+    .frame {
+        display: grid;
+    }
+
+    .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filterButtons {
+        display: flex;
+        flex-wrap: wrap;  
+        margin-top: 0.7rem;
+        margin-left: 0.3rem
+    }
+
+    .fButton:hover {
+        transform: scale(1.1); 
+        cursor: pointer; 
+    }
+
+}
+
+@media (max-width: 1022px) {
+    .sortBar {
+        width: 41rem;
     }
 }
 
+@media (max-width: 676px) {
+    .contents {
+        width: 90%;
+        margin: auto;
+    }
+
+    .sortBar {
+        width: 100%
+    }
+}
 

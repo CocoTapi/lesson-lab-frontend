@@ -90,8 +90,6 @@
     display: none; 
   }
 
-
-
   .menuComponent {
     width: 30vw;
     display: flex;
@@ -133,7 +131,8 @@
     .menuComponent {
       display: grid;
       background-color: var(--color-primary-300);
-      
+      position: relative;
+      z-index: 100;
     }
 
     .auth {

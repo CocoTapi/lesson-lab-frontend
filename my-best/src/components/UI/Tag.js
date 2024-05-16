@@ -21,7 +21,7 @@ const tagHeights = {
 }
 
 
-function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thin', tagSize= 'middle', ...rest }){
+function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thin', tagSize= 'middle', hash = 'true', ...rest }){
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primaryBorder;
     const { borderSize } = tagBorders[border] || tagBorders.thin;
     const { height } = tagHeights[tagSize] || tagHeights.middle;
@@ -40,7 +40,7 @@ function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thi
             style={buttonStyle}
             {...rest}
         >
-                <p><FaHashtag /></p>
+            {!hash && <p><FaHashtag /></p>}
             {children}
         </button>
     )

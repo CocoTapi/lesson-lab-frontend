@@ -101,17 +101,18 @@ function MainNavigation() {
                 )}
             </div>
             {displayMenu && 
-            <div className={classes.menuComponent}>
-                <Link className={classes.menuItem}  to="/" >Home</Link>
-                <Link className={classes.menuItem} to="/activities" >Activities</Link>
-                {!token && <Link className={classes.menuItem} to="/auth?mode=login">Login</Link>}
-                {!token && <Link  className={classes.menuItem} to="/auth/signup">Sign Up</Link>}
-                {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`}>My Page</Link>}
-                {token && 
-                    <Form className={classes.menuItem} action='/logout' method='post'>
-                        <button type="submit" className={classes.auth}>Logout</button>
-                    </Form>}
-            </div>
+                <div className={classes.menuComponent}>
+                    <Link className={classes.menuItem}  to="/" >Home</Link>
+                    <Link className={classes.menuItem} to="/activities" >Activities</Link>
+                    <Link className={classes.menuItem} to="/activities/new"> Add Activity</Link>
+                    {!token && <Link className={classes.menuItem} to="/auth?mode=login">Login</Link>}
+                    {!token && <Link  className={classes.menuItem} to="/auth/signup">Sign Up</Link>}
+                    {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`}>My Page</Link>}
+                    {token && 
+                        <Form className={classes.menuItem} action='/logout' method='post'>
+                            <button type="submit" className={classes.auth}>Logout</button>
+                        </Form>}
+                </div>
             }
         </header>
     );

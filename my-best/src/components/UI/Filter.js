@@ -46,7 +46,7 @@ function Filter({ onTimeChange, onAgeChange, onTagChange }) {
                         <label><input type="radio" value="icebreakers" onChange={handleTagChange}/> icebreakers</label>
                         <label><input type="radio" value="fun" onChange={handleTagChange}/> fun</label>
                         <label><input type="radio" value="interactive" onChange={handleTagChange}/> interactive</label>
-                        <label><input type="radio"value="minimum prep" onChange={handleTagChange}/> minimum prep</label>
+                        <label><input type="radio"value="minimum prep" onChange={handleTagChange}/> min prep</label>
                     </div>
 
                     <div className={classes.viewButtons}>

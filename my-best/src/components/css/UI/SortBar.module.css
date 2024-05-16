@@ -55,7 +55,7 @@
 }
 
 
-@media (max-width: 640px) {
+@media (max-width: 676px) {
     .bar {
         height: 3rem;
     }
@@ -101,10 +101,15 @@
         font-size: inherit;
       }
     
-      .buttonIcon {
+    .buttonIcon {
         display: flex;
         text-align: center;
         padding-right: 0;
         margin-right: 0.1rem
     } 
+
+    .sortIcon:hover {
+        transform: scale(1.1); 
+        cursor: pointer; 
+    }
 }
