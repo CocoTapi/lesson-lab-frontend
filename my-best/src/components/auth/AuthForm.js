@@ -21,6 +21,7 @@ function AuthForm({ locationState }) {
     const isLogin = searchParams.get('mode') === 'login';
 
     return (
+        <div className={classes.formContainer}>
             <Form method='post' className={classes.form}>
                 <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
                 {data && data.errors &&
@@ -32,7 +33,7 @@ function AuthForm({ locationState }) {
                 }
                 {data && data.message && <p>{data.message}</p>}
                     {!isLogin &&
-                        <div className={classes.name}>
+                        <div className={classes.nameGroup}>
                             <div className={classes.formName}>
                                 {data && data.errors.firstName && <span> * </span>}
                                 <label htmlFor="firstName">
@@ -95,7 +96,7 @@ function AuthForm({ locationState }) {
                         <h3>or</h3>
                         <button className={classes.googleButton} onClick={googleLoginHandler}>
                             <FcGoogle className={classes.icon} /> 
-                            <span>Sign in with Google</span>
+                            Sign in with Google
                         </button>
                     </>
                     }
@@ -103,6 +104,7 @@ function AuthForm({ locationState }) {
                 </div>
                 
             </Form>
+        </div>
     )
 }
 

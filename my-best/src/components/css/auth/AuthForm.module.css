@@ -1,62 +1,66 @@
-.form {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 50px 100px;
+.formContainer {
+    width: 90%;
+    max-width: 700px;
+    border-radius: 10px;
     background-color: var(--color-grey-100);
-    border-radius: 20px;
+    margin: 5rem auto;
+    transition: all 0.3s;
 }
 
-.formGroup {
-    padding-bottom: 15px;
+.form {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    padding: 2rem 0;
+    padding-bottom: 3rem;
+    transition: all 0.3s;
+}
+
+.formGroup, .formName {
+    width: 100%;
+    padding-bottom: 1rem;
 }
 
 .form h1 {
     color: black;
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 600;
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 1.25rem;
+    transition: all 0.3s;
 }
 
 .form label,
 .form input,
 .form p {
     color: black;
-    font-size: 20px;
+    font-size: 1rem;
     font-weight: 400;
     display: block;
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 0.5rem;
 }
 
 .form input {
-    font: 16px;
+    font-size: 1rem;
     padding: 0 0.5rem;
     border: none;
-    height: 37px;
-    margin-bottom: 20px;
+    height: 2.3rem;
+    margin-bottom: 1.25rem;
+    margin: 0;
+    box-sizing: border-box;
 }
-
-.name {
-    padding-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.formName {
-    width: 45%; 
-}
-
 
 .form p {
-    margin-top: 0;
-    margin-bottom: 100px;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    margin-bottom: 6rem;
 }
 
 .form a {
     text-decoration: none;
-    color: rgb(255, 136, 0);
-    transition: background-color 0.3s, transform 0.3s;
+    color: var(--color-secondary-600);
+    transition: all 0.3s;
 }
 
 .centerGroup {
@@ -64,15 +68,15 @@
 }
 
 .form h3 {
-    margin: 50px;
+    margin: 1rem;
     text-align: center;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 400;
 }
 
 .googleButton {
-    width: 251px;
-    height: 39px;
+    width: 15.7rem;
+    height: 2.45rem;
     border-radius: 10px; 
     border: 2px solid var(--color-primary-700) ;
     background-color: white;
@@ -81,8 +85,13 @@
     align-items: center; 
     margin: 0 auto; 
     overflow: hidden; /* Prevent any overflow, just in case */
-    transform: scale(1.05); 
-    padding-left: 7px;
+    transition: transform 0.3s; 
+    padding-left: 0.4rem;
+    font-size: 1.03rem;
+    color: var(--color-primary-700);
+    align-self: center;
+    font-weight: 600;
+    box-sizing: border-box;
 }
 
 .icon {
@@ -90,26 +99,48 @@
     background-color: white;
     width: 20%;
     height: 100%;
-    padding: 0 10px;
-
-    
+    padding: 0 0.6rem;
+    margin-right: 0.4rem;
     align-items: center; 
     justify-content: center; 
     box-sizing: border-box;
 }
 
-.form span {
-    font-size: 16.5px;
-    color: var(--color-primary-700);
-    align-self: center;
-    padding-left: 10px;
-    font-weight: 600;
-}
-
-.googleButton:hover {
+.googleButton:hover, .form a:hover {
     transform: scale(1.1); /* Slight increase in size */
-
+    cursor: pointer;
 }
+
+@media (min-width: 640px) {
+    .formContainer {
+        border-radius: 20px;
+    }
+    .nameGroup {
+        padding-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .formName {
+        width: 47%; 
+    }
+}
+
+@media (min-width: 1008px) {
+    .formContainer {
+        margin: 7rem auto;
+    }
+
+    .form {
+        width: 80%;
+    }
+
+    .form h1 {
+        font-size: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
 
 
 
