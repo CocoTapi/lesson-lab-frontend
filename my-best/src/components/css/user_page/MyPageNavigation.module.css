@@ -1,6 +1,7 @@
-.label {
+.labels {
     display: flex;
-    width: 1290px;
+    width: 100%;
+    max-width: 1290px;
     margin: auto;
     padding-top: 5px;
     position: relative; /* To use z-index correctly */
@@ -10,31 +11,32 @@
 .labelItem {
     flex: 1;
     background-color: var(--color-primary-300);
-    height: 86px;
+    height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto;
-    border: 5px solid  var(--color-primary-500);
+    border: 3px solid var(--color-primary-500);
     border-bottom: 0;
-    border-radius: 20px 20px 0 0;
-    font-size:30px;
+    border-radius: 10px 10px 0 0;
+    font-size: 1rem;
     font-weight: 600;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
     position: relative; /* To enable correct shadow positioning */
 }
 
 .labelItem h4 {
-    padding-right: 10px;
-    padding-top: 10px;
+    padding-right: 0.6rem;
+    padding-top: 0.34rem;
     color: red;
 }
 
 .labelItem:not(.active):hover {
     border-color: var(--color-info-400);
     cursor: pointer;  
-    transform: translateY(-5px);
-    box-shadow: 0 5px 0px var(--color-primary-300); 
+    transform: translateY(-3px);
+    box-shadow: 0 3px 0px var(--color-primary-300); 
 }
 
 .active {
@@ -43,6 +45,23 @@
     color: white;
     cursor: pointer;  
     transform: translateY(-5px);
-    box-shadow: 0 10px 0px var(--color-primary-700); 
+    box-shadow: 0 5px 0px var(--color-primary-700); 
     
+}
+
+@media (min-width: 640px) { 
+    .labelItem {
+        height: 4rem;
+        border: 5px solid  var(--color-primary-500);
+        border-bottom: 0;
+        font-size:1.25rem;
+    }
+}
+
+@media (min-width: 1008px) {
+    .labelItem {
+        height: 5.3rem;
+        border-radius: 20px 20px 0 0;
+        font-size:1.85rem;
+    }
 }

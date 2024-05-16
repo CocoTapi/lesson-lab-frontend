@@ -1,6 +1,6 @@
 .file {
-    min-height: 54.6rem;
-    width: 80rem;
+    width: 100%;
+    max-width: 80rem;
     margin: auto;
     background-image: linear-gradient(to bottom right, #033b70, var(--color-info-400) );
     border: 5px solid var(--color-primary-700);
@@ -9,4 +9,10 @@
     /* border-top: 0;  */
     z-index: 1; /* Ensuring it stays below the lifted labels */
     position: relative;
+}
+
+@media (min-width: 1008px) {
+    .file {
+        min-height: 54.6rem;
+    }
 }

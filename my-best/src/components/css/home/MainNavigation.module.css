@@ -91,10 +91,11 @@
   }
 
   .menuComponent {
-    width: 30vw;
+    width: 40vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
   }
 
   .menuItem {
