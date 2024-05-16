@@ -1,5 +1,5 @@
 .main {
-    width:100vw;
+    width:100%;
     max-width: 1440px;
     margin: auto;
 }
@@ -11,7 +11,8 @@
 
 .sortBar {
     width: 100%;
-    margin-bottom: 1.8rem
+    margin-bottom: 1.8rem;
+    display: none;
 }
 
 .frame {
@@ -22,13 +23,14 @@
 
 .list {
     display: grid;
-    gap: 0.7rem
+    gap: 0.7rem;
+    display: none;
 }
 
 .detailCard {
-    width: 62rem;
+    width: 100%;
     border: 3px solid var(--color-primary-700);
-    border-radius: 2rem;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +42,7 @@
 
 .detailContent {
     padding: 0;
-    margin: 6rem auto;
+    margin: 2rem auto;
     display: grid;
     justify-content: center;
     width: 83%;
@@ -53,7 +55,7 @@
 
 .image img {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 
@@ -67,7 +69,7 @@
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     padding-bottom: 1rem;
     gap: 1rem;
 }
@@ -77,12 +79,12 @@
 }
 
 .creatorInfo {
-    font-size: 1.25rem;
+    font-size: 1rem;
     display: flex;
     align-content: center;
     text-align: center;
     justify-content: space-between;
-    padding-bottom: 2rem;
+    padding-bottom: 1.5rem;
 }
 
 .creator {
@@ -90,8 +92,7 @@
 }
 
 .creatorIcon {
-    padding-right: 1rem;
-    padding-top: 0.2rem;
+    padding-right: 1.2rem;
 }
 
 .itemContainer {
@@ -172,6 +173,153 @@ a {
     .detailIcons {
         margin: 0;
         font-size: 1rem;
+        padding-bottom: 1rem;
+        gap: 1rem;
+    }
+    
+    .detailIcons:hover {
+        cursor: pointer;
+    }
+    
+    .creatorInfo {
+        font-size: 1.25rem;
+        display: flex;
+        align-content: center;
+        text-align: center;
+        justify-content: space-between;
+        padding-bottom: 2rem;
+    }
+    
+    .creator {
+        display: flex;
+    }
+    
+    .creatorIcon {
+        padding-right: 1rem;
+        padding-top: 0.2rem;
+    }
+    
+    .itemContainer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.25rem;
+        padding-bottom: 5rem;
+    }
+    
+    .detailLeft {
+        width: 25%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .leftTags {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 1rem;
+        padding-top: 1rem;
+    }
+    
+    .detailRight {
+        width: 70%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .detailItem {
+        padding-bottom: 2rem;
+    }
+    
+    .labelTitle {
+        font-weight: 600;
+        padding-bottom: 0.4rem;
+    }
+    
+    .reference {
+        font-size: 0.7rem;
+    }
+    
+    .backButton {
+        display: flex;
+        justify-content: center;
+    }
+    
+    a {
+        text-decoration: none;
+        color: var(--color-primary-700);
+    }
+}
+
+@media (min-width: 1378px) {
+    .main {
+        width:100vw;
+        max-width: 1440px;
+        margin: auto;
+    }
+     
+    .contents {
+        width: 96%;
+        margin: auto;
+    }
+    
+    .sortBar {
+        width: 100%;
+        margin-bottom: 1.8rem
+    }
+    
+    .frame {
+        width: 100%; 
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .list {
+        display: grid;
+        gap: 0.7rem
+    }
+    
+    .detailCard {
+        width: 62rem;
+        border: 3px solid var(--color-primary-700);
+        border-radius: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .detailContent {
+        padding: 0;
+        margin: 6rem auto;
+        display: grid;
+        justify-content: center;
+        width: 83%;
+    }
+    
+    .image {
+        width: 100%;
+        margin: auto;
+    }
+    
+    .image img {
+        width: 100%;
+        border-radius: 20px;
+    }
+    
+    
+    .detailCard h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        padding: 1rem 0;
+    }
+    
+    .detailIcons {
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 1.8rem;
         padding-bottom: 1rem;
         gap: 1rem;
     }

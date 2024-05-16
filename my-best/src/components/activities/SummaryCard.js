@@ -6,15 +6,15 @@ function SummaryCard({ activity, link }) {
    
     return (
         <Link to={link}>
-            <div className={classes.smallCard}>
-                <div className={classes.card}>
-                    <div className={classes.duration}>Duration: {activity.duration} min</div>
-                    <div className={classes.image}>
-                        <img src='/images/small/1.png' alt="example" style={{ borderRadius: '12px' }} />
+            <div className={classes.summaryCard}>
+                <div className={classes.summaryCardContents}>
+                    <div className={classes.summaryCardDuration}>Duration: {activity.duration} min</div>
+                    <div className={classes.summaryCardImage}>
+                        <img src='/images/small/1.png' alt="example" />
                     </div>
-                    <div className={classes.contents}>
+                    <div className={classes.summaryCardDetails}>
                         <h2>{activity.title}</h2>
-                        <div className={classes.icons}>
+                        <div className={classes.summaryCardIcons}>
                             {activity.is_favorited ? <GoHeartFill /> : <GoHeart />}
                             <GoBookmark />
                         </div>

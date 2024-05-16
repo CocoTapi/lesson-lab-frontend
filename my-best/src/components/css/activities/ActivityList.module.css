@@ -92,7 +92,17 @@
     .sortBar {
         width: 100%
     }
+
+    .list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        padding: 0;
+        gap: 1rem;
+        transition: all 0.3s; 
+     }
 }
+
+
 
 
 
