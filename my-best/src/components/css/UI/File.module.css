@@ -9,10 +9,12 @@
     /* border-top: 0;  */
     z-index: 1; /* Ensuring it stays below the lifted labels */
     position: relative;
+    box-sizing: border-box;
 }
 
-@media (min-width: 1008px) {
+@media (min-width: 640px) {
     .file {
         min-height: 54.6rem;
     }
 }
+

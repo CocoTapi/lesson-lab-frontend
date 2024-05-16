@@ -13,24 +13,33 @@ function Profile({ data }){
     
     return (
         <File>
-            <div className={classes.box}>
-                <div className={classes.contents}>
+            <div className={classes.profileBox}>
+                <div className={classes.profileContents}>
+                    <h1>Profile</h1>
                     <div className={classes.item}>
                         <h3>User Name :</h3>
-                        <h3>E-mail :</h3>
-                        <h3>Password :</h3>
-                        <h3>First Name :</h3>
-                        <h3>Last Name :</h3>
-                        <h3>Last login :</h3>
+                        <p>{userProfile.user_name}</p>
                     </div>
                     <div className={classes.item}>
-                        <h3>{userProfile.user_name}</h3>
-                        <h3>{userProfile.email}</h3>
-                        <h3>●●●●●●●</h3>
-                        <h3>{userProfile.first_name}</h3>
-                        <h3>{userProfile.last_name}</h3>
-                        <h3>{userProfile.last_login}</h3>
-                    </div>                           
+                        <h3>E-mail :</h3>
+                        <p>{userProfile.email}</p>
+                    </div>
+                    <div className={classes.item}>
+                        <h3>Password :</h3>
+                        <p>●●●●●●●</p>
+                    </div>
+                    <div className={classes.item}>
+                        <h3>First Name :</h3>
+                        <p>{userProfile.first_name}</p>
+                    </div>
+                    <div className={classes.item}>
+                        <h3>Last Name :</h3>
+                        <p>{userProfile.last_name}</p>
+                    </div>
+                    <div className={classes.item}>
+                        <h3>Last login :</h3>
+                        <p>{userProfile.last_login}</p>
+                    </div>                       
                 </div>
                 <div className={classes.editButton}>
                     <NavLink to={`/mypage/${user_id}/edit`}>
