@@ -22,7 +22,7 @@ function SortBar (
  
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 677) {
+            if (window.innerWidth <= 676) {
                 setShoeMenuBar(true);
             } else {
                 setShoeMenuBar(false);

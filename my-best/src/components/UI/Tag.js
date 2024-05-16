@@ -21,10 +21,11 @@ const tagHeights = {
 }
 
 
-function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thin', tagSize= 'middle', hash = 'true', ...rest }){
+function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thin', tagSize= 'middle', hash = true, ...rest }){
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primaryBorder;
     const { borderSize } = tagBorders[border] || tagBorders.thin;
     const { height } = tagHeights[tagSize] || tagHeights.middle;
+    const showIcon = typeof hash === 'string' ? hash.toLowerCase() === 'true' : hash;
 
     const buttonStyle = {
         color: textColor,
@@ -40,7 +41,7 @@ function Tag({ className, children, colorScheme = 'primaryBorder', border = 'thi
             style={buttonStyle}
             {...rest}
         >
-            {!hash && <p><FaHashtag /></p>}
+            {showIcon && <p><FaHashtag /></p>}
             {children}
         </button>
     )

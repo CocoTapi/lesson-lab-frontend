@@ -15,7 +15,7 @@ function MainNavigation() {
  
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 640) {
+            if (window.innerWidth <= 640) {
                 setShoeMenuBar(true);
             } else {
                 setShoeMenuBar(false);

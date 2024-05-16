@@ -41,24 +41,24 @@ function ActivityItem({ activity, activities }) {
 
     return (
         <div className={classes.main}>
-            <div className={classes.sortBar} >
-                <SortBar />
-            </div>
-            <div className={classes.frame}>
-                <div className={classes.left}>
-                    <ul>
-                        {activities.map((item) => (
+            <div className={classes.contents}>
+                <div className={classes.sortBar} >
+                    <SortBar />
+                </div>
+                <div className={classes.frame}>
+                    <ul className={classes.list}>
+                        {activities.slice(0, 3).map((item) => (
                             <li key={item.activity_id}>
                                 <SummaryCard activity={item} link={`../${item.activity_id}`}/>
                             </li>
                         ))}
                     </ul>
-                </div>
 
-                <div className={classes.right}>
                     <div className={classes.detailCard}>
                         <div className={classes.detailContent}>
-                            <img src='/images/large/1.png' alt="example" style={{ borderRadius: '30px' }} />
+                            <div className={classes.image}>
+                                <img src='/images/large/1.png' alt="example" />
+                            </div>
                             <h1>{activity.title}</h1>
                             <div className={classes.detailIcons}>
                                 {activity.is_favorited ? <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> : <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />}

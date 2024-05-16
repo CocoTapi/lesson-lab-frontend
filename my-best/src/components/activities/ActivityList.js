@@ -16,7 +16,7 @@ function ActivityList({ activities }){
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 1300) {
+            if (window.innerWidth <= 1300) {
                 setShowFilterButton(true);
             } else {
                 setShowFilterButton(false);
@@ -41,19 +41,19 @@ function ActivityList({ activities }){
                     { showFilterButton && 
                         <div className={classes.filterButtons}>
                             <div className={classes.fButton}>
-                                <Tag tag='false'>
+                                <Tag hash='false'>
                                     <MdOutlineFilterCenterFocus className={classes.fIcon} />
                                     Duration
                                 </Tag>
                             </div>
                             <div className={classes.fButton}>
-                                <Tag tag='false'>
+                                <Tag hash='false'>
                                     <MdOutlineFilterCenterFocus className={classes.fIcon} />
                                     Age Group
                                 </Tag>
                             </div>
                             <div className={classes.fButton}>
-                                <Tag tag='false'>
+                                <Tag hash={false} >
                                     <MdOutlineFilterCenterFocus className={classes.fIcon} />
                                     Popular Categories
                                 </Tag>
