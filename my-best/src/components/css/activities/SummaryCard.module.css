@@ -5,6 +5,7 @@
     border: 3px solid var(--color-primary-700);
     border-radius: 20px;
     text-decoration: none;
+    box-sizing: border-box;
     transition: all 0.3s ease;
 }
 

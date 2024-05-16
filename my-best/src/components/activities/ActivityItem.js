@@ -55,29 +55,29 @@ function ActivityItem({ activity, activities }) {
                     </ul>
 
                     <div className={classes.detailCard}>
-                        <div className={classes.detailContent}>
-                            <div className={classes.image}>
+                        <div className={classes.detailCardContents}>
+                            <div className={classes.detailCardImage}>
                                 <img src='/images/large/1.png' alt="example" />
                             </div>
                             <h1>{activity.title}</h1>
-                            <div className={classes.detailIcons}>
+                            <div className={classes.detailCardIcons}>
                                 {activity.is_favorited ? <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> : <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />}
                                 {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> }
                             </div>
-                            <div className={classes.creatorInfo}>
+                            <div className={classes.detailCardCreatorInfo}>
                                 <p>{activity.like_count} likes</p>
                                 <div className={classes.creator} >
                                     <p className={classes.creatorIcon} ><FaRegCircleUser /></p>
                                     <p>{activity.user_name}</p>
                                 </div>  
                             </div>
-                            <div className={classes.itemContainer}>
+                            <div className={classes.detailCardDetails}>
                                 <div className={classes.detailLeft}>
-                                    <div className={classes.detailItem}>
+                                    <div className={`${classes.detailItem} ${classes.flexItem}`}>
                                         <p className={classes.labelTitle}>Durations :</p>
                                         <p>{activity.duration} mins</p>
                                     </div>
-                                    <div className={classes.detailItem}>
+                                    <div className={`${classes.detailItem} ${classes.flexItem}`}>
                                         <p className={classes.labelTitle}>Age group :</p>
                                         <p>{activity.age_group}</p>
                                     </div>
