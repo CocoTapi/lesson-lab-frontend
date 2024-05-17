@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
-import classes from '../css/user_page/Playlists.module.css';
+import classes from '../css/user_page/PlaylistItem.module.css';
 import { FaStar } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 
 function PlaylistItem({list, index, userPlaylists, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
     return (
+        <div className={classes.accordionComponent}>
         <Accordion 
                     headerTitle={list.playlist_title}
                     headerContents={
@@ -101,6 +102,7 @@ function PlaylistItem({list, index, userPlaylists, onRemoveActivity, onDeletePla
                         </div>
                     }
                 />
+            </div>
     )
 
 }

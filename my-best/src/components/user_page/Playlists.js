@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import { TiPlus } from "react-icons/ti";
@@ -9,6 +9,10 @@ import classes from '../css/user_page/Playlists.module.css';
 import { FaStar } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
+import Tag from '../UI/Tag';
+import { MdOutlineFilterCenterFocus } from "react-icons/md";
+import ButtonM from "../UI/ButtonM";
+
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
@@ -26,6 +30,28 @@ function Playlists ({ data }) {
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
     const titleRef = useRef('');
+    const [ showFilterButton, setShowFilterButton] = useState(false);
+
+    //TODO: handle sortOption
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1300) {
+                setShowFilterButton(true);
+            } else {
+                setShowFilterButton(false);
+            }
+        };
+
+        handleResize();
+
+        // Listen for resize events
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     //TODO: sort 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
@@ -88,25 +114,53 @@ function Playlists ({ data }) {
 
     return (
         <File> 
-            <div className={classes.frame}>
+            <div className={classes.outerFrame}>
+                <div className={classes.pageTitle}>
+                    <h1>Playlists</h1>
+                </div>
                 <div className={classes.sortBar}>
                     <SortBar 
                         onSortChange={setSortOption} 
                         colorScheme="primaryLight"
-                        button='ButtonM'
-                        icon={<TiPlus />}
-                        buttonWord='Add Playlist'
-                        onClick={handleShowPlaylist}
-                        buttonColor='secondary'
                     />
-                </div>
-                <div className={classes.contents}>
-                    <div className={classes.left}>
-                        <div className={classes.filter}>
-                            <Filter />
+                    { showFilterButton && 
+                        <div className={classes.filterButtons}>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Duration
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Age Group
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash={false} >
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Popular Categories
+                                </Tag>
+                            </div>
                         </div>
+                    }       
+                </div>
+                <div className={classes.bottomContents}>
+                    <div className={classes.bottomLeft}>
+                        {!showFilterButton &&
+                            <div className={classes.filter}>
+                                <Filter />
+                            </div>
+                        }
                     </div>
-                    <ul className={classes.right}>
+                    <ul className={classes.bottomRight}>
+                        <div  className={classes.addPlaylistBComponent}>
+                            <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
+                                <TiPlus />
+                                Add Playlist
+                            </ButtonM>
+                        </div>
                         {content}
                         {showPlaylistForm && 
                             <Accordion 
@@ -128,7 +182,7 @@ function Playlists ({ data }) {
                                     </form>
                                } 
                                topImage={
-                                <div className={classes.sum}>
+                                <div className={classes.sum} colorScheme='secondary'>
                                     <p><FaStar /></p>
                                 </div>
                             }

@@ -1,13 +1,17 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
 import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
 import SortBar from "../UI/SortBar";
 import Filter from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
+import Tag from '../UI/Tag';
+import { MdOutlineFilterCenterFocus } from "react-icons/md";
+import { GoHeartFill } from "react-icons/go";
+
 
 
 
@@ -25,6 +29,28 @@ function MyFavorites({ data }){
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
     //TODO: sort 
+
+    const [ showFilterButton, setShowFilterButton] = useState(false);
+
+    //TODO: handle sortOption
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1300) {
+                setShowFilterButton(true);
+            } else {
+                setShowFilterButton(false);
+            }
+        };
+
+        handleResize();
+
+        // Listen for resize events
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleRemoveActivity = (activity_id, title) => {
         const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
@@ -56,25 +82,53 @@ function MyFavorites({ data }){
 
     return (
         <File> 
-            <div className={classes.frame}>
+            <div className={classes.outerFrame}>
+                <div className={classes.pageTitle}>
+                    <GoHeartFill className={classes.titleIcon} />
+                    <h1>Likes</h1>
+                </div>
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
-                </div>
-                <div className={classes.contents}>
-                    <div className={classes.left}>
-                        <div className={classes.filter}>
-                            <Filter />
+                    { showFilterButton && 
+                        <div className={classes.filterButtons}>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Duration
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Age Group
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash={false} >
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Popular Categories
+                                </Tag>
+                            </div>
                         </div>
-                       <div className={classes.goToList}>
-                        <Link to='../playlists' >
-                            <ButtonM colorScheme="secondary">
-                                <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
-                                <p>Create Playlist</p>
-                            </ButtonM>
-                        </Link>
+                    }               
+                </div>
+                <div className={classes.bottomContents}>
+                    <div className={classes.bottomLeft}>
+                        {!showFilterButton &&
+                            <div className={classes.filter}>
+                                <Filter />
+                            </div>
+                        }
+                       <div className={classes.createPlaylistButtonComponent}>
+                            <Link to='../playlists' >
+                                <ButtonM colorScheme="secondary">
+                                    <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
+                                    <p>Create Playlist</p>
+                                </ButtonM>
+                            </Link>
                        </div>
                     </div>
-                    <ul className={classes.right}>
+                    <ul className={classes.bottomRight}>
                         {content}
                     </ul>
                 </div>

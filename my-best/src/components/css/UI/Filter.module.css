@@ -71,37 +71,3 @@
     outline: none;
 }
 
-@media (max-width: 1408px) {
-    .box {
-        width: 15.4rem;
-        height: 32.4rem;
-    }
-
-    .contents {
-        width: 80%;
-        margin-left: 2rem;
-    }
-
-    .box h1 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        padding-bottom: 0.2rem;
-    }
-    
-    .radio {
-        margin-bottom: 1.5rem;
-    }
-    
-    .viewButtons {
-        justify-content: center;
-        margin-top: 2rem;
-        gap: 1.6rem;
-        transition: all 0.3s ease; 
-    }
-    
-    .clearButton {
-        padding: 0 0.2rem;  
-        font-size: 0.8rem;
-        
-    }
-}

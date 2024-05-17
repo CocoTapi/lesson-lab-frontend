@@ -1,13 +1,15 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
 import { useSubmit, useRouteLoaderData, useNavigate, Link, useLocation } from "react-router-dom";
-import { useState } from "react";
-import classes from '../css/user_page/MyUploads.module.css';
+import { useState, useEffect } from "react";
+import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
 import SortBar from "../UI/SortBar";
 import Filter from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import Tag from '../UI/Tag';
+import { MdOutlineFilterCenterFocus } from "react-icons/md";
 
 
 
@@ -26,6 +28,27 @@ function MyUploads({ data }){
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const navigate = useNavigate();
     const location = useLocation();
+    const [ showFilterButton, setShowFilterButton] = useState(false);
+
+    //TODO: handle sortOption
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1300) {
+                setShowFilterButton(true);
+            } else {
+                setShowFilterButton(false);
+            }
+        };
+
+        handleResize();
+
+        // Listen for resize events
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     //TODO: sort 
 
@@ -60,16 +83,43 @@ function MyUploads({ data }){
 
     return (
         <File> 
-            <div className={classes.frame}>
+            <div className={classes.outerFrame}>
+                <div className={classes.pageTitle}>
+                    <h1>My Uploads</h1>
+                </div>
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
-                </div>
-                <div className={classes.contents}>
-                    <div className={classes.left}>
-                        <div className={classes.filter}>
-                            <Filter />
+                    { showFilterButton && 
+                        <div className={classes.filterButtons}>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Duration
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash='false'>
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Age Group
+                                </Tag>
+                            </div>
+                            <div className={classes.fButton}>
+                                <Tag hash={false} >
+                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    Popular Categories
+                                </Tag>
+                            </div>
                         </div>
-                       <div className={classes.goToList}>
+                    }     
+                </div>
+                <div className={classes.bottomContents}>
+                    <div className={classes.bottomLeft}>
+                        {!showFilterButton &&
+                            <div className={classes.filter}>
+                                <Filter />
+                            </div>
+                        }
+                       <div className={classes.createPlaylistButtonComponent}>
                         <Link to='../playlists' >
                                 <ButtonM colorScheme="secondary">
                                     <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
@@ -78,7 +128,7 @@ function MyUploads({ data }){
                             </Link>
                        </div>
                     </div>
-                    <ul className={classes.right}>
+                    <ul className={classes.bottomRight}>
                         {content}
                     </ul>
                 </div>

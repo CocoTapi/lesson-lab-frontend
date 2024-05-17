@@ -4,7 +4,6 @@ import { GoHeartFill } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
-import { IoTrashBinSharp } from 'react-icons/io5';
 
 function UserActivityList({ activity, onClick, icon, buttonWord }){
 
@@ -86,7 +85,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
     
     
     return ( 
-        <>
+        <div className={classes.accordionComponent}>
             <Accordion 
                     headerTitle={activity.title}
                     topImage={image}
@@ -95,7 +94,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
                     buttonChildren={buttonChildren}
                     color='white'
             />
-        </>
+        </div>
     )
 };
 

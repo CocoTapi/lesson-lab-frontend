@@ -1,4 +1,8 @@
-p {
+.accordionComponent {
+    margin-bottom: 0.7rem;
+}
+
+.accordionComponent p {
     margin: 0;
     padding: 0;
 }
