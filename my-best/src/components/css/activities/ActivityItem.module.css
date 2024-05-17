@@ -1,12 +1,12 @@
 .main {
     width:100%;
     max-width: 1440px;
-    margin: auto;
+    margin: 0 auto;
 }
  
 .contents {
     width: 96%;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .sortBar {
@@ -193,44 +193,49 @@ a {
 }
 
 @media (max-width: 640px) {
+    .contents {
+        width: 100%;
+    }
+
     .detailCard {
-        border: 2px solid var(--color-primary-700);
+        border: none;
     }
     
     .detailCardContents {
-        width: 88%;
-        padding: 2rem 0;
+        width: 100%;
+        padding: 0;
     }
     
     .detailCardImage img {
-        border-radius: 10px;
+        border-radius: 0;
     }
     
     .detailCard h1 {
         font-size: 1.25rem;
-        padding-top: 1rem;
+        padding: 1rem 1.3rem 1rem;
     }
     
     .detailCardIcons {
         font-size: 1rem;
-        padding-bottom: 1rem;
+        padding: 0 0 0.7rem 1.3rem;
     }
     
     .detailCardCreatorInfo {
         font-size: 1rem;
-        padding-bottom: 1rem;
+        padding: 0 1rem 0.7rem 1rem;
     }
     
     .creatorIcon {
         padding-right: 0.6rem;
-        padding-top: 0.1rem;
+        padding-top: 0.15rem;
     
     }
     
     .detailCardDetails {
         display: grid;
         font-size: 1rem;
-        padding-bottom: 2rem;
+        padding: 1rem;
+        padding-bottom: 3rem;
     }
     
     .detailLeft {
@@ -239,9 +244,14 @@ a {
         margin: 0;
     }
 
+    .detailItem {
+        padding-bottom: 1rem;
+    }
+
     .flexItem {
         display: flex;
         gap: 0.8rem;
+        padding-bottom: 0;
     }
     
     .leftTags {
@@ -252,7 +262,5 @@ a {
         width: 100%;
     }
     
-    .detailItem {
-        padding-bottom: 1rem;
-    }
+  
 }
