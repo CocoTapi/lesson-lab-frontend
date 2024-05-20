@@ -119,10 +119,10 @@ function Playlists ({ data }) {
                     <h1>Playlists</h1>
                 </div>
                 <div className={classes.sortBar}>
-                    <SortBar 
+                    {/* <SortBar 
                         onSortChange={setSortOption} 
                         colorScheme="primaryLight"
-                    />
+                    /> */}
                     {/* { showFilterButton && 
                         <div className={classes.filterButtons}>
                             <div className={classes.fButton}>
@@ -155,6 +155,10 @@ function Playlists ({ data }) {
                         }
                     </div> */}
                     <ul className={classes.bottomRight}>
+                        <SortBar 
+                            onSortChange={setSortOption} 
+                            colorScheme="primaryLight"
+                        />
                         <div  className={classes.addPlaylistBComponent}>
                             <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
                                 <TiPlus />

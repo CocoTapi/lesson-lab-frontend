@@ -23,10 +23,11 @@
     margin: 0;
 }
 
-.sortBar {
+/* .sortBar {
     width: 100%;
     margin: 0;
-}
+    margin-bottom: 0.7rem;
+} */
 
 .filterButtons {
     display: flex;
@@ -52,7 +53,9 @@
 }
 
 .addPlaylistBComponent {
-    padding-bottom: 0.7rem;
+    display: flex;
+    justify-content: end;
+    padding: 0.7rem 0;
     transition: all 0.3s ease;
 }
 
@@ -91,18 +94,14 @@
         margin-top: 1rem;
     }
 
-    .bottomLeft {
+    /* .bottomLeft {
         width: 25%;
-    }
+    } */
 
     .bottomRight {
-        width: 72%;
+        width: 100%;
     }
-    .addPlaylistBComponent {
-        display: flex;
-        justify-content: end;
-        padding-bottom: 0.7rem;
-    }
+ 
     
 }
 
