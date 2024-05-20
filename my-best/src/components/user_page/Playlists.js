@@ -123,7 +123,7 @@ function Playlists ({ data }) {
                         onSortChange={setSortOption} 
                         colorScheme="primaryLight"
                     />
-                    { showFilterButton && 
+                    {/* { showFilterButton && 
                         <div className={classes.filterButtons}>
                             <div className={classes.fButton}>
                                 <Tag hash='false'>
@@ -144,16 +144,16 @@ function Playlists ({ data }) {
                                 </Tag>
                             </div>
                         </div>
-                    }       
+                    }        */}
                 </div>
                 <div className={classes.bottomContents}>
-                    <div className={classes.bottomLeft}>
+                    {/* <div className={classes.bottomLeft}>
                         {!showFilterButton &&
                             <div className={classes.filter}>
                                 <Filter />
                             </div>
                         }
-                    </div>
+                    </div> */}
                     <ul className={classes.bottomRight}>
                         <div  className={classes.addPlaylistBComponent}>
                             <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>

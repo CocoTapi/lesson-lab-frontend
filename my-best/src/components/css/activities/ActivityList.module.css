@@ -84,7 +84,7 @@
 
 @media (max-width: 1300px) {
     .sortBar {
-        width: 61.5rem;
+        width: 100%;
         margin: auto;
         margin-bottom: 0.7rem;
     }
@@ -115,11 +115,11 @@
 
 @media (max-width: 1022px) {
     .sortBar {
-        width: 41rem;
+        width: 100%;
     }
 }
 
-@media (max-width: 676px) {
+@media (max-width: 800px) {
     .contents {
         width: 90%;
         margin: auto;

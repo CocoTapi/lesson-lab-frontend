@@ -59,10 +59,10 @@
     font-size: 1.2rem;
 }
 
-@media (max-width: 676px) {
+@media (max-width: 800px) {
     .summaryCard {
         width: 100%;
-        height: 29rem;
+        min-height: 29rem;
         border: 2px solid var(--color-primary-700);
         border-radius: 10px;
     }

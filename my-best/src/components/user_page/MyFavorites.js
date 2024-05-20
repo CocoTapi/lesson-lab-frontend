@@ -11,9 +11,7 @@ import { GoTrash } from "react-icons/go";
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
-
-
-
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 function MyFavorites({ data }){
     const userFavorites = data.userFavorites;
@@ -31,6 +29,10 @@ function MyFavorites({ data }){
     //TODO: sort 
 
     const [ showFilterButton, setShowFilterButton] = useState(false);
+    const [selectedTime, setSelectedTime] = useState('');
+    const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
+    const [selectedTag, setSelectedTag ] = useState('');
+    const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
     //TODO: handle sortOption
 
@@ -60,14 +62,37 @@ function MyFavorites({ data }){
         }
     }; 
 
-    console.log("userFavorites: ", userFavorites);
+    const handleTimeChange = (time) => {
+        setSelectedTime(time);
+     }
+ 
+     const handleAgeGroupChange = (ageGroup) => {
+         setSelectedAgeGroup(ageGroup);
+     };
+ 
+     const handleTagChange = (tag) => {
+         setSelectedTag(tag);
+     }
+ 
+     const handleFilterButton = () => {
+         setShowFilterMenu(!showFilterMenu);
+     }
+ 
+     const filteredActivities = userFavorites.filter((activity) => {
+         const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
+         const ageGroupMatch = selectedAgeGroup ? activity.age_group === selectedAgeGroup : true;
+         const tagMatch = selectedTag ? activity.tags.includes(selectedTag) : true;
+         return timeMatch && ageGroupMatch && tagMatch;
+     });
+
+    // console.log("userFavorites: ", userFavorites);
 
     let content;
     if (Object.keys(userFavorites).length === 0) {
         console.log("No content")
         content = <p>"You haven't add favorites."</p>
     } else {
-        content = userFavorites.map((activity) => (
+        content = filteredActivities.map((activity) => (
             <li key={activity.activity_id}>
                 <UserActivityList 
                     activity={activity}  
@@ -90,27 +115,21 @@ function MyFavorites({ data }){
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
                     { showFilterButton && 
-                        <div className={classes.filterButtons}>
+                        <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
                                 <Tag hash='false'>
                                     <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Duration
-                                </Tag>
-                            </div>
-                            <div className={classes.fButton}>
-                                <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Age Group
-                                </Tag>
-                            </div>
-                            <div className={classes.fButton}>
-                                <Tag hash={false} >
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Popular Categories
+                                    <p>Filter</p>
+                                    {showFilterMenu ? <FaChevronUp className={classes.fIcon} /> : <FaChevronDown className={classes.fIcon} /> }
                                 </Tag>
                             </div>
                         </div>
-                    }               
+                    }
+                    {showFilterMenu && (
+                        <div style={{ paddingBottom: '0.7rem'}}>
+                            <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>
+                        </div>
+                    )}         
                 </div>
                 <div className={classes.bottomContents}>
                     <div className={classes.bottomLeft}>
