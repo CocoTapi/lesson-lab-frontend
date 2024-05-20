@@ -28,9 +28,9 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
             <div className={classes.detailItem}>
                 <p>{activity.summary}</p>
             </div>
-            <div className={classes.group}>
+            <div className={classes.durationGroup}>
                 <p className={classes.labelTitle}>Duration:</p>
-                <p className={classes.info}>{activity.duration} mins</p>
+                <p>{activity.duration} mins</p>
             </div>
 
         </>
@@ -38,17 +38,17 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
 
     const activityDetail = (
         <div className={classes.accordionDetail}>
-            <div className={classes.activityLeft}>
+            <div className={classes.leftDetailItems}>
+                <div className={classes.accordionAgeGroup}>
+                    <p className={classes.labelTitle}>Age group :</p>
+                    <p>{activity.age_group}</p>
+                </div>
                 <div className={classes.detailItem}>
                     <p className={classes.labelTitle}>Materials :</p>
                     <p>{activity.materials}</p>
                 </div>
-                <div className={classes.detailItem}>
-                    <p className={classes.labelTitle}>Age group :</p>
-                    <p>{activity.age_group}</p>
-                </div>
             </div>
-            <div className={classes.activityRight}>
+            <div className={classes.rightDetailItems}>
                 <div className={classes.detailItem}>
                     <p className={classes.labelTitle}>Objectives:</p>
                     <p>{activity.objectives}</p>

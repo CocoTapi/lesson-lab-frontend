@@ -40,6 +40,7 @@ function Accordion ({
             style={frameStyle}
         >
             <div className={classes.header}>
+                <div className={classes.headerPicAndContents}>
                     <div className={classes.topImage}>
                         {topImage}
                     </div>
@@ -48,7 +49,8 @@ function Accordion ({
                         <div>
                             {headerContents}
                         </div> 
-                    </div>                 
+                    </div>    
+                </div>             
                 <div className={classes.headerRight} onClick={handleClick}>
                     {expanded ? <FaChevronUp /> : <FaChevronDown /> }
                 </div>
