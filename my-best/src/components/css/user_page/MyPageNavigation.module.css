@@ -53,18 +53,26 @@
 @media (min-width: 640px) { 
     .labelItem {
         height: 4rem;
-        border: 3px solid  var(--color-primary-500);
+        border: 3px solid var(--color-primary-500);
         border-bottom: 0;
         font-size:1.25rem;
+    }
+
+    .active {
+        border-color: var(--color-primary-700);
     }
 }
 
 @media (min-width: 1008px) {
     .labelItem {
         height: 5.3rem;
-        border: 5px solid  var(--color-primary-500);
+        border: 5px solid var(--color-primary-500);
         border-bottom: 0;
         border-radius: 20px 20px 0 0;
         font-size:1.85rem;
+    }
+
+    .active {
+        border-color: var(--color-primary-700);
     }
 }
