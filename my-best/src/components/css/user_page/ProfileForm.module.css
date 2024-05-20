@@ -33,7 +33,7 @@
 
 .profileContents {
     width: 90%;
-    margin-top: 2rem;
+    margin: 2rem auto;
     transition: all 0.3s ease;
 }
 

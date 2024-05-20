@@ -40,7 +40,7 @@
 .item {
    width: 100%;
    display: block;
-   padding-bottom: 1.7rem;
+   padding-bottom: 1rem;
    transition: all 0.3s ease;
 }
 
@@ -51,6 +51,11 @@
     margin: 0;
     font-weight: 600;
     transition: all 0.3s ease;
+}
+
+.item p {
+    margin: 0;
+    padding-bottom: 0.45rem;
 }
 
 
