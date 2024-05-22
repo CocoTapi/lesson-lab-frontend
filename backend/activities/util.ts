@@ -70,6 +70,7 @@ export async function insertTags(tags: string[], activity_id: number, date: Date
 
 //Queries
 
+// get summary
 export function getSummaryRelationQuery(verifiedEmail?: string){
     let exists = '';
     if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might
@@ -118,7 +119,74 @@ export function getSummaryRelationQuery(verifiedEmail?: string){
     return query;
 } 
 
+// get filtered summary 
+export function getFilteredSummaryRelationQuery(verifiedEmail?: string){
+    let exists = '';
+    if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might
+        exists = `,
+        EXISTS (
+            SELECT 1
+            FROM user_favorites uf
+            JOIN users u ON u.user_id = uf.user_id
+            WHERE uf.activity_id = a.activity_id AND u.email = $2
+        ) AS is_favorited`;
+    }
 
+    const query: string = `
+        SELECT 
+            a.activity_id,
+            a.title,
+            a.summary,
+            a.instructions,
+            d.duration_title AS duration, 
+            age.age_group_title AS age_group,
+            ARRAY_AGG(DISTINCT tag_title) AS tags,
+            CAST(
+                (SELECT COUNT(*)
+                FROM user_favorites uf
+                WHERE uf.activity_id = a.activity_id
+                ) AS INTEGER
+            ) AS like_count,
+            MAX(GREATEST(
+                ts_rank_cd(a.tsv_summary, to_tsquery($1)),
+                ts_rank_cd(a.tsv_instructions, to_tsquery($1)),
+                ts_rank_cd(a.tsv_materials, to_tsquery($1)),
+                ts_rank_cd(a.tsv_objectives, to_tsquery($1)),
+                similarity(a.title, $1),
+                similarity(t.tag_title, $1),
+                similarity(age.age_group_title, $1)
+            )) AS rank
+            ${exists}
+        FROM
+            activities AS a
+        JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
+        JOIN durations AS d ON d.duration_id = ad.duration_id 
+        JOIN activity_tags AS at ON a.activity_id = at.activity_id 
+        JOIN tags AS t ON t.tag_id = at.tag_id 
+        JOIN activity_age_groups AS aa ON a.activity_id = aa.activity_id
+        JOIN age_groups AS age ON age.age_group_id = aa.age_group_id
+        WHERE
+            a.tsv_summary @@ to_tsquery($1)
+            OR a.tsv_instructions @@ to_tsquery($1)
+            OR a.tsv_materials @@ to_tsquery($1)
+            OR a.tsv_objectives @@ to_tsquery($1)
+            OR a.title % $1
+            OR t.tag_title % $1
+            OR a.materials % $1
+            OR age.age_group_title % $1
+        GROUP BY 
+                    a.activity_id,
+                    d.duration_title,
+                    age.age_group_title         
+        ORDER BY
+            rank DESC
+    `;
+
+    return query;
+}
+
+
+//get detail activity
 export function getUserActivityRelationQuery(verifiedEmail?: string) {
     let exists = '';
     if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might

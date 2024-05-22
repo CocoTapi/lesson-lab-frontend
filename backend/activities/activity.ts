@@ -9,7 +9,8 @@ import {
     deleteUserFavQuery,
     getSummaryRelationQuery,
     addActivitiesQuery,
-    getUserActivityRelationQuery
+    getUserActivityRelationQuery,
+    getFilteredSummaryRelationQuery
 } from "./util";
 
 const db = Database.db;
@@ -30,6 +31,26 @@ export async function getAllActivitiesUser(verifiedEmail: string){
     const result = await db.query(query, [verifiedEmail]);
 
     if (result.rows.length <= 0) throw new Error("Activities does not exist");
+
+    return result.rows
+}
+
+export async function getFilteredActivitiesUser(verifiedEmail: string, searchTerm: string) {
+    const query = getFilteredSummaryRelationQuery(verifiedEmail);
+
+    const result = await db.query(query, [searchTerm, verifiedEmail]);
+
+    if (result.rows.length <= 0) throw new Error("Activities does not exist");
+
+    return result.rows
+}
+
+export async function getFilteredActivities(searchTerm: string) {
+    const query = getFilteredSummaryRelationQuery();
+
+    const result = await db.query(query, [searchTerm]);
+
+    if (result.rows.length <= 0) throw new Error("Activities does not exist")
 
     return result.rows
 }

@@ -70,6 +70,7 @@ function SortBar (
                 <h1>Sort by</h1>
                 <form>
                     <select id='sort' type='sort' name='sort' onChange={sortChangeHandler} className={classes.formSelect}>
+                        <option value="default">Featured Activities</option>
                         <option value="shortToLong">Duration: Short to Long</option>
                         <option value="longToShort">Duration: Long to Short</option>
                         <option value="TopRated">User's Top Rated</option>
