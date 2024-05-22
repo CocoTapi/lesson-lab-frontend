@@ -6,20 +6,20 @@ import SortBar from '../UI/SortBar';
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useSubmit } from 'react-router-dom';
 
 
 
 function ActivityList({ activities }){
     const [ sortOption, setSortOption ] = useState(''); 
-    const [ searchTerm, setSearchterm ] = useState('');
     const [ showFilterButton, setShowFilterButton] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
     const [selectedTag, setSelectedTag ] = useState('');
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
-
-    //TODO: handle sortOption
-
+    const submit = useSubmit();
+    
+    //handle screen sizes change
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 1300) {
@@ -38,6 +38,12 @@ function ActivityList({ activities }){
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const handleFilterButton = () => {
+        setShowFilterMenu(!showFilterMenu);
+    }
+
+
+    //filter functions
     const handleTimeChange = (time) => {
        setSelectedTime(time);
     }
@@ -50,9 +56,13 @@ function ActivityList({ activities }){
         setSelectedTag(tag);
     }
 
-    const handleFilterButton = () => {
-        setShowFilterMenu(!showFilterMenu);
+   //handle search term 
+    const handleSearchTermSubmit = (searchTerm) => {
+        console.log("searchTerm:", searchTerm)
+        submit({ searchTerm: searchTerm }, { method: "POST" });
     }
+
+  
 
     const filteredActivities = activities.filter((activity) => {
         const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
@@ -80,7 +90,7 @@ function ActivityList({ activities }){
         <div className={classes.main}>
             <div className={classes.contents}>
                 <div className={classes.sortBar}>
-                    <SortBar onSortChange={setSortOption} onSearchTermChange={setSearchterm} search='true' />
+                    <SortBar onSortChange={setSortOption} onSearchTermSubmit={handleSearchTermSubmit} search='true' />
                     { showFilterButton && 
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>

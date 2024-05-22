@@ -40,9 +40,9 @@ export async function getFilteredActivitiesUser(verifiedEmail: string, searchTer
 
     const result = await db.query(query, [searchTerm, verifiedEmail]);
 
-    if (result.rows.length <= 0) throw new Error("Activities does not exist");
+    if (result.rows.length <= 0) return [];
 
-    return result.rows
+    return result.rows;
 }
 
 export async function getFilteredActivities(searchTerm: string) {
@@ -50,7 +50,7 @@ export async function getFilteredActivities(searchTerm: string) {
 
     const result = await db.query(query, [searchTerm]);
 
-    if (result.rows.length <= 0) throw new Error("Activities does not exist")
+    if (result.rows.length <= 0) return [];
 
     return result.rows
 }

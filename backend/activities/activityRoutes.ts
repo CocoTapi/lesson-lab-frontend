@@ -19,6 +19,7 @@ import { checkAuth } from "../util/auth";
 
 const router = express.Router();
 
+//get summary list
 router.get('/', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
@@ -30,21 +31,14 @@ router.get('/', asyncHandler(async (req, res) => {
         verifiedEmail = await checkAuth(method, authHeader);
     
     let activities;
-    if (searchTerm.length > 0) {
-        if(verifiedEmail) {
-            activities = await getFilteredActivitiesUser(verifiedEmail, searchTerm)
-        } else {
-            activities = await getFilteredActivities(searchTerm);
-        }
-    } else {
-        if (verifiedEmail)
-            activities = await  getAllActivitiesUser(verifiedEmail);
-        else activities = await  getAllActivities();
-    }
-
+    if (verifiedEmail)
+        activities = await  getAllActivitiesUser(verifiedEmail);
+    else activities = await  getAllActivities();
+   
     res.status(200).json({ activities: activities });
 }))
 
+//get activity detail
 router.get('/:id', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
@@ -60,6 +54,26 @@ router.get('/:id', asyncHandler(async (req, res) => {
     res.status(200).json({ activity: activity });
 }))
 
+//get filtered summary list
+router.post('/search', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const id: number = parseInt(req.params.id);
+    const searchTerm: string = req.body.searchTerm;
+    
+    let verifiedEmail;
+    if (authHeader)
+        verifiedEmail = await checkAuth(method, authHeader);
+    
+    let filteredActivities;
+    if(verifiedEmail) {
+        filteredActivities = await getFilteredActivitiesUser(verifiedEmail, searchTerm)
+    } else {
+        filteredActivities = await getFilteredActivities(searchTerm);
+    }
+
+    res.status(200).json({ activities: filteredActivities });
+}))
 
 router.post('/', asyncHandler(async (req, res) => {
     const method = req.method;

@@ -3,7 +3,7 @@ import RootLayout from '../pages/home/RootLayout';
 // import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/home/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
-import ActivitiesPage, { loader as activitiesLoader} from '../pages/activities/ActivitiesPage';
+import ActivitiesPage, { loader as activitiesLoader, action as searchAction} from '../pages/activities/ActivitiesPage';
 import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
 import LoginLayout from '../pages/auth/LoginLayout';
 import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
@@ -36,7 +36,8 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
               index: true, 
               id: 'activities',
               element: <ActivitiesPage />,
-              loader: activitiesLoader
+              loader: activitiesLoader,
+              action: searchAction
             },
             {
               path: ':activityId',

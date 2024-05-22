@@ -9,7 +9,7 @@ function SortBar (
     colorScheme = 'primary', 
     onSortChange, 
     search = 'false', 
-    onSearchTermChange,
+    onSearchTermSubmit,
     button,
     icon, 
     buttonWord,
@@ -19,6 +19,7 @@ function SortBar (
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primary;
     const [showMenuBar, setShoeMenuBar] = useState(false);
     const [displayMenu, setDisplayMenu] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
  
     useEffect(() => {
         const handleResize = () => {
@@ -55,9 +56,14 @@ function SortBar (
         }
     }
 
-    const handleSearchTermChange = (e) => {
-        if(onSearchTermChange)
-        onSearchTermChange(e.target.value);
+    const handleSearchTermChange = (event) => {
+       setSearchTerm(event.target.value);
+    }
+
+    const handleSearchTermSubmit = (event) => {
+        event.preventDefault();
+        if(onSearchTermSubmit)
+            onSearchTermSubmit(searchTerm);
     }
 
     return (
@@ -78,8 +84,12 @@ function SortBar (
                     </select> 
                 </form>
                 {search === 'true' && 
-                    <form className={classes.right}>
-                        <input className={classes.inputFrame} onChange={handleSearchTermChange} placeholder="Search"/>
+                    <form className={classes.right} onSubmit={handleSearchTermSubmit}>
+                        <input 
+                            className={classes.inputFrame} 
+                            onChange={handleSearchTermChange} 
+                            value={searchTerm} 
+                            placeholder="Search"/>
                     </form>
                 }
                 {button === 'ButtonM' &&

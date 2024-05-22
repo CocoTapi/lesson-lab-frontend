@@ -120,6 +120,8 @@ export function getSummaryRelationQuery(verifiedEmail?: string){
 } 
 
 // get filtered summary 
+
+//TODO: handle more than 2 words search for FTS
 export function getFilteredSummaryRelationQuery(verifiedEmail?: string){
     let exists = '';
     if (verifiedEmail) { //TODO : Change this hardcoded userID value currently set to All might
