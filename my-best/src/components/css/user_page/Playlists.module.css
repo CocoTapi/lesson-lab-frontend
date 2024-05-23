@@ -54,7 +54,7 @@
 
 .addPlaylistBComponent {
     display: flex;
-    justify-content: end;
+    justify-content: start;
     padding: 0.7rem 0;
     transition: all 0.3s ease;
 }
@@ -87,6 +87,15 @@
     transition: all 0.3s ease;
 }
 
+@media (min-width: 640px) {
+    .addPlaylistBComponent {
+        justify-content: end;
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+ 
+}
+
 @media (min-width: 1300px) {
     .bottomContents {
         display: flex;
@@ -94,15 +103,9 @@
         margin-top: 1rem;
     }
 
-    /* .bottomLeft {
-        width: 25%;
-    } */
-
     .bottomRight {
         width: 100%;
     }
- 
-    
 }
 
 

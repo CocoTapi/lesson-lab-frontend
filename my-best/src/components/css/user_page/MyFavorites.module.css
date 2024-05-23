@@ -57,6 +57,12 @@
     width: 100%;
 }
 
+.itemCounts {
+    color: white;
+    font-size: 1.25rem;
+    padding-top: 1rem;
+}
+
 @media (min-width: 1300px) {
     .bottomContents {
         display: flex;

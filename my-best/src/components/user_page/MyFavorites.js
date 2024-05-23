@@ -98,6 +98,14 @@ function MyFavorites({ data }){
         ))       
     }
 
+    let countTitle = 'All';
+    if(
+        selectedTime.length > 0 || 
+        selectedAgeGroup.length > 0 ||
+        selectedTag.length > 0
+    ) {
+        countTitle = 'Filtered'
+    }
 
     return (
         <File> 
@@ -140,6 +148,7 @@ function MyFavorites({ data }){
                                 </ButtonM>
                             </Link>
                        </div>
+                       <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>
                     </div>
                     <ul className={classes.bottomRight}>
                         {content}

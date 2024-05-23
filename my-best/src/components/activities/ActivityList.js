@@ -67,6 +67,14 @@ function ActivityList({ activities }){
 
     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
+    let countTitle = 'All';
+    if(
+        selectedTime.length > 0 || 
+        selectedAgeGroup.length > 0 ||
+        selectedTag.length > 0
+    ) {
+        countTitle = 'Filtered'
+    }
    
     return (
         <div className={classes.main}>
@@ -85,6 +93,7 @@ function ActivityList({ activities }){
                         </div>
                     }
                     {showFilterMenu && <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>}
+                    <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>
                 </div>
                 <div className={classes.frame}>
                     { !showFilterButton && 
@@ -101,7 +110,6 @@ function ActivityList({ activities }){
                     </ul>
                 </div>
             </div>
-           
         </div>
        
     )
