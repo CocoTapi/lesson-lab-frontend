@@ -39,7 +39,9 @@ export async function getAllActivitiesUser(verifiedEmail: string){
 export async function getFilteredActivitiesUser(verifiedEmail: string, searchTerm: string) {
     const query = getFilteredSummaryRelationQuery(verifiedEmail);
 
-    const result = await db.query(query, [searchTerm, verifiedEmail]);
+    const searchTermForFTS: string = searchTerm.split(' ').join(' & ');
+
+    const result = await db.query(query, [searchTermForFTS, searchTerm, verifiedEmail]);
 
     if (result.rows.length <= 0) return [];
 
@@ -49,7 +51,9 @@ export async function getFilteredActivitiesUser(verifiedEmail: string, searchTer
 export async function getFilteredActivities(searchTerm: string) {
     const query = getFilteredSummaryRelationQuery();
 
-    const result = await db.query(query, [searchTerm]);
+    const searchTermForFTS = searchTerm.split(' ').join(' & ');
+
+    const result = await db.query(query, [searchTermForFTS, searchTerm]);
 
     if (result.rows.length <= 0) return [];
 

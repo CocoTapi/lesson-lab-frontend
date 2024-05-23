@@ -130,7 +130,7 @@ export function getFilteredSummaryRelationQuery(verifiedEmail?: string){
             SELECT 1
             FROM user_favorites uf
             JOIN users u ON u.user_id = uf.user_id
-            WHERE uf.activity_id = a.activity_id AND u.email = $2
+            WHERE uf.activity_id = a.activity_id AND u.email = $3
         ) AS is_favorited`;
     }
 
@@ -154,9 +154,9 @@ export function getFilteredSummaryRelationQuery(verifiedEmail?: string){
                 ts_rank_cd(a.tsv_instructions, to_tsquery($1)),
                 ts_rank_cd(a.tsv_materials, to_tsquery($1)),
                 ts_rank_cd(a.tsv_objectives, to_tsquery($1)),
-                similarity(a.title, $1),
-                similarity(t.tag_title, $1),
-                similarity(age.age_group_title, $1)
+                similarity(a.title, $2),
+                similarity(t.tag_title, $2),
+                similarity(age.age_group_title, $2)
             )) AS rank
             ${exists}
         FROM
@@ -172,10 +172,10 @@ export function getFilteredSummaryRelationQuery(verifiedEmail?: string){
             OR a.tsv_instructions @@ to_tsquery($1)
             OR a.tsv_materials @@ to_tsquery($1)
             OR a.tsv_objectives @@ to_tsquery($1)
-            OR a.title % $1
-            OR t.tag_title % $1
-            OR a.materials % $1
-            OR age.age_group_title % $1
+            OR a.title % $2
+            OR t.tag_title % $2
+            OR a.materials % $2
+            OR age.age_group_title % $2
         GROUP BY 
                     a.activity_id,
                     d.duration_title,
