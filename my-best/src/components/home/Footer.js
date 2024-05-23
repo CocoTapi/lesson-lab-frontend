@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
 import { FaInstagram, FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
+
+//TODO: contact link
 function Footer(){
     return (
         <div className={classes.frame}>

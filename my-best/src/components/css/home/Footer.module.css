@@ -2,19 +2,18 @@
     display: inline-block;
     width: 100vw;
     background-color: var(--color-primary-700);
-    margin-top: 20rem;
+    margin-top: 10rem;
 }
 
 .contents {
-    margin: auto;
+    margin: 4rem auto;
     display: grid;
-    padding: 3rem;
 }
 
 .iconGroup {
     display: flex;
     justify-content: center;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
 }
 
 .icon {
@@ -27,7 +26,7 @@
 .contents p {
     font-size: 1rem;
     text-align: center;
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
 }
 
 .contents p:last-child {
@@ -40,17 +39,26 @@
     color: white;
     padding: 0;
     margin: 0;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
 }
 
 .links {
     display: flex;
     justify-content: center;
+    margin: 0;
     padding-bottom: 3rem;
+   
 }
 
 .link {
     color: white;
     padding: 0 1rem;
     font-weight: 600;
+}
+
+@media (min-width: 1300px) {
+    .contents {
+        margin: 6rem auto;
+        display: grid;
+    }
 }
