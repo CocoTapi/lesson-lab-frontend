@@ -14,7 +14,9 @@ function SortBar (
     icon, 
     buttonWord,
     onClick,
-    buttonColor
+    buttonColor,
+    topRate = 'true',
+    defaultOptionName = 'Featured Activities'
 }) {
     const { textColor, backgroundColor, borderColor } = colorSchemes[colorScheme] || colorSchemes.primary;
     const [showMenuBar, setShoeMenuBar] = useState(false);
@@ -76,7 +78,7 @@ function SortBar (
                 <h1>Sort by</h1>
                 <form>
                     <select id='sort' type='sort' name='sort' onChange={sortChangeHandler} className={classes.formSelect}>
-                        <option value="default">Featured Activities</option>
+                        <option value="default">{defaultOptionName}</option>
                         <option value="shortToLong">Duration: Short to Long</option>
                         <option value="longToShort">Duration: Long to Short</option>
                         <option value="TopRated">User's Top Rated</option>
@@ -110,9 +112,10 @@ function SortBar (
             {displayMenu && 
                 <form>
                     <select id='sort' type='sort' name='sort' onChange={sortChangeHandler} className={classes.formSelect}>
+                        <option value="default">{defaultOptionName}</option>
                         <option value="shortToLong">Duration: Short to Long</option>
                         <option value="longToShort">Duration: Long to Short</option>
-                        <option value="TopRated">User's Top Rated</option>
+                        {topRate === 'true' && <option value="TopRated">User's Top Rated</option>}
                         <option value="New">New Arrivals</option>
                     </select> 
                 </form>
@@ -123,3 +126,20 @@ function SortBar (
 
 export default SortBar;
 
+export function getSortedActivities( sortOption, activities ){
+    const sortedActivities = activities.sort((a, b) => {
+        if (sortOption === 'shortToLong') {
+            return a.duration - b.duration;
+        } else if (sortOption === 'longToShort') {
+            return b.duration - a.duration;
+        } else if (sortOption === 'TopRated') {
+            return b.like_count - a.like_count;
+        } else if (sortOption === 'New') {
+            return b.activity_id - a.activity_id;
+        }
+
+        return 0; // Default case if no sort option is matched
+    });
+
+    return sortedActivities;
+}

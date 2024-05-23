@@ -71,3 +71,14 @@ function Filter({ onTimeChange, onAgeChange, onTagChange }) {
 }
 
 export default Filter;
+
+export function getFilteredActivities(activities, selectedTime, selectedAgeGroup, selectedTag){
+    const filteredActivities = activities.filter((activity) => {
+        const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
+        const ageGroupMatch = selectedAgeGroup ? activity.age_group === selectedAgeGroup : true;
+        const tagMatch = selectedTag ? activity.tags.includes(selectedTag) : true;
+        return timeMatch && ageGroupMatch && tagMatch;
+    });
+
+    return filteredActivities;
+}

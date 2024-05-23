@@ -4,8 +4,8 @@ import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
-import SortBar from "../UI/SortBar";
-import Filter from "../UI/Filter";
+import SortBar, { getSortedActivities } from "../UI/SortBar";
+import Filter, { getFilteredActivities } from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import Tag from '../UI/Tag';
@@ -26,16 +26,13 @@ function MyFavorites({ data }){
     }
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
-    //TODO: sort 
-
     const [ showFilterButton, setShowFilterButton] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
     const [selectedTag, setSelectedTag ] = useState('');
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
-    //TODO: handle sortOption
-
+    //handle screen size change
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 1300) {
@@ -54,6 +51,7 @@ function MyFavorites({ data }){
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    //action: remove activity
     const handleRemoveActivity = (activity_id, title) => {
         const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
     
@@ -62,6 +60,7 @@ function MyFavorites({ data }){
         }
     }; 
 
+    //handle filter functions
     const handleTimeChange = (time) => {
         setSelectedTime(time);
      }
@@ -78,21 +77,16 @@ function MyFavorites({ data }){
          setShowFilterMenu(!showFilterMenu);
      }
  
-     const filteredActivities = userFavorites.filter((activity) => {
-         const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
-         const ageGroupMatch = selectedAgeGroup ? activity.age_group === selectedAgeGroup : true;
-         const tagMatch = selectedTag ? activity.tags.includes(selectedTag) : true;
-         return timeMatch && ageGroupMatch && tagMatch;
-     });
+     const filteredActivities = getFilteredActivities(userFavorites, selectedTime, selectedAgeGroup, selectedTag);
 
-    // console.log("userFavorites: ", userFavorites);
+     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
     let content;
     if (Object.keys(userFavorites).length === 0) {
         console.log("No content")
         content = <p>"You haven't add favorites."</p>
     } else {
-        content = filteredActivities.map((activity) => (
+        content = sortedActivities.map((activity) => (
             <li key={activity.activity_id}>
                 <UserActivityList 
                     activity={activity}  

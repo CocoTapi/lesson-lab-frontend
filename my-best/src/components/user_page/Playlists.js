@@ -3,7 +3,7 @@ import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import { TiPlus } from "react-icons/ti";
 import File from "../UI/File";
-import SortBar from "../UI/SortBar";
+import SortBar, { getSortedActivities } from "../UI/SortBar";
 import Filter from "../UI/Filter";
 import classes from '../css/user_page/Playlists.module.css';
 import { FaStar } from "react-icons/fa";
@@ -27,12 +27,11 @@ function Playlists ({ data }) {
         user_id = user.user_id;
     }
     const submit = useSubmit();
-    const [ sortOption, setSortOption ] = useState('shortToLong');
+    const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
     const titleRef = useRef('');
     const [ showFilterButton, setShowFilterButton] = useState(false);
 
-    //TODO: handle sortOption
 
     useEffect(() => {
         const handleResize = () => {
@@ -52,7 +51,6 @@ function Playlists ({ data }) {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    //TODO: sort 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
         const proceed = window.confirm(`Are you sure you want to remove ${activity_title} in your playlist, ${playlist_title}?`);
@@ -91,12 +89,24 @@ function Playlists ({ data }) {
         setShowPlaylistForm(false);
     }
 
+    const sortedPlaylists = userPlaylists.sort((a, b) => {
+        if (sortOption === 'shortToLong') {
+            return a.total_duration - b.total_duration;
+        } else if (sortOption === 'longToShort') {
+            return b.total_duration - a.total_duration;
+        } else if (sortOption === 'New') {
+            return b.playlist_id - a.playlist_id;
+        }
+
+        return 0; // Default case if no sort option is matched
+    });
+
     let content;
     if (Object.keys(userPlaylists).length === 0) {
         console.log("No content")
         content = <p>"You haven't create playlists."</p>
     } else {
-        content = userPlaylists.map((list, index) => (
+        content = sortedPlaylists.map((list, index) => (
             <li key={list.playlist_id}>
                 <PlaylistItem 
                     list={list}
@@ -118,46 +128,13 @@ function Playlists ({ data }) {
                 <div className={classes.pageTitle}>
                     <h1>Playlists</h1>
                 </div>
-                <div className={classes.sortBar}>
-                    {/* <SortBar 
-                        onSortChange={setSortOption} 
-                        colorScheme="primaryLight"
-                    /> */}
-                    {/* { showFilterButton && 
-                        <div className={classes.filterButtons}>
-                            <div className={classes.fButton}>
-                                <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Duration
-                                </Tag>
-                            </div>
-                            <div className={classes.fButton}>
-                                <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Age Group
-                                </Tag>
-                            </div>
-                            <div className={classes.fButton}>
-                                <Tag hash={false} >
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
-                                    Popular Categories
-                                </Tag>
-                            </div>
-                        </div>
-                    }        */}
-                </div>
                 <div className={classes.bottomContents}>
-                    {/* <div className={classes.bottomLeft}>
-                        {!showFilterButton &&
-                            <div className={classes.filter}>
-                                <Filter />
-                            </div>
-                        }
-                    </div> */}
                     <ul className={classes.bottomRight}>
                         <SortBar 
                             onSortChange={setSortOption} 
                             colorScheme="primaryLight"
+                            topRate="false"
+                            defaultOptionName="--- select an option ---"
                         />
                         <div  className={classes.addPlaylistBComponent}>
                             <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>

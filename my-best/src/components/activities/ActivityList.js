@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import classes from '../css/activities/ActivityList.module.css';
-import Filter from '../UI/Filter';
+import Filter, { getFilteredActivities } from '../UI/Filter';
 import SummaryCard from './SummaryCard';
-import SortBar from '../UI/SortBar';
+import SortBar, { getSortedActivities } from '../UI/SortBar';
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
@@ -12,10 +12,10 @@ import { useSubmit } from 'react-router-dom';
 
 function ActivityList({ activities }){
     const [ sortOption, setSortOption ] = useState(''); 
-    const [ showFilterButton, setShowFilterButton] = useState(false);
-    const [selectedTime, setSelectedTime] = useState('');
-    const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
-    const [selectedTag, setSelectedTag ] = useState('');
+    const [ showFilterButton, setShowFilterButton ] = useState(false);
+    const [ selectedTime, setSelectedTime ] = useState('');
+    const [ selectedAgeGroup, setSelectedAgeGroup ] = useState('');
+    const [ selectedTag, setSelectedTag ] = useState('');
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
     
@@ -62,28 +62,10 @@ function ActivityList({ activities }){
         submit({ searchTerm: searchTerm }, { method: "POST" });
     }
 
-  
 
-    const filteredActivities = activities.filter((activity) => {
-        const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
-        const ageGroupMatch = selectedAgeGroup ? activity.age_group === selectedAgeGroup : true;
-        const tagMatch = selectedTag ? activity.tags.includes(selectedTag) : true;
-        return timeMatch && ageGroupMatch && tagMatch;
-    });
+    const filteredActivities = getFilteredActivities(activities, selectedTime, selectedAgeGroup, selectedTag);
 
-    const sortedActivities = filteredActivities.sort((a, b) => {
-        if (sortOption === 'shortToLong') {
-            return a.duration - b.duration;
-        } else if (sortOption === 'longToShort') {
-            return b.duration - a.duration;
-        } else if (sortOption === 'TopRated') {
-            return b.like_count - a.like_count;
-        } else if (sortOption === 'New') {
-            return b.activity_id - a.activity_id;
-        }
-
-        return 0; // Default case if no sort option is matched
-    });
+    const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
    
     return (

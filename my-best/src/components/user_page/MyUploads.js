@@ -4,8 +4,8 @@ import { useSubmit, useRouteLoaderData, useNavigate, Link, useLocation } from "r
 import { useState, useEffect } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
-import SortBar from "../UI/SortBar";
-import Filter from "../UI/Filter";
+import SortBar, { getSortedActivities } from "../UI/SortBar";
+import Filter, { getFilteredActivities } from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Tag from '../UI/Tag';
@@ -36,9 +36,6 @@ function MyUploads({ data }){
     const [selectedTag, setSelectedTag ] = useState('');
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
-
-    //TODO: handle sortOption
-
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 1300) {
@@ -56,8 +53,6 @@ function MyUploads({ data }){
         // Clean up
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-
-    //TODO: sort 
 
     const handleEditActivity = (activity_id) => {
         navigate(`/activities/${activity_id}/edit`, { 
@@ -84,13 +79,9 @@ function MyUploads({ data }){
          setShowFilterMenu(!showFilterMenu);
      }
  
-     const filteredActivities = userUploads.filter((activity) => {
-         const timeMatch = selectedTime ? activity.duration === parseInt(selectedTime): true;
-         const ageGroupMatch = selectedAgeGroup ? activity.age_group === selectedAgeGroup : true;
-         const tagMatch = selectedTag ? activity.tags.includes(selectedTag) : true;
-         return timeMatch && ageGroupMatch && tagMatch;
-     });
+     const filteredActivities = getFilteredActivities(userUploads, selectedTime, selectedAgeGroup, selectedTag);
 
+     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
     // console.log("userUploads: ", userUploads);
 
@@ -99,7 +90,7 @@ function MyUploads({ data }){
         console.log("No content")
         content = <p>"You haven't add activities."</p>
     } else {
-        content = filteredActivities.map((activity) => (
+        content = sortedActivities.map((activity) => (
             <li key={activity.activity_id}>
                 <UserActivityList 
                     activity={activity}  
