@@ -35,6 +35,7 @@ export async function getAllActivitiesUser(verifiedEmail: string){
     return result.rows
 }
 
+
 export async function getFilteredActivitiesUser(verifiedEmail: string, searchTerm: string) {
     const query = getFilteredSummaryRelationQuery(verifiedEmail);
 

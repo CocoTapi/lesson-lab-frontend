@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { useLoaderData, Form } from "react-router-dom";
 import classes from '../css/home/MainNavigation.module.css';
 import { IoMenu } from "react-icons/io5";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function MainNavigation() {
     const user = useLoaderData();  // Assuming user data is correctly provided
@@ -42,8 +43,7 @@ function MainNavigation() {
     return (
         <header className={classes.header}>
             <div className={classes.left}>
-                { showMenuBar && <div className={classes.menuIconComponent} onClick={handleOpenMenu}><IoMenu /></div> }
-
+           
                 <NavLink to="/" className={classes.logo}>
                     LessonLab
                 </NavLink>
@@ -71,6 +71,7 @@ function MainNavigation() {
                         }
                     </>
                 }
+
             </div>
             <div className={classes.right}>
                 {!token && (
@@ -104,20 +105,28 @@ function MainNavigation() {
                     </div>
                 )}
             </div>
-            {displayMenu && 
-                <div className={classes.menuComponent}>
-                    <Link className={classes.menuItem}  to="/" onClick={handleCloseMenu} >Home</Link>
-                    <Link className={classes.menuItem} to="/activities" onClick={handleCloseMenu} >Activities</Link>
-                    <Link className={classes.menuItem} to="/activities/new" onClick={handleCloseMenu} > Add Activity</Link>
-                    {!token && <Link className={classes.menuItem} to="/auth?mode=login" onClick={handleCloseMenu} >Login</Link>}
-                    {!token && <Link  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} >Sign Up</Link>}
-                    {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>}
-                    {token && 
-                        <Form className={classes.menuItem} action='/logout' method='post' onClick={handleCloseMenu} >
-                            <button type="submit" className={classes.auth}>Logout</button>
-                        </Form>}
-                </div>
-            }
+            <div className={classes.menuBox}>
+            { showMenuBar && !displayMenu ? (
+                <div className={classes.menuIconComponent} onClick={handleOpenMenu}><IoMenu /></div>
+            ) : (
+                <div className={classes.menuIconComponent} onClick={handleOpenMenu}><IoIosCloseCircleOutline /></div>
+            )} 
+                {displayMenu && 
+                    <div className={classes.menuComponent}>
+                        <Link className={classes.menuItem}  to="/" onClick={handleCloseMenu} >Home</Link>
+                        <Link className={classes.menuItem} to="/activities" onClick={handleCloseMenu} >Activities</Link>
+                        <Link className={classes.menuItem} to="/activities/new" onClick={handleCloseMenu} > Add Activity</Link>
+                        {!token && <Link className={classes.menuItem} to="/auth?mode=login" onClick={handleCloseMenu} >Login</Link>}
+                        {!token && <Link  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} >Sign Up</Link>}
+                        {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>}
+                        {token && 
+                            <Form className={classes.menuItem} action='/logout' method='post' onClick={handleCloseMenu} >
+                                <button type="submit" className={classes.auth}>Logout</button>
+                            </Form>}
+                    </div>
+                }
+            </div>
+           
         </header>
     );
 }

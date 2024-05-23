@@ -3,12 +3,15 @@
     background-color: white;
     height: 5.5rem;
     display: flex;
-    justify-content: space-between; /* Adjusts items between left and right */
+    justify-content: space-between; 
     align-items: center;
     top: 0;
     left: 0;
     width: 100%;
     position: fixed;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adding shadow to the navbar */
+    z-index: 1000;
   }
   
   .left, .right {
@@ -17,6 +20,8 @@
     align-items: center;
     gap: 0.4rem;
   }
+
+ 
   
   .logo {
     font-size: 2.2rem;
@@ -83,6 +88,11 @@
     gap: 0.4rem;
   }
 
+  .menuBox {
+    display: none;
+    padding-right: 1rem;
+  }
+
   .menuIconComponent {
     padding-top: 0.6rem;
     font-size: 2rem;
@@ -91,63 +101,19 @@
 
   .menuComponent {
     width: 40vw;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     justify-content: center;
     text-align: center;
+    background-color: var(--color-primary-300);
+    position: fixed;
+    z-index: 1000;
+    top: 4rem;
+    right: 0;
   }
 
   .menuItem {
     font-size: 1rem;
     padding: 1rem;
-  }
-
-  @media (max-width: 640px) {
-    .header {
-      height: 4rem;
-      display: grid
-    }
-    
-    .left, .right {
-      padding: 0 1rem;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-    }
-
-    .link, .rightContent {
-      display: none;
-    }
-
-    .menuIconComponent {
-      display: block;
-    }
-
-    .menuIconComponent:hover {
-      cursor: pointer;
-    }
-
-    .menuComponent {
-      display: grid;
-      background-color: var(--color-primary-300);
-      position: relative;
-      z-index: 100;
-    }
-
-    .auth {
-      font-size: 1rem;
-      background-color: transparent;
-      border: none;
-      padding: 0;
-      margin: 0;
-      color: var(--color-primary-700);
-    }
-
-    .auth:hover {
-      transform: none;
-    }
-    
   }
 
   @media (max-width: 1007px) {
@@ -182,3 +148,54 @@
     }
 
   }
+
+  @media (max-width: 640px) {
+    .header {
+      height: 4rem;
+    }
+    
+    .left, .right {
+      padding: 0 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+    }
+
+    .link, .rightContent {
+      display: none;
+    }
+
+    .menuBox {
+      display: grid;
+      padding-right: 1rem;
+    }
+    
+    .menuIconComponent {
+      display: block;
+    }
+
+    .menuIconComponent:hover {
+      cursor: pointer;
+    }
+
+    .menuComponent {
+      display: grid;
+    }
+
+    .auth {
+      font-size: 1rem;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: var(--color-primary-700);
+    }
+
+    .auth:hover {
+      transform: none;
+    }
+    
+  }
+
+ 
