@@ -49,8 +49,8 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                 headerContents={
                     <div className={classes.totalDuration}>
                         <p className={classes.labelTitle}>Total Duration :</p>
-                        {userPlaylists[index].total_duration ? 
-                            <p className={classes.info}>{userPlaylists[index].total_duration} mins</p>
+                        {list.total_duration ? 
+                            <p className={classes.info}>{list.total_duration} mins</p>
                             : <p className={classes.info}> 0 mins</p>
                         }
                     </div>
@@ -63,25 +63,25 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                 }
                 activityDetail={
                     <ul>
-                        {userPlaylists[index].activity_ids[0] !== null && userPlaylists[index].activity_ids.map((item, i) => (
+                        {list.activities[0].activity_id && list.activities.map((item, i) => (
                             <li key={i}> 
                             <div className={classes.activityItemComponent}>
                                 <h1 className={classes.listNum}>
                                                 {i + 1}.
                                             </h1>
                                 <Accordion 
-                                    headerTitle={userPlaylists[index].activity_titles[i]}
+                                    headerTitle={item.title}
                                     headerContents={
                                         <div>
                                             {showSummary && (
                                                 <div className={classes.detailItem}>
-                                                    <p>{userPlaylists[index].summaries[i]}</p>
+                                                    <p>{item.summary}</p>
                                                 </div>
                                             )}
                                             
                                             <div className={classes.durationGroup} >
                                                 <p className={classes.labelTitle} >Duration :</p>
-                                                <p className={classes.info} >{userPlaylists[index].durations[i]} mins</p>
+                                                <p className={classes.info} >{item.duration} mins</p>
                                             </div>
                                         </div>
                                     }
@@ -95,30 +95,30 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                                             <div className={classes.leftDetailItems}>
                                                 <div className={classes.detailItem}>
                                                     <p className={classes.labelTitle}>Materials :</p>
-                                                    <p>{userPlaylists[index].materials[i]}</p>
+                                                    <p>{item.materials}</p>
                                                 </div>
                                             </div>
                                             <div className={classes.rightDetailItems}>
                                                 {!showSummary && (
                                                     <div className={classes.detailItem}>
                                                         <p className={classes.labelTitle}>Summary :</p>
-                                                        <p>{userPlaylists[index].summaries[i]}</p>
+                                                        <p>{item.summary}</p>
                                                     </div>
                                                 )}
                                                 <div className={classes.detailItem}>
                                                     <p className={classes.labelTitle}>Objectives :</p>
-                                                    <p>{userPlaylists[index].objectives[i]}</p>
+                                                    <p>{item.objectives}</p>
                                                 </div>
                                                 <div className={classes.detailItem}>
                                                     <p className={classes.labelTitle}>Instructions :</p>
-                                                    <p>{userPlaylists[index].instructions[i]}</p>
+                                                    <p>{item.instructions}</p>
                                                 </div>
                                                 <div className={classes.detailItem}>
                                                     <p className={classes.labelTitle}>References :</p>
                                                     <p className={classes.accordionReference}>
-                                                        {userPlaylists[index].links[i] ? 
-                                                            <Link to={userPlaylists[index].links[i]}>
-                                                                {userPlaylists[index].links[i]}
+                                                        {item.links ? 
+                                                            <Link to={item.links}>
+                                                                {item.links}
                                                             </Link> 
                                                         : <p>none</p>
                                                         }
@@ -128,7 +128,7 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                                         </div>
                                     }
                                     buttonChildren={
-                                        <IconButton onClick={() => onRemoveActivity(userPlaylists[index].activity_ids[i], userPlaylists[index].activity_titles[i], userPlaylists[index].playlist_id, userPlaylists[index].playlist_title)}>
+                                        <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, list.playlist_id, list.playlist_title)}>
                                             <GoTrash className={classes.playlistItemTrash} />
                                         </IconButton>
                                     }
