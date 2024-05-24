@@ -70,19 +70,32 @@ export interface FavoritesInfo {
     [key: string]: number
 }
 
-export interface UserPlaylist {
-    user_name: string;
-    playlist_title: string;
-    activity_ids: number[];
-    activity_titles: string[];
-    summaries: string[];
-    durations: number[];
-    total_duration: string;
+export interface PlaylistActivity {
+    activity_ids: number,
+    position: number,
+    titles: string,
+    summary: string,
+    duration: number,
+    instructions: string,
+    objectives: string,
+    materials: string,
+    links: string | null
 }
 
-export interface UserPlaylistsContainer {
-    userPlaylists: UserPlaylist[];
+export interface UserPlaylistResult extends PlaylistActivity {
+    playlist_id: number,
+    playlist_title: string,
+    user_id: number,
 }
+
+export interface FormattedPlaylist {
+    playlist_id: number,
+    playlist_title: string,
+    user_id: number,
+    total_duration: number,
+    activities: PlaylistActivity[]
+} 
+
 
 
 

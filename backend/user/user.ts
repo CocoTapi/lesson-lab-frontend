@@ -1,6 +1,6 @@
 import Database from "../database/Database";
 import bcrypt from "bcrypt";
-import { EditProfileInfo, ErrorMessage, FavoritesInfo, ProfileInfo, UserPlaylist } from "../util/types";
+import { EditProfileInfo, ErrorMessage, FavoritesInfo, FormattedPlaylist, UserPlaylistResult } from "../util/types";
 import env from 'dotenv';
 import { isValidText, isValidEmail, isValidPassword } from "../util/validation";
 import {
@@ -10,11 +10,11 @@ import {
     countSameTextQuery,
     updateProfileQuery,
     getUserPlaylistsQuery,
-    reformatActivityData,
     addPlaylistQuery,
     deleteActivitiesQuery,
     deletePlaylistQuery,
-    removeActivityFromPlaylistQuery
+    removeActivityFromPlaylistQuery,
+    reformatPlaylistData
 } from "./util";
 
 env.config();
@@ -87,22 +87,35 @@ export async function getUserUploads(user_id: number) {
 }
 
 export async function getUserPlaylists(user_id: number) {
-    const userPlaylistsQuery = getUserPlaylistsQuery();
+    const userPlaylistsQuery: string = getUserPlaylistsQuery();
 
     const result = await db.query(userPlaylistsQuery, [user_id]);
 
-    let userPlaylistsResult = {};
+    // When user does not have any playlists
+    if (result.rows.length === 0) return [];
+
+    const userPlaylists: UserPlaylistResult[] = result.rows as UserPlaylistResult[];
+
+    const formattedPlaylist: FormattedPlaylist[] = await reformatPlaylistData(userPlaylists);
+
+    return formattedPlaylist;
 
     //when user does not have any playlists
-    if (result.rows.length === 0) return userPlaylistsResult;
+    //if (result.rows.length === 0) return userPlaylistsResult;
     
-    userPlaylistsResult = result.rows;
+    
+    // userPlaylistsResult = result.rows;
+    // console.log(userPlaylistsResult);
 
-    const userPlaylists: UserPlaylist[] = Object.values(userPlaylistsResult) as UserPlaylist[];
+    // const userPlaylists: UserPlaylistResult[] = Object.values(userPlaylistsResult) as UserPlaylistResult[];
+    
+    // const formattedPlaylist: FormattedPlaylist[] = await reformatPlaylistData(userPlaylists);
+
+    //const userPlaylists: UserPlaylist[] = Object.values(userPlaylistsResult) as UserPlaylist[];
 
     //const formattedActivityData = await reformatActivityData(userPlaylists);
 
-    return userPlaylists;
+    //return formattedPlaylist;
 }
 
 //error handling

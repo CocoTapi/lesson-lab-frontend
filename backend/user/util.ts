@@ -1,4 +1,4 @@
-import { UserPlaylist } from "../util/types";
+import { UserPlaylistResult, FormattedPlaylist } from "../util/types";
 
 export const userProfileQuery: string = `
     SELECT 
@@ -131,6 +131,48 @@ export function updateProfileQuery(password: string | null){
 }
 
 export function getUserPlaylistsQuery() {
+    const query: string = `
+        SELECT 
+            p.playlist_id,
+            p.playlist_title,
+            p.user_id,
+            pa.activity_id,
+            pa.position,
+            a.title,
+            a.summary,
+            d.duration_title AS duration,
+            a.instructions,
+            a.objectives,
+            a.materials,
+            a.links
+        FROM 
+        playlists AS p
+        JOIN playlist_activities AS pa ON p.playlist_id = pa.playlist_id
+        JOIN activities AS a ON pa.activity_id = a.activity_id
+        JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
+        JOIN durations AS d ON d.duration_id = ad.duration_id 
+        WHERE p.user_id = $1
+        GROUP BY 
+            p.playlist_id,
+            pa.activity_id,
+            a.title,
+            a.summary,
+            d.duration_title,
+            a.instructions,
+            a.objectives,
+            a.materials,
+            a.links,
+            pa.position
+        Order BY
+            playlist_id ASC,
+            pa.position ASC
+    `;
+
+    return query; 
+}
+
+/*
+export function getUserPlaylistsQuery() {
     const query = `
         SELECT 
             p.playlist_id,  
@@ -170,6 +212,7 @@ export function getUserPlaylistsQuery() {
 
     return query;
 }
+*/
 
 export const addPlaylistQuery = `
     INSERT INTO 
@@ -178,23 +221,46 @@ export const addPlaylistQuery = `
         ($1, $2, $3)
 `
 
-export async function reformatActivityData(playlists: UserPlaylist[]) {
-    const activities: any = [];
-    console.log(playlists)
-    playlists.forEach((playlist: UserPlaylist) => {
-        const { user_name, playlist_title, activity_ids, activity_titles, summaries, durations } = playlist;
-        activity_ids.forEach((activity_id, index) => {
-            activities.push({
-                activity_id,
-                activity_title: activity_titles[index],
-                activity_summary: summaries[index],
-                activity_duration: durations[index]
-            });
-        });
-    });
+export async function reformatPlaylistData(playlists: UserPlaylistResult[]) {
+    const map: any = {};
 
-    return activities;
+    playlists.forEach((list: UserPlaylistResult) => {
+        const { playlist_id, playlist_title, user_id, ...activityDetails } = list;
+
+        if(!map[playlist_id]) {
+            map[playlist_id] = {
+                playlist_id,
+                playlist_title,
+                user_id,
+                total_duration: 0,
+                activities: [],
+            }
+        };
+
+        map[playlist_id].activities.push(activityDetails);
+        map[playlist_id].total_duration += activityDetails.duration;
+    })
+
+    return Object.values(map) as FormattedPlaylist[];
 }
+
+// export async function reformatActivityData(playlists: UserPlaylist[]) {
+//     const activities: any = [];
+//     console.log(playlists)
+//     playlists.forEach((playlist: UserPlaylist) => {
+//         const { user_name, playlist_title, activity_ids, activity_titles, summaries, durations } = playlist;
+//         activity_ids.forEach((activity_id, index) => {
+//             activities.push({
+//                 activity_id,
+//                 activity_title: activity_titles[index],
+//                 activity_summary: summaries[index],
+//                 activity_duration: durations[index]
+//             });
+//         });
+//     });
+
+//     return activities;
+// }
 
 export const deleteActivitiesQuery = `
     DELETE FROM 
