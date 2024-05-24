@@ -7,7 +7,7 @@ import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import IconButton from "../UI/IconButton";
 
-function PlaylistItem({list, index, userPlaylists, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
+function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
 

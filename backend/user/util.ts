@@ -131,6 +131,8 @@ export function updateProfileQuery(password: string | null){
 }
 
 export function getUserPlaylistsQuery() {
+
+    //need to be "LEFT JOIN" for playlist which has no activities yet
     const query: string = `
         SELECT 
             p.playlist_id,
@@ -147,10 +149,14 @@ export function getUserPlaylistsQuery() {
             a.links
         FROM 
         playlists AS p
-        JOIN playlist_activities AS pa ON p.playlist_id = pa.playlist_id
-        JOIN activities AS a ON pa.activity_id = a.activity_id
-        JOIN activity_durations AS ad ON a.activity_id = ad.activity_id 
-        JOIN durations AS d ON d.duration_id = ad.duration_id 
+        LEFT JOIN 
+            playlist_activities AS pa ON p.playlist_id = pa.playlist_id
+        LEFT JOIN 
+            activities AS a ON pa.activity_id = a.activity_id
+        LEFT JOIN 
+            activity_durations AS ad ON a.activity_id = ad.activity_id 
+        LEFT JOIN 
+            durations AS d ON d.duration_id = ad.duration_id 
         WHERE p.user_id = $1
         GROUP BY 
             p.playlist_id,

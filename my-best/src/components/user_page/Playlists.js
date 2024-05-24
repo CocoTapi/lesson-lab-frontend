@@ -106,12 +106,10 @@ function Playlists ({ data }) {
         console.log("No content")
         content = <p>"You haven't create playlists."</p>
     } else {
-        content = sortedPlaylists.map((list, index) => (
+        content = sortedPlaylists.map((list) => (
             <li key={list.playlist_id}>
                 <PlaylistItem 
                     list={list}
-                    index={index}
-                    userPlaylists={userPlaylists}
                     onRemoveActivity={handleRemoveActivity}
                     onDeletePlaylist={handleDeletePlaylist}
                     onAddActivity={handleAddActivity}
