@@ -7,6 +7,7 @@ import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSubmit } from 'react-router-dom';
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 
 
@@ -87,7 +88,7 @@ function ActivityList({ activities }){
                                 <Tag hash='false'>
                                     <MdOutlineFilterCenterFocus className={classes.fIcon} />
                                     <p>Filter</p>
-                                    {showFilterMenu ? <FaChevronUp className={classes.fIcon} /> : <FaChevronDown className={classes.fIcon} /> }
+                                    {showFilterMenu ? <IoIosCloseCircleOutline className={classes.closeIcon}/> : <FaChevronDown className={classes.fIcon} /> }
                                 </Tag>
                             </div>
                         </div>
