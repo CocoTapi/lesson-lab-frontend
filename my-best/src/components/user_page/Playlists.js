@@ -30,15 +30,15 @@ function Playlists ({ data }) {
     const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
     const titleRef = useRef('');
-    const [ showFilterButton, setShowFilterButton] = useState(false);
+    const [ smallDisplay, setSmallDisplay] = useState(false);
 
 
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth < 1300) {
-                setShowFilterButton(true);
+            if (window.innerWidth <= 640) {
+                setSmallDisplay(true);
             } else {
-                setShowFilterButton(false);
+                setSmallDisplay(false);
             }
         };
 
@@ -107,9 +107,9 @@ function Playlists ({ data }) {
         content = <p>"You haven't create playlists."</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
-            <li key={list.playlist_id}>
+            <li key={playlist.playlist_id}>
                 <PlaylistItem 
-                    list={playlist}
+                    playlist={playlist}
                     onRemoveActivity={handleRemoveActivity}
                     onDeletePlaylist={handleDeletePlaylist}
                     onAddActivity={handleAddActivity}
@@ -126,32 +126,39 @@ function Playlists ({ data }) {
                 <div className={classes.pageTitle}>
                     <h1>Playlists</h1>
                 </div>
+                <SortBar 
+                    onSortChange={setSortOption} 
+                    colorScheme="primaryLight"
+                    topRate="false"
+                    defaultOptionName="--- select an option ---"
+                />
+                <div  className={classes.addPlaylistBComponent}>
+                    <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
+                        <TiPlus />
+                        Add Playlist
+                    </ButtonM>
+                </div>
                 <div className={classes.bottomContents}>
                     <ul className={classes.bottomRight}>
-                        <SortBar 
-                            onSortChange={setSortOption} 
-                            colorScheme="primaryLight"
-                            topRate="false"
-                            defaultOptionName="--- select an option ---"
-                        />
-                        <div  className={classes.addPlaylistBComponent}>
-                            <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
-                                <TiPlus />
-                                Add Playlist
-                            </ButtonM>
-                        </div>
-                        {content}
                         {showPlaylistForm && 
+                        <div className={classes.newPlaylistFormComponent}>
                             <Accordion 
                                headerTitle={
                                     <form className={classes.playlistForm} method="POST" onSubmit={handleSubmitNewPlaylist}>
-                                        <input 
-                                            id='playlist_title' 
-                                            type='text' 
-                                            name='playlist_title'  
-                                            placeholder="Playlist title"
-                                            ref={titleRef}
-                                        />
+                                        <div className={classes.formTitleComponent}>
+                                            {smallDisplay && (
+                                                <div className={classes.star} colorScheme='secondary'>
+                                                    <FaStar />
+                                                </div>
+                                            )}
+                                            <input 
+                                                id='playlist_title' 
+                                                type='text' 
+                                                name='playlist_title'  
+                                                placeholder="Playlist title"
+                                                ref={titleRef}
+                                            />
+                                        </div>
 
                                         <div className={classes.formButton} >
                                             <ButtonS colorScheme="primary">
@@ -160,14 +167,17 @@ function Playlists ({ data }) {
                                         </div>
                                     </form>
                                } 
-                               topImage={
-                                <div className={classes.sum} colorScheme='secondary'>
-                                    <p><FaStar /></p>
+                               topImage={smallDisplay ? '' : (
+                                <div className={classes.star} colorScheme='secondary'>
+                                    <FaStar />
                                 </div>
+                               )
                             }
                             />
+                            </div>
                         }
-                       
+                        <h2 className={classes.itemCounts}>All Playlists : {sortedPlaylists.length} items</h2>
+                        {content}
                     </ul>
                 </div>
             </div>

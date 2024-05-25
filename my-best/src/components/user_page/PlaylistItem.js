@@ -7,7 +7,7 @@ import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import IconButton from "../UI/IconButton";
 
-function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
+function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
 
@@ -37,11 +37,11 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
         <div className={classes.accordionComponent}>
             <Accordion 
                 headerTitle={ showStarIcon ?
-                    list.playlist_title
+                    playlist.playlist_title
                 : (
                     <div className={classes.playlistTitle}>
                         <p className={classes.star}><FaStar /></p> 
-                        <p>{list.playlist_title}</p>
+                        <p>{playlist.playlist_title}</p>
                     </div>
                     
                 ) 
@@ -49,8 +49,8 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                 headerContents={
                     <div className={classes.totalDuration}>
                         <p className={classes.labelTitle}>Total Duration :</p>
-                        {list.total_duration ? 
-                            <p className={classes.info}>{list.total_duration} mins</p>
+                        {playlist.total_duration ? 
+                            <p className={classes.info}>{playlist.total_duration} mins</p>
                             : <p className={classes.info}> 0 mins</p>
                         }
                     </div>
@@ -63,7 +63,7 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                 }
                 activityDetail={
                     <ul>
-                        {list.activities[0].activity_id && list.activities.map((item, i) => (
+                        {playlist.activities[0].activity_id && playlist.activities.map((item, i) => (
                             <li key={i}> 
                             <div className={classes.activityItemComponent}>
                                 <h1 className={classes.listNum}>
@@ -128,7 +128,7 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                                         </div>
                                     }
                                     buttonChildren={
-                                        <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, list.playlist_id, list.playlist_title)}>
+                                        <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, playlist.playlist_id, playlist.playlist_title)}>
                                             <GoTrash className={classes.playlistItemTrash} />
                                         </IconButton>
                                     }
@@ -144,7 +144,7 @@ function PlaylistItem({list, onRemoveActivity, onDeletePlaylist, onAddActivity})
                         <IconButton onClick={onAddActivity}>
                             <MdAddCircle className={classes.plusIconButton} />
                         </IconButton>
-                        <IconButton onClick={() => onDeletePlaylist(list.playlist_id, list.playlist_title)}>
+                        <IconButton onClick={() => onDeletePlaylist(playlist.playlist_id, playlist.playlist_title)}>
                             <GoTrash className={classes.trashIconButton} />
                         </IconButton>   
                     </div>
