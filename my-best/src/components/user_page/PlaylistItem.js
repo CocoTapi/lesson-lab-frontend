@@ -141,7 +141,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 buttonChildren={
                     <div className={classes.iconButtonGroup}>
-                        <IconButton onClick={onAddActivity}>
+                        <IconButton onClick={() => onAddActivity(playlist.playlist_id, playlist.user_id, playlist.playlist_title)}>
                             <MdAddCircle className={classes.plusIconButton} />
                         </IconButton>
                         <IconButton onClick={() => onDeletePlaylist(playlist.playlist_id, playlist.playlist_title)}>

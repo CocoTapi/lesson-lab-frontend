@@ -19,6 +19,9 @@ import EditProfilePage, { action as profileEditAction } from "../pages/user_page
 import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
 import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
 import UserPlaylistsPage, { loader as userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
+import SelectionFromFavPage from "../pages/user_page/playlist_selection_page/SelectionFromFavPage";
+import SelectionFromUploadsPage from "../pages/user_page/playlist_selection_page/SelectionFromUploadsPage";
+import SelectionFromAllPage from "../pages/user_page/playlist_selection_page/SelectionFromAllPage";
 
 export const createRouter = (setUserInfo) => createBrowserRouter([
     {
@@ -122,9 +125,27 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 {
                   path: 'playlists',
                   id: 'user-playlists',
-                  element: <UserPlaylistsPage />,
                   loader: userPlaylistsLoader,
-                  action: playlistAction
+                  children: [
+                    {
+                      index: true,
+                      element: <UserPlaylistsPage />,
+                      action: playlistAction
+                    },
+                    {
+                      path: ':playlist_id/add_from_fav',
+                      element: <SelectionFromFavPage />
+                    },
+                    {
+                      path: ':playlist_id/add_from_uploads',
+                      element: <SelectionFromUploadsPage />
+                    },
+                    {
+                      path: ':playlist_id/add_from_all',
+                      element: <SelectionFromAllPage />
+                    }
+                  ]
+                  
                 }
               ]
             }

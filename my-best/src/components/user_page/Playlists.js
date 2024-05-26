@@ -3,15 +3,13 @@ import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import { TiPlus } from "react-icons/ti";
 import File from "../UI/File";
-import SortBar, { getSortedActivities } from "../UI/SortBar";
-import Filter from "../UI/Filter";
+import SortBar from "../UI/SortBar";
 import classes from '../css/user_page/Playlists.module.css';
 import { FaStar } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
-import Tag from '../UI/Tag';
-import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import ButtonM from "../UI/ButtonM";
+import ActivitySelection from "./ActivitySelection";
 
 
 function Playlists ({ data }) {
@@ -31,6 +29,8 @@ function Playlists ({ data }) {
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
     const titleRef = useRef('');
     const [ smallDisplay, setSmallDisplay] = useState(false);
+    const [ showModal, setShowModal ] = useState(false);
+    const [ modalInfo, setModalInfo ] = useState({new_playlist_id: null, new_playlist_user_id: null, new_playlist_title: null});
 
 
     useEffect(() => {
@@ -68,10 +68,14 @@ function Playlists ({ data }) {
         }
     }
 
-    const handleAddActivity = (e) => {
-        e.preventDefault();
-        console.log("add activity!")
-        //TODO:
+    const handleAddActivity = (playlist_id, user_id, playlist_title) => {
+        setModalInfo({
+            new_playlist_id: playlist_id,
+            new_playlist_user_id: user_id,
+            new_playlist_title: playlist_title
+        })
+
+        setShowModal(true);
     }
 
     const handleShowPlaylist = (e) => {
@@ -122,6 +126,12 @@ function Playlists ({ data }) {
 
     return (
         <File> 
+            {showModal && 
+                <ActivitySelection 
+                    title={modalInfo && modalInfo.new_playlist_title}
+                    playlist_id={modalInfo && modalInfo.new_playlist_id}
+                />
+            }
             <div className={classes.outerFrame}>
                 <div className={classes.pageTitle}>
                     <h1>Playlists</h1>
