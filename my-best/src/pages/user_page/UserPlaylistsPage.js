@@ -8,6 +8,7 @@ import Playlists from "../../components/user_page/Playlists";
 
 function UserPlaylistsPage(){
     const { data } = useRouteLoaderData('user-playlists');
+
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
@@ -77,15 +78,15 @@ export async function action({ request }) {
     }
 
     //remove activity from playlist
-    if (method === 'PATCH') {
-        const activity_id = formData.get("activity_id");
-        const playlist_id = formData.get("playlist_id");
+    // if (method === 'PATCH') {
+    //     const activity_id = formData.get("activity_id");
+    //     const playlist_id = formData.get("playlist_id");
 
-        bodyContent = { 
-            activity_id: activity_id,
-            playlist_id: playlist_id 
-        };
-    }
+    //     bodyContent = { 
+    //         activity_id: activity_id,
+    //         playlist_id: playlist_id 
+    //     };
+    // }
 
     //create new playlist
     if (method === 'POST') {
@@ -93,8 +94,7 @@ export async function action({ request }) {
 
         bodyContent = { playlist_title: playlist_title}; 
     }
-
-    //code here
+ 
     const response = await fetch(url, {
         method: method,
         headers: {

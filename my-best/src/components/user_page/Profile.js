@@ -40,7 +40,7 @@ function Profile({ data }){
                             <p>{userProfile.last_name}</p>
                         </div>
                         <div className={classes.item}>
-                            <h3>Last login :</h3>
+                            <h3>Last Login :</h3>
                             <p>{userProfile.last_login}</p>
                         </div> 
                         <div className={classes.editButton}>

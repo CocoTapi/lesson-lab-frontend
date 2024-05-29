@@ -9,7 +9,7 @@ import { FaStar } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
-import ActivitySelection from "./ActivitySelection";
+import ActivitySelection from "./playlist_selection/ActivitySelection";
 
 
 function Playlists ({ data }) {
@@ -31,7 +31,6 @@ function Playlists ({ data }) {
     const [ smallDisplay, setSmallDisplay] = useState(false);
     const [ showModal, setShowModal ] = useState(false);
     const [ modalInfo, setModalInfo ] = useState({new_playlist_id: null, new_playlist_user_id: null, new_playlist_title: null});
-
 
     useEffect(() => {
         const handleResize = () => {
@@ -117,6 +116,7 @@ function Playlists ({ data }) {
                     onRemoveActivity={handleRemoveActivity}
                     onDeletePlaylist={handleDeletePlaylist}
                     onAddActivity={handleAddActivity}
+                    displayPlusButton='true'
 
                 />
             </li>
@@ -139,8 +139,8 @@ function Playlists ({ data }) {
                 <SortBar 
                     onSortChange={setSortOption} 
                     colorScheme="primaryLight"
-                    topRate="false"
                     defaultOptionName="--- select an option ---"
+                    topRate="false"
                 />
                 <div  className={classes.addPlaylistBComponent}>
                     <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>

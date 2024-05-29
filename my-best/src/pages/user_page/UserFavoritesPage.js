@@ -22,7 +22,7 @@ function UserFavoritesPage(){
 
 export default UserFavoritesPage;
 
-async function loadUserDetail(id) {
+export async function loadUserFavorites(id) {
     const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/${id}/favorites`, {
         method: "GET",
@@ -50,7 +50,7 @@ export async function loader({ request, params }){
     console.log("loader id", id);
 
     return defer({
-        data: await loadUserDetail(id),
+        data: await loadUserFavorites(id),
     })
 }
 

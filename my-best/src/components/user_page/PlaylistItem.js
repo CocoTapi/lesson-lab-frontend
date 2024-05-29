@@ -7,11 +7,9 @@ import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import IconButton from "../UI/IconButton";
 
-function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity}) {
+function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, displayPlusButton}) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
-
-    //TODO: handle sortOption
 
     useEffect(() => {
         const handleResize = () => {
@@ -141,9 +139,11 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 buttonChildren={
                     <div className={classes.iconButtonGroup}>
+                        {displayPlusButton && 
                         <IconButton onClick={() => onAddActivity(playlist.playlist_id, playlist.user_id, playlist.playlist_title)}>
                             <MdAddCircle className={classes.plusIconButton} />
                         </IconButton>
+                        }
                         <IconButton onClick={() => onDeletePlaylist(playlist.playlist_id, playlist.playlist_title)}>
                             <GoTrash className={classes.trashIconButton} />
                         </IconButton>   

@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
-import classes from '../css/user_page/ActivitySelection.module.css';
+import classes from '../../css/user_page/ActivitySelection.module.css';
 
-function ActivitySelection({title, playlist_id}){
+function ActivitySelection({ title, playlist_id }){
+    let selection;
     return (
         <div className={classes.modal}>
             <div className={classes.modalCard}>
                 <div className={classes.modalContents}>
-                    <p>Where do you want to choose activities for {title}?</p>
+                    <p>Where do you want to choose an activity for this playlist?</p>
                     <div className={classes.modalButtonComponent}>
                         <Link to={`${playlist_id}/add_from_fav`}>
-                            <button className={classes.modalBigButton}>
+                            <button className={classes.modalBigButton} >
                                 My likes
                             </button>
                         </Link>
