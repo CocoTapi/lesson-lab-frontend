@@ -25,7 +25,7 @@ function MyFavorites({ data }){
         user_id = user.user_id;
     }
     const submit = useSubmit();
-    const [ sortOption, setSortOption ] = useState('shortToLong');
+    const [ sortOption, setSortOption ] = useState('');
     const [ showFilterButton, setShowFilterButton] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
