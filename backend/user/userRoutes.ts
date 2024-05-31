@@ -15,7 +15,8 @@ import {
     getUserPlaylists,
     addPlaylist,
     deletePlaylist,
-    removeActivityFromPlaylist
+    removeActivityFromPlaylist,
+    addActivitiesIntoPlaylist
 } from "./user";
 import env from "dotenv";
 
@@ -116,6 +117,20 @@ router.post('/:id/playlists', asyncHandler(async (req, res) => {
 
     await addPlaylist(playlist_title, user_id);
     res.status(200).json({ message: 'New playlist added.'});
+}))
+
+//add activities into playlist
+router.post('/:id/playlists/:playlist_id', asyncHandler(async (req, res) => {
+    const method = req.method;
+    const authHeader = req.headers.authorization;
+    const verifiedEmail = await checkAuth(method, authHeader);
+
+    const activity_id_arr: number[] = req.body.activity_id_arr;
+    const user_id: number = req.body.user_id;
+    const playlist_id: number = req.body.playlist_id;
+
+    await addActivitiesIntoPlaylist(activity_id_arr, user_id, playlist_id);   
+    res.status(200).json({ message: 'Activities added into a playlist.'});      
 }))
 
 //edit user profile

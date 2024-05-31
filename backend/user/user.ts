@@ -14,7 +14,9 @@ import {
     deleteActivitiesQuery,
     deletePlaylistQuery,
     removeActivityFromPlaylistQuery,
-    reformatPlaylistData
+    reformatPlaylistData,
+    getActivityInsertionQuery,
+    getCurrentActivityCount
 } from "./util";
 
 env.config();
@@ -230,6 +232,26 @@ export async function addPlaylist(playlist_titl: string, user_id: number){
     await db.query(query, [user_id, playlist_titl, date]);
 
     console.log("New playlist created.")
+}
+
+//add activities into a playlist
+export async function addActivitiesIntoPlaylist(activity_id_arr: number[], user_id: number, playlist_id: number) {
+    const date = new Date();
+    const check = await db.query(getCurrentActivityCount, [playlist_id]);
+    const currentActivityCount: number = parseInt(check.rows[0].count);
+ 
+    const query: string = await getActivityInsertionQuery(activity_id_arr);
+    const parameters: any = [];
+    let position: number = currentActivityCount + 1;
+
+    for(let activityId of activity_id_arr) {
+        parameters.push(activityId, playlist_id, position, date);
+        position++;
+    }
+
+    await db.query(query, parameters);
+
+    console.log("activities added to a playlist.");
 }
 
 export async function removeProfile(user_id: number, email: string) {

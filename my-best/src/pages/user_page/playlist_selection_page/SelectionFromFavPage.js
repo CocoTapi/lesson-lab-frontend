@@ -49,10 +49,10 @@ export async function addActivityIntoPlaylistAction({ request }){
     const playlistData = {
         user_id: parseInt(user_id),
         playlist_id: parseInt(playlist_id),
-        activity_id_list: activity_id_arr
+        activity_id_arr
     }
 
-    const response = await fetch(`${API_URL}/${user_id}/playlists`, {
+    const response = await fetch(`${API_URL}/${user_id}/playlists/${playlist_id}`, {
         method: method,
         headers: {
             'Content-Type' : 'application/json',

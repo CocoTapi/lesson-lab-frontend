@@ -227,6 +227,30 @@ export const addPlaylistQuery = `
         ($1, $2, $3)
 `
 
+export const getCurrentActivityCount = `
+    SELECT COUNT(*) FROM playlist_activities
+    WHERE playlist_id = $1
+`
+
+export async function getActivityInsertionQuery(arr: number[]){
+    let query = `
+        INSERT INTO playlist_activities 
+            (activity_id, playlist_id, position, last_update)
+        VALUES
+            ($1, $2, $3, $4)
+    `;
+
+    for(let i = 1; i < arr.length; i++) {
+        let startNum: number = 4*i + 1;
+        let stringToAdd = `
+            ,($${startNum}, $${startNum + 1}, $${startNum + 2}, $${startNum + 3})
+        ` 
+        query = query + stringToAdd;
+    }
+
+    return query;
+}
+
 export async function reformatPlaylistData(playlists: UserPlaylistResult[]) {
     const map: any = {};
 

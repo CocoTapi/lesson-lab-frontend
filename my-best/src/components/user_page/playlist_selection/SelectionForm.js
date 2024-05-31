@@ -79,7 +79,7 @@ function SelectionForm({ data, playlist_id, subTitle }){
     const handleSubmit = () => {
         console.log("clicked")
         if(addingList.length > 0) {
-            submit({ activity_id_list: addingList, playlist_id, user_id}, { method: "PATCH"});
+            submit({ activity_id_list: addingList, playlist_id, user_id}, { method: "POST"});
         }
         navigate(`/mypage/${user_id}/playlists`);
     }
