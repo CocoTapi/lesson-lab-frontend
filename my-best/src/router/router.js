@@ -18,7 +18,7 @@ import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/Use
 import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
 import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
 import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
-import UserPlaylistsPage, { loader as userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
+import UserPlaylistsPage, { userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
 import SelectionFromFavPage, { loader as userFavoriteSelectionLoader, addActivityIntoPlaylistAction } from "../pages/user_page/playlist_selection_page/SelectionFromFavPage";
 import SelectionFromUploadsPage from "../pages/user_page/playlist_selection_page/SelectionFromUploadsPage";
 import SelectionFromAllPage from "../pages/user_page/playlist_selection_page/SelectionFromAllPage";

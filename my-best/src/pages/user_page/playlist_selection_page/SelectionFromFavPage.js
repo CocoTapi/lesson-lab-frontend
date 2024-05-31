@@ -52,7 +52,7 @@ export async function addActivityIntoPlaylistAction({ request }){
         activity_id_arr
     }
 
-    const response = await fetch(`${API_URL}/${user_id}/playlists/${playlist_id}`, {
+    const response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
         method: method,
         headers: {
             'Content-Type' : 'application/json',
@@ -69,7 +69,6 @@ export async function addActivityIntoPlaylistAction({ request }){
     if (!response.ok){
         throw json({ message: 'Could not save activity.'}, { status: 500 });
     }
-
 
     return redirect(`/mypage/${user_id}/playlists`);
 }

@@ -1,0 +1,26 @@
+.radioContainer{
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+    align-items: center;
+}
+
+/* Hide the default radio button */
+.customRadio{
+    cursor: pointer;
+    width: 2.5rem;  
+    height: 2.5rem; 
+}
+
+.customRadio:checked {
+    background: blueviolet;
+    border: 2px solid blueviolet
+}
+
+.bottomSubmitButton {
+    display: flex;
+    justify-content: end;
+    padding-top: 1rem;
+}
+
+

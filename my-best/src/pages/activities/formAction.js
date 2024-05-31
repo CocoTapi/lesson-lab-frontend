@@ -40,8 +40,6 @@ export async function action({ request, params }){
         },
         body: JSON.stringify(activityData)
     })
-    
-    // console.log("response data: ", response)
 
     if (response.status === 422 || response.status === 401) {
         return response;
@@ -50,7 +48,6 @@ export async function action({ request, params }){
     if (!response.ok){
         throw json({ message: 'Could not save activity.'}, { status: 500 });
     }
-
 
     return redirect(redirectPath);
 }

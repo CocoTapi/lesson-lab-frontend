@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouteLoaderData, useSubmit, Link, useNavigate, useLocation } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
@@ -6,6 +7,7 @@ import SortBar from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
+import PlaylistSelection from "./PlaylistSelection";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -18,6 +20,7 @@ function ActivityItem({ activity, activities }) {
     const submit = useSubmit();
     const navigate = useNavigate();
     const location = useLocation();
+    const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
 
     const handleAddFavorite = (is_favorited) => { 
         console.log("is_favorited:", is_favorited)
@@ -31,16 +34,25 @@ function ActivityItem({ activity, activities }) {
     const handleDeleteActivity = (title) => {
         const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
 
-        if (proceed) submit(null, { method: 'DELETE' });
+        if (proceed) submit({ user_id }, { method: 'DELETE' });
     }
 
-    // TODO: passing is_saved
-    //TODO: sort
+    const handleAddPlaylist = (id) => {
+        if(!token) {
+            navigate('/auth?mode=login', { state: { prev_location: location }});
+        } else {
+            setShowPlaylistSelection(true);
+        }
+    }
 
-    console.log("activity_item:", activity);
+    const handlePlaylistSubmit = (playlist_id) => {
+        submit({ user_id, playlist_id }, { method: "PATCH"});
+        setShowPlaylistSelection(false);
+    }
 
     return (
         <div className={classes.main}>
+            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} />}
             <div className={classes.contents}>
                 <div className={classes.sortBar} >
                     <SortBar />
@@ -62,7 +74,7 @@ function ActivityItem({ activity, activities }) {
                             <h1>{activity.title}</h1>
                             <div className={classes.detailCardIcons}>
                                 {activity.is_favorited ? <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> : <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />}
-                                {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> }
+                                <GoBookmark onClick={handleAddPlaylist} /> 
                             </div>
                             <div className={classes.detailCardCreatorInfo}>
                                 <p>{activity.like_count} likes</p>
