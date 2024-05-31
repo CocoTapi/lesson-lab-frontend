@@ -58,7 +58,7 @@ export async function action({ request }) {
     const token = getAuthToken();
     const method = request.method;
     const formData = await request.formData()
-    const user_id = formData.get("user_id");
+    const user_id = parseInt(formData.get("user_id"));
 
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
@@ -67,17 +67,32 @@ export async function action({ request }) {
     if (method === 'DELETE') {
         const playlist_id = formData.get("playlist_id");
         
-        bodyContent = { playlist_id: playlist_id };
+        bodyContent = { playlist_id };
+    }
+
+    //add activities into playlist
+    if(method === 'PATCH' && !formData.get("activity_id")){
+        const playlist_id = parseInt(formData.get("playlist_id"));
+        const list = formData.get("activity_id_list");
+        const activity_id_arr = list.split(',').map(Number);
+
+        bodyContent = {
+            user_id,
+            playlist_id,
+            activity_id_arr
+        }
+
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
     }
 
     //remove activity from playlist
-    if (method === 'PATCH') {
+    if (method === 'PATCH' && formData.get("activity_id")) {
         const activity_id = formData.get("activity_id");
         const playlist_id = formData.get("playlist_id");
 
         bodyContent = { 
-            activity_id: activity_id,
-            playlist_id: playlist_id 
+            activity_id,
+            playlist_id 
         };
     }
 

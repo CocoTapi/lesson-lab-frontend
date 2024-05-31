@@ -93,15 +93,17 @@ export async function action({ params, request }) {
 
     } else if (method === "PATCH") {
         const playlist_id = parseInt(formData.get("playlist_id"));
+        const arr = [];
+        arr.push(activity_id);
 
         const playlistData = {
             user_id,
             playlist_id,
-            activity_id_arr: [activity_id]
+            activity_id_arr: arr
         };
 
-        const response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
-            method: 'post',
+        response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
+            method: method,
             headers: {
                 'Content-Type' : 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -113,7 +115,7 @@ export async function action({ params, request }) {
         console.log('method is missing.');
     };
 
-    if (response.status === 422 || response.status === 401) {
+    if (response?.status === 422 || response?.status === 401) {
         return response;
     };
 

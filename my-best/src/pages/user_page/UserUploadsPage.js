@@ -20,9 +20,9 @@ function UserUploads(){
     )
 };
 
-export default UserUploads;
+export default UserUploads;  
 
-async function loadUserUploads(id) {
+export async function loadUserUploads(id) {
     const token = getAuthToken();
     const response = await fetch(`${API_URL}/user/${id}/uploads`, {
         method: "GET",

@@ -3,12 +3,13 @@ import { loadUserPlaylists } from "../../pages/user_page/UserPlaylistsPage";
 import Modal from "../UI/Modal";
 import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
-import ButtonM from "../UI/ButtonM";
 import ButtonS from "../UI/ButtonS";
+import { useNavigate } from "react-router-dom";
 
-function PlaylistSelection ({ user_id, token, onPlaylistSubmit }){
+function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
@@ -29,13 +30,15 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit }){
         event.preventDefault();
         if (selectedPlaylist) {
             onPlaylistSubmit(selectedPlaylist);
+        } else {
+            onClose();
         }
     }
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
         console.log("No playlist")
-        content = <p>"You haven't create playlists."</p>
+        content = <p>You haven't create playlists.</p>
     } else {
         content = userPlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>

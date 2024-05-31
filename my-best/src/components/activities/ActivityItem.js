@@ -50,9 +50,13 @@ function ActivityItem({ activity, activities }) {
         setShowPlaylistSelection(false);
     }
 
+    const handleCancel = () => {
+        setShowPlaylistSelection(false);
+    }
+
     return (
         <div className={classes.main}>
-            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} />}
+            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} onClose={handleCancel}/>}
             <div className={classes.contents}>
                 <div className={classes.sortBar} >
                     <SortBar />

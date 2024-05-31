@@ -120,7 +120,7 @@ router.post('/:id/playlists', asyncHandler(async (req, res) => {
 }))
 
 //add activities into playlist
-router.post('/:id/playlists/:playlist_id', asyncHandler(async (req, res) => {
+router.patch('/:id/playlists/:playlist_id', asyncHandler(async (req, res) => {
     const method = req.method;
     const authHeader = req.headers.authorization;
     const verifiedEmail = await checkAuth(method, authHeader);

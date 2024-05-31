@@ -30,7 +30,8 @@ function Playlists ({ data }) {
     const titleRef = useRef('');
     const [ smallDisplay, setSmallDisplay] = useState(false);
     const [ showModal, setShowModal ] = useState(false);
-    const [ modalInfo, setModalInfo ] = useState({new_playlist_id: null, new_playlist_user_id: null, new_playlist_title: null});
+    const initialModalInfo = {new_playlist_id: null, new_playlist_user_id: null, new_playlist_title: null};
+    const [ modalInfo, setModalInfo ] = useState(initialModalInfo);
 
     useEffect(() => {
         const handleResize = () => {
@@ -68,6 +69,7 @@ function Playlists ({ data }) {
     }
 
     const handleAddActivity = (playlist_id, user_id, playlist_title) => {
+        console.log("clicked")
         setModalInfo({
             new_playlist_id: playlist_id,
             new_playlist_user_id: user_id,
@@ -104,6 +106,16 @@ function Playlists ({ data }) {
         return 0; // Default case if no sort option is matched
     });
 
+    const handleSubmitPlaylistActivities = (arr, selected_user_id, selected_playlist_id) => {
+        submit({ user_id: selected_user_id, playlist_id: selected_playlist_id, activity_id_list: arr}, { method: "PATCH"});
+        setShowModal(false);
+    }
+
+    const handleCancel = () => {
+        setModalInfo(initialModalInfo);
+        setShowModal(false)
+    }
+
     let content;
     if (Object.keys(userPlaylists).length === 0) {
         console.log("No playlist")
@@ -117,7 +129,6 @@ function Playlists ({ data }) {
                     onDeletePlaylist={handleDeletePlaylist}
                     onAddActivity={handleAddActivity}
                     displayPlusButton='true'
-
                 />
             </li>
         ))       
@@ -130,6 +141,10 @@ function Playlists ({ data }) {
                 <ActivitySelection 
                     title={modalInfo && modalInfo.new_playlist_title}
                     playlist_id={modalInfo && modalInfo.new_playlist_id}
+                    user_id={modalInfo && modalInfo.new_playlist_user_id}
+                    onSubmitActivities={handleSubmitPlaylistActivities}
+                    onClose={handleCancel}
+                
                 />
             }
             <div className={classes.outerFrame}>
