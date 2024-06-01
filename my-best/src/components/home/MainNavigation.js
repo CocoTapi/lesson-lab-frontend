@@ -40,6 +40,8 @@ function MainNavigation() {
         setDisplayMenu(false);
     }
 
+   
+
     return (
         <header className={classes.header}>
             <div className={classes.left}>
@@ -120,7 +122,7 @@ function MainNavigation() {
                         {!token && <Link  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} >Sign Up</Link>}
                         {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>}
                         {token && 
-                            <Form className={classes.menuItem} action='/logout' method='post' onClick={handleCloseMenu} >
+                            <Form className={classes.menuItem} action='/logout' method='post' >
                                 <button type="submit" className={classes.auth}>Logout</button>
                             </Form>}
                     </div>

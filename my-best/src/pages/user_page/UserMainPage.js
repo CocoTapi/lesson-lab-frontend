@@ -8,7 +8,6 @@ import Profile from "../../components/user_page/Profile";
 
 function UserMainPage(){
     const { data } = useRouteLoaderData('user-detail');
-    console.log("data:", data);
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>

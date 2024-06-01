@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouteLoaderData, useSubmit, Link, useNavigate, useLocation } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
-import { GoHeart,GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
+import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
 import SortBar from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";

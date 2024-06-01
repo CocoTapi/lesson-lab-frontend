@@ -160,7 +160,7 @@ function Playlists ({ data }) {
                 <div  className={classes.addPlaylistBComponent}>
                     <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
                         <TiPlus />
-                        Add Playlist
+                        New Playlist
                     </ButtonM>
                 </div>
                 <div className={classes.bottomContents}>

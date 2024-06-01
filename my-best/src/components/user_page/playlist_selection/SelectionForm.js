@@ -1,10 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { useRouteLoaderData, useSubmit, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import classes from '../../css/user_page/SelectionFromFav.module.css';
-import File from "../../UI/File";
-import Accordion from "../../UI/Accordion";
 import SortBar, { getSortedActivities } from "../../UI/SortBar";
-import { FaCheck, FaPlus } from "react-icons/fa";
 import Filter, { getFilteredActivities } from "../../UI/Filter";
 import Tag from "../../UI/Tag";
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
@@ -40,8 +36,6 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
 
         fetchActivityData();
     }, [user_id, selectedList])
-
-    console.log("activityList", activityList);
 
     const handleSelectionChange = (event) => {
         const value = event.target.value;
