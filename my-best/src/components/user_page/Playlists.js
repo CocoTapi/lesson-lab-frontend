@@ -128,7 +128,8 @@ function Playlists ({ data }) {
                     onRemoveActivity={handleRemoveActivity}
                     onDeletePlaylist={handleDeletePlaylist}
                     onAddActivity={handleAddActivity}
-                    displayPlusButton='true'
+                    playlistButtons='true'
+                    activityButtons='true'
                 />
             </li>
         ))       

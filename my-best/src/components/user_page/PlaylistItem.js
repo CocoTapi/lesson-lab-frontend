@@ -7,7 +7,7 @@ import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import IconButton from "../UI/IconButton";
 
-function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, displayPlusButton}) {
+function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons}) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
 
@@ -125,10 +125,11 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                                             </div>
                                         </div>
                                     }
-                                    buttonChildren={
+                                    buttonChildren={activityButtons ? (
                                         <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, playlist.playlist_id, playlist.playlist_title)}>
                                             <GoTrash className={classes.playlistItemTrash} />
                                         </IconButton>
+                                    ): ''
                                     }
                                     
                                 />
@@ -137,17 +138,17 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                         ))}  
                     </ul>
                 }
-                buttonChildren={
+                buttonChildren={ playlistButtons? (
                     <div className={classes.iconButtonGroup}>
-                        {displayPlusButton && 
                         <IconButton onClick={() => onAddActivity(playlist.playlist_id, playlist.user_id, playlist.playlist_title)}>
                             <MdAddCircle className={classes.plusIconButton} />
                         </IconButton>
-                        }
                         <IconButton onClick={() => onDeletePlaylist(playlist.playlist_id, playlist.playlist_title)}>
                             <GoTrash className={classes.trashIconButton} />
                         </IconButton>   
                     </div>
+                ) : ''
+                    
                 }
             />
         </div>
