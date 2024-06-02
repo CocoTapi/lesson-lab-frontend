@@ -32,6 +32,9 @@ export async function loadUserUploads(id) {
         }
     });
 
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
+   
     if(!response.ok) {
         throw json({message: "Could not fetch user uploads."}, { status: 500})
     }
@@ -39,14 +42,14 @@ export async function loadUserUploads(id) {
     const resData = await response.json();
     //console.log("resData:", resData)
     let userUploads = resData.userUploads;
-    console.log("userUploads:", userUploads);
+    //console.log("userUploads:", userUploads);
 
     return { userUploads };
 }
 
 export async function loader({ request, params }){
     const id = params.user_id;
-    console.log("loader id", id);
+    //console.log("loader id", id);
 
     return defer({
         data: await loadUserUploads(id),    
@@ -60,10 +63,10 @@ export async function action({ request }) {
     const user_id = formData.get("user_id");
     const token = getAuthToken();
 
-    console.log("request:", formData);
-    console.log("user_id:", user_id);
-    console.log("activity_id", activity_id);
-    console.log("method", method)
+    // console.log("request:", formData);
+    // console.log("user_id:", user_id);
+    // console.log("activity_id", activity_id);
+    // console.log("method", method)
 
     //code here
     const response = await fetch(`${API_URL}/activities/${activity_id}`, {
@@ -72,6 +75,9 @@ export async function action({ request }) {
             "Authorization": `Bearer ${token}`
         }
     });
+
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
 
     if(!response.ok) {
         throw json({message: "Could not remove favorite activity."}, { status: 500})

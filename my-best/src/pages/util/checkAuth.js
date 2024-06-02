@@ -1,4 +1,4 @@
-import { redirect } from 'react-router-dom'
+import { json, redirect } from 'react-router-dom'
 import { API_URL } from '../../App';
 
 //TODO token stores in local storage or cookies?
@@ -26,15 +26,17 @@ export function getAuthToken() {
     return token;
 };
 
-export async function loader () {
+export async function userLoader () {
     const token = getAuthToken();
-    if(token){
+    if(token && token !== 'EXPIRED'){
         const { user_id, user_name } = await getUserInfoFromToken(token);
         return { token: token, user_id: user_id, user_name: user_name};
-    } else {
-        return token
-    }
-
+    } else if (token && token === 'EXPIRED') {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expiration');
+        return token;
+    } 
+    return token
 };
 
 export function checkAuthLoader() {
@@ -72,7 +74,7 @@ export async function getUserInfoFromToken(token){
     });
 
     if(!response.ok) {
-        throw Error('Could not fetch user info.')
+        throw json({message: 'Could not fetch user info.'}, {status: 500})
     }
 
     const resData = await response.json();

@@ -1,21 +1,19 @@
-//import { useRouteLoaderData } from "react-router-dom";
-import File from '../UI/File';
 import classes from '../css/home/home.module.css';
-import { GoHeartFill } from "react-icons/go";
-import ButtonS from "../UI/ButtonS";
-import { FaEdit } from "react-icons/fa";
 
 
 function Home() {
-    // const user = useRouteLoaderData('root');
-    // let token;
-    // if(user) token = user.token;  
-   
+    let message = 'Something went wrong!';
     return (
-        <div className={classes.container}>
-         home
+        <div className={classes.errorComponent}>
+            <div className={classes.errorContents}>
+                <h1>{message}</h1>
+                <div className={classes.imageComponent}>
+                    <img src='/images/errorImg.png' alt="example" />
+                </div>
+            </div>
         </div>
-    )
+           
+)
 };
 
 export default Home;

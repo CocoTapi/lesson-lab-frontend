@@ -47,7 +47,7 @@ export async function loadUserPlaylists(id) {
 
 export async function userPlaylistsLoader({ request, params }){
     const id = params.user_id;
-    console.log("loader id", id);
+    //console.log("loader id", id);
 
     return defer({
         data: await loadUserPlaylists(id),
@@ -112,9 +112,8 @@ export async function action({ request }) {
         body: JSON.stringify(bodyContent)
     });
 
-    if (response.status === 422 || response.status === 401) {
-        return response;
-    };
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
 
     if(!response.ok) {
         throw json({message: "Could not remove favorite activity."}, { status: 500})

@@ -2,7 +2,6 @@
     display: inline-block;
     width: 100vw;
     background-color: var(--color-primary-700);
-    margin-top: 10rem;
 }
 
 .contents {

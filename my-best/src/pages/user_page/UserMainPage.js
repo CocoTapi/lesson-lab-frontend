@@ -31,6 +31,9 @@ async function loadUserDetail(id) {
         }
     });
 
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
+
     if(!response.ok) {
         throw json({message: "Could not fetch user detail."}, { status: 500})
     }
@@ -44,7 +47,7 @@ async function loadUserDetail(id) {
 
 export async function loader({ request, params }){
     const id = params.user_id;
-    console.log("loader id", id);
+    //console.log("loader id", id);
 
     return defer({
         data: await loadUserDetail(id),

@@ -32,6 +32,9 @@ export async function loadUserFavorites(id) {
         }
     });
 
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
+
     if(!response.ok) {
         throw json({message: "Could not fetch user detail."}, { status: 500})
     }
@@ -41,7 +44,7 @@ export async function loadUserFavorites(id) {
    
     const userFavorites = resData.userFavorites
     
-    console.log("userFavorites:", userFavorites)
+    //console.log("userFavorites:", userFavorites)
     return { userFavorites };
 }
 
@@ -61,10 +64,10 @@ export async function action({ request }) {
     const user_id = formData.get("user_id");
     const token = getAuthToken();
 
-    console.log("request:", formData);
-    console.log("user_id:", user_id);
-    console.log("activity_id", activity_id);
-    console.log("method", method)
+    // console.log("request:", formData);
+    // console.log("user_id:", user_id);
+    // console.log("activity_id", activity_id);
+    // console.log("method", method)
 
     //code here
     const response = await fetch(`${API_URL}/user/${user_id}/favorites/${activity_id}`, {
@@ -73,6 +76,10 @@ export async function action({ request }) {
             "Authorization": `Bearer ${token}`
         }
     });
+
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
+
 
     if(!response.ok) {
         throw json({message: "Could not remove favorite activity."}, { status: 500})
