@@ -9,7 +9,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 0.5rem;
     align-items: center;
 }
 
@@ -28,7 +28,7 @@
 .headerRight {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 900;
     margin: 0;
     padding: 0;
@@ -36,7 +36,7 @@
 
 .detailFrame {
     margin-top: 0;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 
@@ -76,10 +76,6 @@
         padding-right: 1.5rem;
     }
 
-    .headerRight {
-        font-size: 2rem;
-    }
-
     .detailFrame {
         padding: 1rem 1.5rem;
     }
@@ -91,6 +87,10 @@
 
 
 @media (min-width: 1300px) {
+    .headerRight {
+        font-size: 1.5rem;
+    }
+
     .detailFrame {
         padding: 0 1.2rem 1.2rem 1.5rem;
     }

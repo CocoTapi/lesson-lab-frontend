@@ -6,7 +6,7 @@
     margin-bottom: 0.7rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
     background-color: var(--color-grey-300);
     border-radius: 10px;
     padding: 0.5rem 1rem;
@@ -14,8 +14,7 @@
 }
 
 .listNum {
-    font-size: 2rem;
-    padding-left: 0.5rem;
+    font-size: 1.2rem;
 }
 
 .accordionComponent p {
@@ -55,7 +54,7 @@
 .durationGroup {
     width: 100%;
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .labelTitle {
@@ -84,7 +83,7 @@
 
 .totalDuration {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     margin: 0;
     padding-left: 3rem;
 }
@@ -127,6 +126,10 @@
     gap: 1rem;
 }
 
+.activityTitle {
+    font-size: 1.2rem;
+}
+
 @media (min-width: 640px) {
     .accordionDetail {
         display: flex;
@@ -150,6 +153,26 @@
 
     .totalDuration {
         padding-left: 0;
+        gap: 1rem;
+    }
+
+    .listNum {
+        font-size: 1.5rem;
+        padding-left: 0.5rem;
+    }
+
+    .activityItemComponent {
+        gap: 1.5rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .durationGroup {
+        gap: 1rem
     }
 }
 
+@media (min-width: 810px) {
+    .listNum {
+        font-size: 2rem;
+    }
+}

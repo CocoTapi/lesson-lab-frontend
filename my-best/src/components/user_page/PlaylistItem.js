@@ -46,7 +46,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 headerContents={
                     <div className={classes.totalDuration}>
-                        <p className={classes.labelTitle}>Total Duration :</p>
+                        <p className={classes.labelTitle}>Total :</p>
                         {playlist.total_duration ? 
                             <p className={classes.info}>{playlist.total_duration} mins</p>
                             : <p className={classes.info}> 0 mins</p>
@@ -68,7 +68,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                                                 {i + 1}.
                                             </h1>
                                 <Accordion 
-                                    headerTitle={item.title}
+                                    headerTitle={<div className={classes.activityTitle}>{item.title}</div>}
                                     headerContents={
                                         <div>
                                             {showSummary && (
