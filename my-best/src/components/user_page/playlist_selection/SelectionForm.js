@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import classes from '../../css/user_page/SelectionFromFav.module.css';
+import classes from '../../css/user_page/SelectionForm.module.css';
 import SortBar, { getSortedActivities } from "../../UI/SortBar";
 import Filter, { getFilteredActivities } from "../../UI/Filter";
 import Tag from "../../UI/Tag";
@@ -10,6 +10,7 @@ import ButtonS from "../../UI/ButtonS";
 import { loadUserFavorites } from "../../../pages/user_page/UserFavoritesPage";
 import { loadUserUploads } from "../../../pages/user_page/UserUploadsPage";
 import UserActivityList from "../UserActivityList";
+import TopButton from "../../UI/TopButton";
 
 //TODO: fetch only activities that is not in the playlist
 
@@ -102,10 +103,10 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
 
     return (
         <div className={classes.selectionContents}>
-            <div>
-                <h3>Add to Playlist : {title}</h3>
-                <ButtonS onClick={handleSubmit}>Done</ButtonS>
+            <div className={classes.doneButtonComponent}>
+                    <TopButton onClick={handleSubmit}>Done</TopButton>
             </div>
+            <h3>Add to Playlist : {title}</h3>
             {selectedList === 'like' ? 
                 <h4>My Likes</h4> : 
                 <h4>My Uploads</h4>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import classes from '../../css/user_page/ActivitySelection.module.css';
 import Modal from '../../UI/Modal';
 import SelectionForm from './SelectionForm';
+import { GoHeartFill } from "react-icons/go";
 
 function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, onClose }){
     const [selectedList, setSelectedList ] = useState('');
@@ -19,17 +20,13 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                 <div className={classes.modalContents}>
                     <h3>Where do you want to choose an activity for this playlist?</h3>
                     <div className={classes.modalButtonComponent}>
-                        {/* <Link to={`${playlist_id}/add_from_fav`}> */}
                             <button className={classes.modalBigButton} onClick={() => handleClick('like')}>
-                                My likes
+                            <GoHeartFill />likes
                             </button>
-                        {/* </Link>
-                        <Link to={`${playlist_id}/add_from_uploads`}> */}
                             <button className={classes.modalBigButton}  onClick={() => handleClick('upload')}>
                                 My Uploads
                             </button>
-                        {/* </Link> */}
-                        <Link to={`../../../activities`}>
+                        <Link to={`../../../activities`} className={classes.linkButton}>
                             <button className={classes.modalBigButton}>
                                 All activities
                             </button>

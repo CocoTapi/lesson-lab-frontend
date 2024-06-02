@@ -8,11 +8,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2000;
 }
 
 .modalCard {
     background-color: white;
     width: 90%;
+    max-width: 1000px;
     max-height: 80%; 
     padding: 2rem;
     box-sizing: border-box;

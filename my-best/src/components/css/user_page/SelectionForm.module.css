@@ -1,0 +1,8 @@
+.selectionContents {
+    display: block;
+}
+
+.doneButtonComponent {
+    display: flex;
+    justify-content: end;
+}
