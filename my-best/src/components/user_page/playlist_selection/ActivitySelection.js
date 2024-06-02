@@ -4,6 +4,7 @@ import classes from '../../css/user_page/ActivitySelection.module.css';
 import Modal from '../../UI/Modal';
 import SelectionForm from './SelectionForm';
 import { GoHeartFill } from "react-icons/go";
+import TopButton from '../../UI/TopButton';
 
 function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, onClose }){
     const [selectedList, setSelectedList ] = useState('');
@@ -13,11 +14,18 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
         setSelectedList(selection);
         setShowSelection(true);
     }
+
+    const handleBackButton = () => {
+        setShowSelection(false)
+    }
   
     return (
         <Modal>
             {!showSelection &&
                 <div className={classes.modalContents}>
+                    <div className={classes.topButtonComponent}>
+                        <TopButton onClick={onClose} >Back</TopButton>
+                    </div>
                     <h3>Where do you want to choose an activity for this playlist?</h3>
                     <div className={classes.modalButtonComponent}>
                             <button className={classes.modalBigButton} onClick={() => handleClick('like')}>
@@ -42,6 +50,7 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                     title={title} 
                     onSubmitActivities={onSubmitActivities}
                     onClose={onClose}
+                    onBacktoSelection={handleBackButton}
                 />
             }
             

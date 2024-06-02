@@ -1,3 +1,7 @@
+.topButtonComponent {
+    padding-bottom: 1rem;
+}
+
 .modalContent {
 background-color: white;
 padding: 20px;
@@ -37,6 +41,10 @@ position: relative;
 }
 
 @media (min-width: 810px) {
+    .topButtonComponent {
+        padding-bottom: 2rem;
+    }
+
     .modalButtonComponent {
         display: flex;
         gap: 1.5rem;

@@ -5,6 +5,7 @@ import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import { useNavigate } from "react-router-dom";
+import TopButton from "../UI/TopButton";
 
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
     const [userPlaylists, setUserPlaylists] = useState([]);
@@ -49,25 +50,34 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
                     onChange={handlePlaylistChange}
                     className={classes.customRadio}
                 />
-                <PlaylistItem 
-                    playlist={playlist}
-                    displayPlusButton='false'
-                />
+                <div className={classes.playlistItem}>
+                    <PlaylistItem 
+                        playlist={playlist}
+                        displayPlusButton='false'
+                    />
+                </div>
             </label>
         ))       
     }
 
     return (
         <Modal>
-            <form className={classes.modalContents} onSubmit={handleSubmit}>
-                <h3>Select playlist you want to add the activity</h3>
-                <div className={classes.playlistRadio}>
-                    {content}
+            <div className={classes.modalContents}>
+                <div className={classes.topButtonComponent}>
+                    <TopButton onClick={onClose} >Back</TopButton>
+                    <TopButton onClick={handleSubmit} >Done</TopButton>
                 </div>
-                <div className={classes.bottomSubmitButton}>
-                    <ButtonS colorScheme="primary">Submit</ButtonS>
-                </div>
-            </form>
+                <form onSubmit={handleSubmit}>
+                    <h2>Select playlist you want to add the activity</h2>
+                    <div className={classes.playlistRadio}>
+                        {content}
+                    </div>
+                    <div className={classes.bottomSubmitButton}>
+                        <ButtonS colorScheme="primary">Done</ButtonS>
+                    </div>
+                </form>
+            </div>
+            
         </Modal>
     )
 }

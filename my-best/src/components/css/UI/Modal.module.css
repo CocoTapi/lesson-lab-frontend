@@ -16,7 +16,7 @@
     width: 90%;
     max-width: 1000px;
     max-height: 80%; 
-    padding: 2rem;
+    padding: 1rem;
     box-sizing: border-box;
     overflow-y: auto;
 }

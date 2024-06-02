@@ -1,9 +1,9 @@
 .button {
-    width: 15.7rem;
     height: 2.45rem;
     border-radius: 10px;
     overflow: hidden;
-    border: 2px solid;
+    border: 1px solid;
+    padding: 0 1rem;
     justify-content: center;
     align-items: center;
     gap: 1.25rem;

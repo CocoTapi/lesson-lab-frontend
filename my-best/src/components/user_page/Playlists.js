@@ -144,7 +144,6 @@ function Playlists ({ data }) {
                     user_id={modalInfo && modalInfo.new_playlist_user_id}
                     onSubmitActivities={handleSubmitPlaylistActivities}
                     onClose={handleCancel}
-                
                 />
             }
             <div className={classes.outerFrame}>

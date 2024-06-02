@@ -14,7 +14,7 @@ import TopButton from "../../UI/TopButton";
 
 //TODO: fetch only activities that is not in the playlist
 
-function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities, title, onClose}){
+function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities, title, onClose, onBacktoSelection }){
     const [ activityList, setActivityList ] = useState([]);
     const [ selectedActivities, setSelectedActivities ] = useState([]);
     const [ sortOption, setSortOption ] = useState('');
@@ -94,9 +94,11 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
                     onChange={handleSelectionChange}
                     className={classes.customCheck}
                 />
-                <UserActivityList 
-                    activity={activity} 
-                />
+                <div className={classes.activityItemComponent}>
+                    <UserActivityList 
+                        activity={activity} 
+                    />
+                </div>
             </label>
         ))       
     }
@@ -104,12 +106,13 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     return (
         <div className={classes.selectionContents}>
             <div className={classes.doneButtonComponent}>
-                    <TopButton onClick={handleSubmit}>Done</TopButton>
+                <TopButton onClick={onBacktoSelection} >Back</TopButton>
+                <TopButton onClick={handleSubmit}>Done</TopButton>
             </div>
             <h3>Add to Playlist : {title}</h3>
             {selectedList === 'like' ? 
-                <h4>My Likes</h4> : 
-                <h4>My Uploads</h4>
+                <h4>My Likes ({activityList.length} items)</h4> : 
+                <h4>My Uploads ({activityList.length} items)</h4>
             }
             <SortBar onSortChange={setSortOption} />
             <div className={classes.filterButtons} onClick={handleFilterButton} >
@@ -131,8 +134,8 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
                 <div>
                 {content}
                 </div>
-                <div>
-                    <ButtonS onClick={handleSubmit}>Done</ButtonS>
+                <div className={classes.bottomButtonComponent}>
+                    <ButtonS onClick={handleSubmit} colorScheme="primary">Done</ButtonS>
                 </div>
             </form>
         </div>
