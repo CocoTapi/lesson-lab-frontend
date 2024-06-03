@@ -13,11 +13,19 @@ export async function action ({ request }) {
     const firstName = data.get('firstName');
     const lastName = data.get('lastName');
     const email = data.get('email');
+    const confirmEmail = data.get('confirmEmail'); 
     const password = data.get('password');
+    const confirmPassword = data.get('confirmPassword');
+
+    if (email !== confirmEmail) {
+        return { errors: ['The email confirmation does not match.']}
+    } else if (password !== confirmPassword){
+        return { errors: ['The password confirmation does not match.']}
+    }
 
     const signUpData = {
-        firstName: firstName,
-        lastName: lastName,
+        first_name: firstName,
+        last_name: lastName,
         email: email,
         password: password,
     };
@@ -34,15 +42,15 @@ export async function action ({ request }) {
     
     console.log("response data: ", response);
 
-    //error handling
-    if (response.status === 422) throw new Response("", { status: 422 });
-    if (response.status === 401) throw new Response("", { status: 401 });
-   
+   //this make you show which item is invalid.
+    if (response.status === 422 || response.status === 401) {
+        return response;
+    }
 
     if (!response.ok){
         throw json({ message: 'Could not authenticate user.'}, { status: 500 });
     }
 
 
-    return redirect('/');
+    return redirect('/auth?mode=login');
 }

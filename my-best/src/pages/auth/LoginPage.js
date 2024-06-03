@@ -30,10 +30,10 @@ export async function action ( {request, setUserInfo} ) {
         body: JSON.stringify(loginData)
     })
     
-    //error handling
-    if (response.status === 422) throw new Response("", { status: 422 });
-    if (response.status === 401) throw new Response("", { status: 401 });
-   
+    //this make you show which item is invalid.
+    if (response.status === 422 || response.status === 401) {
+        return response;
+    }
 
     if (!response.ok){
         throw json({ message: 'Could not authenticate user.'}, { status: 500 });

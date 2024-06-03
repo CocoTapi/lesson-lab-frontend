@@ -30,7 +30,11 @@ function Playlists ({ data }) {
     const titleRef = useRef('');
     const [ smallDisplay, setSmallDisplay] = useState(false);
     const [ showModal, setShowModal ] = useState(false);
-    const initialModalInfo = {new_playlist_id: null, new_playlist_user_id: null, new_playlist_title: null};
+    const initialModalInfo = {
+        new_playlist_id: null, 
+        new_playlist_user_id: null, 
+        new_playlist_title: null
+    };
     const [ modalInfo, setModalInfo ] = useState(initialModalInfo);
 
     useEffect(() => {

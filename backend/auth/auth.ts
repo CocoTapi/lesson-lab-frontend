@@ -66,15 +66,33 @@ export async function signUp({ email, password, first_name, last_name }: SignUpI
   if (checkResult.rows.length > 0) throw new Error("User already exists.");
 
   const date = new Date();
+  const user_name = createUserName(email);
   const hashResult = bcrypt.hashSync(password, saltRounds);
   if (!hashResult) throw new Error('Password hash fail. User not created')
 
   await db.query(
-    "INSERT INTO users (email, password, first_name, last_name, created_date, last_update) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-    [email, hashResult, first_name, last_name, date, date]
+    "INSERT INTO users (email, password, first_name, last_name, created_date, last_update, user_name) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    [email, hashResult, first_name, last_name, date, date, user_name]
   );
 
   console.log(email, hashResult, first_name, last_name, date, date);
+}
+
+function createUserName(email: string) {
+  const str = email.split('@')[0];
+  const randomNum1 = Math.floor(Math.random() * 10);
+  const randomNum2 = Math.floor(Math.random() * 10);
+  const randomNum3 = Math.floor(Math.random() * 10);
+  const randomNum4 = Math.floor(Math.random() * 10);
+
+  const user_name = str + randomNum1 + randomNum2 + randomNum3 + randomNum4;
+
+  const maxLength = 50;
+  if(user_name.length > maxLength) {
+    return user_name.substring(0, maxLength)
+  } 
+
+  return user_name
 }
 
 export async function login({ email, password }: LoginInfo) {
