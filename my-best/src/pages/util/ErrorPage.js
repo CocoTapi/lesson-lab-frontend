@@ -27,12 +27,13 @@ function ErrorPage(){
     
     return ( 
         <div className={classes.errorComponent}>
-            <div className={classes.imageComponent}>
-
-            </div>
+        <div className={classes.errorContents}>
             <h1>{message}</h1>
-            <p></p>
+            <div className={classes.imageComponent}>
+                <img src='/images/errorImg.png' alt="example" />
+            </div>
         </div>
+    </div>
     )
 }
 
