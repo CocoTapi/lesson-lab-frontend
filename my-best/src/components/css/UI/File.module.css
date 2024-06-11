@@ -10,6 +10,7 @@
     z-index: 1; /* Ensuring it stays below the lifted labels */
     position: relative;
     box-sizing: border-box;
+    margin-bottom: 10rem;
 }
 
 @media (min-width: 640px) {
@@ -22,6 +23,7 @@
 @media (min-width: 1008px) {
     .file {
         border: 5px solid var(--color-primary-700);
+        margin-bottom: 15rem;
     }
 }
 

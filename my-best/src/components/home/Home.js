@@ -8,8 +8,6 @@ function Home() {
     const token = user ? user.token : null;
     const user_id = user ? user.user_id : null;
 
-    console.log("homeToken", token)
-
     return (
         <div className={classes.outerFrame}>
                 <div className={classes.topImageComponent}>

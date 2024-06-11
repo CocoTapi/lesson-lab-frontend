@@ -5,6 +5,7 @@
     border: 2px solid var(--color-primary-700);
     border-radius: 10px;
     background-color: var(--color-grey-100);
+    margin-bottom: 10rem;
     transition: all 0.3s;
 }
 
@@ -163,7 +164,8 @@
 
 @media (min-width: 1008px) {
     .frame {
-        margin: 7rem auto;
+        margin-top: 7rem;
+        margin-bottom: 15rem;
     }
 
     .form {
