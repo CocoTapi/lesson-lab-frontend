@@ -4,7 +4,8 @@ import { API_URL } from "../../App";
 
 function LoginPage() {
     const location = useLocation(); 
-    const prev_location = location.state?.prev_location || {pathname: '/'};
+    // const prev_location = location.state?.prev_location || {pathname: '/'};
+    const prev_location = location.state?.prev_location || '/';
 
     return <AuthForm locationState={prev_location} />
 };
@@ -54,6 +55,8 @@ export async function action ( {request, setUserInfo} ) {
     const expiration = new Date();
     expiration.setHours(expiration.getHours() + 1);
     localStorage.setItem('expiration', expiration.toISOString());
+
+    if (redirectPath === 'playlists') return redirect(`/mypage/${user_id}/playlists`)
 
     return redirect(redirectPath);
 }

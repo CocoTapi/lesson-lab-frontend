@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation } from "react-router-dom";
+import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation, useNavigate } from "react-router-dom";
 import classes from '../css/activities/ActivityForm.module.css';
 import { FaCheck } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
@@ -23,6 +23,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
+    const navigate = useNavigate();
 
     const [typedTags, setTypedTags] = useState('');
     const [matchedTags, setMatchedTags] = useState([]);
@@ -76,14 +77,17 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
         setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
     };
 
+    const handleNavigate = () => {
+        navigate('/auth?mode=login', { state: { prev_location: '/activities/new'}});
+
+    }
+
     return (
         <div className={classes.frame}>
         {!token && 
             <div className={classes.login}>
                 <h1>Please login first!</h1>
-                <Link to='/auth?mode=login' >
-                    <ButtonM>Login</ButtonM>
-                </Link>
+                <ButtonM onClick={handleNavigate}>Login</ButtonM>
             </div>  
         }
         {token && 

@@ -1,12 +1,34 @@
 import ButtonS from '../UI/ButtonS';
 import classes from '../css/home/home.module.css';
-import { Link, useRouteLoaderData} from 'react-router-dom';
+import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
 
 
 function Home() {
     const user = useRouteLoaderData('root');
     const token = user ? user.token : null;
     const user_id = user ? user.user_id : null;
+    const navigate = useNavigate();
+
+    const handleNavigate = (path) => {
+        if (path === 'playlist') {
+            if(user_id) navigate(`/mypage/${user_id}/playlists`);
+
+            navigate("/auth?mode=login", {
+                state: {
+                    prev_location: 'playlists'
+                }
+            })
+        } else if (path === 'add activity') {
+            if(user_id) navigate("/activities/new")
+
+            navigate("/auth?mode=login", {
+                state: {
+                    prev_location: '/activities/new'
+                }
+            })
+        }
+       
+    }
 
     return (
         <div className={classes.outerFrame}>
@@ -48,9 +70,9 @@ function Home() {
                             while reducing your workload. 
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
-                            <Link to={token ? `/mypage/${user_id}/playlists` : "/auth?mode=login"}  >
-                                <ButtonS className={classes.menuBoxButton} colorScheme='primary'>Create Now</ButtonS>
-                            </Link>
+                            {/* <Link to={token ? `/mypage/${user_id}/playlists` : "/auth?mode=login"}  > */}
+                                <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>Create Now</ButtonS>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>
@@ -63,9 +85,7 @@ function Home() {
                             for more learners everywhere.
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
-                            <Link to={token ? "/activities/new" : "/auth?mode=login"}>
-                                <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder'>Add Activity</ButtonS>
-                            </Link>
+                            <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder' onClick={() => handleNavigate('add activity')} >Add Activity</ButtonS>
                         </div>
                     </div>
                 </div>

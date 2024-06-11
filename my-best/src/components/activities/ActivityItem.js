@@ -11,15 +11,11 @@ import PlaylistSelection from "./PlaylistSelection";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
-    let token;
-    let user_id;
-    if (user) {
-        token = user.token;
-        user_id = user.user_id;
-    }
+    const token = user ? user.token : null;
+    const user_id = user ? user.user_id : null;
     const submit = useSubmit();
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation().pathname;
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
 
     const handleAddFavorite = (is_favorited) => { 
