@@ -70,9 +70,7 @@ function Home() {
                             while reducing your workload. 
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
-                            {/* <Link to={token ? `/mypage/${user_id}/playlists` : "/auth?mode=login"}  > */}
-                                <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>Create Now</ButtonS>
-                            {/* </Link> */}
+                            <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>Create Now</ButtonS>
                         </div>
                     </div>
                 </div>

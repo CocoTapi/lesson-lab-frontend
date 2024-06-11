@@ -30,7 +30,6 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const [chosenTags, setChosenTags] = useState([]);
 
    const prev_location = locationState? locationState.pathname : '/activities';
-    //TODO: delete button
 
     let defaultLinks = '';
     if(activity && activity.links !== "null") defaultLinks = activity.links;
