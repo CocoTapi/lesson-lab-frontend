@@ -1,4 +1,4 @@
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import classes from './ErrorPage.module.css';
 import ButtonM from "../../components/UI/ButtonM";
 
@@ -32,6 +32,9 @@ function ErrorPage(){
             <div className={classes.imageComponent}>
                 <img src='/images/errorImg.png' alt="example" />
             </div>
+            <Link to='/'>
+              <ButtonM>Back to Home</ButtonM>
+            </Link>
         </div>
     </div>
     )

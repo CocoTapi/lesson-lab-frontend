@@ -2,6 +2,7 @@
     width:100%;
     max-width: 1440px;
     margin: 0 auto;
+    margin-bottom: 7rem;
 }
  
 .contents {
@@ -211,7 +212,7 @@ a {
     }
     
     .detailCard h1 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         padding: 1rem 1.3rem 1rem;
     }
     

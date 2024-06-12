@@ -3,14 +3,15 @@ import { GoHeart, GoHeartFill, GoBookmark } from "react-icons/go";
 import classes from '../css/activities/SummaryCard.module.css';
 
 function SummaryCard({ activity, link }) {
-   
+   //TODO: add image selection
+
     return (
         <Link to={link}>
             <div className={classes.summaryCard}>
                 <div className={classes.summaryCardContents}>
                     <div className={classes.summaryCardDuration}>Duration: {activity.duration} min</div>
                     <div className={classes.summaryCardImage}>
-                        <img src='/images/small/1.png' alt="example" />
+                        <img src={`/images/small/${activity.user_id}.png`} alt="example" />
                     </div>
                     <div className={classes.summaryCardDetails}>
                         <h2>{activity.title}</h2>

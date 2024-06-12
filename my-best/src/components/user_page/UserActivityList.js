@@ -13,7 +13,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
 
 
     const image = (
-        <img src='/images/accordionSmall/1.png' alt="example" style={{ borderRadius: '10px' }}/>
+        <img src={`/images/accordionSmall/${activity.user_id}.png`} alt="example" style={{ borderRadius: '10px' }}/>
     )
 
     const headerContents = (

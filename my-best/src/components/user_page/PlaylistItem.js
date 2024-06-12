@@ -31,6 +31,8 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    //console.log(playlist)
+
     return (
         <div className={classes.accordionComponent}>
             <Accordion 
@@ -85,7 +87,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                                     }
                                     topImage={ 
                                         <div className={classes.customList}>
-                                            <img src='/images/accordionSmall/1.png' alt="example" style={{ borderRadius: '10px' }}/>
+                                            <img src={`/images/accordionSmall/1.png`} alt="example" style={{ borderRadius: '10px' }}/>
                                         </div>
                                     }
                                     activityDetail={
