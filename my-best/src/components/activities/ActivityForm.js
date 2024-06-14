@@ -94,7 +94,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                 <div className={classes.left}>
                     <h1>{activity ? 'Edit Activity' : 'Add Activity'}</h1>
                     {data && data.errors &&
-                        <ul>
+                        <ul className={classes.dataError}>
                             {Object.values(data.errors).map((err) => (
                                 <li key={err}>{err}</li>
                             ))}

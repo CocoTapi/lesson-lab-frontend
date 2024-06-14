@@ -28,6 +28,10 @@
     transition: all 0.3s;
 }
 
+.dataError li {
+   color: red; 
+}
+
 .left {
     width: 100%;
 }
@@ -108,7 +112,6 @@
 }
 
 .formSelect:hover {
-    transform: scale(1.1); 
     cursor: pointer;
 }
 
