@@ -82,6 +82,11 @@
     .bottomRight {
         width: 72%;
     }
+
+    .itemCounts {
+        padding-top: 1.5rem;
+        font-size: 1.5rem;
+    }
 }
 
 
