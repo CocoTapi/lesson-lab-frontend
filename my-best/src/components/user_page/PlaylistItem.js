@@ -120,7 +120,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                                                             <Link to={item.links}>
                                                                 {item.links}
                                                             </Link> 
-                                                        : <p>none</p>
+                                                        : 'none'
                                                         }
                                                     </p>
                                                 </div>

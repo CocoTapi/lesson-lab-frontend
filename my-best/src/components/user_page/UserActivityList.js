@@ -64,7 +64,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
                             <Link to={activity.links}>
                                 {activity.links}
                             </Link> 
-                        : <p>none</p>
+                        : "none"
                         }
                     </p>
                 </div>
