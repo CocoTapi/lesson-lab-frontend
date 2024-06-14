@@ -30,7 +30,7 @@ function MyUploads({ data }){
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const navigate = useNavigate();
     const location = useLocation();
-    const [ showFilterButton, setShowFilterButton] = useState(false);
+    const [ smallScreen, setSmallScreen] = useState(false);
     const [selectedTime, setSelectedTime] = useState('');
     const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
     const [selectedTag, setSelectedTag ] = useState('');
@@ -39,9 +39,9 @@ function MyUploads({ data }){
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 1300) {
-                setShowFilterButton(true);
+                setSmallScreen(true);
             } else {
-                setShowFilterButton(false);
+                setSmallScreen(false);
             }
         };
 
@@ -118,9 +118,17 @@ function MyUploads({ data }){
                 <div className={classes.pageTitle}>
                     <h1>My Uploads</h1>
                 </div>
+                <div className={classes.createPlaylistButtonComponent}>
+                    <Link to='../playlists' >
+                        <ButtonM colorScheme="secondary">
+                            <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
+                            <p>Create Playlist</p>
+                        </ButtonM>
+                    </Link>
+                </div>
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
-                    { showFilterButton && 
+                    { smallScreen && 
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
                                 <Tag hash='false'>
@@ -131,6 +139,8 @@ function MyUploads({ data }){
                             </div>
                         </div>
                     }
+                    { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
+
                     {showFilterMenu && (
                         <div style={{ paddingBottom: '0.7rem'}}>
                             <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>
@@ -139,20 +149,12 @@ function MyUploads({ data }){
                 </div>
                 <div className={classes.bottomContents}>
                     <div className={classes.bottomLeft}>
-                        {!showFilterButton &&
+                        {!smallScreen &&
                             <div className={classes.filter}>
                                 <Filter />
                             </div>
                         }
-                       <div className={classes.createPlaylistButtonComponent}>
-                        <Link to='../playlists' >
-                                <ButtonM colorScheme="secondary">
-                                    <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
-                                    <p>Create Playlist</p>
-                                </ButtonM>
-                            </Link>
-                       </div>
-                       <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>
+                    { smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
                     </div>
                     <ul className={classes.bottomRight}>
                         {content}

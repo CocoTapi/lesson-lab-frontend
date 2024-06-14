@@ -13,7 +13,7 @@ function UserFavoritesPage(){
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={data}>
-                    {(loadedData) => <MyFavorites data={loadedData} />}
+                    {(loadedData) => <MyFavorites data={loadedData.userFavorites} />}
                 </Await>
             </Suspense>
         </>

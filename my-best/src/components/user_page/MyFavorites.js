@@ -14,7 +14,7 @@ import { GoHeartFill } from "react-icons/go";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 function MyFavorites({ data }){
-    const userFavorites = data.userFavorites;
+    const userFavorites = data;
     const user = useRouteLoaderData('root');
     let token;
     let user_name;
