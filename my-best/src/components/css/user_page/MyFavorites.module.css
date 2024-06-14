@@ -49,7 +49,7 @@
 
 .createPlaylistButtonComponent {
     display: flex;
-    justify-content: start;
+    justify-content: end;
     margin-bottom: 0.7rem;
 }
 
@@ -75,7 +75,6 @@
     }
 
     .createPlaylistButtonComponent {
-        justify-content: center;
         margin-top: 2rem;
     }
 

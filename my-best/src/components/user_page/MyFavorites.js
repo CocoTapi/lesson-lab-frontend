@@ -114,6 +114,14 @@ function MyFavorites({ data }){
                     <GoHeartFill className={classes.titleIcon} />
                     <h1>Likes</h1>
                 </div>
+                <div className={classes.createPlaylistButtonComponent}>
+                    <Link to='../playlists' >
+                        <ButtonM colorScheme="secondary">
+                            <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
+                            <p>Create Playlist</p>
+                        </ButtonM>
+                    </Link>
+                </div>
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
                     { smallScreen && 
@@ -127,7 +135,7 @@ function MyFavorites({ data }){
                             </div>
                         </div>
                     }
-                                        { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
+                    { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
 
                     {showFilterMenu && (
                         <div style={{ paddingBottom: '0.7rem'}}>
@@ -142,14 +150,6 @@ function MyFavorites({ data }){
                                 <Filter />
                             </div>
                         }
-                       <div className={classes.createPlaylistButtonComponent}>
-                            <Link to='../playlists' >
-                                <ButtonM colorScheme="secondary">
-                                    <h2 className={classes.buttonIcon}><MdOutlineAddToPhotos /></h2>
-                                    <p>Create Playlist</p>
-                                </ButtonM>
-                            </Link>
-                       </div>
                        { smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
                     </div>
                     <ul className={classes.bottomRight}>
