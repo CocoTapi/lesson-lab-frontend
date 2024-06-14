@@ -12,13 +12,18 @@
 
 .sortBar {
     width: 100%;
-    margin-bottom: 0.8rem
+    margin-bottom: 0.8rem;
+}
+
+.filterButtons {
+    margin-top: 0.7rem;
 }
 
 .frame {
     width: 100%; 
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
 }
 
 .activityComponent {
@@ -33,13 +38,14 @@
 
 .list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
     padding: 0;
-    gap: 1.8rem;
+    gap: 1rem;
     transition: all 0.3s; 
  }
  
  .list li {
+    border: 2px solid var(--color-primary-500);
+    border-radius: 10px;
     transition: all 0.3s; 
  }
 
@@ -56,105 +62,22 @@
     font-size: 1.5rem;
  }
 
-/* for filter itself */
-@media (max-width: 1408px) {
-    .box {
-        width: 15.4rem;
-        height: 32.4rem;
-    }
-
-    .contents {
-        width: 80%;
-        margin-left: 2rem;
-    }
-
-    .box h1 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        padding-bottom: 0.2rem;
-    }
-    
-    .radio {
-        margin-bottom: 1.5rem;
-    }
-    
-    .viewButtons {
-        justify-content: center;
-        margin-top: 2rem;
-        gap: 1.6rem;
-        transition: all 0.3s ease; 
-    }
-    
-    .clearButton {
-        padding: 0 0.2rem;  
-        font-size: 0.8rem;
-        
-    }
-}
-
-@media (max-width: 1352px) {
+ @media (min-width: 412px) {
     .list {
-        gap: 0.7rem;
-     }
-}
-
-@media (max-width: 1300px) {
-    .sortBar {
-        width: 100%;
-        margin: auto;
-        margin-bottom: 0.7rem;
-    }
-
-    .frame {
-        display: grid;
-    }
-
-    .list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .filterButtons {
-        display: flex;
-        flex-wrap: wrap;  
-        margin-top: 0.7rem;
-        transition: transform 0.3s ease;
-    }
-
-    .fButton:hover {
-        transform: scale(1.1); 
-        cursor: pointer; 
-    }
-
-}
-
-@media (max-width: 1022px) {
-    .sortBar {
-        width: 100%;
-    }
-}
-
-@media (max-width: 800px) {
-    .contents {
-        width: 90%;
-        margin: auto;
-    }
-
-    .sortBar {
-        width: 100%
-    }
-
-    .list {
-        display: grid;
         grid-template-columns: repeat(2, 1fr); 
-        padding: 0;
-        gap: 1rem;
-        transition: all 0.3s; 
      }
-}
+ }
 
+ @media (min-width: 962px) {
+    .list {
+        grid-template-columns: repeat(3, 1fr); 
+     }
+ }
 
-
-
-
+ @media (min-width: 1300px) {
+    .itemCounts {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+ }

@@ -23,7 +23,7 @@ function ActivityList({ activities }){
     //handle screen sizes change
     useEffect(() => {
         const handleResize = () => {
-            if (window.innerWidth <= 1300) {
+            if (window.innerWidth < 1300) {
                 setShowFilterButton(true);
             } else {
                 setShowFilterButton(false);
