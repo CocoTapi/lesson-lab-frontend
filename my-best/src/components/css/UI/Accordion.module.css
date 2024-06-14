@@ -9,7 +9,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 1rem;
     align-items: center;
 }
 
