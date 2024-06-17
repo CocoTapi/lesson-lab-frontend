@@ -87,7 +87,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                                     }
                                     topImage={ 
                                         <div className={classes.customList}>
-                                            <img src={`/images/accordionSmall/1.png`} alt="example" style={{ borderRadius: '10px' }}/>
+                                            <img src={`/images/accordionSmall/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }}/>
                                         </div>
                                     }
                                     activityDetail={

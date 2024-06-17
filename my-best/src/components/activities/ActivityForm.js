@@ -144,6 +144,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                             <option value="adults">adults</option>
                         </select> 
                     </div>
+
         
                     {/* Summary */}
                     <div className={classes.formGroup}>
