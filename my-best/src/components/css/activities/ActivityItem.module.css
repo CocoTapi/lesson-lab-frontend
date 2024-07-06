@@ -24,6 +24,12 @@
 .list {
     display: grid;
     gap: 0.7rem;
+    max-width: 20rem;
+}
+
+.list li {
+    border: 3px solid var(--color-primary-700);
+    border-radius: 10px;
 }
 
 .detailCard {

@@ -11,7 +11,7 @@ function SummaryCard({ activity, link }) {
                 <div className={classes.summaryCardContents}>
                     <div className={classes.summaryCardDuration}>Duration: {activity.duration} min</div>
                     <div className={classes.summaryCardImage}>
-                        <img src={`/images/large/${activity.image_num}.png`} alt="example" />
+                        <img src={`/images/large/${activity.image_num || 1}.png`} alt="example" />
                     </div>
                     <div className={classes.summaryCardDetails}>
                         <h2>{activity.title}</h2>

@@ -48,6 +48,31 @@
     transition: all 0.3s;
 }
 
+.activityImageFrame {
+    width: 100%;
+}
+
+.activityImageFrame img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.emptyImage {
+    width: 100%;
+    height: 10rem;
+    background-color: var(--color-primary-300);
+    transition: all 0.3s;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyImage:hover {
+    cursor: pointer;
+}
+
+
 .form label,
 .form input,
 .form h2 {

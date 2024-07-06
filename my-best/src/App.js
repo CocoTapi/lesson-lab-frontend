@@ -2,8 +2,13 @@ import './App.css';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from './router/router';
 import UserProvider, { useUserContext } from './pages/util/UserProvider';
+// import env from "dotenv"
 
-export const API_URL = 'http://localhost:8080';
+// env.config();
+
+// export const API_URL = process.env.API_URL;
+// export const API_URL = "http://54.164.115.66:8080"
+export const API_URL = "http://localhost:8080"
 
 function App() {
 

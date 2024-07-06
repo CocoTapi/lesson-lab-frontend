@@ -6,6 +6,7 @@ import ButtonS from "../UI/ButtonS";
 import ButtonM from "../UI/ButtonM";
 import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
+import SelectImage from "./SelectImage";
 
 
 function ActivityForm({ existingTags, method, activity, locationState }) {   
@@ -28,6 +29,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const [typedTags, setTypedTags] = useState('');
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
    const prev_location = locationState? locationState.pathname : '/activities';
 
@@ -81,6 +83,10 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
 
     }
 
+    const handleSelectImage = () => {
+        setShowModal(!showModal);
+    }
+
     return (
         <div className={classes.frame}>
         {!token && 
@@ -101,7 +107,23 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                         </ul>
                     }
                     {data && data.message && <p>{data.message}</p>}
+
+                    {/* select image */}
+                    <div  className={classes.formGroup}>
+                        {data && data.errors.image_num && <span> * </span>} 
+                        {activity ? 
+                            <div className={classes.activityImageFrame}  onClick={handleSelectImage}>
+                                <img src={`/images/large/activity.image_num.png`} alt="activityImage" />
+                            </div>
+                            : <div className={classes.emptyImage} onClick={handleSelectImage}>
+                                Select Image
+                            </div>
+                        }
+                    </div>
                     
+
+                    {showModal && <SelectImage />}
+                        
                     {/* title */}
                     <div className={classes.formGroup}>  
                         {data && data.errors.title && <span> * </span>}                       
@@ -144,6 +166,18 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                             <option value="adults">adults</option>
                         </select> 
                     </div>
+{/* 
+                    <div>
+                        {data && data.errors.age_group && <span> * </span>}
+                        <label>Image Selection</label>
+                        <label><input type="radio" name="image" value="1" />
+                            <div>
+                            <img src={`/images/small/1.png`} alt="example" />
+                            </div>
+                        </label>
+
+                    </div> 
+                    */}
 
         
                     {/* Summary */}
