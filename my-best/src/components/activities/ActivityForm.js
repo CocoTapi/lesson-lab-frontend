@@ -30,6 +30,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(activity?.image_num);
 
    const prev_location = locationState? locationState.pathname : '/activities';
 
@@ -83,8 +84,12 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
 
     }
 
-    const handleSelectImage = () => {
+    const handleOpenImageSelectionModal = () => {
         setShowModal(!showModal);
+    }
+
+    const handleSelectImage = (image) => {
+        setSelectedImage(image)
     }
 
     return (
@@ -111,18 +116,19 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     {/* select image */}
                     <div  className={classes.formGroup}>
                         {data && data.errors.image_num && <span> * </span>} 
-                        {activity ? 
-                            <div className={classes.activityImageFrame}  onClick={handleSelectImage}>
-                                <img src={`/images/large/activity.image_num.png`} alt="activityImage" />
+                        {selectedImage ? 
+                            <div className={classes.activityImageFrame}  onClick={handleOpenImageSelectionModal}>
+                                <img src={`/images/large/${selectedImage}.png`} alt="activityImage" />
+                                <h1 className={classes.changeImageSign}>Change Image</h1>
                             </div>
-                            : <div className={classes.emptyImage} onClick={handleSelectImage}>
+                            : <div className={classes.emptyImage} onClick={handleOpenImageSelectionModal}>
                                 Select Image
                             </div>
                         }
                     </div>
                     
 
-                    {showModal && <SelectImage />}
+                    {showModal && <SelectImage onImageSelect={handleSelectImage} onSelect={handleOpenImageSelectionModal} />}
                         
                     {/* title */}
                     <div className={classes.formGroup}>  
