@@ -1,0 +1,26 @@
+.selectedImageFrame {
+    width: 50%;
+    padding-bottom: 3rem;
+}
+
+.selectedImageFrame img {
+    width: 100%;   
+}
+
+.imageFrame{
+    width: 100%;
+    padding-bottom: 1.5rem;
+}
+
+.imageFrame img {
+    width: 100%;
+}
+
+.imageFrame:hover {
+    cursor: pointer;
+}
+
+.backButton {
+    display: flex;
+    justify-content: end;
+}

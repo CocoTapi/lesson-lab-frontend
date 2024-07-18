@@ -9,7 +9,7 @@ function ActivitiesPage() {
     const [ activities, setActivities ] = useState(initialActivities); 
     const filteredActivities = useActionData();
 
-    console.log("activities:", activities)
+    //console.log("activities:", activities)
 
     //TODO: handle if there is 0 match 
 
@@ -94,7 +94,7 @@ export async function action({ request }){
     }
 
     const resData = await response.json();
-    console.log("filteredActivities: ", resData.activities);
+    //console.log("filteredActivities: ", resData.activities);
     
     const filteredActivities = resData.activities;
     

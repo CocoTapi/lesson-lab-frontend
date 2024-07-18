@@ -12,6 +12,7 @@ export async function action({ request, params }){
     const activityData = {
         user_id: parseInt(data.get('user_id')),
         user_name: data.get('user_name'),
+        image_num: parseInt(data.get('image_num')),
         title: data.get('title').trim(),
         duration: parseInt(data.get('duration')),
         age_group: data.get('age_group'),
@@ -23,7 +24,7 @@ export async function action({ request, params }){
         tags: JSON.parse(data.get('chosenTags'))
     };
 
-    // console.log("activity data: ", activityData);
+    console.log("activity data: ", activityData);
 
     let url = `${API_URL}/activities`;
 

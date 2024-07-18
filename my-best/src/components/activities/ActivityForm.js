@@ -30,7 +30,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const [matchedTags, setMatchedTags] = useState([]);
     const [chosenTags, setChosenTags] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(activity?.image_num);
+    const [selectedImage, setSelectedImage] = useState(activity?.image_num || '');
 
    const prev_location = locationState? locationState.pathname : '/activities';
 
@@ -117,9 +117,11 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     <div  className={classes.formGroup}>
                         {data && data.errors.image_num && <span> * </span>} 
                         {selectedImage ? 
-                            <div className={classes.activityImageFrame}  onClick={handleOpenImageSelectionModal}>
-                                <img src={`/images/large/${selectedImage}.png`} alt="activityImage" />
-                                <h1 className={classes.changeImageSign}>Change Image</h1>
+                            <div>
+                                <div className={classes.activityImageFrame}  onClick={handleOpenImageSelectionModal}>
+                                    <img src={`/images/large/${selectedImage}.png`} alt="activityImage" />
+                                    <h2 className={classes.changeImageSign}>Change Image</h2>
+                                </div>
                             </div>
                             : <div className={classes.emptyImage} onClick={handleOpenImageSelectionModal}>
                                 Select Image
@@ -128,7 +130,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                     </div>
                     
 
-                    {showModal && <SelectImage onImageSelect={handleSelectImage} onSelect={handleOpenImageSelectionModal} />}
+                    {showModal && <SelectImage onImageSelect={handleSelectImage} onShowModal={handleOpenImageSelectionModal} selectedImage={selectedImage} />}
                         
                     {/* title */}
                     <div className={classes.formGroup}>  
@@ -158,7 +160,6 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                             <option value="31">30 mins and more</option>
                         </select> 
                     </div>
-                    
         
                     {/* age group */}
                     <div className={classes.formGroup}>
@@ -172,19 +173,6 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                             <option value="adults">adults</option>
                         </select> 
                     </div>
-{/* 
-                    <div>
-                        {data && data.errors.age_group && <span> * </span>}
-                        <label>Image Selection</label>
-                        <label><input type="radio" name="image" value="1" />
-                            <div>
-                            <img src={`/images/small/1.png`} alt="example" />
-                            </div>
-                        </label>
-
-                    </div> 
-                    */}
-
         
                     {/* Summary */}
                     <div className={classes.formGroup}>
@@ -297,8 +285,9 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
         
                     {/* hidden input */}
                     <input type="hidden" name="chosenTags" value={JSON.stringify(chosenTags)} />
-                    <input type="hidden" name="user_id" value={user_id} />
-                    <input type="hidden" name="user_name" value={user_name} />
+                    <input type="hidden" name="user_id" value={user_id} required/>
+                    <input type="hidden" name="user_name" value={user_name} required/>
+                    <input type="hidden" name="image_num" value={selectedImage} required/>
                     <input type="hidden" name="prev_location" value={prev_location} />
 
                 </div>

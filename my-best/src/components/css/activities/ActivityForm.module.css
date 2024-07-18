@@ -48,14 +48,20 @@
     transition: all 0.3s;
 }
 
-.activityImageFrame {
+/* .activityImageFrame {
     width: 100%;
+    max-width: 812px;
 }
 
 .activityImageFrame img {
     width: 100%;
     border-radius: 15px;
 }
+
+.changeImageSign {
+   display: none;
+}
+*/
 
 .emptyImage {
     width: 100%;
@@ -71,6 +77,12 @@
 .emptyImage:hover {
     cursor: pointer;
 }
+
+.activityImageFrame:hover {
+    .changeImageSign {
+        display: flex;
+    }
+} 
 
 
 .form label,
@@ -168,6 +180,53 @@
     display: flex;
     justify-content: end;
     padding-right: 1rem;
+}
+
+.activityImageFrame {
+    position: relative; /* Needed for absolutely positioning the overlay and the changeImageSign */
+    width: 100%;
+    max-width: 812px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure the overlay does not spill out */
+}
+
+.activityImageFrame img {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+.activityImageFrame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    opacity: 0;
+    transition: opacity 0.2s ease; /* Smooth transition for the overlay */
+    border-radius: 5px; /* Match the image border radius */
+}
+
+.activityImageFrame:hover::before {
+    opacity: 1; /* Show the overlay on hover */
+}
+
+.changeImageSign {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease; /* Smooth transition for opacity */
+}
+
+.activityImageFrame:hover .changeImageSign {
+    opacity: 1; /* Show on hover */
 }
 
 @media (min-width: 640px) {
