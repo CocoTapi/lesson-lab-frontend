@@ -211,22 +211,24 @@
     border-radius: 5px; /* Match the image border radius */
 }
 
-.activityImageFrame:hover::before {
-    opacity: 1; /* Show the overlay on hover */
-}
-
 .changeImageSign {
     position: absolute;
     justify-content: center;
     align-items: center;
     color: white;
     font-weight: 600;
+    font-size: 2rem;
+    background-color: white;
+    padding: 0.5rem;
     opacity: 0; /* Initially hidden */
-    transition: opacity 0.2s ease; /* Smooth transition for opacity */
+}
+
+.activityImageFrame:hover::before {
+    opacity: 1; /* Show the overlay on hover */
 }
 
 .activityImageFrame:hover .changeImageSign {
-    opacity: 1; /* Show on hover */
+    opacity: 1;
 }
 
 @media (min-width: 640px) {
