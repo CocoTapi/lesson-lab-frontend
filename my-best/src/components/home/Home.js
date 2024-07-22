@@ -11,21 +11,27 @@ function Home() {
 
     const handleNavigate = (path) => {
         if (path === 'playlist') {
-            if(user_id) navigate(`/mypage/${user_id}/playlists`);
+            if(user_id){
+                navigate(`/mypage/${user_id}/playlists`);
+            } else {
+                navigate("/auth?mode=login", {
+                    state: {
+                        prev_location: 'playlists'
+                    }
+                })
+            }
 
-            navigate("/auth?mode=login", {
-                state: {
-                    prev_location: 'playlists'
-                }
-            })
+           
         } else if (path === 'add activity') {
-            if(user_id) navigate("/activities/new")
-
-            navigate("/auth?mode=login", {
-                state: {
-                    prev_location: '/activities/new'
-                }
-            })
+            if(user_id){
+                navigate("/activities/new")
+            } else {
+                navigate("/auth?mode=login", {
+                    state: {
+                        prev_location: '/activities/new'
+                    }
+                })
+            }  
         }
        
     }
