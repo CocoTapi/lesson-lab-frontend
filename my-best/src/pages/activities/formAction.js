@@ -24,7 +24,7 @@ export async function action({ request, params }){
         tags: JSON.parse(data.get('chosenTags'))
     };
 
-    console.log("activity data: ", activityData);
+    //console.log("activity data: ", activityData);
 
     let url = `${API_URL}/activities`;
 

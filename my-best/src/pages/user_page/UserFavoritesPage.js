@@ -8,7 +8,7 @@ import MyFavorites from "../../components/user_page/MyFavorites";
 
 function UserFavoritesPage(){
     const { data } = useRouteLoaderData('user-favorites');
-    console.log("data:", data);
+    //console.log("data:", data);
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
@@ -50,7 +50,7 @@ export async function loadUserFavorites(id) {
 
 export async function loader({ request, params }){
     const id = params.user_id;
-    console.log("loader id", id);
+    //console.log("loader id", id);
 
     return defer({
         data: await loadUserFavorites(id),

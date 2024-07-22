@@ -8,8 +8,6 @@ import { FaEdit } from "react-icons/fa";
 function Profile({ data }){
     const userProfile = data.userProfile;
     const user_id = userProfile.user_id; 
-
-    console.log(userProfile);
     
     return (
         <File>

@@ -43,7 +43,7 @@ export async function action({ request, params }){
         password
     };
 
-    console.log("profile data: ", profileData);
+    //console.log("profile data: ", profileData);
 
     let url;
 
@@ -75,7 +75,7 @@ export async function action({ request, params }){
     }
     
     const resData = await response.json();
-    console.log("resData after edit profile", resData);
+    //console.log("resData after edit profile", resData);
 
     const newToken = resData.token;
 
