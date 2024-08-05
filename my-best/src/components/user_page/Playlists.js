@@ -16,14 +16,9 @@ function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
     //const formattedActivityData = data.uformattedActivityData;
     const user = useRouteLoaderData('root');
-    let token;
-    let user_name;
-    let user_id;
-    if(user) {
-        token = user.token;
-        user_name = user.user_name
-        user_id = user.user_id;
-    }
+    const token = user ? user.token : null;
+    const user_id = user ? user.user_id : null;
+    const user_name = user ? user.user_name : null;
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
@@ -120,6 +115,11 @@ function Playlists ({ data }) {
         setShowModal(false)
     }
 
+    const handleSaveOrder = (playlist_id, orderUpdate) => {
+        console.log(playlist_id, orderUpdate);
+        //submit({ user_id, playlist_id, orderUpdate}, { method: "PATCH"});
+    }
+
     let content;
     if (Object.keys(userPlaylists).length === 0) {
         console.log("No playlist")
@@ -134,6 +134,7 @@ function Playlists ({ data }) {
                     onAddActivity={handleAddActivity}
                     playlistButtons='true'
                     activityButtons='true'
+                    saveOrder={handleSaveOrder}
                 />
             </li>
         ))       
@@ -169,42 +170,45 @@ function Playlists ({ data }) {
                 </div>
                 <div className={classes.bottomContents}>
                     <ul className={classes.bottomRight}>
-                        {showPlaylistForm && 
-                        <div className={classes.newPlaylistFormComponent}>
-                            <Accordion 
-                               headerTitle={
-                                    <form className={classes.playlistForm} method="POST" onSubmit={handleSubmitNewPlaylist}>
-                                        <div className={classes.formTitleComponent}>
-                                            {smallDisplay && (
-                                                <div className={classes.star} colorScheme='secondary'>
-                                                    <FaStar />
-                                                </div>
-                                            )}
-                                            <input 
-                                                id='playlist_title' 
-                                                type='text' 
-                                                name='playlist_title'  
-                                                placeholder="Playlist title"
-                                                ref={titleRef}
-                                            />
-                                        </div>
 
-                                        <div className={classes.formButton} >
-                                            <ButtonS colorScheme="primary">
-                                                <p>Create</p>
-                                            </ButtonS>
-                                        </div>
-                                    </form>
-                               } 
-                               topImage={smallDisplay ? '' : (
-                                <div className={classes.star} colorScheme='secondary'>
-                                    <FaStar />
-                                </div>
-                               )
-                            }
-                            />
+                        {/* form to add a new playlist */}
+                        {showPlaylistForm && 
+                            <div className={classes.newPlaylistFormComponent}>
+                                <Accordion 
+                                headerTitle={
+                                        <form className={classes.playlistForm} method="POST" onSubmit={handleSubmitNewPlaylist}>
+                                            <div className={classes.formTitleComponent}>
+                                                {smallDisplay && (
+                                                    <div className={classes.star} colorScheme='secondary'>
+                                                        <FaStar />
+                                                    </div>
+                                                )}
+                                                <input 
+                                                    id='playlist_title' 
+                                                    type='text' 
+                                                    name='playlist_title'  
+                                                    placeholder="Playlist title"
+                                                    ref={titleRef}
+                                                />
+                                            </div>
+
+                                            <div className={classes.formButton} >
+                                                <ButtonS colorScheme="primary">
+                                                    <p>Create</p>
+                                                </ButtonS>
+                                            </div>
+                                        </form>
+                                } 
+                                topImage={smallDisplay ? '' : (
+                                    <div className={classes.star} colorScheme='secondary'>
+                                        <FaStar />
+                                    </div>
+                                )
+                                }
+                                />
                             </div>
                         }
+                        
                         <h2 className={classes.itemCounts}>All Playlists : {sortedPlaylists.length} items</h2>
                         {content}
                     </ul>

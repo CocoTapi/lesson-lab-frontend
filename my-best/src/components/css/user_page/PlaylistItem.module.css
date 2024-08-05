@@ -130,6 +130,12 @@
     font-size: 1.2rem;
 }
 
+.reorderButtonComponent {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1rem;
+}
+
 @media (min-width: 640px) {
     .accordionDetail {
         display: flex;

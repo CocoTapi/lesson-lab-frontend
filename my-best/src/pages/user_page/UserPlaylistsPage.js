@@ -71,7 +71,7 @@ export async function action({ request }) {
     }
 
     //add activities into playlist
-    if(method === 'PATCH' && !formData.get("activity_id")){
+    if(method === 'PATCH' && !formData.get("activity_id" && !formData.get('orderUpdate'))){
         const playlist_id = parseInt(formData.get("playlist_id"));
         const list = formData.get("activity_id_list");
         const activity_id_arr = list.split(',').map(Number);
@@ -80,6 +80,19 @@ export async function action({ request }) {
             user_id,
             playlist_id,
             activity_id_arr
+        }
+
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+    }
+
+     //update activity order
+     if (method === 'PATCH' && !formData.get("activity_id") && !formData.get("activity_id_list")){
+        const playlist_id = parseInt(formData.get("playlist_id"));
+        const orderUpdate = formData.get('orderUpdate');
+
+        bodyContent = {
+            playlist_id,
+            newOrderedActivities: orderUpdate
         }
 
         url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
@@ -95,6 +108,8 @@ export async function action({ request }) {
             playlist_id 
         };
     }
+
+   
 
     //create new playlist
     if (method === 'POST') {

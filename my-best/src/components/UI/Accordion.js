@@ -21,6 +21,7 @@ function Accordion ({
     activityDetail,
     buttonChildren,
     color = 'white',
+    expandable = true
    }){
     const [expanded, setExpanded ] = useState(false);
     const { backgroundColor } = colors[color] || colors.white;
@@ -50,10 +51,13 @@ function Accordion ({
                             {headerContents}
                         </div> 
                     </div>    
-                </div>             
-                <div className={classes.headerRight} onClick={handleClick}>
-                    {expanded ? <FaChevronUp /> : <FaChevronDown /> }
-                </div>
+                </div> 
+                {expandable && 
+                    <div className={classes.headerRight} onClick={handleClick}>
+                        {expanded ? <FaChevronUp /> : <FaChevronDown /> }
+                    </div>
+                }            
+                
             </div>
             {expanded && 
                 <div className={classes.detailFrame}>

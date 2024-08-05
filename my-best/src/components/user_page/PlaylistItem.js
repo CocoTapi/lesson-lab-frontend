@@ -6,10 +6,18 @@ import { FaStar } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import { GoTrash } from "react-icons/go";
 import IconButton from "../UI/IconButton";
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import PlaylistActivityItem from "./PlaylistActivityItem";
+import ButtonS from "../UI/ButtonS";
+import Tag from "../UI/Tag";
 
-function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons}) {
+function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder}) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
+    const [activities, setActivities] = useState(playlist.activities);
+    const [isReorderMode, setIsReorderMode] = useState(false);
+    const [reorderedActivities, setReorderedActivities] = useState([]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -32,6 +40,40 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
     }, []);
 
     //console.log(playlist)
+
+    const handleDragEnd = (event) => {
+        const { active, over } = event;
+    
+        if (active.id !== over.id) {
+          setActivities((items) => {
+            const oldIndex = items.findIndex(item => item.activity_id === active.id);
+            const newIndex = items.findIndex(item => item.activity_id === over.id);
+            const newOrderedItems = arrayMove(items, oldIndex, newIndex)
+
+            //save the new order
+            setReorderedActivities(newOrderedItems);
+
+            return newOrderedItems;
+          });    
+        }
+    };
+
+    const handleSaveOrder = () => {
+        const orderUpdate = reorderedActivities.map((item, index) => ({
+            activity_id: item.activity_id,
+            position: index + 1
+        }));
+        saveOrder(playlist.playlist_id, orderUpdate);
+        setIsReorderMode(false);
+    }
+
+    const handleOrderModeClick = () => {
+        if (isReorderMode) {
+            handleSaveOrder();
+        } else {
+            setIsReorderMode(true);
+        }
+    }
 
     return (
         <div className={classes.accordionComponent}>
@@ -61,84 +103,50 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                     </div>
                 ) : ''
                 }
-                activityDetail={
-                    <ul>
-                        {playlist.activities[0].activity_id && playlist.activities.map((item, i) => (
-                            <li key={i}> 
-                            <div className={classes.activityItemComponent}>
-                                <h1 className={classes.listNum}>
-                                                {i + 1}.
-                                            </h1>
-                                <Accordion 
-                                    headerTitle={<div className={classes.activityTitle}>{item.title}</div>}
-                                    headerContents={
-                                        <div>
-                                            {showSummary && (
-                                                <div className={classes.detailItem}>
-                                                    <p>{item.summary}</p>
-                                                </div>
-                                            )}
-                                            
-                                            <div className={classes.durationGroup} >
-                                                <p className={classes.labelTitle} >Duration :</p>
-                                                <p className={classes.info} >{item.duration} mins</p>
-                                            </div>
-                                        </div>
-                                    }
-                                    topImage={ 
-                                        <div className={classes.customList}>
-                                            <img src={`/images/accordionSmall/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }}/>
-                                        </div>
-                                    }
-                                    activityDetail={
-                                        <div className={classes.accordionDetail}>
-                                            <div className={classes.leftDetailItems}>
-                                                <div className={classes.detailItem}>
-                                                    <p className={classes.labelTitle}>Materials :</p>
-                                                    <p>{item.materials}</p>
-                                                </div>
-                                            </div>
-                                            <div className={classes.rightDetailItems}>
-                                                {!showSummary && (
-                                                    <div className={classes.detailItem}>
-                                                        <p className={classes.labelTitle}>Summary :</p>
-                                                        <p>{item.summary}</p>
-                                                    </div>
-                                                )}
-                                                <div className={classes.detailItem}>
-                                                    <p className={classes.labelTitle}>Objectives :</p>
-                                                    <p>{item.objectives}</p>
-                                                </div>
-                                                <div className={classes.detailItem}>
-                                                    <p className={classes.labelTitle}>Instructions :</p>
-                                                    <p>{item.instructions}</p>
-                                                </div>
-                                                <div className={classes.detailItem}>
-                                                    <p className={classes.labelTitle}>References :</p>
-                                                    <p className={classes.accordionReference}>
-                                                        {item.links ? 
-                                                            <Link to={item.links}>
-                                                                {item.links}
-                                                            </Link> 
-                                                        : 'none'
-                                                        }
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                    buttonChildren={activityButtons ? (
-                                        <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, playlist.playlist_id, playlist.playlist_title)}>
-                                            <GoTrash className={classes.playlistItemTrash} />
-                                        </IconButton>
-                                    ): ''
-                                    }
-                                    
-                                />
-                                </div>  
-                            </li>
-                        ))}  
-                    </ul>
+                activityDetail={ 
+                    <div>
+                        <div className={classes.reorderButtonComponent}>
+                            <ButtonS colorScheme="primaryBorder" onClick={handleOrderModeClick} >
+                                {isReorderMode ? "Save Order" : "Change Order"}
+                            </ButtonS>
+                        </div>
+                        { isReorderMode ? 
+                            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                                <SortableContext items={activities.map(item => item.activity_id)} strategy={verticalListSortingStrategy}>
+                                    <ul>
+                                        {activities[0].activity_id && activities.map((item, i) => (
+                                            <PlaylistActivityItem
+                                                key={item.activity_id}
+                                                item={item}
+                                                i={i}
+                                                showSummary={showSummary}
+                                                activityButtons={activityButtons}
+                                                onRemoveActivity={onRemoveActivity}
+                                                playlist={playlist}
+                                                isReorderMode={isReorderMode}
+                                            />
+                                        ))}
+                                    </ul>
+                                </SortableContext>
+                            </DndContext>
+                            : 
+                            <ul>
+                                {activities[0].activity_id && activities.map((item, i) => (
+                                    <PlaylistActivityItem
+                                        key={item.activity_id}
+                                        item={item}
+                                        i={i}
+                                        showSummary={showSummary}
+                                        activityButtons={activityButtons}
+                                        onRemoveActivity={onRemoveActivity}
+                                        playlist={playlist}
+                                        isReorderMode={isReorderMode}
+                                    />
+                                ))}
+                            </ul>
+                        }
+                    </div>
+                    
                 }
                 buttonChildren={ playlistButtons? (
                     <div className={classes.iconButtonGroup}>
