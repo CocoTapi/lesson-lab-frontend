@@ -117,7 +117,7 @@ function Playlists ({ data }) {
 
     const handleSaveOrder = (playlist_id, orderUpdate) => {
         console.log(playlist_id, orderUpdate);
-        //submit({ user_id, playlist_id, orderUpdate}, { method: "PATCH"});
+        submit({ user_id, playlist_id, orderUpdate}, { method: "PATCH"});
     }
 
     let content;

@@ -59,10 +59,10 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
     };
 
     const handleSaveOrder = () => {
-        const orderUpdate = reorderedActivities.map((item, index) => ({
-            activity_id: item.activity_id,
-            position: index + 1
-        }));
+        const orderUpdate = []
+        reorderedActivities.map((item) => (
+            orderUpdate.push(item.activity_id)
+        ));
         saveOrder(playlist.playlist_id, orderUpdate);
         setIsReorderMode(false);
     }

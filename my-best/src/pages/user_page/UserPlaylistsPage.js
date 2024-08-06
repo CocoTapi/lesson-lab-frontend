@@ -55,24 +55,23 @@ export async function userPlaylistsLoader({ request, params }){
 }
 
 export async function action({ request }) {
+
     const token = getAuthToken();
     const method = request.method;
     const formData = await request.formData()
     const user_id = parseInt(formData.get("user_id"));
+    const playlist_id = parseInt(formData.get("playlist_id")) || null;
 
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
     //delete playlist
     if (method === 'DELETE') {
-        const playlist_id = formData.get("playlist_id");
-        
         bodyContent = { playlist_id };
     }
 
     //add activities into playlist
-    if(method === 'PATCH' && !formData.get("activity_id" && !formData.get('orderUpdate'))){
-        const playlist_id = parseInt(formData.get("playlist_id"));
+    if(method === 'PATCH' && !formData.get("activity_id") && !formData.get('orderUpdate')){
         const list = formData.get("activity_id_list");
         const activity_id_arr = list.split(',').map(Number);
 
@@ -87,8 +86,10 @@ export async function action({ request }) {
 
      //update activity order
      if (method === 'PATCH' && !formData.get("activity_id") && !formData.get("activity_id_list")){
-        const playlist_id = parseInt(formData.get("playlist_id"));
-        const orderUpdate = formData.get('orderUpdate');
+        const list = formData.get('orderUpdate');
+        const orderUpdate = list.split(',').map(Number);
+
+        console.log("orderUpdate:", orderUpdate);
 
         bodyContent = {
             playlist_id,
@@ -100,16 +101,13 @@ export async function action({ request }) {
 
     //remove activity from playlist
     if (method === 'PATCH' && formData.get("activity_id")) {
-        const activity_id = formData.get("activity_id");
-        const playlist_id = formData.get("playlist_id");
+        const activity_id = parseInt(formData.get("activity_id"));
 
         bodyContent = { 
             activity_id,
             playlist_id 
         };
     }
-
-   
 
     //create new playlist
     if (method === 'POST') {
@@ -118,22 +116,22 @@ export async function action({ request }) {
         bodyContent = { playlist_title: playlist_title}; 
     }
  
-    const response = await fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type' : 'application/json',
-            "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(bodyContent)
-    });
+    // const response = await fetch(url, {
+    //     method: method,
+    //     headers: {
+    //         'Content-Type' : 'application/json',
+    //         "Authorization": `Bearer ${token}`
+    //     },
+    //     body: JSON.stringify(bodyContent)
+    // });
 
-    if (response.status === 422) throw new Response("", { status: 422 });
-    if (response.status === 401) throw new Response("", { status: 401 });
+    // if (response.status === 422) throw new Response("", { status: 422 });
+    // if (response.status === 401) throw new Response("", { status: 401 });
 
-    if(!response.ok) {
-        throw json({message: "Could not remove favorite activity."}, { status: 500})
-    }
+    // if(!response.ok) {
+    //     throw json({message: "Could not remove favorite activity."}, { status: 500})
+    // }
 
-    return redirect(`/mypage/${user_id}/playlists`);
+    // return redirect(`/mypage/${user_id}/playlists`);
 }
 
