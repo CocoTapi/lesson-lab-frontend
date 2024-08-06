@@ -65,10 +65,23 @@ export async function action({ request }) {
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
-    //delete playlist
-    if (method === 'DELETE') {
+    //remove activity from playlist
+    if (method === 'DELETE' && formData.get("activity_id")) {
+        const activity_id = parseInt(formData.get("activity_id"));
+        console.log("start deleting", playlist_id, activity_id)
+
+        bodyContent = { 
+            playlist_id,
+            activity_id 
+        };
+
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+    } else if (method === 'DELETE') {
+        //delete playlist
         bodyContent = { playlist_id };
     }
+
+   
 
     //add activities into playlist
     if(method === 'PATCH' && !formData.get("activity_id") && !formData.get('orderUpdate')){
@@ -76,7 +89,6 @@ export async function action({ request }) {
         const activity_id_arr = list.split(',').map(Number);
 
         bodyContent = {
-            user_id,
             playlist_id,
             activity_id_arr
         }
@@ -84,29 +96,19 @@ export async function action({ request }) {
         url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
     }
 
-     //update activity order
+     //update playlist: reorder activity 
      if (method === 'PATCH' && !formData.get("activity_id") && !formData.get("activity_id_list")){
         const list = formData.get('orderUpdate');
         const orderUpdate = list.split(',').map(Number);
 
-        console.log("orderUpdate:", orderUpdate);
+        //console.log("orderUpdate:", orderUpdate);
 
         bodyContent = {
             playlist_id,
-            newOrderedActivities: orderUpdate
+            reorderedActivities: orderUpdate
         }
 
         url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
-    }
-
-    //remove activity from playlist
-    if (method === 'PATCH' && formData.get("activity_id")) {
-        const activity_id = parseInt(formData.get("activity_id"));
-
-        bodyContent = { 
-            activity_id,
-            playlist_id 
-        };
     }
 
     //create new playlist
@@ -116,22 +118,22 @@ export async function action({ request }) {
         bodyContent = { playlist_title: playlist_title}; 
     }
  
-    // const response = await fetch(url, {
-    //     method: method,
-    //     headers: {
-    //         'Content-Type' : 'application/json',
-    //         "Authorization": `Bearer ${token}`
-    //     },
-    //     body: JSON.stringify(bodyContent)
-    // });
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type' : 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(bodyContent)
+    });
 
-    // if (response.status === 422) throw new Response("", { status: 422 });
-    // if (response.status === 401) throw new Response("", { status: 401 });
+    if (response.status === 422) throw new Response("", { status: 422 });
+    if (response.status === 401) throw new Response("", { status: 401 });
 
-    // if(!response.ok) {
-    //     throw json({message: "Could not remove favorite activity."}, { status: 500})
-    // }
+    if(!response.ok) {
+        throw json({message: "Could not remove favorite activity."}, { status: 500})
+    }
 
-    // return redirect(`/mypage/${user_id}/playlists`);
+    return redirect(`/mypage/${user_id}/playlists`);
 }
 

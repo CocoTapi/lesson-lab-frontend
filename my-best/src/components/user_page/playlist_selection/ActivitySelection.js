@@ -6,7 +6,7 @@ import SelectionForm from './SelectionForm';
 import { GoHeartFill } from "react-icons/go";
 import TopButton from '../../UI/TopButton';
 
-function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, onClose }){
+function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, onClose, current_activity_ids }){
     const [selectedList, setSelectedList ] = useState('');
     const [showSelection, setShowSelection ] = useState(false);
 
@@ -48,6 +48,7 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                     playlist_id={playlist_id} 
                     user_id={user_id} 
                     title={title} 
+                    current_activity_ids={current_activity_ids}
                     onSubmitActivities={onSubmitActivities}
                     onClose={onClose}
                     onBacktoSelection={handleBackButton}

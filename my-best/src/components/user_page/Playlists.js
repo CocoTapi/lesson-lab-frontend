@@ -14,7 +14,6 @@ import ActivitySelection from "./playlist_selection/ActivitySelection";
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
-    //const formattedActivityData = data.uformattedActivityData;
     const user = useRouteLoaderData('root');
     const token = user ? user.token : null;
     const user_id = user ? user.user_id : null;
@@ -26,9 +25,10 @@ function Playlists ({ data }) {
     const [ smallDisplay, setSmallDisplay] = useState(false);
     const [ showModal, setShowModal ] = useState(false);
     const initialModalInfo = {
-        new_playlist_id: null, 
-        new_playlist_user_id: null, 
-        new_playlist_title: null
+        selected_playlist_id: null, 
+        selected_playlist_user_id: null, 
+        selected_playlist_title: null,
+        current_playlist_activity_ids: null
     };
     const [ modalInfo, setModalInfo ] = useState(initialModalInfo);
 
@@ -52,10 +52,10 @@ function Playlists ({ data }) {
 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
-        const proceed = window.confirm(`Are you sure you want to remove ${activity_title} in your playlist, ${playlist_title}?`);
+        const proceed = window.confirm(`Are you sure you want to remove ${activity_title} from your playlist, ${playlist_title}?`);
     
         if (proceed) {
-            submit({ activity_id, user_id, playlist_id}, { method: "PATCH" });
+            submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
         }
     };
     
@@ -67,12 +67,12 @@ function Playlists ({ data }) {
         }
     }
 
-    const handleAddActivity = (playlist_id, user_id, playlist_title) => {
-        console.log("clicked")
+    const handleAddActivity = (playlist_id, user_id, playlist_title, activity_ids) => {
         setModalInfo({
-            new_playlist_id: playlist_id,
-            new_playlist_user_id: user_id,
-            new_playlist_title: playlist_title
+            selected_playlist_id: playlist_id,
+            selected_playlist_user_id: user_id,
+            selected_playlist_title: playlist_title,
+            current_playlist_activity_ids: activity_ids
         })
 
         setShowModal(true);
@@ -116,14 +116,13 @@ function Playlists ({ data }) {
     }
 
     const handleSaveOrder = (playlist_id, orderUpdate) => {
-        console.log(playlist_id, orderUpdate);
         submit({ user_id, playlist_id, orderUpdate}, { method: "PATCH"});
     }
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
         console.log("No playlist")
-        content = <p>"You haven't create playlists."</p>
+        content = <p>"You haven't created playlists yet."</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
             <li key={playlist.playlist_id}>
@@ -145,9 +144,10 @@ function Playlists ({ data }) {
         <File> 
             {showModal && 
                 <ActivitySelection 
-                    title={modalInfo && modalInfo.new_playlist_title}
-                    playlist_id={modalInfo && modalInfo.new_playlist_id}
-                    user_id={modalInfo && modalInfo.new_playlist_user_id}
+                    title={modalInfo && modalInfo.selected_playlist_title}
+                    playlist_id={modalInfo && modalInfo.selected_playlist_id}
+                    user_id={modalInfo && modalInfo.selected_playlist_user_id}
+                    current_activity_ids={modalInfo.current_playlist_activity_ids}
                     onSubmitActivities={handleSubmitPlaylistActivities}
                     onClose={handleCancel}
                 />
@@ -156,18 +156,19 @@ function Playlists ({ data }) {
                 <div className={classes.pageTitle}>
                     <h1>Playlists</h1>
                 </div>
+                <div  className={classes.addPlaylistBComponent}>
+                    <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
+                        <TiPlus />
+                        Add Playlist
+                    </ButtonM>
+                </div>
                 <SortBar 
                     onSortChange={setSortOption} 
                     colorScheme="primaryLight"
                     defaultOptionName="--- select an option ---"
                     topRate="false"
                 />
-                <div  className={classes.addPlaylistBComponent}>
-                    <ButtonM onClick={handleShowPlaylist} colorScheme='secondary'>
-                        <TiPlus />
-                        New Playlist
-                    </ButtonM>
-                </div>
+              
                 <div className={classes.bottomContents}>
                     <ul className={classes.bottomRight}>
 
