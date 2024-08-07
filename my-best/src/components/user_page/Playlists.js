@@ -180,7 +180,7 @@ function Playlists ({ data }) {
                                         <form className={classes.playlistForm} method="POST" onSubmit={handleSubmitNewPlaylist}>
                                             <div className={classes.formTitleComponent}>
                                                 {smallDisplay && (
-                                                    <div className={classes.star} colorScheme='secondary'>
+                                                    <div className={classes.star}>
                                                         <FaStar />
                                                     </div>
                                                 )}
@@ -201,7 +201,7 @@ function Playlists ({ data }) {
                                         </form>
                                 } 
                                 topImage={smallDisplay ? '' : (
-                                    <div className={classes.star} colorScheme='secondary'>
+                                    <div className={classes.star} >
                                         <FaStar />
                                     </div>
                                 )

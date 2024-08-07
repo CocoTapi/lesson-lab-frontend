@@ -34,11 +34,14 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                             <button className={classes.modalBigButton}  onClick={() => handleClick('upload')}>
                                 My Uploads
                             </button>
-                        <Link to={`../../../activities`} className={classes.linkButton}>
+                            <button className={classes.modalBigButton}  onClick={() => handleClick('allActivities')}>
+                                All activities
+                            </button>
+                        {/* <Link to={`../../../activities`} className={classes.linkButton}>
                             <button className={classes.modalBigButton}>
                                 All activities
                             </button>
-                       </Link>           
+                       </Link>            */}
                     </div> 
                 </div>
             }

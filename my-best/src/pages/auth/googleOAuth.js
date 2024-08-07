@@ -16,8 +16,9 @@ function navigate(url) {
         `width=${width},height=${height},top=${top},left=${left}`
     );
 
+    // Listener for messages from the popup window
     window.addEventListener('message', handleGoogleAuthEvent, false);
-    
+   
 }
 
 export async function googleOAuthAction() {
@@ -36,10 +37,12 @@ export async function googleOAuthAction() {
         }
 
         const data = await response.json();
-        console.log(data);
-        console.log(data.authUrl);
+        // console.log(data);
+        // console.log(data.authUrl);
 
+        //open the authentication popup
         navigate(data.authUrl);
+
     } catch (error) {
         console.error('Error during Google OAuth login:', error);
     }

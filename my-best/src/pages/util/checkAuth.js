@@ -51,18 +51,21 @@ export function checkAuthLoader() {
 
 
 export function handleGoogleAuthEvent(event) {
-
     console.log("call the function!!!!!");
+
+
     if (event.data && event.data.token) {
-        localStorage.setItem('token', event.data.token); // Store the token
-        //perform all other logic
-        /**
-         * redirect to another page
-         */
+        // Store the token
+        localStorage.setItem('token', event.data.token);
+        console.log("Token stored in local storage:", localStorage.getItem('token'));
+        
+
         console.log("redirect!!!!!!")
+        // redirect to home 
         window.location.href = "/";
     } 
 }
+
 
 export async function getUserInfoFromToken(token){
     const response = await fetch(`${API_URL}/user`, {
