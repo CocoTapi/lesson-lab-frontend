@@ -3,11 +3,13 @@ import ButtonS from "../UI/ButtonS";
 import File from "../UI/File";
 import classes from '../css/user_page/Profile.module.css';
 import { FaEdit } from "react-icons/fa";
-
+import { formatDateString } from "../../pages/util/formatDate";
 
 function Profile({ data }){
     const userProfile = data.userProfile;
     const user_id = userProfile.user_id; 
+
+    let formattedDate = formatDateString(userProfile.last_login)
     
     return (
         <File>
@@ -39,7 +41,7 @@ function Profile({ data }){
                         </div>
                         <div className={classes.item}>
                             <h3>Last Login :</h3>
-                            <p>{userProfile.last_login}</p>
+                            <p>{formattedDate}</p>
                         </div> 
                         <div className={classes.editButton}>
                             <NavLink to={`/mypage/${user_id}/edit`}>
