@@ -78,7 +78,7 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
 
                     <div className={classes.viewButtons}>
                         <button className={classes.clearButton} onClick={handleClearButton}>clear all</button>
-                        <ButtonS onClick={handleViewButton} >view</ButtonS>
+                        {/* <ButtonS onClick={handleViewButton} >view</ButtonS> */}
                     </div>
                 </div>
             </form>

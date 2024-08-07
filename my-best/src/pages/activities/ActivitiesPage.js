@@ -6,7 +6,7 @@ import { getAuthToken } from "../util/checkAuth";
 
 function ActivitiesPage() {
     const { activities: initialActivities } = useLoaderData();
-    const [ activities, setActivities ] = useState(initialActivities); 
+    const [activities, setActivities] = useState(initialActivities);
     const filteredActivities = useActionData();
 
     //console.log("activities:", activities)
@@ -14,7 +14,7 @@ function ActivitiesPage() {
     //TODO: handle if there is 0 match 
 
     useEffect(() => {
-        if (filteredActivities ) {
+        if (filteredActivities) {
             setActivities(filteredActivities);
         } else {
             setActivities(initialActivities)
@@ -46,21 +46,21 @@ export async function loadActivities() {
 
     const response = await fetch(`${API_URL}/activities`, tokenHeaders);
 
-    if(!response.ok) {
-        throw json({message: "Could not fetch activities."}, { status: 500})
+    if (!response.ok) {
+        throw json({ message: "Could not fetch activities." }, { status: 500 })
     }
 
     const resData = await response.json();
     return resData.activities;
 }
 
-export async function loader(){
+export async function loader() {
     return defer({
         activities: await loadActivities()
     })
 }
 
-export async function action({ request }){
+export async function action({ request }) {
     const formData = await request.formData()
     const searchTerm = formData.get('searchTerm').trim();
     const token = getAuthToken();
@@ -92,14 +92,14 @@ export async function action({ request }){
 
     const response = await fetch(`${API_URL}/activities/search`, tokenHeaders);
 
-    if(!response.ok) {
-        throw json({message: "Could not fetch filtered activities."}, { status: 500})
+    if (!response.ok) {
+        throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
     }
 
     const resData = await response.json();
     //console.log("filteredActivities: ", resData.activities);
-    
+
     const filteredActivities = resData.activities;
-    
+
     return filteredActivities;
 }

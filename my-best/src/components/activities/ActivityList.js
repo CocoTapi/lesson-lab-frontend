@@ -8,6 +8,7 @@ import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useSubmit } from 'react-router-dom';
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import ButtonM from '../UI/ButtonM';
 
 
 
@@ -19,6 +20,8 @@ function ActivityList({ activities }){
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
+
+    //console.log(activities);
     
     //handle screen sizes change
     useEffect(() => {
@@ -60,7 +63,15 @@ function ActivityList({ activities }){
    //handle search term 
     const handleSearchTermSubmit = (searchTerm) => {
         console.log("searchTerm:", searchTerm)
-        submit({ searchTerm: searchTerm }, { method: "POST" });
+        if(!searchTerm || searchTerm.length <= 0) {
+           searchTerm = "";
+        }
+        submit({ searchTerm }, { method: "POST" });
+    }
+    
+    //handle return to all activities
+    const handleReturnToAllActivities = () => {
+        window.location.href='/activities'
     }
 
 
@@ -119,6 +130,12 @@ function ActivityList({ activities }){
                         </div>
                     }
                     <ul className={classes.list}>
+                        {sortedActivities.length === 0 &&
+                            <div>
+                                <h2>No results found. Please try a different search term.</h2>
+                                <ButtonM onClick={handleReturnToAllActivities}>Return to all activities</ButtonM>
+                            </div>
+                        }
                         {sortedActivities.map((activity) => (
                             <li key={activity.activity_id}>
                                 <SummaryCard activity={activity} link={`../activities/${activity.activity_id}`}/>

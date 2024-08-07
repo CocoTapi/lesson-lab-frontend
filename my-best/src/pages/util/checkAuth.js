@@ -3,40 +3,43 @@ import { API_URL } from '../../App';
 
 //TODO token stores in local storage or cookies?
 
-export function getTokenDuration() {
+export function testTokenDuration() {
     const storedExpirationDate = localStorage.getItem('expiration');
     const expirationDate = new Date(storedExpirationDate);
     const now = new Date();
-    const duration = expirationDate.getTime() - now.getTime();
-    return duration;
+    const duration =  expirationDate.getTime() - now.getTime();
+    console.log('testing duration for the token', duration)
+    if (duration <= 0) {
+        throw new Error('Token is expired')
+    };
 };
 
 export function getAuthToken() {
     const token = localStorage.getItem('token');
 
-    if (!token) {
+    try {
+        if (!token) throw new Error("Token does not exist in local storage")
+        testTokenDuration();
+    } catch (error) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expiration');
+        // console.error(error);
         return null;
     }
-
-    const tokenDuration = getTokenDuration();
-    if(tokenDuration < 0) {
-        return 'EXPIRED'
-    };
 
     return token;
 };
 
-export async function userLoader () {
+export async function userLoader() {
     const token = getAuthToken();
-    if(token && token !== 'EXPIRED'){
-        const { user_id, user_name } = await getUserInfoFromToken(token);
-        return { token: token, user_id: user_id, user_name: user_name};
-    } else if (token && token === 'EXPIRED') {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expiration');
-        return token;
-    } 
-    return token
+
+    if (!token) {
+        // return redirect("./auth?mode=login");
+        return null;
+    }
+
+    const { user_id, user_name } = await getUserInfoFromToken(token);
+    return { token, user_id, user_name };
 };
 
 export function checkAuthLoader() {
@@ -45,10 +48,9 @@ export function checkAuthLoader() {
     if (!token) {
         return redirect("./auth?mode=login")
     }
-    
-    return null;
-}
 
+    return null;
+};
 
 export function handleGoogleAuthEvent(event) {
     console.log("call the function!!!!!");
@@ -67,11 +69,11 @@ export function handleGoogleAuthEvent(event) {
         localStorage.setItem('expiration', expiration.toISOString());
 
         window.location.href = '/'
-    } 
+    }
 }
 
 
-export async function getUserInfoFromToken(token){
+export async function getUserInfoFromToken(token) {
     const response = await fetch(`${API_URL}/user`, {
         method: 'GET',
         headers: {
@@ -80,8 +82,8 @@ export async function getUserInfoFromToken(token){
         }
     });
 
-    if(!response.ok) {
-        throw json({message: 'Could not fetch user info.'}, {status: 500})
+    if (!response.ok) {
+        throw json({ message: 'Could not fetch user info.' }, { status: 500 })
     }
 
     const resData = await response.json();
@@ -89,6 +91,6 @@ export async function getUserInfoFromToken(token){
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;
-   
+
     return { user_id, user_name };
 }
