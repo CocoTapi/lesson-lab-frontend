@@ -65,39 +65,18 @@ export async function action({ request }) {
     let url = `${API_URL}/user/${user_id}/playlists`
     let bodyContent;
 
-    //remove activity from playlist
-    if (method === 'DELETE' && formData.get("activity_id")) {
-        const activity_id = parseInt(formData.get("activity_id"));
-        console.log("start deleting", playlist_id, activity_id)
+    //----- NOT require refresh after the response -----
 
-        bodyContent = { 
-            playlist_id,
-            activity_id 
-        };
-
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
-    } else if (method === 'DELETE') {
-        //delete playlist
+    //delete playlist 
+    if (method === 'DELETE' &&! formData.get("activity_id") ) {
         bodyContent = { playlist_id };
+
+        await handleRequest(url, method, token, bodyContent, user_id);
+        return redirect(`/mypage/${user_id}/playlists`);
     }
 
-   
-
-    //add activities into playlist
-    if(method === 'PATCH' && !formData.get("activity_id") && !formData.get('orderUpdate')){
-        const list = formData.get("activity_id_list");
-        const activity_id_arr = list.split(',').map(Number);
-
-        bodyContent = {
-            playlist_id,
-            activity_id_arr
-        }
-
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
-    }
-
-     //update playlist: reorder activity 
-     if (method === 'PATCH' && !formData.get("activity_id") && !formData.get("activity_id_list")){
+    //update playlist: reorder activity 
+    if (method === 'PATCH' && !formData.get("activity_id") && !formData.get("activity_id_list")){
         const list = formData.get('orderUpdate');
         const orderUpdate = list.split(',').map(Number);
 
@@ -109,6 +88,9 @@ export async function action({ request }) {
         }
 
         url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+
+        await handleRequest(url, method, token, bodyContent, user_id);
+        return redirect(`/mypage/${user_id}/playlists`);
     }
 
     //create new playlist
@@ -116,12 +98,55 @@ export async function action({ request }) {
         const playlist_title = formData.get("playlist_title");
 
         bodyContent = { playlist_title: playlist_title}; 
+
+        await handleRequest(url, method, token, bodyContent, user_id);
+        return redirect(`/mypage/${user_id}/playlists`);
     }
- 
+
+    
+
+
+    //----- require refresh after the response -----
+
+    //remove activity from playlist 
+    if (method === 'DELETE' && formData.get("activity_id")) {
+        const activity_id = parseInt(formData.get("activity_id"));
+        console.log("start deleting", playlist_id, activity_id)
+
+        bodyContent = { 
+            playlist_id,
+            activity_id 
+        };
+
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+
+        await handleRequest(url, method, token, bodyContent, user_id);
+        return handlePageRefresh(user_id);
+    } 
+
+    //add activities into playlist | require refresh
+    if(method === 'PATCH' && !formData.get("activity_id") && !formData.get('orderUpdate')){
+        const list = formData.get("activity_id_list");
+        const activity_id_arr = list.split(',').map(Number);
+
+        bodyContent = {
+            playlist_id,
+            activity_id_arr
+        }
+
+        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+
+        await handleRequest(url, method, token, bodyContent, user_id);
+        return handlePageRefresh(user_id);    
+    }
+
+}
+
+async function handleRequest(url, method, token, bodyContent, user_id) {
     const response = await fetch(url, {
         method: method,
         headers: {
-            'Content-Type' : 'application/json',
+            'Content-Type': 'application/json',
             "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(bodyContent)
@@ -130,10 +155,14 @@ export async function action({ request }) {
     if (response.status === 422) throw new Response("", { status: 422 });
     if (response.status === 401) throw new Response("", { status: 401 });
 
-    if(!response.ok) {
-        throw json({message: "Could not remove favorite activity."}, { status: 500})
+    if (!response.ok) {
+        throw json({ message: "Could not complete the request." }, { status: 500 });
     }
+}
 
-    return redirect(`/mypage/${user_id}/playlists`);
+function handlePageRefresh(user_id) {
+    const redirectUrl = `/mypage/${user_id}/playlists`;
+    window.location.href = redirectUrl;
+    return null;
 }
 

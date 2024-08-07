@@ -31,9 +31,9 @@ function MyUploads({ data }){
     const navigate = useNavigate();
     const location = useLocation();
     const [ smallScreen, setSmallScreen] = useState(false);
-    const [selectedTime, setSelectedTime] = useState('');
-    const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
-    const [selectedTag, setSelectedTag ] = useState('');
+    const [ selectedDurations, setSelectedDurations ] = useState([]);
+    const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
+    const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
     useEffect(() => {
@@ -63,23 +63,23 @@ function MyUploads({ data }){
         });
     }; 
 
-    const handleTimeChange = (time) => {
-        setSelectedTime(time);
+    const handleDurationChange = (duration) => {
+        setSelectedDurations(duration);
      }
  
      const handleAgeGroupChange = (ageGroup) => {
-         setSelectedAgeGroup(ageGroup);
+         setSelectedAgeGroups(ageGroup);
      };
  
      const handleTagChange = (tag) => {
-         setSelectedTag(tag);
+         setSelectedTags(tag);
      }
  
      const handleFilterButton = () => {
          setShowFilterMenu(!showFilterMenu);
      }
  
-     const filteredActivities = getFilteredActivities(userUploads, selectedTime, selectedAgeGroup, selectedTag);
+     const filteredActivities = getFilteredActivities(userUploads, selectedDurations, selectedAgeGroups, selectedTags);
 
      const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
@@ -104,9 +104,9 @@ function MyUploads({ data }){
 
     let countTitle = 'All';
     if(
-        selectedTime.length > 0 || 
-        selectedAgeGroup.length > 0 ||
-        selectedTag.length > 0
+        selectedDurations.length > 0 || 
+        selectedAgeGroups.length > 0 ||
+        selectedTags.length > 0
     ) {
         countTitle = 'Filtered'
     }
@@ -143,7 +143,15 @@ function MyUploads({ data }){
 
                     {showFilterMenu && (
                         <div style={{ paddingBottom: '0.7rem'}}>
-                            <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>
+                            <Filter 
+                                onDurationsChange={handleDurationChange} 
+                                onAgeGroupsChange={handleAgeGroupChange} 
+                                onTagsChange={handleTagChange} 
+                                selectedDurations={selectedDurations}
+                                selectedAgeGroups={selectedAgeGroups}
+                                selectedTags={selectedTags}
+                                onShowFilterMenu={setShowFilterMenu}
+                            />                        
                         </div>
                     )}         
                 </div>
@@ -151,7 +159,15 @@ function MyUploads({ data }){
                     <div className={classes.bottomLeft}>
                         {!smallScreen &&
                             <div className={classes.filter}>
-                                <Filter />
+                                 <Filter 
+                                    onDurationsChange={handleDurationChange} 
+                                    onAgeGroupsChange={handleAgeGroupChange} 
+                                    onTagsChange={handleTagChange} 
+                                    selectedDurations={selectedDurations}
+                                    selectedAgeGroups={selectedAgeGroups}
+                                    selectedTags={selectedTags}
+                                    onShowFilterMenu={setShowFilterMenu}
+                                />
                             </div>
                         }
                     { smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}

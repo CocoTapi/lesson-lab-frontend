@@ -29,7 +29,7 @@
     transition: all 0.3s ease; 
 }
 
-.radio {
+.checkbox {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Makes 2 columns each taking half the space */
     gap: 10px 0px;

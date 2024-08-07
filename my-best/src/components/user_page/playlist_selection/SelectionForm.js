@@ -18,9 +18,9 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     const [ activityList, setActivityList ] = useState([]);
     const [ selectedActivities, setSelectedActivities ] = useState([]);
     const [ sortOption, setSortOption ] = useState('');
-    const [selectedTime, setSelectedTime] = useState('');
-    const [selectedAgeGroup, setSelectedAgeGroup ] = useState('');
-    const [selectedTag, setSelectedTag ] = useState('');
+    const [ selectedDurations, setSelectedDurations ] = useState([]);
+    const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
+    const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
 
     useEffect(() => {
@@ -58,16 +58,16 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     }
 
     //handle filter functions
-    const handleTimeChange = (time) => {
-        setSelectedTime(time);
+    const handleDurationChange = (duration) => {
+        setSelectedDurations(duration);
     }
 
     const handleAgeGroupChange = (ageGroup) => {
-        setSelectedAgeGroup(ageGroup);
+        setSelectedAgeGroups(ageGroup);
     };
 
     const handleTagChange = (tag) => {
-        setSelectedTag(tag);
+        setSelectedTags(tag);
     }
 
     const handleFilterButton = () => {
@@ -77,7 +77,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     // remove existed activities in the playlist
     const availableActivities = activityList.filter(activity => !current_activity_ids.includes(activity.activity_id));
 
-    const filteredActivities = getFilteredActivities(availableActivities, selectedTime, selectedAgeGroup, selectedTag);
+    const filteredActivities = getFilteredActivities(availableActivities, selectedDurations, selectedAgeGroups, selectedTags);
 
     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
@@ -128,7 +128,15 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
             </div>
             {showFilterMenu && (
                 <div>
-                    <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>
+                    <Filter 
+                        onDurationsChange={handleDurationChange} 
+                        onAgeGroupsChange={handleAgeGroupChange} 
+                        onTagsChange={handleTagChange} 
+                        selectedDurations={selectedDurations}
+                        selectedAgeGroups={selectedAgeGroups}
+                        selectedTags={selectedTags}
+                        onShowFilterMenu={setShowFilterMenu}
+                    />                
                 </div>
             )}    
             <h4 className={classes.itemCounts}>{sortedActivities.length} items available</h4>

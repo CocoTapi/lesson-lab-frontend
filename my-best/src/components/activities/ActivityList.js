@@ -14,9 +14,9 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 function ActivityList({ activities }){
     const [ sortOption, setSortOption ] = useState(''); 
     const [ showFilterButton, setShowFilterButton ] = useState(false);
-    const [ selectedTime, setSelectedTime ] = useState('');
-    const [ selectedAgeGroup, setSelectedAgeGroup ] = useState('');
-    const [ selectedTag, setSelectedTag ] = useState('');
+    const [ selectedDurations, setSelectedDurations ] = useState([]);
+    const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
+    const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
     
@@ -45,16 +45,16 @@ function ActivityList({ activities }){
 
 
     //filter functions
-    const handleTimeChange = (time) => {
-       setSelectedTime(time);
+    const handleDurationChange = (duration) => {
+       setSelectedDurations(duration);
     }
 
     const handleAgeGroupChange = (ageGroup) => {
-        setSelectedAgeGroup(ageGroup);
+        setSelectedAgeGroups(ageGroup);
     };
 
     const handleTagChange = (tag) => {
-        setSelectedTag(tag);
+        setSelectedTags(tag);
     }
 
    //handle search term 
@@ -64,15 +64,15 @@ function ActivityList({ activities }){
     }
 
 
-    const filteredActivities = getFilteredActivities(activities, selectedTime, selectedAgeGroup, selectedTag);
+    const filteredActivities = getFilteredActivities(activities, selectedDurations, selectedAgeGroups, selectedTags);
 
     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
 
     let countTitle = 'All';
     if(
-        selectedTime.length > 0 || 
-        selectedAgeGroup.length > 0 ||
-        selectedTag.length > 0
+        selectedDurations.length > 0 || 
+        selectedAgeGroups.length > 0 ||
+        selectedTags.length > 0
     ) {
         countTitle = 'Filtered'
     }
@@ -93,13 +93,29 @@ function ActivityList({ activities }){
                             </div>
                         </div>
                     }
-                    {showFilterMenu && <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>}
+                    {showFilterMenu && 
+                        <Filter 
+                            onDurationsChange={handleDurationChange} 
+                            onAgeGroupsChange={handleAgeGroupChange} 
+                            onTagsChange={handleTagChange} 
+                            selectedDurations={selectedDurations}
+                            selectedAgeGroups={selectedAgeGroups}
+                            selectedTags={selectedTags}
+                            onShowFilterMenu={setShowFilterMenu}
+                        />}
                     <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>
                 </div>
                 <div className={classes.frame}>
                     { !showFilterButton && 
                         <div className={classes.filter}>
-                            <Filter onTimeChange={handleTimeChange} onAgeChange={handleAgeGroupChange} onTagChange={handleTagChange}/>
+                            <Filter 
+                                onDurationsChange={handleDurationChange} 
+                                onAgeGroupsChange={handleAgeGroupChange} 
+                                onTagsChange={handleTagChange}
+                                selectedDurations={selectedDurations}
+                                selectedAgeGroups={selectedAgeGroups}
+                                selectedTags={selectedTags}
+                            />
                         </div>
                     }
                     <ul className={classes.list}>
