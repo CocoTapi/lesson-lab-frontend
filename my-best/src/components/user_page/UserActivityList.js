@@ -30,7 +30,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
             </div>
             <div className={classes.durationGroup}>
                 <p className={classes.labelTitle}>Duration:</p>
-                <p>{activity.duration} mins</p>
+                <p>{activity.duration === 31 ? '30 ~ ' : activity.duration} mins</p>
             </div>
 
         </>

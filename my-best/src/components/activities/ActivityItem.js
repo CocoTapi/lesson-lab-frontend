@@ -107,7 +107,7 @@ function ActivityItem({ activity, activities }) {
                                 <div className={classes.detailLeft}>
                                     <div className={`${classes.detailItem} ${classes.flexItem}`}>
                                         <p className={classes.labelTitle}>Durations :</p>
-                                        <p>{activity.duration} mins</p>
+                                        <p>{activity.duration === 31 ? '30 ~' : activity.duration} mins</p>
                                     </div>
                                     <div className={`${classes.detailItem} ${classes.flexItem}`}>
                                         <p className={classes.labelTitle}>Age group :</p>

@@ -33,7 +33,7 @@ function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveA
                 )}
                 <div className={classes.durationGroup}>
                   <p className={classes.labelTitle}>Duration :</p>
-                  <p className={classes.info}>{item.duration} mins</p>
+                  <p className={classes.info}>{item.duration === 31 ? '30 ~ ' : item.duration} mins</p>
                 </div>
               </div>
             }

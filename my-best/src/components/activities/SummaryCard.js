@@ -9,7 +9,8 @@ function SummaryCard({ activity, link }) {
         <Link to={link}>
             <div className={classes.summaryCard}>
                 <div className={classes.summaryCardContents}>
-                    <div className={classes.summaryCardDuration}>Duration: {activity.duration} min</div>
+                    <div className={classes.summaryCardDuration}>
+                        Duration: {activity.duration === 31 ? '30 ~ ' : activity.duration} min</div>
                     <div className={classes.summaryCardImage}>
                         <img src={`/images/large/${activity.image_num || 1}.png`} alt="example" />
                     </div>
