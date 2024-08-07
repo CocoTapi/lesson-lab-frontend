@@ -12,7 +12,7 @@ function AuthForm({ locationState }) {
     const [isLoading, setLoading] = useState(false);   
     // const prev_location = locationState? locationState.pathname : '/';
     const prev_location = locationState? locationState: '/';
-    console.log(locationState);
+    //console.log(locationState);
 
     const googleLoginHandler = () => {
         setLoading(true);

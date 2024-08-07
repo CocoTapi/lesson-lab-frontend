@@ -64,8 +64,7 @@ function SortBar (
 
     const handleSearchTermSubmit = (event) => {
         event.preventDefault();
-        if(onSearchTermSubmit)
-            onSearchTermSubmit(searchTerm);
+        if(onSearchTermSubmit) onSearchTermSubmit(searchTerm);
     }
 
     return (

@@ -14,8 +14,10 @@ function ActivitiesPage() {
     //TODO: handle if there is 0 match 
 
     useEffect(() => {
-        if (filteredActivities && filteredActivities.length > 0) {
+        if (filteredActivities ) {
             setActivities(filteredActivities);
+        } else {
+            setActivities(initialActivities)
         }
     }, [filteredActivities]);
 
@@ -49,7 +51,6 @@ export async function loadActivities() {
     }
 
     const resData = await response.json();
-    //console.log(resData.activities);
     return resData.activities;
 }
 
@@ -60,13 +61,15 @@ export async function loader(){
 }
 
 export async function action({ request }){
-    const data = await request.formData();
+    const formData = await request.formData()
+    const searchTerm = formData.get('searchTerm').trim();
     const token = getAuthToken();
     let tokenHeaders = null;
 
     const searchTermObj = {
-        searchTerm: data.get('searchTerm').trim()
+        searchTerm
     }
+
 
     if (token) {
         tokenHeaders = {
