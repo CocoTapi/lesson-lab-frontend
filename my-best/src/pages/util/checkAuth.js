@@ -53,16 +53,20 @@ export function checkAuthLoader() {
 export function handleGoogleAuthEvent(event) {
     console.log("call the function!!!!!");
 
+    // if (event.origin !== YOUR_BACKEND_URL) {
+    //     console.warn('Invalid event origin');
+    //     return;
+    // }
 
     if (event.data && event.data.token) {
         // Store the token
         localStorage.setItem('token', event.data.token);
         console.log("Token stored in local storage:", localStorage.getItem('token'));
-        
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+        localStorage.setItem('expiration', expiration.toISOString());
 
-        console.log("redirect!!!!!!")
-        // redirect to home 
-        window.location.href = "/";
+        window.location.href = '/'
     } 
 }
 

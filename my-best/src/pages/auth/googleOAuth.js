@@ -1,5 +1,5 @@
 import { API_URL } from "../../App";
-import { json } from "react-router-dom";
+import { json, redirect } from "react-router-dom";
 import { handleGoogleAuthEvent } from "../util/checkAuth";
 
 
@@ -10,7 +10,13 @@ function navigate(url) {
     const top = (window.innerHeight / 2) - (height / 2);
 
     // Open the authentication popup
-    window.open(
+    // window.open(
+    //     url,
+    //     'AuthWindow',
+    //     `width=${width},height=${height},top=${top},left=${left}`
+    // );
+
+    const authWindow = window.open(
         url,
         'AuthWindow',
         `width=${width},height=${height},top=${top},left=${left}`
@@ -18,7 +24,7 @@ function navigate(url) {
 
     // Listener for messages from the popup window
     window.addEventListener('message', handleGoogleAuthEvent, false);
-   
+
 }
 
 export async function googleOAuthAction() {
