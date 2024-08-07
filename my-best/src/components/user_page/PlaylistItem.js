@@ -12,7 +12,7 @@ import PlaylistActivityItem from "./PlaylistActivityItem";
 import ButtonS from "../UI/ButtonS";
 import Tag from "../UI/Tag";
 
-function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder}) {
+function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder, showChangeOrderButton }) {
     const [ showStarIcon, setshowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
     const [activities, setActivities] = useState(playlist.activities);
@@ -105,11 +105,11 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 activityDetail={ 
                     <div>
-                        <div className={classes.reorderButtonComponent}>
+                        { showChangeOrderButton !== 'false' && <div className={classes.reorderButtonComponent}>
                             <ButtonS colorScheme="primaryBorder" onClick={handleOrderModeClick} >
                                 {isReorderMode ? "Save Order" : "Change Order"}
                             </ButtonS>
-                        </div>
+                        </div>}
                         { isReorderMode ? 
                             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                                 <SortableContext items={activities.map(item => item.activity_id)} strategy={verticalListSortingStrategy}>

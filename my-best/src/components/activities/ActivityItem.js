@@ -72,7 +72,7 @@ function ActivityItem({ activity, activities }) {
 
     return (
         <div className={classes.main}>
-            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} onClose={handleCancel}/>}
+            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} onClose={handleCancel} current_activity_id={activity.activity_id}/>}
             <div className={classes.contents}>
                 <div className={classes.sortBar} >
                     <SortBar />
@@ -143,7 +143,7 @@ function ActivityItem({ activity, activities }) {
                                                 <Link to={activity.links}>
                                                     {activity.links}
                                                 </Link> 
-                                            : <p>none</p>
+                                            : 'none'
                                             }
                                         </p>
                                     </div>

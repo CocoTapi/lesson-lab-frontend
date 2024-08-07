@@ -7,7 +7,7 @@ import ButtonS from "../UI/ButtonS";
 import { useNavigate } from "react-router-dom";
 import TopButton from "../UI/TopButton";
 
-function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
+function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id }){
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState();
     const navigate = useNavigate();
@@ -21,7 +21,6 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
         fetchPlaylistData();
     }, [user_id, token]);
 
-    console.log("userPlaylists", userPlaylists);
 
     const handlePlaylistChange = (event) => {
         setSelectedPlaylist(event.target.value);
@@ -36,12 +35,14 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
         }
     }
 
+    const availablePlaylists = userPlaylists.filter(playlist => !playlist.activity_ids.includes(current_activity_id));
+
     let content;
-    if (Object.keys(userPlaylists).length === 0) {
-        console.log("No playlist")
-        content = <p>You haven't create playlists.</p>
+    if (Object.keys(availablePlaylists).length === 0) {
+        console.log("No playlist available")
+        content = <p>No playlist available.</p>
     } else {
-        content = userPlaylists.map((playlist) => (
+        content = availablePlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>
                 <input
                     type="radio"
@@ -54,6 +55,7 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose }){
                     <PlaylistItem 
                         playlist={playlist}
                         displayPlusButton='false'
+                        showChangeOrderButton='false'
                     />
                 </div>
             </label>
