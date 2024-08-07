@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouteLoaderData, useSubmit, Link, useNavigate, useLocation } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
@@ -17,6 +17,26 @@ function ActivityItem({ activity, activities }) {
     const navigate = useNavigate();
     const location = useLocation().pathname;
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
+    const [showTags, setShowTags] = useState(false);
+
+     //handle screen sizes change
+     useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640) {
+                setShowTags(true);
+            } else {
+                setShowTags(false);
+            }
+        };
+
+        handleResize();
+
+        // Listen for resize events
+        window.addEventListener('resize', handleResize);
+
+        // Clean up
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleAddFavorite = (is_favorited) => { 
         console.log("is_favorited:", is_favorited)
@@ -27,11 +47,11 @@ function ActivityItem({ activity, activities }) {
         }
     }
 
-    const handleDeleteActivity = (title) => {
-        const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
+    // const handleDeleteActivity = (title) => {
+    //     const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
 
-        if (proceed) submit({ user_id }, { method: 'DELETE' });
-    }
+    //     if (proceed) submit({ user_id }, { method: 'DELETE' });
+    // }
 
     const handleAddPlaylist = (id) => {
         if(!token) {
@@ -127,6 +147,13 @@ function ActivityItem({ activity, activities }) {
                                             }
                                         </p>
                                     </div>
+                                    {showTags && 
+                                        <div className={classes.detailItem}>
+                                            {activity.tags.map((tag) => (
+                                            <Tag key={tag}>{tag}</Tag>
+                                            ))}
+                                        </div>
+                                    }
                                 </div>
                             </div>
                             
