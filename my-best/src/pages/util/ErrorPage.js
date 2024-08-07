@@ -27,16 +27,16 @@ function ErrorPage(){
     
     return ( 
         <div className={classes.errorComponent}>
-        <div className={classes.errorContents}>
+          <div className={classes.errorContents}>
             <h1>{message}</h1>
-            <div className={classes.imageComponent}>
-                <img src='/images/errorImg.png' alt="example" />
-            </div>
-            <Link to='/'>
+              <div className={classes.imageComponent}>
+                  <img src='/images/errorImg.png' alt="example" />
+              </div>
+          </div>
+          <Link to='/' className={classes.buttonComponent}>
               <ButtonM>Back to Home</ButtonM>
             </Link>
-        </div>
-    </div>
+      </div>
     )
 }
 
