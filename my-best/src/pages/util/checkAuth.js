@@ -8,7 +8,7 @@ export function testTokenDuration() {
     const expirationDate = new Date(storedExpirationDate);
     const now = new Date();
     const duration =  expirationDate.getTime() - now.getTime();
-    console.log('testing duration for the token', duration)
+    //console.log('testing duration for the token', duration)
     if (duration <= 0) {
         throw new Error('Token is expired')
     };
@@ -53,7 +53,7 @@ export function checkAuthLoader() {
 };
 
 export function handleGoogleAuthEvent(event) {
-    console.log("call the function!!!!!");
+    //console.log("call the function!!!!!");
 
     // if (event.origin !== YOUR_BACKEND_URL) {
     //     console.warn('Invalid event origin');
@@ -63,7 +63,8 @@ export function handleGoogleAuthEvent(event) {
     if (event.data && event.data.token) {
         // Store the token
         localStorage.setItem('token', event.data.token);
-        console.log("Token stored in local storage:", localStorage.getItem('token'));
+        //console.log("Token stored in local storage:", localStorage.getItem('token'));
+        
         const expiration = new Date();
         expiration.setHours(expiration.getHours() + 1);
         localStorage.setItem('expiration', expiration.toISOString());

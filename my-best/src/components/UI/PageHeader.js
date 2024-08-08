@@ -17,7 +17,7 @@ function PageHeader({ title, token, link }){
                 </li>
                 <li>
                     <NavLink
-                        to={token ? "/activities/new" : "../auth?mode=login"}
+                        to={"/activities/new"}
                     >
                         <button className={classes.addButton}>
                             <TiPlus />

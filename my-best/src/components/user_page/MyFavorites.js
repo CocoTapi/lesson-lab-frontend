@@ -76,16 +76,17 @@ function MyFavorites({ data }){
      const handleFilterButton = () => {
          setShowFilterMenu(!showFilterMenu);
      }
- 
-     const filteredActivities = getFilteredActivities(userFavorites, selectedDurations, selectedAgeGroups, selectedTags);
 
-     const sortedActivities = getSortedActivities( sortOption, filteredActivities );
-
+    let filteredActivities = null;
+    let sortedActivities = null;
     let content;
+    
     if (Object.keys(userFavorites).length === 0) {
-        console.log("No content")
-        content = <p>"You haven't add favorites."</p>
+        content = <p>You haven't liked activities.</p>
     } else {
+        filteredActivities = getFilteredActivities(userFavorites, selectedDurations, selectedAgeGroups, selectedTags);
+        sortedActivities = getSortedActivities( sortOption, filteredActivities );
+
         content = sortedActivities.map((activity) => (
             <li key={activity.activity_id}>
                 <UserActivityList 
@@ -135,7 +136,7 @@ function MyFavorites({ data }){
                             </div>
                         </div>
                     }
-                    { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
+                    { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities? sortedActivities.length : 0} items</h2>}
 
                     {showFilterMenu && (
                         <div style={{ paddingBottom: '0.7rem'}}>
@@ -166,7 +167,7 @@ function MyFavorites({ data }){
                                 />
                             </div>
                         }
-                       { smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>}
+                       { smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities? sortedActivities.length : 0} items</h2>}
                     </div>
                     <ul className={classes.bottomRight}>
                         {content}
