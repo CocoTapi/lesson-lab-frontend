@@ -22,6 +22,7 @@ function ProfileForm({ userProfile }) {
 
     const isSubmitting = navigation.state === 'submitting';
 
+    console.log(userProfile);
     //add invalid message styling
     return (
         <File>
@@ -63,26 +64,31 @@ function ProfileForm({ userProfile }) {
                                     <label htmlFor="last_name">Last Name :</label>
                                     <input id='last_name' type='text' name='last_name'  defaultValue={userProfile.last_name} required />
                                 </div>
-                                <div className={classes.item}>
-                                    {data && (data.errors.length || data.errors.simbol || data.errors.num)
-                                        && <span> * </span>
-                                    }
-                                    <label htmlFor="password">Password :</label>
-                                    {!passwordChange && 
-                                        <div className={classes.passwordButtonComponent}>
-                                            <button onClick={passwordCangeHandler} className={classes.passwordButton} >Change Password</button>
+                                {userProfile.hasOwnProperty('password')? '' : 
+                                <>
+                                    <div className={classes.item}>
+                                        {data && (data.errors.length || data.errors.simbol || data.errors.num)
+                                            && <span> * </span>
+                                        }
+                                        <label htmlFor="password">Password :</label>
+                                        {!passwordChange && 
+                                            <div className={classes.passwordButtonComponent}>
+                                                <button onClick={passwordCangeHandler} className={classes.passwordButton} >Change Password</button>
+                                            </div>
+                                        }
+                                        {passwordChange && 
+                                            <input id='password' type='password' name='password' required />
+                                        }
+                                    </div>
+                                    {passwordChange &&
+                                        <div className={classes.item}>
+                                            <label htmlFor="confirmPassword">Confirm password :</label>
+                                            <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
                                         </div>
                                     }
-                                    {passwordChange && 
-                                        <input id='password' type='password' name='password' required />
-                                    }
-                                </div>
-                                {passwordChange &&
-                                    <div className={classes.item}>
-                                        <label htmlFor="confirmPassword">Confirm password :</label>
-                                        <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
-                                    </div>
+                                </>
                                 }
+                               
                             </div>
                             <input type="hidden" name="user_id" value={user_id} /> 
                             <div className={classes.buttons}>
