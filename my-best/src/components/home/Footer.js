@@ -16,7 +16,7 @@ function Footer(){
                         <a href='https://www.google.com/' className={classes.icon} ><FaGoogle /></a>
                     </div>
                     <div>
-                        <a href='www.linkedin.com/in/shiori-yoshida'  className={classes.icon} ><FaLinkedinIn /></a>
+                        <a href='https://www.linkedin.com/'  className={classes.icon} ><FaLinkedinIn /></a>
                     </div>
                     <div>
                         <a href='https://github.com/CocoTapi'  className={classes.icon} ><FaGithub /></a>
@@ -26,7 +26,7 @@ function Footer(){
                 <div className={classes.links}>
                     <Link to='/' className={classes.link}>Home</Link>
                     <Link to='/activities' className={classes.link} >Activities</Link>
-                    <a href='www.linkedin.com/in/shiori-yoshida' className={classes.link}>Contact</a>
+                    <Link to='/activities/new' className={classes.link} >Add Activity</Link>
                 </div>
                 <h3>LessonLab</h3>
                 <p>2024</p>
