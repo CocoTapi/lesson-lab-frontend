@@ -81,7 +81,7 @@
     border: 2px solid var(--color-primary-700) ;
     background-color: white;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center; 
     margin: 0 auto; 
     overflow: hidden; /* Prevent any overflow, just in case */

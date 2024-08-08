@@ -89,7 +89,7 @@
 
 .buttons {
     display: flex;
-    justify-content: end; 
+    justify-content: flex-end; 
     padding-top: 3rem;
     transition: all 0.3s ease;
 }
@@ -107,7 +107,7 @@
 
 .editButton {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-top: 2rem;
     transition: all 0.3s ease;
 }

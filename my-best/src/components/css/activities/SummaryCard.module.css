@@ -18,7 +18,7 @@
     padding: 7% 0;
     display: flex;
     font-size: 0.8rem;
-    justify-content: end;
+    justify-content: flex-end;
     text-decoration: none;
     color: black;
 }

@@ -54,7 +54,7 @@
 
 .addPlaylistBComponent {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding: 0.7rem 0;
     transition: all 0.3s ease;
 }
@@ -87,7 +87,7 @@
 
 .formButton {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     transition: all 0.3s ease;
 }
 
