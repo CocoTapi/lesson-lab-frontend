@@ -98,6 +98,7 @@ function MyUploads({ data }){
                     onClick={handleEditActivity}
                     icon={<FaEdit />}
                     buttonWord='Edit'
+                    deleteButton='true'
                 />
             </li>
         ))       

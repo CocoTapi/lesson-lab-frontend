@@ -1,16 +1,23 @@
 import Accordion from '../UI/Accordion';
 import classes from '../css/user_page/UserActivityList.module.css';
 import { GoHeartFill } from 'react-icons/go';
-import { Link } from 'react-router-dom';
+import { Link, useSubmit } from 'react-router-dom';
 import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
+import { GoTrash } from 'react-icons/go';
 
-function UserActivityList({ activity, onClick, icon, buttonWord }){
+function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='false' }){
+    const submit = useSubmit();
 
     const handleClick = (id, title) => {
         onClick(id, title)
     }
 
+    const handleDeleteActivity = (title, activity_id) => {
+        const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
+
+        if (proceed) submit({ user_id: activity.user_id, activity_id }, { method: 'DELETE' });
+    }
 
     const image = (
         <img src={`/images/accordionSmall/${activity.image_num}.png`} alt="example" style={{ borderRadius: '10px' }}/>
@@ -77,10 +84,19 @@ function UserActivityList({ activity, onClick, icon, buttonWord }){
 
    
     const buttonChildren = (buttonWord ? (
-        <ButtonS onClick={() => handleClick(activity.activity_id, activity.title)} >
-            <p className={classes.buttonIcon}>{icon}</p>
-            <p>{buttonWord}</p>
-        </ButtonS>
+        <div>
+            <ButtonS onClick={() => handleClick(activity.activity_id, activity.title)} >
+                <p className={classes.buttonIcon}>{icon}</p>
+                <p>{buttonWord}</p>
+            </ButtonS>
+        {deleteButton === 'true' &&
+            <ButtonS onClick={() => handleDeleteActivity(activity.title, activity.activity_id)} className={classes.deleteButton} colorScheme='greyBorder'>
+                <GoTrash />
+                <p>Delete</p>
+            </ButtonS>
+        }
+        </div>
+        
     ) : ''
  )
     

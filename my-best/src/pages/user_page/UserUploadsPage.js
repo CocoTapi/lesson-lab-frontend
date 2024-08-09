@@ -63,24 +63,25 @@ export async function action({ request }) {
     const user_id = formData.get("user_id");
     const token = getAuthToken();
 
-    // console.log("request:", formData);
-    // console.log("user_id:", user_id);
-    // console.log("activity_id", activity_id);
-    // console.log("method", method)
+    const bodyComponent = {
+        user_id, activity_id
+    }
 
-    //code here
+    
     const response = await fetch(`${API_URL}/activities/${activity_id}`, {
         method: request.method,
         headers: {
+            'Content-Type' : 'application/json',
             "Authorization": `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify(bodyComponent)
     });
 
     if (response.status === 422) throw new Response("", { status: 422 });
     if (response.status === 401) throw new Response("", { status: 401 });
 
     if(!response.ok) {
-        throw json({message: "Could not remove favorite activity."}, { status: 500})
+        throw json({message: "Could not delete activity."}, { status: 500})
     }
 
     return redirect(`/mypage/${user_id}/uploads`);

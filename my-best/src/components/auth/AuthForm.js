@@ -24,6 +24,7 @@ function AuthForm({ locationState }) {
         <div className={classes.formContainer}>
             <Form method='post' className={classes.form}>
                 <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+                {data && data.message && <h4 className={classes.errorMessages}>{data.message}</h4>}
                 {data && data.errors &&
                     <ul>
                         {Object.values(data.errors).map((err) => (
@@ -31,19 +32,18 @@ function AuthForm({ locationState }) {
                         ))}
                     </ul>
                 }
-                {data && data.message && <p>{data.message}</p>}
                     {!isLogin &&
                         <div className={classes.nameGroup}>
                             <div className={classes.formName}>
-                                {data && data.errors.firstName && <span> * </span>}
                                 <label htmlFor="firstName">
+                                    {data && data.errors.firstName && <span> * </span>}
                                     First Name
                                 </label>
                                 <input id='firstName' type='text' name='firstName' placeholder='First Name' required />
                             </div>
                             <div className={classes.formName}>
-                                {data && data.errors.lastName && <span> * </span>}
                                 <label htmlFor="lastName">
+                                    {data && data.errors.lastName && <span> * </span>}
                                     Last Name 
                                 </label>
                                 <input id='lastName' type='text' name='lastName' placeholder='Last Name' required />
@@ -53,36 +53,49 @@ function AuthForm({ locationState }) {
 
                     {/* e-mail */}
                     <div className={classes.formGroup}>
-                        {data && data.errors.email && <span> * </span>}
-                        <label htmlFor="email">E-mail</label>
+                        <label htmlFor="email">
+                            {data && data.errors.email && <span> * </span>}
+                            E-mail
+                        </label>
                         <input id='email' type='email' name='email' placeholder='E-mail' required />
                     </div>
+                    {/* confirm e-mail */}
                     {!isLogin &&
                         <div className={classes.formGroup}>
-                            <label htmlFor="confirmEmail">Confirm e-mail</label>
+                            <label htmlFor="confirmEmail">
+                                {data && data.errors.confirmEmail && <span> * </span>}
+                                Confirm E-mail
+                            </label>
                             <input id='confirmEmail' type='email' name='confirmEmail' placeholder='E-mail' required />
                         </div>
                     }
                 
                     {/* password */}
                     <div className={classes.formGroup}>
-                        {data && (data.errors.length || data.errors.simbol || data.errors.num)
-                            && <span> * </span>
-                        }
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">
+                            {data && (data.errors.length || data.errors.simbol || data.errors.num)
+                                && <span> * </span>
+                            }
+                            Password
+                        </label>
                         <input id='password' type='password' name='password' placeholder='password' required />
                     </div>
 
-                    {/* Hidden input for redirection path */}
-                    <input type="hidden" name="prev_location" value={prev_location} />
-
+                    {/* confirm password */}
                     {!isLogin &&
                         <div className={classes.formGroup}>
-                            <label htmlFor="confirmPassword">Confirm password</label>
+                            <label htmlFor="confirmPassword">
+                                {data && data.errors.confirmPassword && <span> * </span>}
+                                Confirm Password
+                            </label>
                             <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
                         </div>
                     }
                     <div>
+
+                    {/* Hidden input for redirection path */}
+                    <input type="hidden" name="prev_location" value={prev_location} />
+
                     {isLogin ? (
                         <p>Haven't signed up yet? <Link to='/auth/signup'>Sign up</Link> instead.</p>
                     ) : (

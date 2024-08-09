@@ -112,6 +112,18 @@
     transition: all 0.3s ease;
 }
 
+.errorMessages {
+    display: grid;
+    justify-content: center;
+    color: red;
+    padding-bottom: 1rem;
+}
+
+.errorSpan {
+    color: red;
+    padding-right: 0.5rem;
+}
+
 @media (min-width: 640px) {
     .profileBox {
         border-radius: 10px;

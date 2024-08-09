@@ -116,6 +116,18 @@
     color: red;
 }
 
+.authErrorMessages {
+    color: red;
+    margin: 0;
+}
+
+.authErrors {
+    color: red;
+    padding-bottom: 1rem;
+}
+
+
+
 @media (min-width: 640px) {
     .formContainer {
         border-radius: 20px;
@@ -129,6 +141,7 @@
     .formName {
         width: 47%; 
     }
+
 }
 
 @media (min-width: 1008px) {

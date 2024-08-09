@@ -7,10 +7,9 @@ import File from "../UI/File";
 import SortBar, { getSortedActivities } from "../UI/SortBar";
 import Filter, { getFilteredActivities } from "../UI/Filter";
 import { MdOutlineAddToPhotos } from "react-icons/md";
-import { GoTrash } from "react-icons/go";
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
-import { GoHeartFill } from "react-icons/go";
+import { GoHeartFill, GoTrash } from "react-icons/go";
 import { FaChevronDown } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 

@@ -67,6 +67,10 @@
     padding-bottom: 0.8rem;
 }
 
+.deleteButton {
+    margin-top: 0.5rem;
+}
+
 @media (min-width: 640px) {
     .accordionDetail {
         display: flex;

@@ -7,6 +7,8 @@ import ButtonM from "../UI/ButtonM";
 import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 import SelectImage from "./SelectImage";
+import { GoTrash } from "react-icons/go";
+
 
 
 function ActivityForm({ existingTags, method, activity, locationState }) {   
@@ -20,7 +22,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
         user_id = user.user_id;
     }
     const location = useLocation();
-    const currentPath = location.pathname;
+    //const currentPath = location.pathname;
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';

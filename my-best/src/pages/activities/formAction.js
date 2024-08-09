@@ -5,11 +5,12 @@ import { json, defer, redirect } from "react-router-dom";
 export async function action({ request, params }){
     const data = await request.formData();  
     const redirectPath = data.get('prev_location') || '/activities';
+    const activity_id = parseInt(params.activityId);
 
-    const method = request.method;
+    let method = request.method;
     const token = getAuthToken();
 
-    const activityData = {
+    const bodyComponent = {
         user_id: parseInt(data.get('user_id')),
         user_name: data.get('user_name'),
         image_num: parseInt(data.get('image_num')),
@@ -24,13 +25,11 @@ export async function action({ request, params }){
         tags: JSON.parse(data.get('chosenTags'))
     };
 
-    //console.log("activity data: ", activityData);
 
     let url = `${API_URL}/activities`;
 
     if (method === 'PATCH') {
-        const activityId = parseInt(params.activityId);
-        url = `${API_URL}/activities/${activityId}` 
+        url = `${API_URL}/activities/${activity_id}`;
     }
 
     const response = await fetch(url, {
@@ -39,7 +38,7 @@ export async function action({ request, params }){
             'Content-Type' : 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(activityData)
+        body: JSON.stringify(bodyComponent)
     })
 
     if (response.status === 422 || response.status === 401) {

@@ -18,9 +18,17 @@ export async function action ({ request }) {
     const confirmPassword = data.get('confirmPassword');
 
     if (email !== confirmEmail) {
-        return { errors: ['The email confirmation does not match.']}
+        return { 
+            message: "Edit profile failed due to validation errors.",
+            errors: {
+                confirmEmail: 'The email confirmation does not match.'
+            }};
     } else if (password !== confirmPassword){
-        return { errors: ['The password confirmation does not match.']}
+        return { 
+            message: "Edit profile failed due to validation errors.",
+            errors: {
+                confirmPassword: 'The password confirmation does not match.'
+            }}
     }
 
     const signUpData = {

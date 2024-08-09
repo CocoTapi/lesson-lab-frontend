@@ -22,8 +22,6 @@ function ProfileForm({ userProfile }) {
 
     const isSubmitting = navigation.state === 'submitting';
 
-    console.log(userProfile);
-    //add invalid message styling
     return (
         <File>
             <div className={classes.outerFrame}>
@@ -33,44 +31,53 @@ function ProfileForm({ userProfile }) {
                 <div className={classes.profileBox}>
                     <div className={classes.profileContents}>
                         <Form method='patch'>
+                            {data && data.message && <p className={classes.errorMessages}>{data.message}</p>}
                             {data && data.errors &&
-                                <ul>
+                                <ul className={classes.errorMessages}>
                                     {Object.values(data.errors).map((err) => (
                                         <li key={err}>{err}</li>
                                     ))}
                                 </ul>
                             }
-                            {data && data.message && <p>{data.message}</p>}
                             <div>
                                 <div  className={classes.item}>
-                                    {data && data.errors.user_name && <span> * </span>
-                                        }
-                                    <label htmlFor="user_name">User Name :</label>
+                                    <label htmlFor="user_name">
+                                        {data && data.errors.user_name && <span className={classes.errorSpan}> * </span>}
+                                        User Name :
+                                        </label>
                                     <input id='user_name' type='text' name='user_name'  defaultValue={userProfile.user_name} required />
                                 </div>
                                 <div className={classes.item}>
-                                    {data && data.errors.email && <span> * </span>
-                                    }
-                                    <label htmlFor="email">E-mail :</label>
+                                    <label htmlFor="email">
+                                        {data && data.errors.email && <span className={classes.errorSpan}> * </span>}
+                                        E-mail :
+                                    </label>
                                     <input id='email' type='email' name='email'  defaultValue={userProfile.email} required />
                                 </div>
                                 <div className={classes.item}>
-                                    {data && data.errors.first_name && <span> * </span>}
-                                    <label htmlFor="first_name">First Name :</label>
+                                    <label htmlFor="first_name">
+                                        {data && data.errors.first_name && <span className={classes.errorSpan}> * </span>}
+                                        First Name :
+                                    </label>
                                     <input id='first_name' type='text' name='first_name' defaultValue={userProfile.first_name} required />
                                 </div>
                                 <div className={classes.item}>
-                                    {data && data.errors.last_name && <span> * </span>}
-                                    <label htmlFor="last_name">Last Name :</label>
+                                    <label htmlFor="last_name">
+                                        {data && data.errors.last_name && <span className={classes.errorSpan}> * </span>}
+                                        Last Name :
+                                    </label>
                                     <input id='last_name' type='text' name='last_name'  defaultValue={userProfile.last_name} required />
                                 </div>
                                 {userProfile.hasOwnProperty('password')? '' : 
                                 <>
                                     <div className={classes.item}>
+                                        
+                                        <label htmlFor="password">
                                         {data && (data.errors.length || data.errors.simbol || data.errors.num)
-                                            && <span> * </span>
+                                            && <span className={classes.errorSpan}> * </span>
                                         }
-                                        <label htmlFor="password">Password :</label>
+                                            Password :
+                                        </label>
                                         {!passwordChange && 
                                             <div className={classes.passwordButtonComponent}>
                                                 <button onClick={passwordCangeHandler} className={classes.passwordButton} >Change Password</button>
@@ -82,7 +89,10 @@ function ProfileForm({ userProfile }) {
                                     </div>
                                     {passwordChange &&
                                         <div className={classes.item}>
-                                            <label htmlFor="confirmPassword">Confirm password :</label>
+                                            <label htmlFor="confirmPassword">
+                                                {data && data.errors.confirmPassword && <span className={classes.errorSpan}> * </span>}
+                                                Confirm Password :
+                                            </label>
                                             <input id='confirmPassword' type='password' name='confirmPassword' placeholder='password' required />
                                         </div>
                                     }
@@ -93,7 +103,7 @@ function ProfileForm({ userProfile }) {
                             <input type="hidden" name="user_id" value={user_id} /> 
                             <div className={classes.buttons}>
                                 {isSubmitting && <p>Submitting...</p>}
-                                <ButtonS colorScheme="primaryBorder" disabled={isSubmitting}  >
+                                <ButtonS colorScheme="primary" disabled={isSubmitting}  >
                                     <FaCheck className={classes.submitIcon}/>
                                     Submit
                                 </ButtonS>         
@@ -101,7 +111,7 @@ function ProfileForm({ userProfile }) {
                         </Form>
                         <div>                 
                             <Link to='../' className={classes.editButton}>
-                                <ButtonS>Back</ButtonS>
+                                <ButtonS colorScheme='greyBorder'>Cancel</ButtonS>
                             </Link>
                         </div>
                     </div>

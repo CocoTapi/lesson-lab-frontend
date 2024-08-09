@@ -29,9 +29,20 @@ export async function action({ request, params }){
     const last_name = data.get('last_name').trim();
     const email = data.get('email').trim();
     let password = null;
+    let confirmPassword = null;
 
     if (data.get('password')) {
-        password = data.get('password').trim()
+        password = data.get('password').trim();
+        confirmPassword = data.get('confirmPassword').trim();
+
+        if (password !== confirmPassword) {
+            return { 
+                message: "Edit profile failed due to validation errors.",
+                errors: {
+                    confirmPassword: 'The password confirmation does not match.'
+                }
+            }
+        }
     }
 
     const profileData = {
