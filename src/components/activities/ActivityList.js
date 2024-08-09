@@ -9,6 +9,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { useSubmit } from 'react-router-dom';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ButtonM from '../UI/ButtonM';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -20,6 +21,7 @@ function ActivityList({ activities }){
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
+    const navigate = useNavigate();
     
     //handle screen sizes change
     useEffect(() => {
@@ -68,9 +70,8 @@ function ActivityList({ activities }){
     
     //handle return to all activities
     const handleReturnToAllActivities = () => {
-        window.location.href='/activities'
+        navigate('/activities')    
     }
-
 
     const filteredActivities = getFilteredActivities(activities, selectedDurations, selectedAgeGroups, selectedTags);
 

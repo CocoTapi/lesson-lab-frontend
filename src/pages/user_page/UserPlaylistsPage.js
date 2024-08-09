@@ -1,6 +1,6 @@
 import { json, defer, Await, useRouteLoaderData, redirect, useNavigate, useLocation } from "react-router-dom";
 import { Suspense } from "react";
-import { API_URL } from '../../App';
+import { API_URL, baseUrl } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 
@@ -160,8 +160,9 @@ async function handleRequest(url, method, token, bodyContent, user_id) {
     }
 }
 
+
 function handlePageRefresh(user_id) {
-    const redirectUrl = `/mypage/${user_id}/playlists`;
+    const redirectUrl = `${baseUrl}/full-stack-project-frontend/mypage/${user_id}/playlists`;
     window.location.href = redirectUrl;
     return null;
 }
