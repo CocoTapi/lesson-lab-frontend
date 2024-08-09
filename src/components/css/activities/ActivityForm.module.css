@@ -1,0 +1,271 @@
+.frame {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1142px;
+    border: 2px solid var(--color-primary-700);
+    border-radius: 10px;
+    background-color: var(--color-grey-100);
+    margin-bottom: 10rem;
+    transition: all 0.3s;
+}
+
+.login {
+    display: block;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+.login h1 {
+    padding-bottom: 1.25rem;
+}
+
+.form {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    padding: 2rem 0;
+    padding-bottom: 3rem;
+    transition: all 0.3s;
+}
+
+.dataError li {
+   color: red; 
+}
+
+.left {
+    width: 100%;
+}
+.formGroup {
+    width: 100%;
+    padding-bottom: 1rem;
+}
+
+.form h1 {
+    color: black;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding-bottom: 1.25rem;
+    transition: all 0.3s;
+}
+
+/* .activityImageFrame {
+    width: 100%;
+    max-width: 812px;
+}
+
+.activityImageFrame img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.changeImageSign {
+   display: none;
+}
+*/
+
+.emptyImage {
+    width: 100%;
+    height: 10rem;
+    background-color: var(--color-primary-300);
+    transition: all 0.3s;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyImage:hover {
+    cursor: pointer;
+}
+
+.activityImageFrame:hover {
+    .changeImageSign {
+        display: flex;
+    }
+} 
+
+
+.form label,
+.form input,
+.form h2 {
+    color: black;
+    font-size: 1rem;
+    font-weight: 400;
+    display: block;
+    width: 100%;
+    padding-bottom: 0.5rem;
+}
+
+.form input {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    border: none;
+    height: 2.3rem;
+    margin-bottom: 1.25rem;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.form textarea {
+    width: 95%;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    display: block;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.summary {
+    height: 3rem;
+}
+
+.objectives {
+    height: 4.5rem;
+}
+
+.references {
+    font-size: 0.7rem;
+    height: 1rem;
+}
+
+.instructions {
+    height: 12rem;
+}
+
+.formSelect {
+    width: 11rem;
+    height: 2rem; 
+    line-height: 1rem; 
+    text-align: center;
+    background-color: white; 
+    border: none;
+    cursor: pointer; 
+    font-size: 1rem;
+    font-weight: 400;
+    display: block;
+    margin-left: 5px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.formSelect:hover {
+    cursor: pointer;
+}
+
+.tagInput {
+    width: 100%;
+}
+
+.beforeTag {
+    transition: transform 0.3s ease;
+}
+
+
+.beforeTag:hover,
+.deleteTag:hover {
+    transform: scale(1.1); 
+    cursor: pointer;  
+}
+
+.deleteTag:hover {
+    color: red;
+    transform: scale(1.5)
+}
+
+.left {
+    padding-bottom: 2rem;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.activityImageFrame {
+    position: relative; /* Needed for absolutely positioning the overlay and the changeImageSign */
+    width: 100%;
+    max-width: 812px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure the overlay does not spill out */
+}
+
+.activityImageFrame img {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+.activityImageFrame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    opacity: 0;
+    transition: opacity 0.2s ease; 
+    border-radius: 5px; 
+}
+
+.changeImageSign {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    font-size: 2rem;
+    background-color: white;
+    padding: 0.5rem;
+    opacity: 0; /* Initially hidden */
+}
+
+.activityImageFrame:hover::before {
+    opacity: 1; /* Show the overlay on hover */
+}
+
+.activityImageFrame:hover .changeImageSign {
+    opacity: 1;
+}
+
+@media (min-width: 640px) {
+    .frame {
+        border-radius: 20px;
+    }
+
+    .form h1 {
+        font-size: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .form textarea {
+        width: 85%;
+    }
+
+    .tagInput {
+        width: 40%;
+    }
+
+}
+
+@media (min-width: 1008px) {
+    .frame {
+        margin-top: 7rem;
+        margin-bottom: 15rem;
+    }
+
+    .form {
+        width: 85%;
+    }
+
+    .right {
+        padding-right: 0;
+    }
+ 
+}
+
+
+

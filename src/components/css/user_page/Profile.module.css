@@ -1,0 +1,110 @@
+.outerFrame {
+    width: 95%;
+    max-width: 1216px;
+    margin: 1.5rem auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.pageTitle {
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.pageTitle h1 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.profileBox {
+    background-color: white;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.profileContents {
+    width: 90%;
+    margin: 2rem auto;
+    transition: all 0.3s ease;
+}
+
+.item {
+   width: 100%;
+   display: block;
+   padding-bottom: 1rem;
+   transition: all 0.3s ease;
+}
+
+
+.item h3 {
+    font-size: 1rem;
+    padding-bottom: 0.3rem;
+    margin: 0;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.item p {
+    margin: 0;
+    padding-bottom: 0.45rem;
+}
+
+
+.editButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 2rem;  
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+    .profileBox {
+        border-radius: 10px;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .profileContents {
+        display: grid;
+        margin: 4rem auto;
+    }
+
+    .item {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .item h3 {
+        width: 25%;
+        text-align: right;
+    }
+
+    .item p {
+        width: 37%;
+    }
+    
+    .editButton {
+        padding-top: 3rem 0;   
+    }
+}
+
+@media (min-width: 1007px) {
+    .pageTitle h1 {
+        padding-bottom: 2rem;
+    }
+
+    .item h3, .item p {
+        font-size: 1.25rem;
+    }
+
+}

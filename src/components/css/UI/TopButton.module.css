@@ -1,0 +1,42 @@
+.button {
+    height: 2.45rem;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid;
+    padding: 0 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    display: inline-flex;
+    transition: transform 0.3s; 
+    font-size: 1.03rem;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+.buttonIcon {
+    display: flex;
+    text-align: center;
+    padding-right: 0;
+    margin-right: 0.1rem
+}
+
+.button:hover,
+.button:active {
+    transform: scale(1.1);
+    cursor: pointer;  
+}
+
+.button:focus {
+    outline: none;
+}
+
+button:disabled,
+button:focus:disabled,
+button:hover:disabled,
+button:active:disabled {
+    background-color: var(--color-grey-100);
+    border-color: var(--color-grey-100);
+    color: var(--color-grey-500);
+    cursor: not-allowed;
+}

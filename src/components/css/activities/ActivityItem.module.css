@@ -1,0 +1,273 @@
+.main {
+    width:100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    margin-bottom: 7rem;
+}
+ 
+.contents {
+    width: 96%;
+    margin: 0 auto;
+}
+
+.sortBar {
+    width: 100%;
+    margin-bottom: 1.8rem;
+}
+
+.frame {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.list {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 20rem;
+}
+
+.list li {
+    border: 3px solid var(--color-primary-700);
+    border-radius: 10px;
+}
+
+.detailCard {
+    max-width: 62rem;
+    height: 100%;
+    border: 3px solid var(--color-primary-700);
+    border-radius: 15px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.detailCardContents {
+    width: 82.5%;
+    margin: 0 auto;
+    padding: 10% 0;
+}
+
+.detailCardImage {
+    width: 100%;
+}
+
+.detailCardImage img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.detailCard h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    padding-top: 1rem;
+}
+
+.detailCardIcons {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+    gap: 1rem;
+}
+
+.detailCardIcons:hover {
+    cursor: pointer;
+}
+
+.detailCardCreatorInfo {
+    font-size: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+}
+
+.creator {
+    display: flex;
+}
+
+.creatorIcon {
+    padding-right: 1.2rem;
+    padding-top: 0.18rem;
+
+}
+
+.detailCardDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    padding-bottom: 5rem;
+}
+
+.detailLeft {
+    width: 25%;
+    padding: 0;
+    margin: 0;
+}
+
+.leftTags {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    padding-top: 1rem;
+}
+
+.detailRight {
+    width: 70%;
+    padding: 0;
+    margin: 0;
+}
+
+.detailItem {
+    padding-bottom: 2rem;
+}
+
+.labelTitle {
+    font-weight: 600;
+    padding-bottom: 0.4rem;
+}
+
+.reference {
+    font-size: 0.7rem;
+}
+
+.backButton {
+    display: flex;
+    justify-content: center;
+}
+
+
+a {
+    text-decoration: none;
+    color: var(--color-primary-700);
+}
+
+@media (max-width: 1378px) {
+    .detailCard {
+        width: 100%;
+        height: 100%;
+        margin-left: 0.7rem;
+    }
+}
+
+@media (max-width: 1378px) {
+    .detailCardContents {
+        width: 86%;
+        margin: 0 auto;
+        padding: 8% 0;
+    }
+
+    .detailCard h1 {
+        font-size: 2rem;
+    }
+    
+    .detailCardIcons {
+        font-size: 1.5rem;
+    }
+    
+    .detailCardCreatorInfo {
+        font-size: 1.2rem;
+        padding-bottom: 1.25rem;
+    }
+    
+    .creatorIcon {
+        padding-right: 1rem;
+    
+    }
+    
+    .detailCardDetails {
+        font-size: 1.2rem;
+        padding-bottom: 5rem;
+    }
+    
+    .leftTags {
+        font-size: 0.8rem;
+        padding-top: 1rem;
+    }
+}
+
+@media (max-width: 1007px) {
+    .sortBar {
+        display: none;
+    }
+
+    .list {
+        display: none;
+    }
+
+    .detailCard {
+        margin: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .contents {
+        width: 100%;
+    }
+
+    .detailCard {
+        border: none;
+    }
+    
+    .detailCardContents {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .detailCardImage img {
+        border-radius: 0;
+    }
+    
+    .detailCard h1 {
+        font-size: 1.5rem;
+        padding: 1rem 1.3rem 1rem;
+    }
+    
+    .detailCardIcons {
+        font-size: 1rem;
+        padding: 0 0 0.7rem 1.3rem;
+    }
+    
+    .detailCardCreatorInfo {
+        font-size: 1rem;
+        padding: 0 1rem 0.7rem 1rem;
+    }
+    
+    .creatorIcon {
+        padding-right: 0.6rem;
+        padding-top: 0.15rem;
+    
+    }
+    
+    .detailCardDetails {
+        display: grid;
+        font-size: 1rem;
+        padding: 1rem;
+        padding-bottom: 3rem;
+    }
+    
+    .detailLeft {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .detailItem {
+        padding-bottom: 1rem;
+    }
+
+    .flexItem {
+        display: flex;
+        gap: 0.8rem;
+        padding-bottom: 0;
+    }
+    
+    .leftTags {
+        display: none;
+    }
+    
+    .detailRight {
+        width: 100%;
+    }
+
+    
+}

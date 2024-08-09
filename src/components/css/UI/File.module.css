@@ -1,0 +1,29 @@
+.file {
+    width: 100%;
+    max-width: 80rem;
+    margin: auto;
+    background-image: linear-gradient(to bottom right, var(--color-primary-700), var(--color-info-400) );
+    border: 5px solid var(--color-primary-700);
+    border-radius: 0 0 1.25rem 1.25rem;
+    display: flex;
+    /* border-top: 0;  */
+    z-index: 1; /* Ensuring it stays below the lifted labels */
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: 10rem;
+}
+
+@media (min-width: 640px) {
+    .file {
+        min-height: 54.6rem;
+        border: 3px solid var(--color-primary-700);
+    }
+}
+
+@media (min-width: 1008px) {
+    .file {
+        border: 5px solid var(--color-primary-700);
+        margin-bottom: 15rem;
+    }
+}
+

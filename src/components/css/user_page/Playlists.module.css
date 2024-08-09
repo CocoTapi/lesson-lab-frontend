@@ -1,0 +1,158 @@
+.outerFrame {
+    width: 95%;
+    max-width: 1216px;
+    margin: 1.5rem auto;
+}
+
+.pageTitle {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.pageTitle h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: white;
+}
+
+.titleIcon {
+    font-size: 1.9rem;
+    color: red;
+    padding-top: 0.4rem;
+    margin: 0;
+}
+
+/* .sortBar {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 0.7rem;
+} */
+
+.filterButtons {
+    display: flex;
+    flex-wrap: wrap;  
+    transition: transform 0.3s ease;
+    margin-top: 0.7rem;
+}
+
+.bottomContents {
+    width: 100%;
+    max-width: 1216px;
+    margin: 0;
+    display: grid;
+}
+
+.bottomLeft {
+    width: 100%;
+    margin: 0;
+}
+
+.bottomRight {
+    width: 100%;
+}
+
+.addPlaylistBComponent {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.7rem 0;
+    transition: all 0.3s ease;
+}
+
+
+.playlistForm {
+    margin-top: auto;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.formTitleComponent {
+    display: flex;
+    gap: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.playlistForm input {
+    padding: 0.4rem 0.3rem;
+    font-size: 1.5rem;
+    font-family: 'DM Sans';
+    font-weight: 600;
+    width: 100%;
+    flex-grow: 1;
+    margin: 0;
+    border: 1px solid var(--color-primary-700);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.formButton {
+    display: flex;
+    justify-content: flex-end;
+    transition: all 0.3s ease;
+}
+
+.itemCounts {
+    color: white;
+    font-size: 1.25rem;
+}
+
+.itemCounts h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.newPlaylistFormComponent {
+    padding-bottom: 0.7rem;
+}
+
+.star {
+    font-size: 2rem;
+    color:  var(--color-info-500);
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .addPlaylistBComponent {
+        justify-content: end;
+        padding-top: 1rem;
+    }
+    
+    .playlistForm {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .playlistForm input {
+        flex: 1;
+        margin: 0 1rem 0 0; /* 1rem gap between input and button */
+        align-items: center;
+    }
+    
+    .formButton {
+        display: flex;
+        align-items: center;
+    }
+
+    .formTitleComponent {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding-bottom: 0;
+    }
+  
+ 
+}
+
+@media (min-width: 1300px) {
+    .bottomContents {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .bottomRight {
+        width: 100%;
+    }
+}

@@ -1,0 +1,78 @@
+.frame {
+  margin: auto;
+    margin-top: 7rem;
+    margin-bottom: 3rem;
+    display: flex;
+    width: 100%;
+    max-width: 1440px;
+}
+  
+.frame a {
+  text-decoration: none;
+  color: black;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 0 1.8rem;
+}
+
+.left {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addButton {
+  font-size: 1.25rem;
+  background-color: var(--color-secondary-500);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  display: inline-flex;
+  transition: transform 0.3s;
+  font-weight: 600;
+  padding: 1rem 2rem;
+  gap: 0.4rem;
+}
+
+.addButton:hover,
+.addButton:active { 
+    transform: scale(1.05); 
+    cursor: pointer;  
+}
+
+.addButton:focus {
+    outline: none;
+}
+
+ul {
+  list-style-type: none; 
+  padding: 0;
+  margin: 0; 
+}
+
+@media (max-width: 640px) {
+  .addButton {
+    display: none;
+  }
+}
+
+
+@media (max-width: 1007px) {
+  .frame {
+    margin-top: 5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .addButton {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+

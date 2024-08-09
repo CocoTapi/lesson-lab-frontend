@@ -1,0 +1,83 @@
+.main {
+    width:100vw;
+    max-width: 1440px;
+    margin: auto;
+    margin-bottom: 10rem;
+}
+ 
+.contents {
+    width: 96%;
+    margin: auto;
+}
+
+.sortBar {
+    width: 100%;
+    margin-bottom: 0.8rem;
+}
+
+.filterButtons {
+    margin-top: 0.7rem;
+}
+
+.frame {
+    width: 100%; 
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.activityComponent {
+    display: grid;
+}
+.itemCounts {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    padding: 0.8rem 0;
+}
+
+.list {
+    display: grid;
+    padding: 0;
+    gap: 1rem;
+    transition: all 0.3s; 
+ }
+ 
+ .list li {
+    border: 2px solid var(--color-primary-500);
+    border-radius: 10px;
+    transition: all 0.3s; 
+ }
+
+ .fButton {
+    transition: transform 0.3s; 
+}
+
+ .fIcon {
+    margin-top: 2px;
+ }
+
+ .closeIcon {
+    margin-top: 2px;
+    font-size: 1.5rem;
+ }
+
+ @media (min-width: 412px) {
+    .list {
+        grid-template-columns: repeat(2, 1fr); 
+     }
+ }
+
+ @media (min-width: 962px) {
+    .list {
+        grid-template-columns: repeat(3, 1fr); 
+     }
+ }
+
+ @media (min-width: 1300px) {
+    .itemCounts {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+ }

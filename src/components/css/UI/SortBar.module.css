@@ -1,0 +1,115 @@
+.bar {
+    height: 4.3rem;
+    width: 100%;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+.bar h1 {
+    font-size: 1rem;
+    padding: 0 1rem;
+    
+}
+
+.formSelect {
+    width: 14rem;
+    height: 2.5rem; /* specific height instead of percentage */
+    line-height: 50px; /* aligning line height with the height for vertical centering */
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;   
+    border: 2px solid var(--color-primary-900); /* Optional: Adds a border that might make it look more button-like */
+    padding: 0 0.9rem; /* Padding for better text visibility */
+    cursor: pointer; 
+    box-sizing: border-box; 
+}
+
+.right {
+   margin-left: auto;
+}
+
+.inputFrame {
+    display: flex;
+    align-items: center;
+    width: 18rem;
+    height: 2.5rem;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid var(--color-primary-900);
+    overflow: hidden;
+    padding: 0 0.6rem;
+    font-size: inherit;
+    box-sizing: border-box; 
+    margin-right: 1rem;
+}
+
+.buttonIcon {
+    display: flex;
+    text-align: center;
+    padding-right: 0;
+    margin-right: 0.1rem
+}
+
+
+@media (max-width: 676px) {
+    .bar {
+        height: 3rem;
+    }
+
+    .sortIcon {
+        margin-left: 1.5rem;
+        margin-right: 1rem;
+    }
+    
+    .bar h1 {
+        font-size: 1rem;
+        padding: 0 1rem;
+        
+    }
+    
+    .formSelect {
+        width: 14rem;
+        height: 2.5rem; /* specific height instead of percentage */
+        line-height: 50px; /* aligning line height with the height for vertical centering */
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;   
+        border: 2px solid var(--color-primary-900); /* Optional: Adds a border that might make it look more button-like */
+        padding: 0 0.9rem; /* Padding for better text visibility */
+        cursor: pointer; /* Changes the cursor to indicate this is a clickable item */
+    }
+    
+    .right {
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+    
+    .inputFrame {
+        display: flex;
+        align-items: center;
+        width: 18rem;
+        height: 2.5rem;
+        background-color: white;
+        border-radius: 10px;
+        border: 2px solid var(--color-primary-900);
+        overflow: hidden;
+        padding: 0 0.6rem;
+        font-size: inherit;
+      }
+    
+    .buttonIcon {
+        display: flex;
+        text-align: center;
+        padding-right: 0;
+        margin-right: 0.1rem
+    } 
+
+    .sortIcon:hover {
+        transform: scale(1.1); 
+        cursor: pointer; 
+    }
+}

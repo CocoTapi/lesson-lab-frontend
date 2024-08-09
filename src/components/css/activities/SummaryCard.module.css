@@ -1,0 +1,86 @@
+.summaryCard {
+    width: 100%;
+    /* border: 2px solid var(--color-primary-700);
+    border-radius: 10px; */
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.summaryCardContents {
+    width: 88%;
+    color: black;
+    display: grid;
+    margin: 0 auto;
+}
+
+.summaryCardDuration {
+    padding: 7% 0;
+    display: flex;
+    font-size: 0.8rem;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: black;
+}
+
+.summaryCardImage {
+    width: 100%;
+}
+
+.summaryCardImage img {
+   width: 100%;
+   border-radius: 6px; 
+}
+
+.summaryCardDetails {
+    width: 100%;
+    transition: width 0.3s ease;
+}
+
+.summaryCardDetails h2 {
+    font-size: 1rem;
+    padding: 1rem 0;
+    margin: 0;
+}
+
+.summaryCardDetails p {
+    font-size: 0.8rem;
+    padding-bottom: 0.3rem;
+    margin: 0.5rem 0;
+}
+
+.summaryCardIcons {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.8rem;
+}
+
+/* @media (min-width: 800px) {
+    .summaryCard {
+        width: 19.6rem;
+        height: 32.25rem;
+        max-width: 19.6rem;
+        border: 3px solid var(--color-primary-700);
+        border-radius: 20px;
+    }
+    
+    .summaryCardContents {
+        width: 81%;
+    }
+    
+    .summaryCardDetails h2 {
+        font-size: 1.5rem;
+    }
+    
+    .summaryCardDetails p {
+        font-size: 1rem;
+    }
+    
+    .summaryCardIcons {
+        font-size: 1.2rem;
+    }
+} */
+

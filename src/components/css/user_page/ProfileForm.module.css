@@ -1,0 +1,169 @@
+.outerFrame {
+    width: 95%;
+    max-width: 1216px;
+    margin: 1.5rem auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.pageTitle {
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.pageTitle h1 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.profileBox {
+    background-color: white;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.profileContents {
+    width: 90%;
+    margin: 2rem auto;
+    transition: all 0.3s ease;
+}
+
+.item {
+   width: 100%;
+   display: block;
+   padding-bottom: 1rem;
+   transition: all 0.3s ease;
+}
+
+
+.item label {
+    font-size: 1rem;
+    padding-bottom: 0.3rem;
+    margin: 0;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.item input {
+    margin: 0;
+    width: 100%;
+    color: black;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.3rem 0.5rem;
+    border: 2px solid var(--color-primary-700);
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.passwordButtonComponent {
+    width: 100%;
+}
+
+.passwordButton {
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 2px solid var(--color-primary-700);
+    background-color: var(--color-primary-300);
+    transition: transform 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+.passwordButton:hover {
+    transform: scale(1.1);
+    cursor: pointer;  
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end; 
+    padding-top: 3rem;
+    transition: all 0.3s ease;
+}
+
+.submitIcon {
+    padding-top: 0.1rem;
+}
+
+.buttons p {
+    color: var(--color-secondary-600);
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+}
+
+
+.editButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 2rem;
+    transition: all 0.3s ease;
+}
+
+.errorMessages {
+    display: grid;
+    justify-content: center;
+    color: red;
+    padding-bottom: 1rem;
+}
+
+.errorSpan {
+    color: red;
+    padding-right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .profileBox {
+        border-radius: 10px;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .profileContents {
+        display: grid;
+        margin: 4rem auto;
+    }
+
+    .item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .item label {
+        width: 25%;
+        text-align: right;
+    }
+
+    .item input, .passwordButtonComponent {
+        width: 37%;
+    }
+
+    .buttons {
+        padding-top: 4rem;
+    }
+}
+
+@media (min-width: 1007px) {
+    .pageTitle h1 {
+        padding-bottom: 2rem;
+    }
+
+    .item label, .item input {
+        font-size: 1.25rem;
+    }
+
+}

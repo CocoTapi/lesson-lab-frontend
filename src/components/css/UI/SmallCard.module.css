@@ -1,0 +1,10 @@
+.card {
+  width: 19.6rem;
+  height: 32.25rem;
+  border: 3px solid var(--color-primary-700);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+

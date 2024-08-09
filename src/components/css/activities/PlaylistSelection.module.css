@@ -1,0 +1,50 @@
+.topButtonComponent {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+}
+
+.radioContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    align-items: center;
+}
+
+.playlistItem {
+    flex: 1;
+}
+
+
+
+.customRadio:checked {
+    background: blueviolet;
+    border: 2px solid blueviolet
+}
+
+.bottomSubmitButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+}
+
+@media (min-width: 810px) {
+    .modalContents {
+        padding: 0 1rem;
+    }
+
+    .topButtonComponent {
+        padding-bottom: 2rem;
+    }
+
+    .radioContainer {
+        gap: 2rem
+    }
+
+    .customRadio{
+        cursor: pointer;
+        width: 2.5rem;  
+        height: 2.5rem; 
+    }
+}

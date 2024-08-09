@@ -1,0 +1,39 @@
+.selectionContents {
+    display: block;
+}
+
+.doneButtonComponent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottomButtonComponent {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+}
+
+.filterButtons {
+    padding-top: 0.7rem;
+}
+
+.checkContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.activityItemComponent {
+    flex: 1;
+}
+
+.customCheck {
+    width: 2rem;
+}
+
+@media (min-width: 810px) {
+    .selectionContents {
+        display: block;
+        padding: 0 1rem;
+    }
+}

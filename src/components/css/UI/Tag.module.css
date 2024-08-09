@@ -1,0 +1,22 @@
+
+.button {
+    height: 2rem;
+    padding: 0 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    display: inline-flex;
+    transition: transform 0.3s; 
+    font-size: inherit;
+    font-weight: 400;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box; 
+}
+
+
+
+
+

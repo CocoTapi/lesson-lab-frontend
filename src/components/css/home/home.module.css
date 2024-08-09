@@ -1,0 +1,200 @@
+.outerFrame {
+    width: 100%;
+    padding-top: 4rem;
+    display: grid;
+    background-color: #D6DDE1;
+}
+
+.topImageComponent {
+    width: 100%;
+    background-color: #D6DDE1;
+    position: relative;
+}
+
+.topImageComponent {
+    width: 100%;
+    max-width: 1440px;
+    margin: auto;
+}
+
+.topImageComponent img {
+  width: 60%;
+  max-width: 594px;
+  height: 100%;
+  max-height: 895px;
+  float: right;
+  transition: all 0.3s ease;
+}
+
+.titleTextComponent {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 12%;
+    left: 4%;
+    transition: all 0.3s ease;
+}
+
+.titleTextComponent h1 {
+    margin: 0;
+    padding-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.titleTextComponent h1:last-child {
+    padding-bottom: 0;
+}
+
+.titleTextComponent span {
+    background-image: linear-gradient(to right, #0D477F, #9853A0);
+    -webkit-background-clip: text;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.contentsMenuComponent {
+    display: grid;
+    transition: all 0.3s ease;
+}
+
+.menuBox {
+    width: 100%;
+    padding: 3.5rem 0;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.menuBox h3, .menuBox p {
+    padding-bottom: 1rem;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.menuBox:nth-child(2n) {
+    background-color: var(--color-primary-500);
+    transition: all 0.3s ease;
+}
+
+.menuBoxContents {
+    width: 85%;
+    margin: auto;
+}
+
+.menuBoxButtonComponent {
+    display: flex;
+    justify-content: center;
+    padding-top: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 412px) {
+    .titleTextComponent {
+        font-size: 0.9rem;
+    }
+    
+    .titleTextComponent h1 {
+        padding-bottom: 1rem;
+    }
+    
+}
+
+@media (min-width: 500px) {
+    .titleTextComponent {
+        font-size: 1.1rem;
+    }
+    
+    .titleTextComponent h1 {
+        padding-bottom: 1.1rem;
+    }
+    
+}
+
+@media (min-width: 640px) {
+    .titleTextComponent {
+        font-size: 1.3rem;
+    }
+    
+    .titleTextComponent h1 {
+        padding-bottom: 1.3rem;
+    }
+
+    .menuBox h3 {
+        font-size: 1.5rem;
+    }   
+}
+
+@media (min-width: 768px) {
+    .titleTextComponent {
+        font-size: 1.5rem;
+    }
+    
+    .titleTextComponent h1 {
+        padding-bottom: 1.5rem;
+    }
+
+    .topImageComponent img {
+        width: 50%;
+    }
+
+    .menuBox {
+        padding: 4.5rem 0;
+    }
+
+    .menuBox h3 {
+        padding-bottom: 2rem;
+    }
+    
+}
+
+@media (min-width: 1007px) {
+    .outerFrame {
+        padding-top: 5.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .titleTextComponent {
+        font-size: 1.8rem;
+        bottom: 18%;
+    }
+    
+    .titleTextComponent h1 {
+        padding-bottom: 2rem;
+    }
+
+    .menuBox {
+        padding: 4.5rem 0;
+    }
+}
+
+@media (min-width: 1200px) {
+    .contentsMenuComponent {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        background-color: white;
+    }
+
+    .menuBox {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+        width: 23rem;
+        border: 1px solid var(--color-primary-500);
+        border-radius: 10px;
+        margin: 8rem 0;
+    }
+
+    .menuBoxContents {
+        flex: 1; /* Allows the content to grow and take up available space */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menuBoxButtonComponent {
+        padding-top: 1.2rem;
+        margin-top: auto; 
+    }
+}

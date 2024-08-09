@@ -1,0 +1,97 @@
+.outerFrame {
+    width: 95%;
+    max-width: 1216px;
+    margin: 1.5rem auto;
+}
+
+.pageTitle {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.pageTitle h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: white;
+}
+
+.titleIcon {
+    font-size: 1.9rem;
+    color: red;
+    padding-top: 0.4rem;
+    margin: 0;
+}
+
+.sortBar {
+    width: 100%;
+    margin: 0;
+}
+
+.filterButtons {
+    display: flex;
+    flex-wrap: wrap;  
+    transition: transform 0.3s ease;
+    margin-top: 0.7rem;
+}
+
+.bottomContents {
+    width: 100%;
+    max-width: 1216px;
+    margin: 0;
+    display: grid;
+}
+
+.bottomLeft {
+    width: 100%;
+    margin: 0;
+}
+
+.createPlaylistButtonComponent {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.7rem;
+}
+
+.bottomRight {
+    width: 100%;
+}
+
+.itemCounts {
+    color: white;
+    font-size: 1.25rem;
+    padding-top: 1rem;
+}
+
+.fIcon {
+    margin-top: 2px;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 1300px) {
+    .bottomContents {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .bottomLeft {
+        width: 25%;
+    }
+
+    .createPlaylistButtonComponent {
+        margin-top: 2rem;
+    }
+
+    .bottomRight {
+        width: 72%;
+    }
+
+    .itemCounts {
+        padding-top: 1.5rem;
+        font-size: 1.5rem;
+    }
+}
+
+
+
