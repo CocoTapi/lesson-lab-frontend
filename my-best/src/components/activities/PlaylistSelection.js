@@ -4,13 +4,11 @@ import Modal from "../UI/Modal";
 import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
-import { useNavigate } from "react-router-dom";
 import TopButton from "../UI/TopButton";
 
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id }){
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
@@ -39,7 +37,6 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
 
     let content;
     if (Object.keys(availablePlaylists).length === 0) {
-        console.log("No playlist available")
         content = <p>No playlist available.</p>
     } else {
         content = availablePlaylists.map((playlist) => (

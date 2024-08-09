@@ -39,7 +39,6 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
-        console.log("is_favorited:", is_favorited)
         if(!token) {
             navigate('/auth?mode=login', { state: { prev_location: location }});
         } else {

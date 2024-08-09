@@ -22,15 +22,11 @@ function FileUploadForm(){
        
         setFileInputs((prevFileInputs) => {
             const inputs = [...prevFileInputs];
-            console.log(inputs);
             inputs.splice(index, 1);
-            console.log(index, inputs)
 
             return inputs;
         })
     }
-
-    //TODO: fix add and delete file function
 
     return (
         <form>
