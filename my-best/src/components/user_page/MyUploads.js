@@ -10,7 +10,9 @@ import { MdOutlineAddToPhotos } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 
 
 
@@ -131,9 +133,9 @@ function MyUploads({ data }){
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
                                 <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    <MdOutlineFilterCenterFocus />
                                     <p>Filter</p>
-                                    {showFilterMenu ? <FaChevronUp className={classes.fIcon} /> : <FaChevronDown className={classes.fIcon} /> }
+                                    {showFilterMenu ? <IoIosCloseCircleOutline className={classes.fIcon} />  : <FaChevronDown /> }
                                 </Tag>
                             </div>
                         </div>

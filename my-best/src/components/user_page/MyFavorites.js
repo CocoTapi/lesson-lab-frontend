@@ -11,7 +11,9 @@ import { GoTrash } from "react-icons/go";
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { GoHeartFill } from "react-icons/go";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 
 function MyFavorites({ data }){
     const userFavorites = data;
@@ -129,9 +131,9 @@ function MyFavorites({ data }){
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
                                 <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                    <MdOutlineFilterCenterFocus />
                                     <p>Filter</p>
-                                    {showFilterMenu ? <FaChevronUp className={classes.fIcon} /> : <FaChevronDown className={classes.fIcon} /> }
+                                    {showFilterMenu ? <IoIosCloseCircleOutline className={classes.fIcon} /> : <FaChevronDown  /> }
                                 </Tag>
                             </div>
                         </div>
