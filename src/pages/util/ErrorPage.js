@@ -30,7 +30,7 @@ function ErrorPage(){
           <div className={classes.errorContents}>
             <h1>{message}</h1>
               <div className={classes.imageComponent}>
-                  <img src='/images/errorImg.png' alt="example" />
+                  <img src='/full-stack-project-frontend/images/errorImg.png' alt="example" />
               </div>
           </div>
           <Link to='/' className={classes.buttonComponent}>
