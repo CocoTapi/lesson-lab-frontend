@@ -52,7 +52,7 @@ function Playlists ({ data }) {
 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
-        const proceed = window.confirm(`Are you sure you want to remove ${activity_title} from your playlist, ${playlist_title}?`);
+        const proceed = window.confirm(`Are you sure you want to remove "${activity_title}" from "${playlist_title}"?`);
     
         if (proceed) {
             submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
@@ -60,7 +60,7 @@ function Playlists ({ data }) {
     };
     
     const handleDeletePlaylist = (playlist_id, playlist_title) => {
-        const proceed = window.confirm(`Are you sure you want to delete ${playlist_title}?`);
+        const proceed = window.confirm(`Are you sure you want to delete "${playlist_title}"?`);
     
         if (proceed) {
             submit({ user_id, playlist_id }, { method: "DELETE" });

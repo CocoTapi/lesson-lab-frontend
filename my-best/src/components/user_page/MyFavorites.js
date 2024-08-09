@@ -55,7 +55,7 @@ function MyFavorites({ data }){
 
     //action: remove activity
     const handleRemoveActivity = (activity_id, title) => {
-        const proceed = window.confirm(`Are you sure you want to remove ${title} in your favorites?`);
+        const proceed = window.confirm(`Are you sure you want to unlike "${title}" ?`);
     
         if (proceed) {
             submit({ activity_id, user_id}, { method: "DELETE" });

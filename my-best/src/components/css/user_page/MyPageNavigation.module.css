@@ -4,8 +4,6 @@
     max-width: 80rem;
     margin: auto;
     padding-top: 5px;
-    position: relative; /* To use z-index correctly */
-    z-index: 2; /* Higher than file */
     box-sizing: border-box;
 }
 
