@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigation, useActionData, Form, Link, useRouteLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { useNavigation, useActionData, Form, useRouteLoaderData, useLocation, useNavigate } from "react-router-dom";
 import classes from '../css/activities/ActivityForm.module.css';
 import { FaCheck } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
@@ -7,9 +7,6 @@ import ButtonM from "../UI/ButtonM";
 import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 import SelectImage from "./SelectImage";
-import { GoTrash } from "react-icons/go";
-
-
 
 function ActivityForm({ existingTags, method, activity, locationState }) {   
     const user = useRouteLoaderData('root');
@@ -121,7 +118,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                         {selectedImage ? 
                             <div>
                                 <div className={classes.activityImageFrame}  onClick={handleOpenImageSelectionModal}>
-                                    <img src={`/images/large/${selectedImage}.png`} alt="activityImage" />
+                                    <img src={`/full-stack-project-frontend/images/large/${selectedImage}.png`} alt="activityImage" />
                                     <h2 className={classes.changeImageSign}>Change Image</h2>
                                 </div>
                             </div>

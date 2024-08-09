@@ -71,6 +71,15 @@
     margin-top: 0.5rem;
 }
 
+.accordionImage {
+    width: 139px;
+}
+
+.accordionImage img {
+    width: 100%;
+    border-radius: 10px;
+}
+
 @media (min-width: 640px) {
     .accordionDetail {
         display: flex;

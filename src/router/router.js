@@ -134,6 +134,8 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
         }
       ]
     }
-  ]);
+  ], {
+    basename: "/full-stack-project-frontend"
+  });
 
  

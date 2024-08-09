@@ -20,7 +20,9 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
     }
 
     const image = (
-        <img src={`/images/accordionSmall/${activity.image_num}.png`} alt="example" style={{ borderRadius: '10px' }}/>
+            <div className={classes.accordionImage}>
+                <img src={`/full-stack-project-frontend/images/large/${activity.image_num || 1}.png`} alt="example" />
+            </div>
     )
 
     const headerContents = (

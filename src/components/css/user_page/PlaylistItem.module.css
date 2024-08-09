@@ -121,9 +121,15 @@
     gap: 1rem;
 }
 
-.customList {
+.accordionImage {
     display: flex;
     gap: 1rem;
+    width: 139px;
+}
+
+.accordionImage img {
+    width: 100%;
+    border-radius: 10px;
 }
 
 .activityTitle {

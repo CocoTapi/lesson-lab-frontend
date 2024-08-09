@@ -40,7 +40,7 @@ function Home() {
         <div className={classes.outerFrame}>
                 <div className={classes.topImageComponent}>
                     <div className={classes.imageContents}>
-                        <img src='/images/topImage.png' alt='topImage' />
+                        <img src='full-stack-project-frontend/images/topImage.png' alt='topImage' />
                         <div className={classes.titleTextComponent}>
                             <h1>Achieve</h1>
                             <h1><span>Innovative</span> Education</h1>

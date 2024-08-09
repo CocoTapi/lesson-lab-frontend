@@ -38,8 +38,8 @@ function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveA
               </div>
             }
             topImage={
-              <div className={classes.customList}>
-                <img src={`/images/accordionSmall/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }} />
+              <div className={classes.accordionImage}>
+                <img src={`/full-stack-project-frontend/images/large/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }} />
               </div>
             }
             activityDetail={

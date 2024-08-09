@@ -28,13 +28,13 @@ function SelectImage({ onImageSelect, selectedImage, onShowModal }){
             <div>
                 <h2>Currently Selected:</h2>
                 <div className={classes.selectedImageFrame} onClick={handleCancel}>
-                    <img src={`/images/large/${selectedImage}.png`} alt="activityImage" />
+                    <img src={`/full-stack-project-frontend/images/large/${selectedImage}.png`} alt="activityImage" />
                 </div>
             </div>
             }
 
             <h1>Select an Image</h1>
-            <ul>
+            <ul className={classes.imageList}>
                 {images.map((image) => (
                   <li
                     key={image}
@@ -42,7 +42,7 @@ function SelectImage({ onImageSelect, selectedImage, onShowModal }){
                     className={classes.imageFrame}
                   >
                     <img 
-                        src={`/images/large/${image}.png`} 
+                        src={`/full-stack-project-frontend/images/large/${image}.png`} 
                         alt={`activity-image-${image}`}
                     />
                   </li>

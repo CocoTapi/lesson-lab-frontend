@@ -88,7 +88,7 @@ function ActivityItem({ activity, activities }) {
                     <div className={classes.detailCard}>
                         <div className={classes.detailCardContents}>
                             <div className={classes.detailCardImage}>
-                                <img src={`/images/large/${activity.image_num || 1}.png`} alt="example" />
+                                <img src={`/full-stack-project-frontend/images/large/${activity.image_num || 1}.png`} alt="example" />
                             </div>
                             <h1>{activity.title}</h1>
                             <div className={classes.detailCardIcons}>

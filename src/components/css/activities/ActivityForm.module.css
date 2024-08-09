@@ -48,21 +48,6 @@
     transition: all 0.3s;
 }
 
-/* .activityImageFrame {
-    width: 100%;
-    max-width: 812px;
-}
-
-.activityImageFrame img {
-    width: 100%;
-    border-radius: 15px;
-}
-
-.changeImageSign {
-   display: none;
-}
-*/
-
 .emptyImage {
     width: 100%;
     height: 10rem;
