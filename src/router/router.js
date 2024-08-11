@@ -1,5 +1,6 @@
-import { createHashRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import RootLayout from '../pages/home/RootLayout';
+// import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/home/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader, action as searchAction } from '../pages/activities/ActivitiesPage';
@@ -15,14 +16,17 @@ import { action as activityFormAction, loader as tagsLoader } from '../pages/act
 import UserLayout from "../pages/user_page/UserLayout";
 import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
 import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
-import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from '../pages/user_page/UserUploadsPage';
-import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from '../pages/user_page/UserFavoritesPage';
-import UserPlaylistsPage, { userPlaylistsLoader, action as playlistAction } from '../pages/user_page/UserPlaylistsPage';
-import OauthRedirectPage, { loader as tokenLoader } from '../pages/auth/OauthRedirectPage';
+import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
+import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
+import UserPlaylistsPage, { userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
+import OauthRedirectPage, { loader as tokenLoader } from "../pages/auth/OauthRedirectPage";
 import ErrorPage from "../pages/util/ErrorPage";
 import { baseName } from "../App";
 
-export const createRouter = (setUserInfo) => createHashRouter([
+
+
+
+export const createRouter = (setUserInfo) => createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
@@ -142,5 +146,6 @@ export const createRouter = (setUserInfo) => createHashRouter([
     ]
   }
 ], {
-  basename: "https://cocotapi.github.io/full-stack-project-frontend/"
+  basename: "/full-stack-project-frontend"
 });
+

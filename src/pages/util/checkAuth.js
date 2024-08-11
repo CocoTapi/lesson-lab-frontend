@@ -16,6 +16,7 @@ export function testTokenDuration() {
 };
 
 export function getAuthToken() {
+    console.log(getCookie())
     const token = localStorage.getItem('token');
 
     try {
@@ -95,4 +96,11 @@ export async function getUserInfoFromToken(token) {
     const user_name = resData.data.user_name;
 
     return { user_id, user_name };
+}
+
+// Function to extract the cookie value
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
