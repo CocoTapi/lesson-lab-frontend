@@ -8,7 +8,8 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const baseUrl = process.env.REACT_APP_BASE_URL;
 
 function App() {
-console.log(API_URL);
+console.log("API url: ", API_URL);
+console.log("Base url: ", baseUrl)
   return (
     <UserProvider>
       <AppWithRouter />
