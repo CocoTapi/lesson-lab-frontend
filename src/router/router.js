@@ -142,5 +142,5 @@ export const createRouter = (setUserInfo) => createHashRouter([
     ]
   }
 ], {
-  basename: "/full-stack-project-frontend"
+  basename: "https://cocotapi.github.io/full-stack-project-frontend/"
 });
