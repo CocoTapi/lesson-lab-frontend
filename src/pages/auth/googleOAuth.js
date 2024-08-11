@@ -8,7 +8,7 @@ function navigate(url) {
     const width = 600, height = 600;
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
-
+    console.log(isMobileDevice);
     // Open the authentication popup
     // window.open(
     //     url,
@@ -25,6 +25,10 @@ function navigate(url) {
     // Listener for messages from the popup window
     window.addEventListener('message', handleGoogleAuthEvent, false);
 
+}
+
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
 }
 
 export async function googleOAuthAction() {
