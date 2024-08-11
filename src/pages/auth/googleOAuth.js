@@ -16,14 +16,18 @@ function navigate(url) {
     //     `width=${width},height=${height},top=${top},left=${left}`
     // );
 
+
     const authWindow = window.open(
         url,
         'AuthWindow',
         `width=${width},height=${height},top=${top},left=${left}`
     );
-
     // Listener for messages from the popup window
     window.addEventListener('message', handleGoogleAuthEvent, false);
+
+
+
+
 
 }
 
@@ -51,7 +55,9 @@ export async function googleOAuthAction() {
         // console.log(data.authUrl);
 
         //open the authentication popup
-        navigate(data.authUrl);
+        if (isMobileDevice()) {
+            window.location.href = data.authUrl;
+        } else navigate(data.authUrl);
 
     } catch (error) {
         console.error('Error during Google OAuth login:', error);

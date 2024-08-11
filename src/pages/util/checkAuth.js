@@ -8,7 +8,7 @@ export function testTokenDuration() {
     const storedExpirationDate = localStorage.getItem('expiration');
     const expirationDate = new Date(storedExpirationDate);
     const now = new Date();
-    const duration =  expirationDate.getTime() - now.getTime();
+    const duration = expirationDate.getTime() - now.getTime();
     //console.log('testing duration for the token', duration)
     if (duration <= 0) {
         throw new Error('Token is expired')
@@ -16,7 +16,7 @@ export function testTokenDuration() {
 };
 
 export function getAuthToken() {
-    console.log(getCookie())
+
     const token = localStorage.getItem('token');
 
     try {
@@ -32,8 +32,27 @@ export function getAuthToken() {
     return token;
 };
 
-export async function userLoader() {
-    const token = getAuthToken();
+export async function userLoader({ request, params }) {
+
+    const urlParams = new URLSearchParams(new URL(request.url).search)
+    let token = urlParams?.get('token');
+
+    if (token) {
+        localStorage.setItem('token', token);
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+        localStorage.setItem('expiration', expiration.toISOString());
+  
+        if(isMobileDevice()){
+            window.postMessage({ token }, '*'); 
+        } else {
+            window.opener.postMessage({ token }, '*'); 
+            window.close();
+        }
+        //save it to local storage
+    }
+
+    token = getAuthToken()
 
     if (!token) {
         // return redirect("./auth?mode=login");
@@ -42,16 +61,6 @@ export async function userLoader() {
 
     const { user_id, user_name } = await getUserInfoFromToken(token);
     return { token, user_id, user_name };
-};
-
-export function checkAuthLoader() {
-    const token = getAuthToken();
-
-    if (!token) {
-        return redirect("./auth?mode=login")
-    }
-
-    return null;
 };
 
 export function handleGoogleAuthEvent(event) {
@@ -66,7 +75,7 @@ export function handleGoogleAuthEvent(event) {
         // Store the token
         localStorage.setItem('token', event.data.token);
         //console.log("Token stored in local storage:", localStorage.getItem('token'));
-        
+
         const expiration = new Date();
         expiration.setHours(expiration.getHours() + 1);
         localStorage.setItem('expiration', expiration.toISOString());
@@ -98,9 +107,6 @@ export async function getUserInfoFromToken(token) {
     return { user_id, user_name };
 }
 
-// Function to extract the cookie value
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
 }
