@@ -6,7 +6,8 @@ import UserProvider, { useUserContext } from './pages/util/UserProvider';
 
 export const API_URL = process.env.REACT_APP_API_URL;
 export const baseUrl = process.env.REACT_APP_BASE_URL;
-
+export const baseName = process.env.REACT_APP_BASE_NAME;
+console.log(baseName)
 function App() {
 console.log("API url: ", API_URL);
 console.log("Base url: ", baseUrl)

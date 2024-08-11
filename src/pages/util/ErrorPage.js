@@ -7,7 +7,7 @@ function ErrorPage(){
     let message = 'Something went wrong!';
     let secondMessage = ''
     let status;
-
+  console.log(error);
     if (isRouteErrorResponse(error)) {
         if(error.message) console.log("error message:", error.message);
         if(error.status) console.log("error status:", error.status);
