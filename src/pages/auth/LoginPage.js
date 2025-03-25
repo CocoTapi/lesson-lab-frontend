@@ -43,7 +43,6 @@ export async function action ( {request, setUserInfo} ) {
     const resData = await response.json();
 
     const user_id = resData.data.user_id;
-    const user_name = resData.data.user_name;
     const token = resData.token;
 
 

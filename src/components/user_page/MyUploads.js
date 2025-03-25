@@ -1,6 +1,6 @@
 import ButtonM from "../UI/ButtonM";
 import UserActivityList from "./UserActivityList";
-import { useSubmit, useRouteLoaderData, useNavigate, Link, useLocation } from "react-router-dom";
+import {  useRouteLoaderData, useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classes from '../css/user_page/MyFavorites.module.css';
 import File from "../UI/File";
@@ -20,15 +20,10 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 function MyUploads({ data }){
     const userUploads = data.userUploads;
     const user = useRouteLoaderData('root');
-    let token;
-    let user_name;
     let user_id;
-    if(user) {
-        token = user.token;
-        user_name = user.user_name
-        user_id = user.user_id;
-    }
-    const submit = useSubmit();
+    if(user) user_id = user.user_id;
+
+    // const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('shortToLong');
     const navigate = useNavigate();
     const location = useLocation();

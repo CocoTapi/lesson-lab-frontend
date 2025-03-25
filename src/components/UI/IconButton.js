@@ -1,5 +1,4 @@
 import classes from '../css/UI/IconButton.module.css';
-import { colorSchemes } from './colorSchemes';
 
 function IconButton({ className, children, ...rest }){   
     

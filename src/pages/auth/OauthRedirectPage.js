@@ -1,5 +1,3 @@
-
-import { defer } from "react-router-dom";
 import Home from "../../components/home/Home";
 
 function OauthRedirectPage() {

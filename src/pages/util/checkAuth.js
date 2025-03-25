@@ -1,4 +1,4 @@
-import { json, redirect } from 'react-router-dom'
+import { json } from 'react-router-dom'
 import { API_URL } from '../../App';
 import { baseUrl } from '../../App';
 
@@ -55,7 +55,7 @@ export async function userLoader({ request, params }) {
     token = getAuthToken()
 
     if (!token) {
-        // return redirect("./auth?mode=login");
+        // you have to return "null" if there is anything to return.
         return null;
     }
 

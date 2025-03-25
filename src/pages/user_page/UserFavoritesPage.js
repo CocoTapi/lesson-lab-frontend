@@ -58,7 +58,7 @@ export async function loader({ request, params }){
 }
 
 export async function action({ request }) {
-    const method = request.method;
+    // const method = request.method;
     const formData = await request.formData()
     const activity_id = formData.get("activity_id");
     const user_id = formData.get("user_id");

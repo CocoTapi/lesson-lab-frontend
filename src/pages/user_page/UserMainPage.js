@@ -1,4 +1,4 @@
-import { json, defer, Await, useRouteLoaderData, redirect } from "react-router-dom";
+import { json, defer, Await, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import { API_URL } from '../../App';
 import { getAuthToken } from "../util/checkAuth";

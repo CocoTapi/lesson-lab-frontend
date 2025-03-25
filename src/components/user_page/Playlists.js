@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useSubmit, useRouteLoaderData, Link } from "react-router-dom";
+import { useSubmit, useRouteLoaderData } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import { TiPlus } from "react-icons/ti";
 import File from "../UI/File";
@@ -15,9 +15,7 @@ import ActivitySelection from "./playlist_selection/ActivitySelection";
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
     const user = useRouteLoaderData('root');
-    const token = user ? user.token : null;
     const user_id = user ? user.user_id : null;
-    const user_name = user ? user.user_name : null;
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);

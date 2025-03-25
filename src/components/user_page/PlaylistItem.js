@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import classes from '../css/user_page/PlaylistItem.module.css';
 import { FaStar } from "react-icons/fa";
@@ -10,7 +9,6 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import PlaylistActivityItem from "./PlaylistActivityItem";
 import ButtonS from "../UI/ButtonS";
-import Tag from "../UI/Tag";
 
 function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder, showChangeOrderButton }) {
     const [ showStarIcon, setshowStarIcon] = useState(false);

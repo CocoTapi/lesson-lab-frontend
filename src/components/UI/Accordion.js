@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { GoHeart, GoHeartFill, GoBookmark, GoBookmarkFill } from "react-icons/go";
 import classes from '../css/UI/Accordion.module.css';
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 

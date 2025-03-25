@@ -3,7 +3,6 @@ import File from '../UI/File';
 import ButtonS from '../UI/ButtonS';
 import { FaCheck } from 'react-icons/fa';
 import classes from '../css/user_page/ProfileForm.module.css'
-import ButtonM from '../UI/ButtonM';
 import { useState } from 'react';
 
 

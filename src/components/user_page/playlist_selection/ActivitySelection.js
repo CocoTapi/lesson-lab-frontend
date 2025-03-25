@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import classes from '../../css/user_page/ActivitySelection.module.css';
 import Modal from '../../UI/Modal';
 import SelectionForm from './SelectionForm';

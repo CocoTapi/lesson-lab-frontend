@@ -17,14 +17,9 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 function MyFavorites({ data }){
     const userFavorites = data;
     const user = useRouteLoaderData('root');
-    let token;
-    let user_name;
+
     let user_id;
-    if(user) {
-        token = user.token;
-        user_name = user.user_name
-        user_id = user.user_id;
-    }
+    if(user)  user_id = user.user_id;
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('');
     const [ smallScreen, setSmallScreen] = useState(false);

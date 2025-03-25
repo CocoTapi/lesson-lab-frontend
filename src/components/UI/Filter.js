@@ -1,5 +1,4 @@
 import classes from '../css/UI/Filter.module.css';
-import ButtonS from './ButtonS';
 
 
 function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDurations, selectedAgeGroups, selectedTags, onShowFilterMenu }) {
@@ -32,10 +31,10 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
         );
     };
 
-    const handleViewButton = (event) => {
-        event.preventDefault();
-        onShowFilterMenu(false);
-    }
+    // const handleViewButton = (event) => {
+    //     event.preventDefault();
+    //     onShowFilterMenu(false);
+    // }
 
     const handleClearButton = (event) => {
         event.preventDefault();

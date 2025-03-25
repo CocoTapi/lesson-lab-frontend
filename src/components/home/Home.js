@@ -5,7 +5,7 @@ import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
 
 function Home() {
     const user = useRouteLoaderData('root');
-    const token = user ? user.token : null;
+    // const token = user ? user.token : null;
     const user_id = user ? user.user_id : null;
     const navigate = useNavigate();
 

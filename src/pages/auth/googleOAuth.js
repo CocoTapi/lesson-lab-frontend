@@ -1,5 +1,5 @@
 import { API_URL } from "../../App";
-import { json, redirect } from "react-router-dom";
+import { json } from "react-router-dom";
 import { handleGoogleAuthEvent } from "../util/checkAuth";
 
 
@@ -17,7 +17,8 @@ function navigate(url) {
     // );
 
 
-    const authWindow = window.open(
+    // const authWindow =
+    window.open(
         url,
         'AuthWindow',
         `width=${width},height=${height},top=${top},left=${left}`
@@ -51,10 +52,12 @@ export async function googleOAuthAction() {
         }
 
         const data = await response.json();
-        // console.log(data);
-        // console.log(data.authUrl);
+        //console.log(data);
+        //console.log(data.authUrl);
+        
+        //this authUrl navigates the google login page. 
 
-        //open the authentication popup
+        //open the authentication popup if not mobile device
         if (isMobileDevice()) {
             window.location.href = data.authUrl;
         } else navigate(data.authUrl);

@@ -9,7 +9,7 @@ function AuthForm({ locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    const [isLoading, setLoading] = useState(false);   
+    const [setLoading] = useState(false);   
     const prev_location = locationState? locationState: '/';
 
     const googleLoginHandler = () => {
