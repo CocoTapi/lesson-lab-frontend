@@ -5,7 +5,7 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
-import { addGuestFavorite, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
+import { addGuestFavorite, getGuestFavorites, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
 
 
 
@@ -46,7 +46,16 @@ async function loadActivity(id) {
     }
 
     const resData = await response.json();
-    return resData.activity[0];
+
+    const activity = resData.activity[0];
+
+    if(!token) {
+        const favActivities = getGuestFavorites();
+       
+        activity.is_favorited = favActivities.includes(activity.activity_id);
+    }
+
+    return activity;
 }
 
 export async function loader({ request, params }) {
@@ -100,7 +109,11 @@ export async function action({ params, request }) {
                 body: JSON.stringify(favData)
             });
         } else if (user_id === 'guest') {
-            addGuestFavorite(activity_id);
+            if (favData.is_favorited) {
+                removeGuestFavorite(activity_id);
+            } else {
+                addGuestFavorite(activity_id);
+            }
         }
     }
 

@@ -39,20 +39,8 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
-        // if(!token) {
-        //     navigate('/auth?mode=login', { state: { prev_location: location }});
-        // } else {
-        //     submit({ user_id, is_favorited }, { method: "POST" });
-        // }
         submit({ user_id, is_favorited }, { method: "POST" });
-
     }
-
-    // const handleDeleteActivity = (title) => {
-    //     const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
-
-    //     if (proceed) submit({ user_id }, { method: 'DELETE' });
-    // }
 
     const handleAddPlaylist = (id) => {
         if(!token) {

@@ -3,6 +3,7 @@ import { API_URL } from "../../App";
 import { json, defer, useLoaderData, Await, useActionData } from "react-router-dom";
 import { Suspense, useState, useEffect } from "react";
 import { getAuthToken } from "../util/checkAuth";
+import { addFavoritesIntoResponseData } from "../util/saveGuestData";
 
 function ActivitiesPage() {
     const { activities: initialActivities } = useLoaderData();
@@ -51,7 +52,12 @@ export async function loadActivities() {
     }
 
     const resData = await response.json();
-    return resData.activities;
+
+    const activities = resData.activities;
+
+    if (!token) addFavoritesIntoResponseData(activities);
+    
+    return activities;
 }
 
 export async function loader() {
@@ -101,5 +107,9 @@ export async function action({ request }) {
 
     const filteredActivities = resData.activities;
 
+    if (!token) addFavoritesIntoResponseData(filteredActivities);
+
+
     return filteredActivities;
 }
+
