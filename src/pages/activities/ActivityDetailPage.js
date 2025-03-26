@@ -92,6 +92,7 @@ export async function action({ params, request }) {
         }
     }
     
+    // manage user likes
     if (method === "POST") {
         const favData = {
             user_id,

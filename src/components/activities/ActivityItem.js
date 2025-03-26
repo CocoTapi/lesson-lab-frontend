@@ -18,6 +18,8 @@ function ActivityItem({ activity, activities }) {
     const location = useLocation().pathname;
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
     const [showTags, setShowTags] = useState(false);
+    const initialCount = activity.like_count;
+    const [activityCount, setActivityCount] = useState(initialCount);
 
      //handle screen sizes change
      useEffect(() => {
@@ -39,6 +41,13 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
+        if (user_id === 'guest'){
+            if (is_favorited === true && initialCount < activityCount){
+                setActivityCount((prev) => prev - 1);
+            } else if (is_favorited === false) {
+                setActivityCount((prev) => prev + 1);        
+            }
+        }
         submit({ user_id, is_favorited }, { method: "POST" });
     }
 
@@ -86,7 +95,7 @@ function ActivityItem({ activity, activities }) {
                                 <GoBookmark onClick={handleAddPlaylist} /> 
                             </div>
                             <div className={classes.detailCardCreatorInfo}>
-                                <p>{activity.like_count} likes</p>
+                                <p>{activityCount} likes</p>
                                 <div className={classes.creator} >
                                     <p className={classes.creatorIcon} ><FaRegCircleUser /></p>
                                     <p>{activity.user_name}</p>

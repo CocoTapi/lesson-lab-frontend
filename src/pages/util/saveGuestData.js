@@ -40,5 +40,7 @@ export function addFavoritesIntoResponseData(activities){
     // add is_favorited into each activity
     for (const activity of activities) {
         activity.is_favorited = favActivities.includes(activity.activity_id) 
+
+        if (activity.is_favorited) activity.like_count++;
     }
 }
