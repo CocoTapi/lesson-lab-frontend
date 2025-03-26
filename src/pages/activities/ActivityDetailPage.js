@@ -5,7 +5,7 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
-import { addGuestFavorite, getGuestFavorites, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
+import { addActivitiesToPlaylist, addGuestFavorite, FAVORITES_KEY, getGuestData, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
 
 
 
@@ -50,7 +50,7 @@ async function loadActivity(id) {
     const activity = resData.activity[0];
 
     if(!token) {
-        const favActivities = getGuestFavorites();
+        const favActivities = getGuestData(FAVORITES_KEY);
        
         activity.is_favorited = favActivities.includes(activity.activity_id);
     }
@@ -139,14 +139,9 @@ export async function action({ params, request }) {
             body: JSON.stringify(playlistData)
         })
         } else if (user_id === 'guest'){
-            playlistData = {
-                playlist_id,
-                activity_id_arr: arr
-            };
-            
-            saveGuestData('playlists', playlistData);
+            const durations = formData.get('activityDuration');
+            addActivitiesToPlaylist(playlist_id, arr, durations);
         }
-
     } 
 
     if (response?.status === 422 || response?.status === 401) {

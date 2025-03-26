@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouteLoaderData, useSubmit, Link, useNavigate, useLocation } from "react-router-dom";
+import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
@@ -14,8 +14,6 @@ function ActivityItem({ activity, activities }) {
     const token = user ? user.token : null;
     const user_id = user ? user.user_id : 'guest';
     const submit = useSubmit();
-    const navigate = useNavigate();
-    const location = useLocation().pathname;
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
     const [showTags, setShowTags] = useState(false);
     const initialCount = activity.like_count;
@@ -52,15 +50,12 @@ function ActivityItem({ activity, activities }) {
     }
 
     const handleAddPlaylist = (id) => {
-        if(!token) {
-            navigate('/auth?mode=login', { state: { prev_location: location }});
-        } else {
-            setShowPlaylistSelection(true);
-        }
+        setShowPlaylistSelection(true);
     }
 
     const handlePlaylistSubmit = (playlist_id) => {
-        submit({ user_id, playlist_id }, { method: "PATCH"});
+        const activityDuration = activity.duration;
+        submit({ user_id, playlist_id, activityDuration }, { method: "PATCH"});
         setShowPlaylistSelection(false);
     }
 
@@ -70,7 +65,17 @@ function ActivityItem({ activity, activities }) {
 
     return (
         <div className={classes.main}>
-            {showPlaylistSelection && <PlaylistSelection user_id={user_id} token={token} onPlaylistSubmit={handlePlaylistSubmit} onClose={handleCancel} current_activity_id={activity.activity_id}/>}
+            {/* Playlist */}
+            {showPlaylistSelection && 
+                <PlaylistSelection 
+                    user_id={user_id} 
+                    token={token} 
+                    onPlaylistSubmit={handlePlaylistSubmit} 
+                    onClose={handleCancel} 
+                    current_activity_id={activity.activity_id}
+                />
+            }
+            
             <div className={classes.contents}>
                 <div className={classes.sortBar} >
                     <SortBar />
@@ -91,7 +96,10 @@ function ActivityItem({ activity, activities }) {
                             </div>
                             <h1>{activity.title}</h1>
                             <div className={classes.detailCardIcons}>
-                                {activity.is_favorited ? <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> : <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />}
+                                {activity.is_favorited ? 
+                                    <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> :
+                                    <GoHeart onClick={() => handleAddFavorite(activity.is_favorited)} />
+                                }
                                 <GoBookmark onClick={handleAddPlaylist} /> 
                             </div>
                             <div className={classes.detailCardCreatorInfo}>

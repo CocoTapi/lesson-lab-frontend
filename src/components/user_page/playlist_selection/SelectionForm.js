@@ -15,7 +15,7 @@ import TopButton from "../../UI/TopButton";
 
 //TODO: fetch only activities that is not in the playlist
 
-function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities, title, onClose, onBacktoSelection, current_activity_ids }){
+function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities, title, onClose, onBackToSelection, current_activity_ids }){
     const [ activityList, setActivityList ] = useState([]);
     const [ selectedActivities, setSelectedActivities ] = useState([]);
     const [ sortOption, setSortOption ] = useState('');
@@ -23,6 +23,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
+    const [playlistDuration, setPlaylistDuration] = useState(0);
 
     useEffect(() => {
         let response;
@@ -42,20 +43,27 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         fetchActivityData();
     }, [user_id, selectedList])
 
-    const handleSelectionChange = (event) => {
-        const value = event.target.value;
+    const handleSelectionChange = (event, activity) => {
+        const activityId = event.target.value;
 
-        setSelectedActivities(prevSelectedActivities => 
-            prevSelectedActivities.includes(value) 
-                ? prevSelectedActivities.filter(activity => activity !== value) 
-                : [...prevSelectedActivities, value]
-        );
+        // Check if the activity is already selected or not meaning removing or adding activity
+        const isSelected = selectedActivities.includes(activityId);
+
+        if (isSelected) {
+            // Remove activity
+            setSelectedActivities(prev => prev.filter(id => id !== activityId));
+            setPlaylistDuration(prev => prev - (activity.duration || 0));
+        } else {
+            // Add activity
+            setSelectedActivities(prev => [...prev, activityId]);
+            setPlaylistDuration(prev => prev + (activity.duration || 0));
+        }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if(selectedActivities.length > 0) {
-            onSubmitActivities(selectedActivities, user_id, playlist_id);
+            onSubmitActivities(selectedActivities, user_id, playlist_id, playlistDuration);
         } else {
             onClose()
         }
@@ -97,7 +105,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
                     type="checkbox"
                     name="activityCheck"
                     value={activity.activity_id}
-                    onChange={handleSelectionChange}
+                    onChange={(e) => handleSelectionChange(e, activity)}
                     className={classes.customCheck}
                 />
                 <div className={classes.activityItemComponent}>
@@ -112,7 +120,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     return (
         <div className={classes.selectionContents}>
             <div className={classes.doneButtonComponent}>
-                <TopButton onClick={onBacktoSelection} >Back</TopButton>
+                <TopButton onClick={onBackToSelection} >Back</TopButton>
                 <TopButton onClick={handleSubmit}>Done</TopButton>
             </div>
             <h3>Add to Playlist : {title}</h3>

@@ -53,7 +53,7 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                     current_activity_ids={current_activity_ids}
                     onSubmitActivities={onSubmitActivities}
                     onClose={onClose}
-                    onBacktoSelection={handleBackButton}
+                    onBackToSelection={handleBackButton}
                 />
             }
             

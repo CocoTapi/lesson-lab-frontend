@@ -49,11 +49,11 @@ function Playlists ({ data }) {
     }, []);
 
 
-    const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
+    const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title, activityDuration) => {
         const proceed = window.confirm(`Are you sure you want to remove "${activity_title}" from "${playlist_title}"?`);
     
         if (proceed) {
-            submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
+            submit({ activity_id, user_id, playlist_id, activityDuration}, { method: "DELETE" });
         }
     };
     
@@ -103,8 +103,8 @@ function Playlists ({ data }) {
         return 0; // Default case if no sort option is matched
     });
 
-    const handleSubmitPlaylistActivities = (arr, selected_user_id, selected_playlist_id) => {
-        submit({ user_id: selected_user_id, playlist_id: selected_playlist_id, activity_id_list: arr}, { method: "PATCH"});
+    const handleSubmitPlaylistActivities = (arr, user_id, playlist_id, playlistDuration) => {
+        submit({ user_id, playlist_id, activity_id_list: arr, playlistDuration}, { method: "PATCH"});
         setShowModal(false);
     }
 

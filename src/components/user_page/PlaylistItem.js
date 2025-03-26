@@ -11,7 +11,7 @@ import PlaylistActivityItem from "./PlaylistActivityItem";
 import ButtonS from "../UI/ButtonS";
 
 function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder, showChangeOrderButton }) {
-    const [ showStarIcon, setshowStarIcon] = useState(false);
+    const [ showStarIcon, setShowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
     const [activities, setActivities] = useState(playlist.activities);
     const [isReorderMode, setIsReorderMode] = useState(false);
@@ -20,10 +20,10 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 640) {
-                setshowStarIcon(true);
+                setShowStarIcon(true);
                 setShowSummary(true);
             } else {
-                setshowStarIcon(false);
+                setShowStarIcon(false);
                 setShowSummary(false);
             }
         };
