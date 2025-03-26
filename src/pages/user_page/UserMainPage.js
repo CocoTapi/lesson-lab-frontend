@@ -23,26 +23,36 @@ export default UserMainPage;
 
 async function loadUserDetail(id) {
     const token = getAuthToken();
-    const response = await fetch(`${API_URL}/user/${id}`, {
-        method: "GET",
-        headers: {
-            'Content-Type' : 'application/json',
-            'Authorization': `Bearer ${token}`
+
+    if(token) {
+        const response = await fetch(`${API_URL}/user/${id}`, {
+            method: "GET",
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    
+        if (response.status === 422) throw new Response("", { status: 422 });
+        if (response.status === 401) throw new Response("", { status: 401 });
+    
+        if(!response.ok) {
+            throw json({message: "Could not fetch user detail."}, { status: 500})
         }
-    });
-
-    if (response.status === 422) throw new Response("", { status: 422 });
-    if (response.status === 401) throw new Response("", { status: 401 });
-
-    if(!response.ok) {
-        throw json({message: "Could not fetch user detail."}, { status: 500})
+    
+        const resData = await response.json();
+        //console.log("resData:", resData)
+        const userProfile = resData.userProfile;
+        //console.log("userProfile:", userProfile);
+        return { userProfile };
     }
 
-    const resData = await response.json();
-    //console.log("resData:", resData)
-    const userProfile = resData.userProfile;
-    //console.log("userProfile:", userProfile);
-    return { userProfile };
+     // Guest user fallback
+     const guestProfile = {
+        user_id: 'guest'
+     }
+     return { userProfile: guestProfile}
+    
 }
 
 export async function loader({ request, params }){

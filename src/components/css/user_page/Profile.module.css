@@ -66,6 +66,17 @@
     transition: all 0.3s ease;
 }
 
+.centerGroup {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.centerGroupTitle {
+    margin-bottom: 5rem;
+}
+
 @media (min-width: 640px) {
     .profileBox {
         border-radius: 10px;
