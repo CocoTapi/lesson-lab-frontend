@@ -5,6 +5,7 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
+import { addGuestFavorite, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
 
 
 
@@ -60,48 +61,61 @@ export async function loader({ request, params }) {
 export async function action({ params, request }) {
     const activity_id = parseInt(params.activityId);
     const method = request.method;
+    if(!method) throw json({ message: "Method is missing." }) ;
+
     const token = getAuthToken();
     const formData = await request.formData();
-    const user_id = parseInt(formData.get("user_id"));
+    const user_id = formData.get("user_id");
+    if (user_id !== 'guest') parseInt(user_id);
 
     let response;
 
     if (method === "DELETE") {
-        response = await fetch(`${API_URL}/activities/${activity_id}`, {
-            method: method,
-            headers: {
-                "Authorization": 'Bearer' + token
-            }
-        });
-
-    } else if (method === "POST") {
+        if(token && user_id !== 'guest') {
+            response = await fetch(`${API_URL}/activities/${activity_id}`, {
+                method: method,
+                headers: {
+                    "Authorization": 'Bearer' + token
+                }
+            });
+        } else {
+            removeGuestFavorite(activity_id);
+        }
+    }
+    
+    if (method === "POST") {
         const favData = {
             user_id,
             activity_id,
             is_favorited: formData.get("is_favorited") === "true"
         }
-        // console.log("favData:", favData);
 
-        response = await fetch(`${API_URL}/user/${user_id}/favorites`, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(favData)
-        });
+        if(token && user_id !== 'guest') {
+            response = await fetch(`${API_URL}/user/${user_id}/favorites`, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(favData)
+            });
+        } else if (user_id === 'guest') {
+            addGuestFavorite(activity_id);
+        }
+    }
 
-    } else if (method === "PATCH") {
+    if (method === "PATCH") {
         const playlist_id = parseInt(formData.get("playlist_id"));
         const arr = [];
         arr.push(activity_id);
 
-        const playlistData = {
+        let playlistData = {
             user_id,
             playlist_id,
             activity_id_arr: arr
         };
 
+        if (token && user_id !== 'guest') {
         response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
             method: method,
             headers: {
@@ -110,17 +124,23 @@ export async function action({ params, request }) {
             },
             body: JSON.stringify(playlistData)
         })
+        } else if (user_id === 'guest'){
+            playlistData = {
+                playlist_id,
+                activity_id_arr: arr
+            };
+            
+            saveGuestData('playlists', playlistData);
+        }
 
-    } else {
-        console.log('method is missing.');
-    };
+    } 
 
     if (response?.status === 422 || response?.status === 401) {
         return response;
     };
 
-    if (!response.ok) {
-        throw json({ message: "Could not delete activity." }, { status: 500 })
+    if (response && !response.ok) {
+        throw json({ message: "Activity request failed." }, { status: 500 })
     }
 
     return redirect(`/activities/${activity_id}`);

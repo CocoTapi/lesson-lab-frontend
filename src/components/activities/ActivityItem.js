@@ -12,7 +12,7 @@ import PlaylistSelection from "./PlaylistSelection";
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
     const token = user ? user.token : null;
-    const user_id = user ? user.user_id : null;
+    const user_id = user ? user.user_id : 'guest';
     const submit = useSubmit();
     const navigate = useNavigate();
     const location = useLocation().pathname;
@@ -39,11 +39,13 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
-        if(!token) {
-            navigate('/auth?mode=login', { state: { prev_location: location }});
-        } else {
-            submit({ user_id, is_favorited }, { method: "POST" });
-        }
+        // if(!token) {
+        //     navigate('/auth?mode=login', { state: { prev_location: location }});
+        // } else {
+        //     submit({ user_id, is_favorited }, { method: "POST" });
+        // }
+        submit({ user_id, is_favorited }, { method: "POST" });
+
     }
 
     // const handleDeleteActivity = (title) => {
