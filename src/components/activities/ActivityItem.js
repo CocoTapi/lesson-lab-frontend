@@ -40,7 +40,7 @@ function ActivityItem({ activity, activities }) {
 
     const handleAddFavorite = (is_favorited) => { 
         if (user_id === 'guest'){
-            if (is_favorited === true && initialCount < activityCount){
+            if (is_favorited === true){
                 setActivityCount((prev) => prev - 1);
             } else if (is_favorited === false) {
                 setActivityCount((prev) => prev + 1);        
