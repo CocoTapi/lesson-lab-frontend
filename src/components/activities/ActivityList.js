@@ -59,6 +59,8 @@ function ActivityList({ activities }){
         setSelectedTags(tag);
     }
 
+    // TODO: search term reset
+
    //handle search term 
     const handleSearchTermSubmit = (searchTerm) => {
         if(!searchTerm || searchTerm.length <= 0) {

@@ -12,6 +12,11 @@ import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
 import Swal from "sweetalert2";
 
+// TODO: change add playlist form style from accordion to normal
+// TODO: check if the title is empty or not
+// TODO: add a message when the playlist is empty
+// TODO: add boarder for sort bar for playlist
+// TODO: handle the situation when you click "My Page" title next to add activity button for guests
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;

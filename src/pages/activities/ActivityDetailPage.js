@@ -9,7 +9,7 @@ import { addActivitiesToPlaylist, addGuestFavorite, addPlaylistWithId, FAVORITES
 import { handleRequest } from "../user_page/UserPlaylistsPage";
 import Swal from 'sweetalert2';
 
-
+// TODO: tell user for the successful playlist update
 
 function ActivityDetailPage() {
     const { activity, activities } = useRouteLoaderData('activity-detail');

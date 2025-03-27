@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
-import { FaInstagram, FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
+import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 
 //TODO: contact link
@@ -10,13 +10,10 @@ function Footer(){
             <div className={classes.contents}>
                 <div className={classes.iconGroup}>
                     <div>
-                        <a href='https://www.instagram.com/' className={classes.icon} ><FaInstagram /></a>
-                    </div>
-                    <div>
                         <a href='https://www.google.com/' className={classes.icon} ><FaGoogle /></a>
                     </div>
                     <div>
-                        <a href='https://www.linkedin.com/'  className={classes.icon} ><FaLinkedinIn /></a>
+                        <a href='https://www.linkedin.com/in/shiori-yoshida/'  className={classes.icon} ><FaLinkedinIn /></a>
                     </div>
                     <div>
                         <a href='https://github.com/CocoTapi'  className={classes.icon} ><FaGithub /></a>

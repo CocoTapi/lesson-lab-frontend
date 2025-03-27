@@ -1,6 +1,6 @@
 import classes from '../css/UI/Filter.module.css';
 
-
+// TODO: change it to responsive design
 function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDurations, selectedAgeGroups, selectedTags, onShowFilterMenu }) {
  
 
