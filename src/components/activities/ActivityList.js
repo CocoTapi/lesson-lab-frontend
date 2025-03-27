@@ -6,7 +6,7 @@ import SortBar, { getSortedActivities } from '../UI/SortBar';
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
-import { useSubmit } from 'react-router-dom';
+import { useNavigate, useSubmit } from 'react-router-dom';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ButtonM from '../UI/ButtonM';
 
@@ -20,6 +20,7 @@ function ActivityList({ activities }){
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
+    const navigate = useNavigate();
     
     //handle screen sizes change
     useEffect(() => {
@@ -68,10 +69,13 @@ function ActivityList({ activities }){
     
     //handle return to all activities
     const handleReturnToAllActivities = () => {
-        // navigate('/activities')    
+        // From Filter    
         setSelectedDurations([]);
         setSelectedAgeGroups([]);
         setSelectedTags([]);
+
+        // From Search 
+        navigate('../activities');
     }
 
     const filteredActivities = getFilteredActivities(activities, selectedDurations, selectedAgeGroups, selectedTags);
