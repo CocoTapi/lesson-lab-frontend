@@ -71,8 +71,20 @@ export function addFavoritesIntoResponseData(activities) {
     const favActivities = getGuestData(FAVORITES_KEY);
 
     for (const activity of activities) {
+        // Store original like count if not already stored
+        if (activity.original_like_count === undefined) {
+            activity.original_like_count = activity.like_count;
+        }
+
+        // Check if the activity is favorited (return boolean)
         activity.is_favorited = favActivities.includes(activity.activity_id);
-        if (activity.is_favorited) activity.like_count++;
+
+        // If favorited, add 1 to the like count, otherwise reset to original
+        if (activity.is_favorited) {
+            activity.like_count = activity.original_like_count + 1;
+        } else {
+            activity.like_count = activity.original_like_count;
+        }
     }
 }
 

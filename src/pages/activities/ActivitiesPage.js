@@ -104,6 +104,7 @@ export async function action({ request }) {
 
         filteredActivities = resData.activities;
     } else {
+        // handling in backend
         // tokenHeaders = {
         //     method: 'POST',
         //     headers: {
@@ -112,6 +113,7 @@ export async function action({ request }) {
         //     body: JSON.stringify(searchTermObj)
         // }
 
+        
         // handle guest user's favorite
         filteredActivities = findActivities(searchTerm);
         addFavoritesIntoResponseData(filteredActivities);

@@ -3,7 +3,6 @@ import { GoHeart, GoHeartFill, GoBookmark } from "react-icons/go";
 import classes from '../css/activities/SummaryCard.module.css';
 
 function SummaryCard({ activity, link }) {
-   //TODO: add image selection
 
     return (
         <Link to={link}>
