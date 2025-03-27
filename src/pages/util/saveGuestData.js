@@ -91,6 +91,58 @@ export function getUserFavoritesActivity() {
 }
 
 // Guest playlist functions
+
+// Fetch userPlaylist
+export function fetchGuestPlaylist() {
+    let playlists = getGuestData(PLAYLIST_KEY);
+    const activities = fetchActivities();
+
+    // Iterate through the playlists and map activity IDs to activity details
+    const userPlaylists = playlists.map(playlist => {
+        const playlistActivities = playlist.activity_list.map((activityId, index) => {
+            
+            // Find the activity corresponding to the activityId
+            const activity = activities.find(item => item.activity_id === activityId);
+
+            if (!activity) {
+                throw new Error(`Activity with activity_id: ${activityId} not found`);
+            }
+
+            // Build the activity object with additional details
+            return {
+                image_num: activity.image_num,
+                activity_id: activity.activity_id,
+                position: index + 1, // Position in the playlist (1-based index)
+                title: activity.title,
+                summary: activity.summary,
+                duration: activity.duration,
+                instructions: activity.instructions || 'N/A',
+                objectives: activity.objectives || 'N/A',
+                materials: activity.materials || 'N/A',
+                links: activity.links || null
+            };
+        });
+
+        // Calculate the total duration for the playlist
+        const totalDuration = playlistActivities.reduce(
+            (sum, activity) => sum + activity.duration, 0
+        );
+
+        return {
+            playlist_id: playlist.playlist_id,
+            playlist_title: playlist.playlist_title,
+            user_id: 'guest', 
+            total_duration: totalDuration,
+            activities: playlistActivities,
+            activity_ids: playlist.activity_list
+        };
+    });
+
+    return userPlaylists; 
+
+}
+
+// Add a new Playlist (Only the title of playlist)
 export function saveNewGuestPlaylist(playlistTitle) {
     const playlists = getGuestData(PLAYLIST_KEY);
     const newPlaylist =  {

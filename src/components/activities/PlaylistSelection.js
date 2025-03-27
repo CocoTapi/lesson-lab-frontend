@@ -5,6 +5,7 @@ import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import TopButton from "../UI/TopButton";
+import { fetchGuestPlaylist } from "../../pages/util/saveGuestData";
 
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id }){
     const [userPlaylists, setUserPlaylists] = useState([]);
@@ -12,8 +13,15 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
-            const response = await loadUserPlaylists(user_id);
-            setUserPlaylists(response.userPlaylists);
+            let list;
+            if (user_id !== 'guest'){
+                const response = await loadUserPlaylists(user_id);
+                list = response.userPlaylists;
+            } else {
+                list = fetchGuestPlaylist();
+            }
+           
+            setUserPlaylists(list);
         };
 
         fetchPlaylistData();
@@ -37,7 +45,12 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
 
     let content;
     if (Object.keys(availablePlaylists).length === 0) {
-        content = <p>No playlist available.</p>
+        content = (
+            <div>
+                <p>No playlist available.</p>
+                {/* TODO: Add playlist form  */}
+            </div>
+        )
     } else {
         content = availablePlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>

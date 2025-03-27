@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { API_URL, baseUrl } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
-import { addActivitiesToPlaylist, getGuestData, PLAYLIST_KEY, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
+import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
 
 //TODO: re-fetch data after adding activities into playlist
 
@@ -27,8 +27,12 @@ export default UserPlaylistsPage;
 
 export async function loadUserPlaylists(id) {
     const token = getAuthToken();
-    if(token) {
-        const response = await fetch(`${API_URL}/user/${id}/playlists`, {
+    let user_id = id;
+    if(user_id !== 'guest') user_id = parseInt(id);
+    let userPlaylists;
+
+    if(token && user_id !== 'guest') {
+        const response = await fetch(`${API_URL}/user/${user_id}/playlists`, {
             method: "GET",
             headers: {
                 'Content-Type' : 'application/json',
@@ -42,14 +46,14 @@ export async function loadUserPlaylists(id) {
     
         const resData = await response.json();
        
-        const userPlaylists = resData.userPlaylists;
+        userPlaylists = resData.userPlaylists;
+        console.log("userPlaylists", userPlaylists);
     
-        return { userPlaylists };
-    } else {
-        const userPlaylists = getGuestData(PLAYLIST_KEY);
-        return { userPlaylists }
+        
+    } else if (user_id === 'guest') {
+        userPlaylists = fetchGuestPlaylist()
     }
-    
+    return { userPlaylists };
 }
 
 export async function userPlaylistsLoader({ request, params }){

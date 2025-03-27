@@ -103,7 +103,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 activityDetail={ 
                     <div>
-                        { showChangeOrderButton !== 'false' && playlist.activity_ids.length > 1 &&
+                        { showChangeOrderButton !== 'false' && playlist.activities.length > 1 &&
                             <div className={classes.reorderButtonComponent}>
                             <ButtonS colorScheme="primaryBorder" onClick={handleOrderModeClick} >
                                 {isReorderMode ? "Save Order" : "Change Order"}
@@ -114,7 +114,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                                 <SortableContext items={activities.map(item => item.activity_id)} strategy={verticalListSortingStrategy}>
                                     <ul>
-                                        {activities[0].activity_id && activities.map((item, i) => (
+                                        {activities[0]?.activity_id && activities.map((item, i) => (
                                             <PlaylistActivityItem
                                                 key={item.activity_id}
                                                 item={item}
@@ -131,7 +131,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                             </DndContext>
                             : 
                             <ul>
-                                {activities[0].activity_id && activities.map((item, i) => (
+                                {activities[0]?.activity_id && activities.map((item, i) => (
                                     <PlaylistActivityItem
                                         key={item.activity_id}
                                         item={item}

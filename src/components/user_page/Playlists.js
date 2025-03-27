@@ -15,7 +15,7 @@ import ActivitySelection from "./playlist_selection/ActivitySelection";
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
     const user = useRouteLoaderData('root');
-    const user_id = user ? user.user_id : null;
+    const user_id = user ? user.user_id : 'guest';
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
@@ -66,6 +66,7 @@ function Playlists ({ data }) {
     }
 
     const handleAddActivity = (playlist_id, user_id, playlist_title, activity_ids) => {
+        console.log('activity_id', activity_ids)
         setModalInfo({
             selected_playlist_id: playlist_id,
             selected_playlist_user_id: user_id,

@@ -65,7 +65,7 @@ function ActivityItem({ activity, activities }) {
 
     return (
         <div className={classes.main}>
-            {/* Playlist */}
+            {/* Modal: select playlist*/}
             {showPlaylistSelection && 
                 <PlaylistSelection 
                     user_id={user_id} 
