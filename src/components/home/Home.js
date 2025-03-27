@@ -6,23 +6,15 @@ import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
 function Home() {
     const user = useRouteLoaderData('root');
     // const token = user ? user.token : null;
-    const user_id = user ? user.user_id : null;
+    const user_id = user ? user.user_id : 'guest';
     const navigate = useNavigate();
 
     const handleNavigate = (path) => {
         if (path === 'playlist') {
-            if(user_id){
-                navigate(`/mypage/${user_id}/playlists`);
-            } else {
-                navigate("/auth?mode=login", {
-                    state: {
-                        prev_location: 'playlists'
-                    }
-                })
-            }
-
-           
-        } else if (path === 'add activity') {
+            navigate(`/mypage/${user_id}/playlists`);
+        }; 
+        
+        if (path === 'add activity') {
             if(user_id){
                 navigate("/activities/new")
             } else {
@@ -32,7 +24,7 @@ function Home() {
                     }
                 })
             }  
-        }
+        };
        
     }
 
@@ -62,7 +54,9 @@ function Home() {
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
                             <Link to='/activities' >
-                                <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder'>Explore Now</ButtonS>
+                                <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder'>
+                                    Explore Now
+                                </ButtonS>
                             </Link>
                         </div>
                     </div>
@@ -76,7 +70,9 @@ function Home() {
                             while reducing your workload. 
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
-                            <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>Create Now</ButtonS>
+                            <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>
+                                Create Now
+                            </ButtonS>
                         </div>
                     </div>
                 </div>

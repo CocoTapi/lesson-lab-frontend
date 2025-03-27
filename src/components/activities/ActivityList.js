@@ -9,7 +9,6 @@ import { FaChevronDown } from "react-icons/fa";
 import { useSubmit } from 'react-router-dom';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ButtonM from '../UI/ButtonM';
-import { useNavigate } from 'react-router-dom';
 
 
 
@@ -21,7 +20,6 @@ function ActivityList({ activities }){
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
-    const navigate = useNavigate();
     
     //handle screen sizes change
     useEffect(() => {
@@ -70,7 +68,10 @@ function ActivityList({ activities }){
     
     //handle return to all activities
     const handleReturnToAllActivities = () => {
-        navigate('/activities')    
+        // navigate('/activities')    
+        setSelectedDurations([]);
+        setSelectedAgeGroups([]);
+        setSelectedTags([]);
     }
 
     const filteredActivities = getFilteredActivities(activities, selectedDurations, selectedAgeGroups, selectedTags);
@@ -90,7 +91,12 @@ function ActivityList({ activities }){
         <div className={classes.main}>
             <div className={classes.contents}>
                 <div className={classes.sortBar}>
-                    <SortBar onSortChange={setSortOption} onSearchTermSubmit={handleSearchTermSubmit} search='true' />
+                    <SortBar 
+                        onSortChange={setSortOption} 
+                        onSearchTermSubmit={handleSearchTermSubmit} 
+                        search='true' 
+                    />
+
                     { showFilterButton && 
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
@@ -131,7 +137,7 @@ function ActivityList({ activities }){
                         {sortedActivities.length === 0 &&
                             <div>
                                 <h2>No results found. Please try a different search term.</h2>
-                                <ButtonM onClick={handleReturnToAllActivities}>Return to all activities</ButtonM>
+                                <ButtonM onClick={handleReturnToAllActivities}>Show all activities</ButtonM>
                             </div>
                         }
                         {sortedActivities.map((activity) => (
