@@ -12,6 +12,7 @@ import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { GoHeartFill, GoTrash } from "react-icons/go";
 import { FaChevronDown } from "react-icons/fa";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import Swal from "sweetalert2";
 
 
 function MyFavorites({ data }){
@@ -27,6 +28,7 @@ function MyFavorites({ data }){
     const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
+
 
     //handle screen size change
     useEffect(() => {
@@ -49,11 +51,19 @@ function MyFavorites({ data }){
 
     //action: remove activity
     const handleRemoveActivity = (activity_id, title) => {
-        const proceed = window.confirm(`Are you sure you want to unlike "${title}" ?`);
-    
-        if (proceed) {
-            submit({ activity_id, user_id}, { method: "DELETE" });
-        }
+        Swal.fire({
+        title: "Are you sure?",
+        text: `Do you want to unlike this activity"?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ff9603",
+        cancelButtonColor: "#55555",
+        confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                submit({ activity_id, user_id}, { method: "DELETE" });
+            }
+        });
     }; 
 
     //handle filter functions

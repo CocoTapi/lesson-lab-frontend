@@ -5,6 +5,8 @@ import { Link, useSubmit } from 'react-router-dom';
 import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
 import { GoTrash } from 'react-icons/go';
+import Swal from "sweetalert2";
+
 
 function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='false' }){
     const submit = useSubmit();
@@ -14,9 +16,25 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
     }
 
     const handleDeleteActivity = (title, activity_id) => {
-        const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
+        // const proceed = window.confirm(`Are you sure you want to delete ${title}?`);
 
-        if (proceed) submit({ user_id: activity.user_id, activity_id }, { method: 'DELETE' });
+        // if (proceed) submit({ user_id: activity.user_id, activity_id }, { method: 'DELETE' });
+
+        // TODO: test this
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to unlike this activity"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ff9603",
+            cancelButtonColor: "#55555",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                submit({ user_id: activity.user_id, activity_id }, { method: 'DELETE' });
+            }
+        });
+        
     }
 
     const image = (
