@@ -1,5 +1,47 @@
+import demoData from '../../demoData.json';
+
 export const PLAYLIST_KEY = 'guest_playlist';
 export const FAVORITES_KEY = 'guest_favorites';
+
+// Fetch all activities from demo file
+export function fetchActivities() {
+    const activities = demoData.activities;
+    if(!activities) throw new Error('There is no list of activities.')
+    return activities;
+}
+
+// Fetch activity by activity_id
+export function fetchActivityById(id) {
+    const activities = fetchActivities();
+    const activity = activities.find(activity => 
+        activity.activity_id === id
+    );
+
+    if (!activity) throw new Error(`No matched activity with activity_id: ${id}`);
+
+    return activity;
+}
+
+// Find activities based on search term
+export function findActivities(searchTerm) {
+    const activities = fetchActivities();  
+    const lowercasedSearchTerm = searchTerm.toLowerCase(); 
+
+    const matchedActivities = activities.filter(activity => {
+        // Check if any of the fields contain the search term (case-insensitive)
+        return (
+            activity.title.toLowerCase().includes(lowercasedSearchTerm) ||
+            activity.summary.toLowerCase().includes(lowercasedSearchTerm) ||
+            activity.duration.toString().includes(lowercasedSearchTerm) ||
+            activity.age_group.toLowerCase().includes(lowercasedSearchTerm) ||
+            activity.tags.some(tag => tag.toLowerCase().includes(lowercasedSearchTerm))
+        );
+    });
+
+    if(!matchedActivities) return [];
+
+    return matchedActivities; 
+}
 
 // General utilities
 export function getGuestData(key) {
@@ -34,6 +76,20 @@ export function addFavoritesIntoResponseData(activities) {
     }
 }
 
+export function getUserFavoritesActivity() {
+    const favorites = getGuestData(FAVORITES_KEY);
+    const list = [];
+    const activities = fetchActivities();
+
+    for (const activity of activities) {
+        if (favorites.includes(activity.activity_id)) {
+            list.push(activity);
+        }
+    }
+
+    return list;
+}
+
 // Guest playlist functions
 export function saveNewGuestPlaylist(playlistTitle) {
     const playlists = getGuestData(PLAYLIST_KEY);
@@ -43,6 +99,7 @@ export function saveNewGuestPlaylist(playlistTitle) {
         total_duration: 0,
         activity_list: []
     }
+
     playlists.push(newPlaylist);
     setGuestData(PLAYLIST_KEY, playlists);
 }
@@ -51,6 +108,8 @@ export function removeGuestPlaylist(playlist_id) {
     const updatedPlaylists = getGuestData(PLAYLIST_KEY).filter(p => 
         p.playlist_id !== playlist_id
     );
+
+    if (!updatedPlaylists) throw new Error('Could not remove playlist.')
 
     setGuestData(PLAYLIST_KEY, updatedPlaylists);
 }

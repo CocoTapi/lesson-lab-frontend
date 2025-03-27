@@ -8,7 +8,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 function MainNavigation() {
     const user = useLoaderData();  // Assuming user data is correctly provided
     const token = user ? user.token : null;
-    const user_id = user ? user.user_id : null;
+    const user_id = user ? user.user_id : 'guest';
     const user_name = user ? user.user_name : null;
     const user_initial = user_name ? user_name.split('')[0] : null;
     const [showMenuBar, setShoeMenuBar] = useState(false);
@@ -63,14 +63,12 @@ function MainNavigation() {
                         >
                             Activities
                         </NavLink>
-                        {token &&
-                            <NavLink
-                                to={`/mypage/${user_id}`}
-                                className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
-                                >
-                                    My Page
-                            </NavLink>
-                        }
+                        <NavLink
+                            to={`/mypage/${user_id}`}
+                            className={({ isActive }) => isActive ? `${classes.active} ${classes.link}` : classes.link}
+                            >
+                                My Page
+                        </NavLink>
                     </>
                 }
 
@@ -78,7 +76,6 @@ function MainNavigation() {
             <div className={classes.right}>
                 {!token && (
                     <div className={classes.rightContent}> 
-                        
                             <NavLink
                                 to="/auth?mode=login"
                                 className={classes.authFrame}
@@ -118,9 +115,9 @@ function MainNavigation() {
                         <Link className={classes.menuItem}  to="/" onClick={handleCloseMenu} >Home</Link>
                         <Link className={classes.menuItem} to="/activities" onClick={handleCloseMenu} >Activities</Link>
                         <Link className={classes.menuItem} to="/activities/new" onClick={handleCloseMenu} > Add Activity</Link>
+                        <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>
                         {!token && <Link className={classes.menuItem} to="/auth?mode=login" onClick={handleCloseMenu} >Login</Link>}
                         {!token && <Link  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} >Sign Up</Link>}
-                        {token && <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>}
                         {token && 
                             <Form className={classes.menuItem} action='/logout' method='post' >
                                 <button type="submit" className={classes.auth}>Logout</button>

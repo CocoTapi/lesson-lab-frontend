@@ -32,7 +32,12 @@ function Profile({ data }){
                         <div className={classes.profileContents}>
                          
                             <div className={classes.centerGroup}>
-                                <h3 className={classes.centerGroupTitle}>Guest User</h3>
+                                <h3>Hi there!</h3>
+                                <h3 className={classes.centerGroupTitle}>
+                                Check out your favorite activities and build your own playlist. 
+                                Want to save everything and unlock all the features? 
+                                Just sign up or log in — it’s quick and easy!
+                                </h3>
                                 <ButtonM onClick={handleLogin}>Login</ButtonM>
                                 <h3>or</h3>
                                 <ButtonM onClick={handleSignUp} colorScheme="primary">Sign Up</ButtonM>

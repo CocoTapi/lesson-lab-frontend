@@ -119,8 +119,7 @@ function Playlists ({ data }) {
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
-        console.log("No playlist")
-        content = <p>"You haven't created playlists yet."</p>
+        content = <p>You haven't created playlists yet.</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
             <li key={playlist.playlist_id}>

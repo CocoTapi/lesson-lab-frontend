@@ -5,7 +5,7 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
-import { addActivitiesToPlaylist, addGuestFavorite, FAVORITES_KEY, getGuestData, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
+import { addActivitiesToPlaylist, addGuestFavorite, FAVORITES_KEY, fetchActivityById, getGuestData, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
 
 
 
@@ -29,27 +29,32 @@ export default ActivityDetailPage;
 async function loadActivity(id) {
     const token = getAuthToken();
     let tokenHeaders = null;
+    let activity;
+
     if (token) {
         tokenHeaders = {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             },
+        };
+
+        const response = await fetch(`${API_URL}/activities/${id}`, tokenHeaders);
+
+        if (!response.ok) {
+            throw json({ message: "Could not fetch activity detail." }, { status: 500 })
         }
+
+        const resData = await response.json();
+
+        activity = resData.activity[0];
     }
-
-
-    const response = await fetch(`${API_URL}/activities/${id}`, tokenHeaders);
-
-    if (!response.ok) {
-        throw json({ message: "Could not fetch activity detail." }, { status: 500 })
-    }
-
-    const resData = await response.json();
-
-    const activity = resData.activity[0];
 
     if(!token) {
+        const activity_id = parseInt(id);
+        activity = fetchActivityById(activity_id);
+
+        // Update guest is_favorited
         const favActivities = getGuestData(FAVORITES_KEY);
        
         activity.is_favorited = favActivities.includes(activity.activity_id);
@@ -70,7 +75,7 @@ export async function loader({ request, params }) {
 export async function action({ params, request }) {
     const activity_id = parseInt(params.activityId);
     const method = request.method;
-    if(!method) throw json({ message: "Method is missing." }) ;
+    if(!method) throw new Error({ message: "Method is missing." }) ;
 
     const token = getAuthToken();
     const formData = await request.formData();
@@ -130,27 +135,28 @@ export async function action({ params, request }) {
         };
 
         if (token && user_id !== 'guest') {
-        response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
-            method: method,
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(playlistData)
-        })
+            response = await fetch(`${API_URL}/user/${user_id}/playlists/${playlist_id}`, {
+                method: method,
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(playlistData)
+            })
+
+            if (response?.status === 422 || response?.status === 401) {
+                return response;
+            };
+        
+            if (response && !response.ok) {
+                throw json({ message: "Activity request failed." }, { status: 500 })
+            }
+
         } else if (user_id === 'guest'){
             const durations = formData.get('activityDuration');
             addActivitiesToPlaylist(playlist_id, arr, durations);
         }
     } 
-
-    if (response?.status === 422 || response?.status === 401) {
-        return response;
-    };
-
-    if (response && !response.ok) {
-        throw json({ message: "Activity request failed." }, { status: 500 })
-    }
 
     return redirect(`/activities/${activity_id}`);
 }

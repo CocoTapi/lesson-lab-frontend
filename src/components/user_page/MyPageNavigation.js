@@ -5,14 +5,9 @@ import PageHeader from "../UI/PageHeader";
 
 function MyPageNavigation(){
     const user = useRouteLoaderData('root');
-    let user_id;
-    let token;
-    //let user_name;
-    if(user) {
-        token = user.token;
-        user_id = user.user_id;
-        //user_name = user.user_name
-    }
+    const token = user ? user.token : null;
+    const user_id = user ? user.user_id : 'guest';
+
 
     return (
         <header>
@@ -20,30 +15,34 @@ function MyPageNavigation(){
             <nav className={classes.labels}>
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}`: '../auth?mode=login'}
+                            to={`/mypage/${user_id}`}
                             end
                         >
                            Profile
                     </NavLink>
+
                     <NavLink
-                            className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}/favorites`: '../auth?mode=login'}
-                            end
+                        className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
+                        to={`/mypage/${user_id}/favorites`}
+                        end
                     >
                             <h4><GoHeartFill /></h4>
                             Likes
                     </NavLink>
-                    <NavLink
-                            className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
-                            end
-                        >
-                        My Uploads
 
-                    </NavLink>       
+                    {user_id !== 'guest' &&
+                        <NavLink
+                                className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
+                                to={token ? `/mypage/${user_id}/uploads`: '../auth?mode=login'}
+                                end
+                            >
+                            My Uploads
+                        </NavLink>     
+                    }
+
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
-                            to={token ? `/mypage/${user_id}/playlists`: '../auth?mode=login'}
+                            to={`/mypage/${user_id}/playlists`}
                             end
                         >
                         Playlists
