@@ -27,13 +27,24 @@
   --color-grey-300: #D9D9D9;
   --color-grey-400: #b4b4b4;
   --color-grey-500: #666666;
+}
 
-
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100%;
 }
+
+main {
+  flex: 1;
+}
+
 
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

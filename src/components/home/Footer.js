@@ -6,7 +6,7 @@ import { FaInstagram, FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 //TODO: contact link
 function Footer(){
     return (
-        <div className={classes.frame}>
+        <footer className={classes.frame}>
             <div className={classes.contents}>
                 <div className={classes.iconGroup}>
                     <div>
@@ -31,7 +31,7 @@ function Footer(){
                 <h3>LessonLab</h3>
                 <p>2024</p>
             </div>
-        </div>
+        </footer>
     )
 }
 
