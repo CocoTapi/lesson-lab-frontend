@@ -13,8 +13,6 @@ import { loadActivities } from "../../../pages/activities/ActivitiesPage";
 import UserActivityList from "../UserActivityList";
 import TopButton from "../../UI/TopButton";
 
-//TODO: fetch only activities that is not in the playlist
-
 function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities, title, onClose, onBackToSelection, current_activity_ids }){
     const [ activityList, setActivityList ] = useState([]);
     const [ selectedActivities, setSelectedActivities ] = useState([]);

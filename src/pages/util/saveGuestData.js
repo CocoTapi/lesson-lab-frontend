@@ -142,8 +142,20 @@ export function fetchGuestPlaylist() {
 
 }
 
+// create new activity with an activity
+export async function addPlaylistWithId(title, activityDuration, activity_id) {
+    // create new playlist
+    const newPlaylist = await saveNewGuestPlaylist(title);
+    if(!newPlaylist) throw new Error('Could not create new Playlist.');
+
+    newPlaylist.total_duration = activityDuration;
+    newPlaylist.activity_list.push(activity_id);
+
+    return newPlaylist
+}
+
 // Add a new Playlist (Only the title of playlist)
-export function saveNewGuestPlaylist(playlistTitle) {
+export async function saveNewGuestPlaylist(playlistTitle) {
     const playlists = getGuestData(PLAYLIST_KEY);
     const newPlaylist =  {
         playlist_id: playlists.length + 1,
@@ -154,6 +166,9 @@ export function saveNewGuestPlaylist(playlistTitle) {
 
     playlists.push(newPlaylist);
     setGuestData(PLAYLIST_KEY, playlists);
+    
+    // return new playlist 
+    return newPlaylist;
 }
 
 export function removeGuestPlaylist(playlist_id) {

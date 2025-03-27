@@ -47,8 +47,6 @@ export async function loadUserPlaylists(id) {
         const resData = await response.json();
        
         userPlaylists = resData.userPlaylists;
-        console.log("userPlaylists", userPlaylists);
-    
         
     } else if (user_id === 'guest') {
         userPlaylists = fetchGuestPlaylist()
@@ -83,6 +81,7 @@ export async function action({ request }) {
         bodyContent = { playlist_id };
         if (token && user_id !== 'guest') {
             await handleRequest(url, method, token, bodyContent, user_id);
+
         } else if (user_id === 'guest') {
             removeGuestPlaylist(playlist_id);
         }
@@ -108,6 +107,7 @@ export async function action({ request }) {
             url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
     
             await handleRequest(url, method, token, bodyContent, user_id);
+
         } else if (user_id === 'guest')  {
             reorderPlaylist(playlist_id, orderUpdate)
         }
@@ -122,6 +122,7 @@ export async function action({ request }) {
             bodyContent = { playlist_title }; 
 
             await handleRequest(url, method, token, bodyContent, user_id);
+
         } else if (user_id === 'guest') {
             saveNewGuestPlaylist(playlist_title);
         }
@@ -146,6 +147,7 @@ export async function action({ request }) {
     
             url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
             await handleRequest(url, method, token, bodyContent, user_id);
+
         } else if (user_id === 'guest')  {
             const duration = formData.get('activityDuration');
             removeActivityFromPlaylist(playlist_id, activity_id, duration);
@@ -168,6 +170,7 @@ export async function action({ request }) {
             url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
     
             await handleRequest(url, method, token, bodyContent, user_id);
+
         } else if (user_id === 'guest')  {
             const durations = formData.get('playlistDuration');
             addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
@@ -178,7 +181,7 @@ export async function action({ request }) {
 
 }
 
-async function handleRequest(url, method, token, bodyContent, user_id) {
+export async function handleRequest(url, method, token, bodyContent, user_id) {
     const response = await fetch(url, {
         method: method,
         headers: {

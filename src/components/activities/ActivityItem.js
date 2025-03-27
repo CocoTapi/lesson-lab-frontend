@@ -13,6 +13,7 @@ function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
     const token = user ? user.token : null;
     const user_id = user ? user.user_id : 'guest';
+    
     const submit = useSubmit();
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);
     const [showTags, setShowTags] = useState(false);
@@ -63,6 +64,23 @@ function ActivityItem({ activity, activities }) {
         setShowPlaylistSelection(false);
     }
 
+    // create new playlist and add the activity in it
+    const handleSubmitNewPlaylist = () => {
+        // Get today's date 
+        const now = new Date();
+
+        // YYYY-MM-DD HH:mm:ss
+        const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
+
+        if(!formattedDate) throw new Error('Fail to get date.')
+
+        const playlist_title = `New Playlist - ${formattedDate}`;
+        const activity_id = activity.activity_id;
+        const activity_duration = activity.duration;
+
+        submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
+    }
+
     return (
         <div className={classes.main}>
             {/* Modal: select playlist*/}
@@ -73,6 +91,7 @@ function ActivityItem({ activity, activities }) {
                     onPlaylistSubmit={handlePlaylistSubmit} 
                     onClose={handleCancel} 
                     current_activity_id={activity.activity_id}
+                    onCreatePlaylist={handleSubmitNewPlaylist}
                 />
             }
             

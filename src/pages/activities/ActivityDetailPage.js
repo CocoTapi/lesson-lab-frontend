@@ -5,7 +5,9 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
-import { addActivitiesToPlaylist, addGuestFavorite, FAVORITES_KEY, fetchActivityById, getGuestData, removeGuestFavorite, saveGuestData } from "../util/saveGuestData";
+import { addActivitiesToPlaylist, addGuestFavorite, addPlaylistWithId, FAVORITES_KEY, fetchActivityById, fetchGuestPlaylist, fetchPlaylistByTitle, getGuestData, removeGuestFavorite, saveGuestData, saveNewGuestPlaylist } from "../util/saveGuestData";
+import { handleRequest } from "../user_page/UserPlaylistsPage";
+import Swal from 'sweetalert2';
 
 
 
@@ -81,6 +83,8 @@ export async function action({ params, request }) {
     const formData = await request.formData();
     const user_id = formData.get("user_id");
     if (user_id !== 'guest') parseInt(user_id);
+    
+    const playlist_title = formData.get("playlist_title");
 
     let response;
 
@@ -98,7 +102,7 @@ export async function action({ params, request }) {
     }
     
     // manage user likes
-    if (method === "POST") {
+    if (method === "POST" && !playlist_title) {
         const favData = {
             user_id,
             activity_id,
@@ -157,6 +161,37 @@ export async function action({ params, request }) {
             addActivitiesToPlaylist(playlist_id, arr, durations);
         }
     } 
+
+    // Create a new playlist and add the activity
+    if (method === 'POST' && playlist_title) {
+        if (token && user_id !== 'guest') {
+            const bodyContent = { playlist_title, activity_id};
+            let url = `${API_URL}/user/${user_id}/playlists`;
+
+            await handleRequest(url, method, token, bodyContent, user_id);
+            // TODO: check this post request is working in backend
+        } else {
+            const activity_duration = formData.get('activity_duration');
+
+            const newPlaylist = await addPlaylistWithId(playlist_title, activity_duration, activity_id);
+
+            if(newPlaylist) {
+                Swal.fire({
+                    title: "Success!",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#315079'
+                  });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong. Please try again later.",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                  });   
+            }
+        }
+    }
 
     return redirect(`/activities/${activity_id}`);
 }
