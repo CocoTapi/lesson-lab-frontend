@@ -5,15 +5,27 @@ import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import TopButton from "../UI/TopButton";
+import { fetchGuestPlaylist } from "../../pages/util/saveGuestData";
+import ButtonM from "../UI/ButtonM";
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
-function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id }){
+// Select playlist from Activity Item
+function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id, onCreatePlaylist }){
     const [userPlaylists, setUserPlaylists] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState();
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
-            const response = await loadUserPlaylists(user_id);
-            setUserPlaylists(response.userPlaylists);
+            let list;
+            if (user_id !== 'guest'){
+                const response = await loadUserPlaylists(user_id);
+                list = response.userPlaylists;
+            } else {
+                list = fetchGuestPlaylist();
+            }
+           
+            setUserPlaylists(list);
         };
 
         fetchPlaylistData();
@@ -33,11 +45,20 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
         }
     }
 
+    const handleCreatePlaylist = () => {
+        onCreatePlaylist();
+        onClose();
+    }
+
     const availablePlaylists = userPlaylists.filter(playlist => !playlist.activity_ids.includes(current_activity_id));
 
     let content;
     if (Object.keys(availablePlaylists).length === 0) {
-        content = <p>No playlist available.</p>
+        content = (
+            <div>
+                <p>No playlist available.</p>
+            </div>
+        )
     } else {
         content = availablePlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>
@@ -71,8 +92,19 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
                     <div className={classes.playlistRadio}>
                         {content}
                     </div>
+                    <div className={classes.createPlaylistButtonComponent}>
+                        {user_id === 'guest' ?
+                        (   <ButtonM onClick={handleCreatePlaylist}>
+                                Create Playlist & Add
+                            </ButtonM>
+                        ) : (
+                            <Link to={`../../mypage/${user_id}/playlists`} >
+                                <p>Do you want to create a new playlist first?</p>
+                            </Link>
+                        )}
+                    </div>
                     <div className={classes.bottomSubmitButton}>
-                        <ButtonS colorScheme="primary">Done</ButtonS>
+                        <ButtonS colorScheme="primary">Done</ButtonS> :
                     </div>
                 </form>
             </div>

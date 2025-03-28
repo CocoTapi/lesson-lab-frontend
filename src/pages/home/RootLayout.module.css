@@ -1,0 +1,9 @@
+.rootLayout {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.mainContent {
+    flex: 1; /* Pushes footer to the bottom */
+}

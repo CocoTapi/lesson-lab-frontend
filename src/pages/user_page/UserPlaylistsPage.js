@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { API_URL, baseUrl } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
+import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
 
 //TODO: re-fetch data after adding activities into playlist
 
@@ -26,22 +27,30 @@ export default UserPlaylistsPage;
 
 export async function loadUserPlaylists(id) {
     const token = getAuthToken();
-    const response = await fetch(`${API_URL}/user/${id}/playlists`, {
-        method: "GET",
-        headers: {
-            'Content-Type' : 'application/json',
-            'Authorization': `Bearer ${token}`
+    let user_id = id;
+    if(user_id !== 'guest') user_id = parseInt(id);
+    let userPlaylists;
+
+    if(token && user_id !== 'guest') {
+        const response = await fetch(`${API_URL}/user/${user_id}/playlists`, {
+            method: "GET",
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    
+        if(!response.ok) {
+            throw json({message: "Could not fetch user playlists."}, { status: 500})
         }
-    });
-
-    if(!response.ok) {
-        throw json({message: "Could not fetch user playlists."}, { status: 500})
+    
+        const resData = await response.json();
+       
+        userPlaylists = resData.userPlaylists;
+        
+    } else if (user_id === 'guest') {
+        userPlaylists = fetchGuestPlaylist()
     }
-
-    const resData = await response.json();
-   
-    const userPlaylists = resData.userPlaylists;
-
     return { userPlaylists };
 }
 
@@ -55,11 +64,11 @@ export async function userPlaylistsLoader({ request, params }){
 }
 
 export async function action({ request }) {
-
     const token = getAuthToken();
     const method = request.method;
     const formData = await request.formData()
-    const user_id = parseInt(formData.get("user_id"));
+    let user_id = formData.get("user_id")
+    if (user_id !== 'guest') parseInt(user_id);
     const playlist_id = parseInt(formData.get("playlist_id")) || null;
 
     let url = `${API_URL}/user/${user_id}/playlists`
@@ -68,10 +77,15 @@ export async function action({ request }) {
     //----- NOT require refresh after the response -----
 
     //delete playlist 
-    if (method === 'DELETE' &&! formData.get("activity_id") ) {
+    if (method === 'DELETE' && !formData.get("activity_id") ) {
         bodyContent = { playlist_id };
+        if (token && user_id !== 'guest') {
+            await handleRequest(url, method, token, bodyContent, user_id);
 
-        await handleRequest(url, method, token, bodyContent, user_id);
+        } else if (user_id === 'guest') {
+            removeGuestPlaylist(playlist_id);
+        }
+
         return redirect(`/mypage/${user_id}/playlists`);
     }
 
@@ -80,26 +94,39 @@ export async function action({ request }) {
         const list = formData.get('orderUpdate');
         const orderUpdate = list.split(',').map(Number);
 
-        //console.log("orderUpdate:", orderUpdate);
-
-        bodyContent = {
-            playlist_id,
-            reorderedActivities: orderUpdate
+        if (!Array.isArray(orderUpdate) || orderUpdate.some(id => typeof id !== 'number')) {
+            throw new Error('Invalid reorder data');
         }
 
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+        if (token && user_id !== 'guest') {
+            bodyContent = {
+                playlist_id,
+                reorderedActivities: orderUpdate
+            }
+    
+            url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+    
+            await handleRequest(url, method, token, bodyContent, user_id);
 
-        await handleRequest(url, method, token, bodyContent, user_id);
+        } else if (user_id === 'guest')  {
+            reorderPlaylist(playlist_id, orderUpdate)
+        }
+        
         return redirect(`/mypage/${user_id}/playlists`);
     }
 
     //create new playlist
     if (method === 'POST') {
         const playlist_title = formData.get("playlist_title");
+        if (token && user_id !== 'guest') {
+            bodyContent = { playlist_title }; 
 
-        bodyContent = { playlist_title: playlist_title}; 
+            await handleRequest(url, method, token, bodyContent, user_id);
 
-        await handleRequest(url, method, token, bodyContent, user_id);
+        } else if (user_id === 'guest') {
+            saveNewGuestPlaylist(playlist_title);
+        }
+       
         return redirect(`/mypage/${user_id}/playlists`);
     }
 
@@ -111,16 +138,21 @@ export async function action({ request }) {
     //remove activity from playlist 
     if (method === 'DELETE' && formData.get("activity_id")) {
         const activity_id = parseInt(formData.get("activity_id"));
-        console.log("start deleting", playlist_id, activity_id)
 
-        bodyContent = { 
-            playlist_id,
-            activity_id 
-        };
+        if(token && user_id !== 'guest') {
+            bodyContent = { 
+                playlist_id,
+                activity_id 
+            };
+    
+            url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+            await handleRequest(url, method, token, bodyContent, user_id);
 
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
-
-        await handleRequest(url, method, token, bodyContent, user_id);
+        } else if (user_id === 'guest')  {
+            const duration = formData.get('activityDuration');
+            removeActivityFromPlaylist(playlist_id, activity_id, duration);
+        }
+       
         return handlePageRefresh(user_id);
     } 
 
@@ -129,20 +161,27 @@ export async function action({ request }) {
         const list = formData.get("activity_id_list");
         const activity_id_arr = list.split(',').map(Number);
 
-        bodyContent = {
-            playlist_id,
-            activity_id_arr
+        if (token && user_id !== 'guest') {
+            bodyContent = {
+                playlist_id,
+                activity_id_arr
+            }
+    
+            url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
+    
+            await handleRequest(url, method, token, bodyContent, user_id);
+
+        } else if (user_id === 'guest')  {
+            const durations = formData.get('playlistDuration');
+            addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
         }
-
-        url = `${API_URL}/user/${user_id}/playlists/${playlist_id}`
-
-        await handleRequest(url, method, token, bodyContent, user_id);
+        
         return handlePageRefresh(user_id);    
     }
 
 }
 
-async function handleRequest(url, method, token, bodyContent, user_id) {
+export async function handleRequest(url, method, token, bodyContent, user_id) {
     const response = await fetch(url, {
         method: method,
         headers: {

@@ -10,12 +10,18 @@ import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
+import Swal from "sweetalert2";
 
+// TODO: change add playlist form style from accordion to normal
+// TODO: check if the title is empty or not
+// TODO: add a message when the playlist is empty
+// TODO: add boarder for sort bar for playlist
+// TODO: handle the situation when you click "My Page" title next to add activity button for guests
 
 function Playlists ({ data }) {
     const userPlaylists = data.userPlaylists;
     const user = useRouteLoaderData('root');
-    const user_id = user ? user.user_id : null;
+    const user_id = user ? user.user_id : 'guest';
     const submit = useSubmit();
     const [ sortOption, setSortOption ] = useState('');
     const [ showPlaylistForm, setShowPlaylistForm] = useState(false);
@@ -49,23 +55,41 @@ function Playlists ({ data }) {
     }, []);
 
 
-    const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title) => {
-        const proceed = window.confirm(`Are you sure you want to remove "${activity_title}" from "${playlist_title}"?`);
-    
-        if (proceed) {
-            submit({ activity_id, user_id, playlist_id}, { method: "DELETE" });
-        }
+    const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title, activityDuration) => {
+         Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to remove this activity"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ff9603",
+            cancelButtonColor: "#55555",
+            confirmButtonText: "Yes, remove it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                submit({ activity_id, user_id, playlist_id, activityDuration}, { method: "DELETE" });
+            }
+          });
     };
     
     const handleDeletePlaylist = (playlist_id, playlist_title) => {
-        const proceed = window.confirm(`Are you sure you want to delete "${playlist_title}"?`);
-    
-        if (proceed) {
-            submit({ user_id, playlist_id }, { method: "DELETE" });
-        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to delete this playlist"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ff9603",
+            cancelButtonColor: "#55555",
+            confirmButtonText: "Yes, delete it!",
+          },
+        ).then((result) => {
+            if (result.isConfirmed) {
+                submit({ user_id, playlist_id }, { method: "DELETE" });
+            }
+          });
     }
 
     const handleAddActivity = (playlist_id, user_id, playlist_title, activity_ids) => {
+        console.log('activity_id', activity_ids)
         setModalInfo({
             selected_playlist_id: playlist_id,
             selected_playlist_user_id: user_id,
@@ -103,8 +127,8 @@ function Playlists ({ data }) {
         return 0; // Default case if no sort option is matched
     });
 
-    const handleSubmitPlaylistActivities = (arr, selected_user_id, selected_playlist_id) => {
-        submit({ user_id: selected_user_id, playlist_id: selected_playlist_id, activity_id_list: arr}, { method: "PATCH"});
+    const handleSubmitPlaylistActivities = (arr, user_id, playlist_id, playlistDuration) => {
+        submit({ user_id, playlist_id, activity_id_list: arr, playlistDuration}, { method: "PATCH"});
         setShowModal(false);
     }
 
@@ -119,8 +143,7 @@ function Playlists ({ data }) {
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
-        console.log("No playlist")
-        content = <p>"You haven't created playlists yet."</p>
+        content = <p>You haven't created playlists yet.</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
             <li key={playlist.playlist_id}>

@@ -11,7 +11,7 @@ import PlaylistActivityItem from "./PlaylistActivityItem";
 import ButtonS from "../UI/ButtonS";
 
 function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivity, playlistButtons, activityButtons, saveOrder, showChangeOrderButton }) {
-    const [ showStarIcon, setshowStarIcon] = useState(false);
+    const [ showStarIcon, setShowStarIcon] = useState(false);
     const [ showSummary, setShowSummary ] = useState(false);
     const [activities, setActivities] = useState(playlist.activities);
     const [isReorderMode, setIsReorderMode] = useState(false);
@@ -20,10 +20,10 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 640) {
-                setshowStarIcon(true);
+                setShowStarIcon(true);
                 setShowSummary(true);
             } else {
-                setshowStarIcon(false);
+                setShowStarIcon(false);
                 setShowSummary(false);
             }
         };
@@ -103,7 +103,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 activityDetail={ 
                     <div>
-                        { showChangeOrderButton !== 'false' && playlist.activity_ids.length > 1 &&
+                        { showChangeOrderButton !== 'false' && playlist.activities.length > 1 &&
                             <div className={classes.reorderButtonComponent}>
                             <ButtonS colorScheme="primaryBorder" onClick={handleOrderModeClick} >
                                 {isReorderMode ? "Save Order" : "Change Order"}
@@ -114,7 +114,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                             <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                                 <SortableContext items={activities.map(item => item.activity_id)} strategy={verticalListSortingStrategy}>
                                     <ul>
-                                        {activities[0].activity_id && activities.map((item, i) => (
+                                        {activities[0]?.activity_id && activities.map((item, i) => (
                                             <PlaylistActivityItem
                                                 key={item.activity_id}
                                                 item={item}
@@ -131,7 +131,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                             </DndContext>
                             : 
                             <ul>
-                                {activities[0].activity_id && activities.map((item, i) => (
+                                {activities[0]?.activity_id && activities.map((item, i) => (
                                     <PlaylistActivityItem
                                         key={item.activity_id}
                                         item={item}

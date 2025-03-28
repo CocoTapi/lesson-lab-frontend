@@ -30,9 +30,13 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                             <button className={classes.modalBigButton} onClick={() => handleClick('like')}>
                             <GoHeartFill />likes
                             </button>
-                            <button className={classes.modalBigButton}  onClick={() => handleClick('upload')}>
-                                My Uploads
-                            </button>
+
+                            {user_id !== 'guest' && 
+                                <button className={classes.modalBigButton}  onClick={() => handleClick('upload')}>
+                                    My Uploads
+                                </button>
+                            }
+
                             <button className={classes.modalBigButton}  onClick={() => handleClick('allActivities')}>
                                 All activities
                             </button>
@@ -53,7 +57,7 @@ function ActivitySelection({ title, playlist_id, user_id, onSubmitActivities, on
                     current_activity_ids={current_activity_ids}
                     onSubmitActivities={onSubmitActivities}
                     onClose={onClose}
-                    onBacktoSelection={handleBackButton}
+                    onBackToSelection={handleBackButton}
                 />
             }
             

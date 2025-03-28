@@ -4,7 +4,7 @@ import ButtonS from '../UI/ButtonS';
 import { FaCheck } from 'react-icons/fa';
 import classes from '../css/user_page/ProfileForm.module.css'
 import { useState } from 'react';
-
+import Swal from "sweetalert2";
 
 
 function ProfileForm({ userProfile }) {
@@ -13,10 +13,25 @@ function ProfileForm({ userProfile }) {
     const navigation = useNavigation();
     const user_id = userProfile.user_id;
 
-    const passwordCangeHandler = (event) => {
-        event.preventDefault();
-        const proceed = window.confirm(`Are you sure you want to change password`);
-        if(proceed) setPasswordChange(!passwordChange);
+    const passwordChangeHandler = (event) => {
+        // TODO: test this
+        // event.preventDefault();
+        // const proceed = window.confirm(`Are you sure you want to change password`);
+        // if(proceed) setPasswordChange(!passwordChange);
+
+         Swal.fire({
+            title: "Are you sure?",
+            text: `Do you want to unlike this activity"?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ff9603",
+            cancelButtonColor: "#55555",
+            confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setPasswordChange(!passwordChange);
+                }
+            });
     }
 
     const isSubmitting = navigation.state === 'submitting';
@@ -79,7 +94,7 @@ function ProfileForm({ userProfile }) {
                                         </label>
                                         {!passwordChange && 
                                             <div className={classes.passwordButtonComponent}>
-                                                <button onClick={passwordCangeHandler} className={classes.passwordButton} >Change Password</button>
+                                                <button onClick={passwordChangeHandler} className={classes.passwordButton} >Change Password</button>
                                             </div>
                                         }
                                         {passwordChange && 

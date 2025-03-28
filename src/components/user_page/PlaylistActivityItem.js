@@ -80,7 +80,7 @@ function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveA
               </div>
             }
             buttonChildren={activityButtons ? (
-              <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, playlist.playlist_id, playlist.playlist_title)}>
+              <IconButton onClick={() => onRemoveActivity(item.activity_id, item.title, playlist.playlist_id, playlist.playlist_title, item.duration)}>
                 <GoTrash className={classes.playlistItemTrash} />
               </IconButton>
             ) : ''}

@@ -6,10 +6,9 @@ import SortBar, { getSortedActivities } from '../UI/SortBar';
 import Tag from '../UI/Tag';
 import { MdOutlineFilterCenterFocus } from "react-icons/md";
 import { FaChevronDown } from "react-icons/fa";
-import { useSubmit } from 'react-router-dom';
+import { useNavigate, useSubmit } from 'react-router-dom';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ButtonM from '../UI/ButtonM';
-import { useNavigate } from 'react-router-dom';
 
 
 
@@ -60,6 +59,8 @@ function ActivityList({ activities }){
         setSelectedTags(tag);
     }
 
+    // TODO: search term reset
+
    //handle search term 
     const handleSearchTermSubmit = (searchTerm) => {
         if(!searchTerm || searchTerm.length <= 0) {
@@ -70,7 +71,13 @@ function ActivityList({ activities }){
     
     //handle return to all activities
     const handleReturnToAllActivities = () => {
-        navigate('/activities')    
+        // From Filter    
+        setSelectedDurations([]);
+        setSelectedAgeGroups([]);
+        setSelectedTags([]);
+
+        // From Search 
+        navigate('../activities');
     }
 
     const filteredActivities = getFilteredActivities(activities, selectedDurations, selectedAgeGroups, selectedTags);
@@ -90,7 +97,12 @@ function ActivityList({ activities }){
         <div className={classes.main}>
             <div className={classes.contents}>
                 <div className={classes.sortBar}>
-                    <SortBar onSortChange={setSortOption} onSearchTermSubmit={handleSearchTermSubmit} search='true' />
+                    <SortBar 
+                        onSortChange={setSortOption} 
+                        onSearchTermSubmit={handleSearchTermSubmit} 
+                        search='true' 
+                    />
+
                     { showFilterButton && 
                         <div className={classes.filterButtons} onClick={handleFilterButton} >
                             <div className={classes.fButton}>
@@ -131,7 +143,7 @@ function ActivityList({ activities }){
                         {sortedActivities.length === 0 &&
                             <div>
                                 <h2>No results found. Please try a different search term.</h2>
-                                <ButtonM onClick={handleReturnToAllActivities}>Return to all activities</ButtonM>
+                                <ButtonM onClick={handleReturnToAllActivities}>Show all activities</ButtonM>
                             </div>
                         }
                         {sortedActivities.map((activity) => (

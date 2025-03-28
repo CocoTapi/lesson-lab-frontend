@@ -9,14 +9,13 @@ export function testTokenDuration() {
     const expirationDate = new Date(storedExpirationDate);
     const now = new Date();
     const duration = expirationDate.getTime() - now.getTime();
-    //console.log('testing duration for the token', duration)
+
     if (duration <= 0) {
         throw new Error('Token is expired')
     };
 };
 
 export function getAuthToken() {
-
     const token = localStorage.getItem('token');
 
     try {
@@ -25,7 +24,7 @@ export function getAuthToken() {
     } catch (error) {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
-        // console.error(error);
+
         return null;
     }
 
@@ -33,7 +32,6 @@ export function getAuthToken() {
 };
 
 export async function userLoader({ request, params }) {
-
     const urlParams = new URLSearchParams(new URL(request.url).search)
     let token = urlParams?.get('token');
 
@@ -49,7 +47,6 @@ export async function userLoader({ request, params }) {
             window.opener.postMessage({ token }, '*'); 
             window.close();
         }
-        //save it to local storage
     }
 
     token = getAuthToken()
@@ -64,17 +61,9 @@ export async function userLoader({ request, params }) {
 };
 
 export function handleGoogleAuthEvent(event) {
-    //console.log("call the function!!!!!");
-
-    // if (event.origin !== YOUR_BACKEND_URL) {
-    //     console.warn('Invalid event origin');
-    //     return;
-    // }
-
     if (event.data && event.data.token) {
         // Store the token
         localStorage.setItem('token', event.data.token);
-        //console.log("Token stored in local storage:", localStorage.getItem('token'));
 
         const expiration = new Date();
         expiration.setHours(expiration.getHours() + 1);
@@ -99,7 +88,6 @@ export async function getUserInfoFromToken(token) {
     }
 
     const resData = await response.json();
-    //console.log("resData:", resData);
 
     const user_id = resData.data.user_id;
     const user_name = resData.data.user_name;

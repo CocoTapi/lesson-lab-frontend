@@ -23,6 +23,7 @@ function SortBar (
     const [displayMenu, setDisplayMenu] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
  
+    // TODO: fix search submission for second time's search
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth <= 676) {

@@ -62,7 +62,7 @@ export async function action({ request, params }){
         const user_id = params.user_id;
         url = `${API_URL}/user/` + user_id;
     } else {
-        throw Error('Could not edit. Change to PATCH request.')
+        throw new Error('Could not edit. Change to PATCH request.')
     }
 
     console.log("method:", method);
