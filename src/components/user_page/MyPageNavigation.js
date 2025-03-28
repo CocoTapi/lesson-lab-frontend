@@ -11,7 +11,7 @@ function MyPageNavigation(){
 
     return (
         <header>
-           <PageHeader title='My Page' token={token} link={'/mypage'} />
+           <PageHeader title='My Page' token={token} link={`/mypage/${user_id}`} />
             <nav className={classes.labels}>
                     <NavLink
                             className={({ isActive }) => isActive ? `${classes.active} ${classes.labelItem} ` : classes.labelItem}
