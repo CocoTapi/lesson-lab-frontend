@@ -169,7 +169,9 @@ export async function action({ request }) {
             await removeActivityFromPlaylist(playlist_id, activity_id, duration);
         }
        
-        return handlePageRefresh(user_id);
+        // TODO: Check this refresh function
+        // return handlePageRefresh(user_id);
+        return null;
     } 
 
     //add activities into playlist | require refresh
@@ -192,7 +194,8 @@ export async function action({ request }) {
             await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
         }
         
-        return handlePageRefresh(user_id);    
+        // return handlePageRefresh(user_id);  
+        return null;  
     }
 
 }
