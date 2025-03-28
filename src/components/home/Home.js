@@ -1,3 +1,4 @@
+import { baseName } from '../../App';
 import ButtonS from '../UI/ButtonS';
 import classes from '../css/home/home.module.css';
 import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
@@ -32,7 +33,7 @@ function Home() {
         <div className={classes.outerFrame}>
                 <div className={classes.topImageComponent}>
                     <div className={classes.imageContents}>
-                        <img src='/full-stack-project-frontend/images/topImage.png' alt='topImage' />
+                        <img src={`/lesson-lab-frontend/images/topImage.png`} alt='topImage' />
                         <div className={classes.titleTextComponent}>
                             <h1>Achieve</h1>
                             <h1><span>Innovative</span> Education</h1>

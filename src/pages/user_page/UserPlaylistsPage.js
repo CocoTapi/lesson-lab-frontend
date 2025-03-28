@@ -1,6 +1,6 @@
 import { json, defer, Await, useRouteLoaderData, redirect } from "react-router-dom";
 import { Suspense } from "react";
-import { API_URL, baseUrl } from '../../App';
+import { API_URL, baseName, baseUrl } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
@@ -202,7 +202,7 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
 function handlePageRefresh(user_id) {
     console.log("baseUrl:", baseUrl);
 
-    const redirectUrl = `${baseUrl}/full-stack-project-frontend/mypage/${user_id}/playlists`;
+    const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
 
     console.log("Redirecting to:", redirectUrl);
     

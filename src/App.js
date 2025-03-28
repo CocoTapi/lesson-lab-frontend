@@ -4,9 +4,13 @@ import { createRouter } from './router/router';
 import UserProvider, { useUserContext } from './pages/util/UserProvider';
 // env.config();
 
-export const API_URL = process.env.REACT_APP_API_URL;
-export const baseUrl = process.env.REACT_APP_BASE_URL;
-export const baseName = process.env.REACT_APP_BASE_NAME;
+// export const API_URL = process.env.REACT_APP_API_URL;
+// export const baseUrl = process.env.REACT_APP_BASE_URL;
+// export const baseName = process.env.REACT_APP_BASE_NAME;
+
+export const API_URL = 'http://localhost:8080';
+export const baseUrl = 'http://localhost:3000';
+export const baseName = '/lesson-lab-frontend';
 
 function App() {
 

@@ -8,6 +8,7 @@ import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
 import PlaylistSelection from "./PlaylistSelection";
+import { baseName } from "../../App";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -111,7 +112,7 @@ function ActivityItem({ activity, activities }) {
                     <div className={classes.detailCard}>
                         <div className={classes.detailCardContents}>
                             <div className={classes.detailCardImage}>
-                                <img src={`/full-stack-project-frontend/images/large/${activity.image_num || 1}.png`} alt="example" />
+                                <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
                             </div>
                             <h1>{activity.title}</h1>
                             <div className={classes.detailCardIcons}>

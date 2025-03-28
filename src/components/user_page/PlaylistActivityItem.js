@@ -6,6 +6,7 @@ import IconButton from "../UI/IconButton";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GrDrag } from "react-icons/gr";
+import { baseName } from "../../App";
 
 function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveActivity, playlist, isReorderMode }){
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.activity_id });
@@ -39,7 +40,7 @@ function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveA
             }
             topImage={
               <div className={classes.accordionImage}>
-                <img src={`/full-stack-project-frontend/images/large/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }} />
+                <img src={`${baseName}/images/large/${item.image_num}.png`} alt="example" style={{ borderRadius: '10px' }} />
               </div>
             }
             activityDetail={

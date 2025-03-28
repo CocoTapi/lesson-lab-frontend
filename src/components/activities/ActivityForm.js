@@ -7,6 +7,7 @@ import ButtonM from "../UI/ButtonM";
 import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 import SelectImage from "./SelectImage";
+import { baseName } from "../../App";
 
 function ActivityForm({ existingTags, method, activity, locationState }) {   
     const user = useRouteLoaderData('root');
@@ -117,7 +118,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
                         {selectedImage ? 
                             <div>
                                 <div className={classes.activityImageFrame}  onClick={handleOpenImageSelectionModal}>
-                                    <img src={`/full-stack-project-frontend/images/large/${selectedImage}.png`} alt="activityImage" />
+                                    <img src={`${baseName}/images/large/${selectedImage}.png`} alt="activityImage" />
                                     <h2 className={classes.changeImageSign}>Change Image</h2>
                                 </div>
                             </div>

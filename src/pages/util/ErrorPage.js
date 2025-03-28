@@ -1,6 +1,7 @@
 import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import classes from './ErrorPage.module.css';
 import ButtonM from "../../components/UI/ButtonM";
+import { baseName } from "../../App";
 
 function ErrorPage(){
     let error = useRouteError();
@@ -28,7 +29,7 @@ function ErrorPage(){
           <div className={classes.errorContents}>
             <h1>{message}</h1>
               <div className={classes.imageComponent}>
-                  <img src='/full-stack-project-frontend/images/errorImg.png' alt="example" />
+                  <img src={`${baseName}/images/errorImg.png`} alt="example" />
               </div>
           </div>
           <Link to='/' className={classes.buttonComponent}>
