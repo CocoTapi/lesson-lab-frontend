@@ -54,10 +54,12 @@ async function loadActivity(id) {
 
     if(!token) {
         const activity_id = parseInt(id);
-        activity = fetchActivityById(activity_id);
+        activity = await fetchActivityById(activity_id);
 
         // Update guest is_favorited
-        const favActivities = getGuestData(FAVORITES_KEY);
+        const favActivities = await getGuestData(FAVORITES_KEY);
+
+        if (!favActivities) throw new Error('Could not get guest favorite activities');
        
         activity.is_favorited = favActivities.includes(activity.activity_id);
     }
@@ -96,8 +98,8 @@ export async function action({ params, request }) {
                     "Authorization": 'Bearer' + token
                 }
             });
-        } else {
-            removeGuestFavorite(activity_id);
+        } else if (user_id === 'guest') {
+            await removeGuestFavorite(activity_id);
         }
     }
     
@@ -120,9 +122,9 @@ export async function action({ params, request }) {
             });
         } else if (user_id === 'guest') {
             if (favData.is_favorited) {
-                removeGuestFavorite(activity_id);
+                await removeGuestFavorite(activity_id);
             } else {
-                addGuestFavorite(activity_id);
+                await addGuestFavorite(activity_id);
             }
         }
     }
@@ -158,7 +160,9 @@ export async function action({ params, request }) {
 
         } else if (user_id === 'guest'){
             const durations = formData.get('activityDuration');
-            addActivitiesToPlaylist(playlist_id, arr, durations);
+            await addActivitiesToPlaylist(playlist_id, arr, durations);
+
+            // TODO: if successful, tell user
         }
     } 
 

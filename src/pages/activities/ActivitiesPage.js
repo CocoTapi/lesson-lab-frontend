@@ -56,8 +56,10 @@ export async function loadActivities() {
 
     // Get activities data locally for demo purpose 
     if (!token) {
-        activities = fetchActivities();
-        addFavoritesIntoResponseData(activities);
+        activities = await fetchActivities();
+
+        if(!activities) throw new Error('Could not fetch activities.')
+        await addFavoritesIntoResponseData(activities);
     }
     
     return activities;
@@ -113,8 +115,8 @@ export async function action({ request }) {
 
         
         // handle guest user's favorite
-        filteredActivities = findActivities(searchTerm);
-        addFavoritesIntoResponseData(filteredActivities);
+        filteredActivities = await findActivities(searchTerm);
+        await addFavoritesIntoResponseData(filteredActivities);
     }
 
     return filteredActivities;

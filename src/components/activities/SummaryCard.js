@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { GoHeart, GoHeartFill, GoBookmark } from "react-icons/go";
 import classes from '../css/activities/SummaryCard.module.css';
+import { baseName } from '../../App';
 
 function SummaryCard({ activity, link }) {
 
@@ -11,7 +12,7 @@ function SummaryCard({ activity, link }) {
                     <div className={classes.summaryCardDuration}>
                         Duration: {activity.duration === 31 ? '30 ~ ' : activity.duration} min</div>
                     <div className={classes.summaryCardImage}>
-                        <img src={`/full-stack-project-frontend/images/large/${activity.image_num || 1}.png`} alt="example" />
+                        <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
                     </div>
                     <div className={classes.summaryCardDetails}>
                         <h2>{activity.title}</h2>

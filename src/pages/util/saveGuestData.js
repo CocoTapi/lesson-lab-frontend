@@ -4,15 +4,15 @@ export const PLAYLIST_KEY = 'guest_playlist';
 export const FAVORITES_KEY = 'guest_favorites';
 
 // Fetch all activities from demo file
-export function fetchActivities() {
+export async function fetchActivities() {
     const activities = demoData.activities;
     if(!activities) throw new Error('There is no list of activities.')
     return activities;
 }
 
 // Fetch activity by activity_id
-export function fetchActivityById(id) {
-    const activities = fetchActivities();
+export async function fetchActivityById(id) {
+    const activities = await fetchActivities();
     const activity = activities.find(activity => 
         activity.activity_id === id
     );
@@ -23,8 +23,8 @@ export function fetchActivityById(id) {
 }
 
 // Find activities based on search term
-export function findActivities(searchTerm) {
-    const activities = fetchActivities();  
+export async function findActivities(searchTerm) {
+    const activities = await fetchActivities();  
     const lowercasedSearchTerm = searchTerm.toLowerCase(); 
 
     const matchedActivities = activities.filter(activity => {
@@ -44,17 +44,17 @@ export function findActivities(searchTerm) {
 }
 
 // General utilities
-export function getGuestData(key) {
+export async function getGuestData(key) {
     return JSON.parse(localStorage.getItem(key) || '[]');
 }
 
-export function setGuestData(key, data) {
+export async function setGuestData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
 // Guest favorites functions
-export function addGuestFavorite(activity_id) {
-    const favorites = getGuestData(FAVORITES_KEY);
+export async function addGuestFavorite(activity_id) {
+    const favorites = await getGuestData(FAVORITES_KEY);
 
     if (!favorites.includes(activity_id)) {
         favorites.push(activity_id);
@@ -62,13 +62,13 @@ export function addGuestFavorite(activity_id) {
     }
 }
 
-export function removeGuestFavorite(activity_id) {
-    const updatedFavorites = getGuestData(FAVORITES_KEY).filter(id => id !== activity_id);
+export async function removeGuestFavorite(activity_id) {
+    const updatedFavorites = await getGuestData(FAVORITES_KEY).filter(id => id !== activity_id);
     setGuestData(FAVORITES_KEY, updatedFavorites);
 }
 
-export function addFavoritesIntoResponseData(activities) {
-    const favActivities = getGuestData(FAVORITES_KEY);
+export async function addFavoritesIntoResponseData(activities) {
+    const favActivities = await getGuestData(FAVORITES_KEY);
 
     for (const activity of activities) {
         // Store original like count if not already stored
@@ -88,10 +88,10 @@ export function addFavoritesIntoResponseData(activities) {
     }
 }
 
-export function getUserFavoritesActivity() {
-    const favorites = getGuestData(FAVORITES_KEY);
+export async function getUserFavoritesActivity() {
+    const favorites = await getGuestData(FAVORITES_KEY);
     const list = [];
-    const activities = fetchActivities();
+    const activities = await fetchActivities();
 
     for (const activity of activities) {
         if (favorites.includes(activity.activity_id)) {
@@ -105,9 +105,9 @@ export function getUserFavoritesActivity() {
 // Guest playlist functions
 
 // Fetch userPlaylist
-export function fetchGuestPlaylist() {
-    let playlists = getGuestData(PLAYLIST_KEY);
-    const activities = fetchActivities();
+export async function fetchGuestPlaylist() {
+    let playlists = await getGuestData(PLAYLIST_KEY);
+    const activities = await fetchActivities();
 
     // Iterate through the playlists and map activity IDs to activity details
     const userPlaylists = playlists.map(playlist => {
@@ -168,7 +168,7 @@ export async function addPlaylistWithId(title, activityDuration, activity_id) {
 
 // Add a new Playlist (Only the title of playlist)
 export async function saveNewGuestPlaylist(playlistTitle) {
-    const playlists = getGuestData(PLAYLIST_KEY);
+    const playlists = await getGuestData(PLAYLIST_KEY);
     const newPlaylist =  {
         playlist_id: playlists.length + 1,
         playlist_title: playlistTitle,
@@ -183,18 +183,23 @@ export async function saveNewGuestPlaylist(playlistTitle) {
     return newPlaylist;
 }
 
-export function removeGuestPlaylist(playlist_id) {
-    const updatedPlaylists = getGuestData(PLAYLIST_KEY).filter(p => 
+export async function removeGuestPlaylist(playlist_id) {
+    const data =  await getGuestData(PLAYLIST_KEY);
+    if(!data) throw new Error('Could not get guest playlist data.')
+
+    const updatedPlaylists = data.filter(p => 
         p.playlist_id !== playlist_id
     );
 
     if (!updatedPlaylists) throw new Error('Could not remove playlist.')
 
     setGuestData(PLAYLIST_KEY, updatedPlaylists);
+
+    // TODO: check if it is correctly updated and return new playlist 
 }
 
-export function addActivitiesToPlaylist(playlist_id, newIds, duration) {
-    const playlists = getGuestData(PLAYLIST_KEY);
+export async function addActivitiesToPlaylist(playlist_id, newIds, duration) {
+    const playlists = await getGuestData(PLAYLIST_KEY);
 
     const updated = playlists.map(p => {
         if (p.playlist_id === playlist_id) {
@@ -210,8 +215,8 @@ export function addActivitiesToPlaylist(playlist_id, newIds, duration) {
     setGuestData(PLAYLIST_KEY, updated);
 }
 
-export function removeActivityFromPlaylist(playlist_id, activity_id, duration){
-    const playlists = getGuestData(PLAYLIST_KEY);
+export async function removeActivityFromPlaylist(playlist_id, activity_id, duration){
+    const playlists = await getGuestData(PLAYLIST_KEY);
 
     const updated = playlists.map(p => {
         if (p.playlist_id === playlist_id) {
@@ -227,8 +232,8 @@ export function removeActivityFromPlaylist(playlist_id, activity_id, duration){
     setGuestData(PLAYLIST_KEY, updated);
 }
 
-export function reorderPlaylist(playlist_id, reorderedActivityIds) {
-    const playlists = getGuestData(PLAYLIST_KEY);
+export async function reorderPlaylist(playlist_id, reorderedActivityIds) {
+    const playlists = await getGuestData(PLAYLIST_KEY);
 
     const updated = playlists.map(p => {
         if (p.playlist_id === playlist_id) {

@@ -145,7 +145,7 @@ function Playlists ({ data }) {
         content = <p>You haven't created playlists yet.</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
-            <li key={playlist.playlist_id}>
+            <li key={`${playlist.total_duration}-${playlist.playlist_id}`}>
                 <PlaylistItem 
                     playlist={playlist}
                     onRemoveActivity={handleRemoveActivity}

@@ -1,5 +1,5 @@
 import { json } from 'react-router-dom'
-import { API_URL } from '../../App';
+import { API_URL, baseName } from '../../App';
 import { baseUrl } from '../../App';
 
 //TODO token stores in local storage or cookies?
@@ -69,7 +69,7 @@ export function handleGoogleAuthEvent(event) {
         expiration.setHours(expiration.getHours() + 1);
         localStorage.setItem('expiration', expiration.toISOString());
 
-        window.location.href = `${baseUrl}/full-stack-project-frontend`
+        window.location.href = `${baseUrl}${baseName}`
     }
 }
 

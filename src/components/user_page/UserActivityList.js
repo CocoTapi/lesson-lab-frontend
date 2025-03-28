@@ -6,6 +6,7 @@ import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
 import { GoTrash } from 'react-icons/go';
 import Swal from "sweetalert2";
+import { baseName } from '../../App';
 
 
 function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='false' }){
@@ -39,7 +40,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
 
     const image = (
             <div className={classes.accordionImage}>
-                <img src={`/full-stack-project-frontend/images/large/${activity.image_num || 1}.png`} alt="example" />
+                <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
             </div>
     )
 

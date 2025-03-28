@@ -1,3 +1,4 @@
+import { baseName } from "../../App";
 import ButtonS from "../UI/ButtonS";
 import Modal from "../UI/Modal";
 import classes from '../css/activities/SelectImage.module.css'
@@ -28,7 +29,7 @@ function SelectImage({ onImageSelect, selectedImage, onShowModal }){
             <div>
                 <h2>Currently Selected:</h2>
                 <div className={classes.selectedImageFrame} onClick={handleCancel}>
-                    <img src={`/full-stack-project-frontend/images/large/${selectedImage}.png`} alt="activityImage" />
+                    <img src={`${baseName}/images/large/${selectedImage}.png`} alt="activityImage" />
                 </div>
             </div>
             }
@@ -42,7 +43,7 @@ function SelectImage({ onImageSelect, selectedImage, onShowModal }){
                     className={classes.imageFrame}
                   >
                     <img 
-                        src={`/full-stack-project-frontend/images/large/${image}.png`} 
+                        src={`${baseName}/images/large/${image}.png`} 
                         alt={`activity-image-${image}`}
                     />
                   </li>

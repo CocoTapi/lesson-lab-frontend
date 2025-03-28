@@ -1,9 +1,10 @@
 import { json, defer, Await, useRouteLoaderData, redirect } from "react-router-dom";
 import { Suspense } from "react";
-import { API_URL, baseUrl } from '../../App';
+import { API_URL, baseName, baseUrl } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
+import Swal from 'sweetalert2';
 
 //TODO: re-fetch data after adding activities into playlist
 
@@ -49,7 +50,7 @@ export async function loadUserPlaylists(id) {
         userPlaylists = resData.userPlaylists;
         
     } else if (user_id === 'guest') {
-        userPlaylists = fetchGuestPlaylist()
+        userPlaylists = await fetchGuestPlaylist()
     }
     return { userPlaylists };
 }
@@ -82,7 +83,7 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest') {
-            removeGuestPlaylist(playlist_id);
+            await removeGuestPlaylist(playlist_id);
         }
 
         return redirect(`/mypage/${user_id}/playlists`);
@@ -108,7 +109,7 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest')  {
-            reorderPlaylist(playlist_id, orderUpdate)
+            await reorderPlaylist(playlist_id, orderUpdate)
         }
         
         return redirect(`/mypage/${user_id}/playlists`);
@@ -123,7 +124,23 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest') {
-            saveNewGuestPlaylist(playlist_title);
+            const newPlaylist = await saveNewGuestPlaylist(playlist_title);
+
+            if(newPlaylist) {
+                            Swal.fire({
+                                title: "Success!",
+                                icon: "success",
+                                draggable: true,
+                                confirmButtonColor: '#315079'
+                              });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong. Please try again later.",
+                                footer: '<a href="#">Why do I have this issue?</a>'
+                              });   
+                        }
         }
        
         return redirect(`/mypage/${user_id}/playlists`);
@@ -149,7 +166,7 @@ export async function action({ request }) {
 
         } else if (user_id === 'guest')  {
             const duration = formData.get('activityDuration');
-            removeActivityFromPlaylist(playlist_id, activity_id, duration);
+            await removeActivityFromPlaylist(playlist_id, activity_id, duration);
         }
        
         return handlePageRefresh(user_id);
@@ -172,7 +189,7 @@ export async function action({ request }) {
 
         } else if (user_id === 'guest')  {
             const durations = formData.get('playlistDuration');
-            addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
+            await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
         }
         
         return handlePageRefresh(user_id);    
@@ -200,7 +217,12 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
 
 
 function handlePageRefresh(user_id) {
-    const redirectUrl = `${baseUrl}/full-stack-project-frontend/mypage/${user_id}/playlists`;
+    console.log("baseUrl:", baseUrl);
+
+    const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
+
+    console.log("Redirecting to:", redirectUrl);
+    
     window.location.href = redirectUrl;
     return null;
 }
