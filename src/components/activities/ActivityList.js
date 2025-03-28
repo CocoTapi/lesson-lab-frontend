@@ -14,35 +14,38 @@ import ButtonM from '../UI/ButtonM';
 
 function ActivityList({ activities }){
     const [ sortOption, setSortOption ] = useState(''); 
-    const [ showFilterButton, setShowFilterButton ] = useState(false);
     const [ selectedDurations, setSelectedDurations ] = useState([]);
     const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
     const [ selectedTags, setSelectedTags ] = useState([]);
-    const [ showFilterMenu, setShowFilterMenu ] = useState(false);
     const submit = useSubmit();
     const navigate = useNavigate();
+
+    const [displayFilterButton, setDisplayFilterButton] = useState(true);
+
+    const [openFilter, setOpenFilter] = useState(false);
     
     //handle screen sizes change
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 1300) {
-                setShowFilterButton(true);
+                setDisplayFilterButton(true);
             } else {
-                setShowFilterButton(false);
+                setDisplayFilterButton(false);
             }
         };
 
+        // Initial check on mount
         handleResize();
 
         // Listen for resize events
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         // Clean up
-        return () => window.removeEventListener('resize', handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     const handleFilterButton = () => {
-        setShowFilterMenu(!showFilterMenu);
+        setOpenFilter(!openFilter);
     }
 
 
@@ -103,42 +106,62 @@ function ActivityList({ activities }){
                         search='true' 
                     />
 
-                    { showFilterButton && 
-                        <div className={classes.filterButtons} onClick={handleFilterButton} >
+                    {/* Show Filter Button for Small Screens */}
+                    {displayFilterButton &&
+                        <div
+                            className={classes.filterButtons}
+                            onClick={handleFilterButton}
+                        >
                             <div className={classes.fButton}>
-                                <Tag hash='false'>
-                                    <MdOutlineFilterCenterFocus className={classes.fIcon} />
+                                <Tag hash="false">
+                                    <MdOutlineFilterCenterFocus
+                                        className={classes.fIcon}
+                                    />
                                     <p>Filter</p>
-                                    {showFilterMenu ? <IoIosCloseCircleOutline className={classes.closeIcon}/> : <FaChevronDown className={classes.fIcon} /> }
+                                    {openFilter ? (
+                                        <IoIosCloseCircleOutline
+                                            className={classes.closeIcon}
+                                        />
+                                    ) : (
+                                        <FaChevronDown className={classes.fIcon} />
+                                    )}
                                 </Tag>
                             </div>
                         </div>
                     }
-                    {showFilterMenu && 
-                        <Filter 
-                            onDurationsChange={handleDurationChange} 
-                            onAgeGroupsChange={handleAgeGroupChange} 
-                            onTagsChange={handleTagChange} 
+
+                    {displayFilterButton && openFilter && 
+                    <div className={classes.filter}>
+                        <Filter
+                            onDurationsChange={handleDurationChange}
+                            onAgeGroupsChange={handleAgeGroupChange}
+                            onTagsChange={handleTagChange}
                             selectedDurations={selectedDurations}
                             selectedAgeGroups={selectedAgeGroups}
                             selectedTags={selectedTags}
-                            onShowFilterMenu={setShowFilterMenu}
-                        />}
+                        />
+                    </div>
+                    }
+
                     <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities.length} items</h2>
+
                 </div>
                 <div className={classes.frame}>
-                    { !showFilterButton && 
+                     {/* Filter inside .frame only when width >= 3000px */}
+                     {!displayFilterButton && (
                         <div className={classes.filter}>
-                            <Filter 
-                                onDurationsChange={handleDurationChange} 
-                                onAgeGroupsChange={handleAgeGroupChange} 
+                            <Filter
+                                onDurationsChange={handleDurationChange}
+                                onAgeGroupsChange={handleAgeGroupChange}
                                 onTagsChange={handleTagChange}
                                 selectedDurations={selectedDurations}
                                 selectedAgeGroups={selectedAgeGroups}
                                 selectedTags={selectedTags}
                             />
                         </div>
-                    }
+                    )}
+
+                    {/* activity list */}
                     <ul className={classes.list}>
                         {sortedActivities.length === 0 &&
                             <div>

@@ -5,8 +5,6 @@ import ButtonM from "../../components/UI/ButtonM";
 function ErrorPage(){
     let error = useRouteError();
     let message = 'Something went wrong!';
-    // let secondMessage = ''
-    // let status;
 
     if (isRouteErrorResponse(error)) {
         if(error.message) console.log("error message:", error.message);
