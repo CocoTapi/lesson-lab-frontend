@@ -23,6 +23,7 @@ function ErrorPage(){
           message = "Looks like server is down."
         }
       }
+
     
     return ( 
         <div className={classes.errorComponent}>

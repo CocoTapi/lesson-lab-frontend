@@ -46,7 +46,9 @@ export async function loadUserFavorites(id) {
         const resData = await response.json();
         userFavorites = resData.userFavorites
     } else if (id === 'guest') {
-        userFavorites = getUserFavoritesActivity();
+        userFavorites = await getUserFavoritesActivity();
+
+        if(!userFavorites) throw new Error('Could not get user favorite activities')
     }
   
     return { userFavorites };
@@ -82,7 +84,7 @@ export async function action({ request }) {
             throw json({message: "Could not remove favorite activity."}, { status: 500})
         }
     } else if (user_id === 'guest'){
-        removeGuestFavorite(activity_id)
+        await removeGuestFavorite(activity_id)
     }
 
    
