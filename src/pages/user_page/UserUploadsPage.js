@@ -40,16 +40,13 @@ export async function loadUserUploads(id) {
     }
 
     const resData = await response.json();
-    //console.log("resData:", resData)
     let userUploads = resData.userUploads;
-    //console.log("userUploads:", userUploads);
 
     return { userUploads };
 }
 
 export async function loader({ request, params }){
     const id = params.user_id;
-    //console.log("loader id", id);
 
     return defer({
         data: await loadUserUploads(id),    

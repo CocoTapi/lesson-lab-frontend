@@ -74,7 +74,6 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
 
     const handleDeleteTag = (e, index) => {
         e.preventDefault();
-        //console.log("index: ", index);
         setChosenTags(prevTags => prevTags.filter((tag, i) => i !== index))
     };
 

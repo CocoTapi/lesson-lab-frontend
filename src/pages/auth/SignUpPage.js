@@ -38,8 +38,6 @@ export async function action ({ request }) {
         password: password,
     };
 
-    console.log("sign Up data: ", signUpData);
-
     const response = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: {
@@ -47,8 +45,6 @@ export async function action ({ request }) {
         },
         body: JSON.stringify(signUpData)
     })
-    
-    console.log("response data: ", response);
 
    //this make you show which item is invalid.
     if (response.status === 422 || response.status === 401) {

@@ -56,7 +56,6 @@ export async function loadUserPlaylists(id) {
 
 export async function userPlaylistsLoader({ request, params }){
     const id = params.user_id;
-    //console.log("loader id", id);
 
     return defer({
         data: await loadUserPlaylists(id),

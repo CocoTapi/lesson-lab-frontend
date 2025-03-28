@@ -11,11 +11,8 @@ export async function onOauthRedirectLoad() {
     console.log(getCookie());
 }
 
+// Require this...
 export async function loader({ _request, _params }) {
-    
-    // const id = params.user_id;
-    //console.log("loader id", id);
-    console.log(getCookie());
     return null;
 }
 

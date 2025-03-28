@@ -41,9 +41,8 @@ async function loadUserDetail(id) {
         }
     
         const resData = await response.json();
-        //console.log("resData:", resData)
         const userProfile = resData.userProfile;
-        //console.log("userProfile:", userProfile);
+        
         return { userProfile };
     }
 
@@ -57,7 +56,6 @@ async function loadUserDetail(id) {
 
 export async function loader({ request, params }){
     const id = params.user_id;
-    //console.log("loader id", id);
 
     return defer({
         data: await loadUserDetail(id),

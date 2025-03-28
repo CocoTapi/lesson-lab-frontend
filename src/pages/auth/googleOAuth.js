@@ -8,7 +8,7 @@ function navigate(url) {
     const width = 600, height = 600;
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
-    console.log(isMobileDevice());
+   
     // Open the authentication popup
     // window.open(
     //     url,
@@ -38,8 +38,6 @@ function isMobileDevice() {
 
 export async function googleOAuthAction() {
     try {
-        console.log("Google auth submitted");
-
         const response = await fetch(`${API_URL}/oauth`, {
             method: "POST",
             headers: {
@@ -52,8 +50,6 @@ export async function googleOAuthAction() {
         }
 
         const data = await response.json();
-        //console.log(data);
-        //console.log(data.authUrl);
         
         //this authUrl navigates the google login page. 
 

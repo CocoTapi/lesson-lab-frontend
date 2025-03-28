@@ -54,8 +54,6 @@ export async function action({ request, params }){
         password
     };
 
-    //console.log("profile data: ", profileData);
-
     let url;
 
     if (method === 'PATCH') {
@@ -64,8 +62,6 @@ export async function action({ request, params }){
     } else {
         throw new Error('Could not edit. Change to PATCH request.')
     }
-
-    console.log("method:", method);
 
     const response = await fetch(url, {
         method: method,
@@ -86,7 +82,6 @@ export async function action({ request, params }){
     }
     
     const resData = await response.json();
-    //console.log("resData after edit profile", resData);
 
     const newToken = resData.token;
 

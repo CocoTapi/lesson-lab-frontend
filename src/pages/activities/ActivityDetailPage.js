@@ -5,7 +5,7 @@ import ActivityItem from "../../components/activities/ActivityItem";
 // import ActivityList from "../../components/activities/ActivityList";
 import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
-import { addActivitiesToPlaylist, addGuestFavorite, addPlaylistWithId, FAVORITES_KEY, fetchActivityById, fetchGuestPlaylist, fetchPlaylistByTitle, getGuestData, removeGuestFavorite, saveGuestData, saveNewGuestPlaylist } from "../util/saveGuestData";
+import { addActivitiesToPlaylist, addGuestFavorite, addPlaylistWithId, FAVORITES_KEY, fetchActivityById, getGuestData, removeGuestFavorite } from "../util/saveGuestData";
 import { handleRequest } from "../user_page/UserPlaylistsPage";
 import Swal from 'sweetalert2';
 

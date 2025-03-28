@@ -9,7 +9,7 @@ import { getUserFavoritesActivity, removeGuestFavorite } from "../util/saveGuest
 
 function UserFavoritesPage(){
     const { data } = useRouteLoaderData('user-favorites');
-    //console.log("data:", data);
+    
     return (
         <>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>

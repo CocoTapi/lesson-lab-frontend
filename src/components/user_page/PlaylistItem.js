@@ -37,8 +37,6 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    //console.log(playlist)
-
     const handleDragEnd = (event) => {
         const { active, over } = event;
     

@@ -10,8 +10,6 @@ function ActivitiesPage() {
     const [activities, setActivities] = useState(initialActivities);
     const filteredActivities = useActionData();
 
-    //console.log("activities:", activities)
-
     //TODO: handle if there is 0 match 
 
     useEffect(() => {
