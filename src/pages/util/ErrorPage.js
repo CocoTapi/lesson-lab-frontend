@@ -23,8 +23,8 @@ function ErrorPage(){
           message = "Looks like server is down."
         }
       }
-      console.log(error);
-    
+
+      
     return ( 
         <div className={classes.errorComponent}>
           <div className={classes.errorContents}>
