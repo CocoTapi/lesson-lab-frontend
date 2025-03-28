@@ -3,7 +3,6 @@ import classes from '../css/home/Footer.module.css';
 import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 
-//TODO: contact link
 function Footer(){
     return (
         <footer className={classes.frame}>
