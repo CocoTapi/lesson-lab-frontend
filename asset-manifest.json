@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/full-stack-project-frontend/static/css/main.3dcf78ce.css",
-    "main.js": "/full-stack-project-frontend/static/js/main.040aaf8c.js",
-    "static/js/488.947193f2.chunk.js": "/full-stack-project-frontend/static/js/488.947193f2.chunk.js",
-    "index.html": "/full-stack-project-frontend/index.html",
-    "main.3dcf78ce.css.map": "/full-stack-project-frontend/static/css/main.3dcf78ce.css.map",
-    "main.040aaf8c.js.map": "/full-stack-project-frontend/static/js/main.040aaf8c.js.map",
-    "488.947193f2.chunk.js.map": "/full-stack-project-frontend/static/js/488.947193f2.chunk.js.map"
+    "main.css": "/CocoTapi/lesson-lab-frontend/static/css/main.36391bab.css",
+    "main.js": "/CocoTapi/lesson-lab-frontend/static/js/main.06a74617.js",
+    "static/js/488.d8f86c06.chunk.js": "/CocoTapi/lesson-lab-frontend/static/js/488.d8f86c06.chunk.js",
+    "index.html": "/CocoTapi/lesson-lab-frontend/index.html",
+    "main.36391bab.css.map": "/CocoTapi/lesson-lab-frontend/static/css/main.36391bab.css.map",
+    "main.06a74617.js.map": "/CocoTapi/lesson-lab-frontend/static/js/main.06a74617.js.map",
+    "488.d8f86c06.chunk.js.map": "/CocoTapi/lesson-lab-frontend/static/js/488.d8f86c06.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3dcf78ce.css",
-    "static/js/main.040aaf8c.js"
+    "static/css/main.36391bab.css",
+    "static/js/main.06a74617.js"
   ]
 }
