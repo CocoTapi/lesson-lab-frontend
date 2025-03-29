@@ -8,7 +8,6 @@ import TopButton from "../UI/TopButton";
 import { fetchGuestPlaylist } from "../../pages/util/saveGuestData";
 import ButtonM from "../UI/ButtonM";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
 
 // Select playlist from Activity Item
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id, onCreatePlaylist }){
@@ -17,13 +16,9 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
-            let list;
-            if (user_id !== 'guest'){
-                const response = await loadUserPlaylists(user_id);
-                list = response.userPlaylists;
-            } else {
-                list = fetchGuestPlaylist();
-            }
+           
+            const response = await loadUserPlaylists(user_id);
+            const list = response.userPlaylists;
            
             setUserPlaylists(list);
         };
@@ -50,16 +45,21 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
         onClose();
     }
 
-    const availablePlaylists = userPlaylists.filter(playlist => !playlist.activity_ids.includes(current_activity_id));
+    let availablePlaylists;
+    if (userPlaylists.length > 0) {
+        availablePlaylists = userPlaylists.filter(playlist => 
+            playlist.activity_ids.includes(current_activity_id)
+        );
+    }
 
     let content;
-    if (Object.keys(availablePlaylists).length === 0) {
+    if (availablePlaylists && Object.keys(availablePlaylists).length === 0) {
         content = (
             <div>
                 <p>No playlist available.</p>
             </div>
         )
-    } else {
+    } else if (availablePlaylists) {
         content = availablePlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>
                 <input

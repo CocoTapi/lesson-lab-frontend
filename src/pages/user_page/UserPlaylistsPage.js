@@ -50,7 +50,7 @@ export async function loadUserPlaylists(id) {
         userPlaylists = resData.userPlaylists;
         
     } else if (user_id === 'guest') {
-        userPlaylists = await fetchGuestPlaylist()
+        userPlaylists = await fetchGuestPlaylist();
     }
     return { userPlaylists };
 }

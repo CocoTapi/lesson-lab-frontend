@@ -52,6 +52,7 @@ async function loadActivity(id) {
         activity = resData.activity[0];
     }
 
+    // This is demo purpose
     if(!token) {
         const activity_id = parseInt(id);
         activity = await fetchActivityById(activity_id);
@@ -76,6 +77,7 @@ export async function loader({ request, params }) {
     })
 }
 
+// handle user's like or dislike an activity
 export async function action({ params, request }) {
     const activity_id = parseInt(params.activityId);
     const method = request.method;

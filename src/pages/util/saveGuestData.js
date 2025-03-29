@@ -106,50 +106,40 @@ export async function getUserFavoritesActivity() {
 
 // Fetch userPlaylist
 export async function fetchGuestPlaylist() {
-    let playlists = await getGuestData(PLAYLIST_KEY);
-    const activities = await fetchActivities();
+    const [playlists, allActivities] = await Promise.all([
+        getGuestData(PLAYLIST_KEY),  //array
+        fetchActivities() //object
+    ]);
 
-    // Iterate through the playlists and map activity IDs to activity details
+    // make a map to insert activity by id
+    const activityMap = new Map(allActivities.map(activity => [activity.activity_id, activity]));
+
     const userPlaylists = playlists.map(playlist => {
-        const playlistActivities = playlist.activity_list.map((activityId, index) => {
-            
-            // Find the activity corresponding to the activityId
-            const activity = activities.find(item => item.activity_id === activityId);
+        const activities = [];
+        console.log(playlist);
+        playlist.activity_ids.map((activity_id, index) => {
+            const activity = activityMap.get(activity_id);
 
             if (!activity) {
-                throw new Error(`Activity with activity_id: ${activityId} not found`);
+                throw new Error(`Activity with activity_id: ${activity_id} not found`);
             }
 
-            // Build the activity object with additional details
-            return {
-                image_num: activity.image_num,
-                activity_id: activity.activity_id,
-                position: index + 1, // Position in the playlist (1-based index)
-                title: activity.title,
-                summary: activity.summary,
-                duration: activity.duration,
-                instructions: activity.instructions || 'N/A',
-                objectives: activity.objectives || 'N/A',
-                materials: activity.materials || 'N/A',
-                links: activity.links || null
+            // Add position to the activity object
+            const activityWithPosition = {
+                ...activity,
+                position: index + 1
             };
+
+            activities.push(activityWithPosition);
         });
 
-        // Calculate the total duration for the playlist
-        const totalDuration = playlistActivities.reduce(
-            (sum, activity) => sum + activity.duration, 0
-        );
-
+        // Add activities to the playlist
         return {
-            playlist_id: playlist.playlist_id,
-            playlist_title: playlist.playlist_title,
-            user_id: 'guest', 
-            total_duration: totalDuration,
-            activities: playlistActivities,
-            activity_ids: playlist.activity_list
+            ...playlist,
+            activities: activities
         };
-    });
-
+    })
+    
     return userPlaylists; 
 
 }
@@ -161,7 +151,7 @@ export async function addPlaylistWithId(title, activityDuration, activity_id) {
     if(!newPlaylist) throw new Error('Could not create new Playlist.');
 
     newPlaylist.total_duration = activityDuration;
-    newPlaylist.activity_list.push(activity_id);
+    newPlaylist.activity_ids.push(activity_id);
 
     return newPlaylist
 }
@@ -173,7 +163,7 @@ export async function saveNewGuestPlaylist(playlistTitle) {
         playlist_id: playlists.length + 1,
         playlist_title: playlistTitle,
         total_duration: 0,
-        activity_list: []
+        activity_ids: []
     }
 
     playlists.push(newPlaylist);
@@ -206,7 +196,7 @@ export async function addActivitiesToPlaylist(playlist_id, newIds, duration) {
             return {
                 ...p,
                 total_duration: duration,
-                activity_list: [...p.activity_list, ...newIds],
+                activity_ids: [...p.activity_ids, ...newIds],
             };
         }
         return p;
@@ -222,7 +212,7 @@ export async function removeActivityFromPlaylist(playlist_id, activity_id, durat
         if (p.playlist_id === playlist_id) {
             return {
                 ...p,
-                activity_list: p.activity_list.filter(id => id !== activity_id),
+                activity_ids: p.activity_ids.filter(id => id !== activity_id),
                 total_duration: Math.max(0, p.total_duration - (duration || 0))
             };
         }
@@ -239,7 +229,7 @@ export async function reorderPlaylist(playlist_id, reorderedActivityIds) {
         if (p.playlist_id === playlist_id) {
             return {
                 ...p,
-                activity_list: reorderedActivityIds
+                activity_ids: reorderedActivityIds
             };
         }
         return p;
