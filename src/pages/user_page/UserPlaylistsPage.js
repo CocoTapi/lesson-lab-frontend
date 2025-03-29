@@ -127,20 +127,20 @@ export async function action({ request }) {
             const newPlaylist = await saveNewGuestPlaylist(playlist_title);
 
             if(newPlaylist) {
-                            Swal.fire({
-                                title: "Success!",
-                                icon: "success",
-                                draggable: true,
-                                confirmButtonColor: '#315079'
-                              });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong. Please try again later.",
-                                footer: '<a href="#">Why do I have this issue?</a>'
-                              });   
-                        }
+                Swal.fire({
+                    title: "Success!",
+                    icon: "success",
+                    draggable: true,
+                    confirmButtonColor: '#315079'
+                    });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong. Please try again later.",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                    });   
+            }
         }
        
         return redirect(`/mypage/${user_id}/playlists`);
