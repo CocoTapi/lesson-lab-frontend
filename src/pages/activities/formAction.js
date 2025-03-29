@@ -1,8 +1,7 @@
 import { getAuthToken } from "../util/checkAuth";
 import { API_URL } from "../../App";
 import { json, defer, redirect } from "react-router-dom";
-import { CANCEL_BUTTON_COLOR, CONFIRM_BUTTON_COLOR } from "../util/commonConstants";
-import Swal from "sweetalert2";
+import { swalAlert } from "../util/swalModal";
 
 export async function action({ request, params }){
     const data = await request.formData();  
@@ -55,29 +54,18 @@ export async function action({ request, params }){
         }
 
         return redirect(redirectPath);
-    
     }
 
     if (user_id === 'guest') {
-        // show modal message
-        Swal.fire({
-            title: "Do you want to login/sign up?",
-            text: "You can add activity after login/sign up!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: CONFIRM_BUTTON_COLOR,
-            cancelButtonColor: CANCEL_BUTTON_COLOR,
-            confirmButtonText: "Yes!"
-          }).then((result) => {
-            if (result.isConfirmed) {
-                return redirect('/auth?mode=login');
-            } else {
-                return redirect('/activities');
-            }
-          });  
-    }
 
-    
+        swalAlert(
+            "Membership Required",
+            "Please log in or sign up to add an activity.", 
+            "OK"
+        );
+
+        return redirect('/auth?mode=login');                
+    }
     
 }
 
@@ -92,9 +80,9 @@ async function loadTags(){
     
         const resData = await response.json();
         return resData.tags;
+    } else {
+       return null;
     }
-    
-    return null;
 }
 
 export function loader(){
@@ -102,3 +90,5 @@ export function loader(){
         tags: loadTags()
     })
 }
+
+

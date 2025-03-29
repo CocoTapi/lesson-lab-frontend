@@ -22,7 +22,7 @@ function Home() {
                         prev_location: '/activities/new'
                     }
                 })
-            }  
+            } 
         };
        
     }
