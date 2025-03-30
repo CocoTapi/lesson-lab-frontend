@@ -88,7 +88,7 @@ function MyFavorites({ data }){
     let content;
     
     if (Object.keys(userFavorites).length === 0) {
-        content = <p>You haven't liked activities.</p>
+        content = <p className={classes.noContent}>You haven't added activities.</p>
     } else {
         filteredActivities = getFilteredActivities(userFavorites, selectedDurations, selectedAgeGroups, selectedTags);
         sortedActivities = getSortedActivities( sortOption, filteredActivities );

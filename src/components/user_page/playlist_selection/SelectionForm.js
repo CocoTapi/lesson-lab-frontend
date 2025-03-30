@@ -60,9 +60,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("selectedDurationTotal", selectedDurationTotal);
-        console.log("playlist_id", playlist_id);
-        console.log("selectedActivities", selectedActivities)
+        
         if(selectedActivities.length > 0) {
             onSubmitActivities(selectedActivities, user_id, playlist_id, selectedDurationTotal);
         } else {

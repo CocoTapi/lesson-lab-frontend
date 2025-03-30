@@ -139,7 +139,7 @@ function Playlists ({ data }) {
 
     let content;
     if (Object.keys(userPlaylists).length === 0) {
-        content = <p>You haven't created playlists yet.</p>
+        content = <p className={classes.noContent}>You haven't created playlists yet.</p>
     } else {
         content = sortedPlaylists.map((playlist) => (
             <li key={`${playlist.total_duration}-${playlist.playlist_id}`}>

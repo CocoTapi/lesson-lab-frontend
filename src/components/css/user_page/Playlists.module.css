@@ -112,6 +112,10 @@
     align-items: center;
 }
 
+.noContent {
+    color: white;
+}
+
 @media (min-width: 640px) {
     .addPlaylistBComponent {
         justify-content: end;

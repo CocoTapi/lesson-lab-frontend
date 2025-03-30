@@ -219,6 +219,8 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
     if (!response.ok) {
         throw json({ message: "Could not complete the request." }, { status: 500 });
     }
+
+    // TODO: add return value and use it to tell user if it is successful or not
 }
 
 
