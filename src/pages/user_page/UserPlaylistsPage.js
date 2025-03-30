@@ -128,19 +128,9 @@ export async function action({ request }) {
             const newPlaylist = await saveNewGuestPlaylist(playlist_title);
 
             if(newPlaylist) {
-                Swal.fire({
-                    title: "Success!",
-                    icon: "success",
-                    draggable: true,
-                    confirmButtonColor: '#315079'
-                    });
+               swalSuccess();
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong. Please try again later.",
-                    footer: '<a href="#">Why do I have this issue?</a>'
-                    });   
+                swalError();
             }
         }
        
@@ -191,9 +181,15 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest')  {
-            const durations = formData.get('selectedDurationTotal');
+            const durations = parseInt(formData.get('selectedDurationTotal'));
+
+            if (durations === 0 || activity_id_arr.length === 0 || !playlist_id) {
+                swalError();
+                throw new Error("activity data is missing.");
+            }
+
             const response = await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
-            console.log(response);
+        
             if(!response) {
                 swalError();
             } else {
