@@ -9,7 +9,7 @@ import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
 import PlaylistSelection from "./PlaylistSelection";
 import { baseName } from "../../App";
-import { swalAlert, swalError } from "../../pages/util/swalModal";
+import { swalError } from "../../pages/util/swalModal";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -42,13 +42,13 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
-        if (user_id === 'guest'){
-            if (is_favorited === true){
-                setActivityCount((prev) => prev - 1);
-            } else if (is_favorited === false) {
-                setActivityCount((prev) => prev + 1);        
-            }
+        // optimistic update
+        if (is_favorited === true){
+            setActivityCount((prev) => prev - 1);
+        } else if (is_favorited === false) {
+            setActivityCount((prev) => prev + 1);        
         }
+     
         submit({ user_id, is_favorited }, { method: "POST" });
     }
 
