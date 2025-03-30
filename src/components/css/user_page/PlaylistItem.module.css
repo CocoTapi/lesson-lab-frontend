@@ -136,10 +136,23 @@
     font-size: 1.2rem;
 }
 
-.reorderButtonComponent {
+/* .reorderButtonComponent {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1rem;
+} */
+
+.reorderButtonComponent {
+    display: none; /* Hide by default */
+}
+
+/* Show only when the device supports hover (non-touch devices) */
+@media (hover: hover) {
+    .reorderButtonComponent {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
 }
 
 @media (min-width: 640px) {

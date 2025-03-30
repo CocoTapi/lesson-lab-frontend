@@ -1,7 +1,6 @@
 import { Link, useRouteLoaderData } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
 import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
-import { baseName, baseUrl } from '../../App';
 
 
 function Footer(){
