@@ -44,11 +44,10 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
 
     return (
         <div className={classes.box}>
-            <form>
-                <div className={classes.contents}>
+            <form className={classes.contents}>
                     <h1>Filter</h1>
 
-                    <h2>Duration</h2>
+                    <h2>Duration :</h2>
                     <div className={classes.checkbox}>
                         <label><input type="checkbox" name="duration" value="5"  checked={selectedDurations.includes("5")} onChange={handleDurationChange} /> ~ 5 mins</label>
                         <label><input type="checkbox" name="duration" value="10" checked={selectedDurations.includes("10")} onChange={handleDurationChange} /> 10 mins</label>
@@ -58,7 +57,7 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
                         <label><input type="checkbox" name="duration" value="31" checked={selectedDurations.includes("31")} onChange={handleDurationChange} /> 30 ~ mins</label>   
                     </div>    
 
-                    <h2>Age Group</h2>
+                    <h2>Age Group :</h2>
                     <div className={classes.checkbox}>
                         <label><input type="checkbox" name="ageGroup" value="kids" checked={selectedAgeGroups.includes("kids")} onChange={handleAgeChange}/> for kids</label>
                         <label><input type="checkbox" name="ageGroup" value="teens" checked={selectedAgeGroups.includes("teens")} onChange={handleAgeChange}/> for teens</label>
@@ -66,7 +65,7 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
                         <label><input type="checkbox" name="ageGroup" value="all age" checked={selectedAgeGroups.includes("all age")} onChange={handleAgeChange}/> for all ages</label>
                     </div>
 
-                    <h2>Popular Categories</h2>
+                    <h2>Popular Categories :</h2>
                     <div className={classes.checkbox}>
                         <label><input type="checkbox" name="tag" value="icebreaker" checked={selectedTags.includes("icebreaker")} onChange={handleTagChange}/> icebreakers</label>
                         <label><input type="checkbox" name="tag" value="fun" checked={selectedTags.includes("fun")} onChange={handleTagChange}/> fun</label>
@@ -77,7 +76,7 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
                     <div className={classes.viewButtons}>
                         <button className={classes.clearButton} onClick={handleClearButton}>clear all</button>
                     </div>
-                </div>
+               
             </form>
         </div>
     )
