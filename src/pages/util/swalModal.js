@@ -40,23 +40,17 @@ export function swalError(){
 }
 
 // Ask Confirmation
-export function modalWarningForComponent(
-    title,
+export function swalWarningForComponent(
     text, 
     confirmButtonText,
-    afterConfirmFn
 ){
     return Swal.fire({
-    title: title,
+    title: "Are you sure?",
     text:  text,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: SECONDARY_COLOR,
     cancelButtonColor: GREY_COLOR,
     confirmButtonText: confirmButtonText
-    }).then((result) => {
-    if (result.isConfirmed) {
-        afterConfirmFn();
-    }
-    });
+    })
 }

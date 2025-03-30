@@ -11,7 +11,7 @@ import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
 import Swal from "sweetalert2";
-import { swalError } from "../../pages/util/swalModal";
+import { swalError, swalWarningForComponent } from "../../pages/util/swalModal";
 
 // TODO: change add playlist form style from accordion to normal
 // TODO: check if the title is empty or not
@@ -56,40 +56,30 @@ function Playlists ({ data }) {
 
 
     const handleRemoveActivity = (activity_id, activity_title, playlist_id, playlist_title, activityDuration) => {
-         Swal.fire({
-            title: "Are you sure?",
-            text: `Do you want to remove this activity"?`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#ff9603",
-            cancelButtonColor: "#55555",
-            confirmButtonText: "Yes, remove it!"
-          }).then((result) => {
+        swalWarningForComponent(
+            `Do you want to remove this activity"?`,
+            "Yes, remove it!"
+        ).then((result) => {
             if (result.isConfirmed) {
-                submit({ activity_id, user_id, playlist_id, activityDuration}, { method: "DELETE" });
-            }
-          });
+                submit({ activity_id, user_id, playlist_id, activityDuration}, { method: "DELETE" });            }
+        });
+        
+        
     };
     
     const handleDeletePlaylist = (playlist_id, playlist_title) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: `Do you want to delete this playlist"?`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#ff9603",
-            cancelButtonColor: "#55555",
-            confirmButtonText: "Yes, delete it!",
-          },
+        swalWarningForComponent(
+            `Do you want to delete this playlist"?`,
+             "Yes, delete it!"
         ).then((result) => {
             if (result.isConfirmed) {
                 submit({ user_id, playlist_id }, { method: "DELETE" });
             }
-          });
+        });
     }
 
     const handleAddActivity = (playlist_id, playlist_title, activity_ids) => {
-        
+
         if (!user_id | !playlist_id | !playlist_title | !activity_ids) {
             swalError();
             setShowModal(false);
