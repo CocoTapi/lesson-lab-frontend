@@ -24,7 +24,7 @@ function Footer(){
                 </div>
                 <p>Personal Projects:</p>
                 <div className={classes.links}>
-                    <a href={`${baseUrl}${baseName}`} className={classes.link} >Home</a>
+                    <Link to='/' className={classes.link} >Home</Link>
                     <Link to='/activities' className={classes.link} >Activities</Link>
                     <Link to={`/mypage/${user_id}`} className={classes.link} >My Page</Link>
                 </div>
