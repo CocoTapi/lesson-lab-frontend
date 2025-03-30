@@ -91,11 +91,12 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         }; 
 
         const newList = activityList.filter(activity => 
-            activity.activity_id.includes(current_activity_ids));    
-        
-            return newList
+            !current_activity_ids.includes(activity.activity_id)
+        );    
+
+        return newList
             
-    }, [activityList])
+    }, [activityList, current_activity_ids])
     
 
     const filteredActivities = getFilteredActivities(availableActivities, selectedDurations, selectedAgeGroups, selectedTags);
