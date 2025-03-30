@@ -213,14 +213,16 @@ export async function removeGuestPlaylist(playlist_id) {
     // TODO: check if it is correctly updated and return new playlist 
 }
 
-export async function addActivitiesToPlaylist(playlist_id, newIds, duration) {
+export async function addActivitiesToPlaylist(playListId, newIds, duration) {
     const playlists = await getGuestData(PLAYLIST_KEY);
+    let correctDuration;
 
     const updated = playlists.map(p => {
-        if (p.playlist_id === playlist_id) {
+        if (p.playlist_id === playListId) {
+            correctDuration = parseInt(p.total_duration) + parseInt(duration);
             return {
                 ...p,
-                total_duration: duration,
+                total_duration: correctDuration,
                 activity_ids: [...p.activity_ids, ...newIds],
             };
         }
@@ -228,6 +230,18 @@ export async function addActivitiesToPlaylist(playlist_id, newIds, duration) {
     });
 
     setGuestData(PLAYLIST_KEY, updated);
+
+    const updatedPlaylists = await getGuestData(PLAYLIST_KEY);
+    const updatedPlaylist = updatedPlaylists.find(p => p.playlist_id === playListId);
+    console.log(updatedPlaylist);
+    const updatedDuration = parseInt(updatedPlaylist.total_duration);
+  
+    console.log(typeof updatedDuration, updatedDuration);
+    console.log(typeof correctDuration, correctDuration);
+
+    // return true(success) or false
+    return correctDuration === updatedDuration
+
 }
 
 export async function removeActivityFromPlaylist(playlist_id, activity_id, duration){

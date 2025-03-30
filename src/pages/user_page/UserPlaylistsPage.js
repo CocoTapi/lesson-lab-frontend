@@ -5,6 +5,7 @@ import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
 import Swal from 'sweetalert2';
+import { swalError, swalSuccess } from "../util/swalModal";
 
 //TODO: re-fetch data after adding activities into playlist
 
@@ -190,8 +191,14 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest')  {
-            const durations = formData.get('playlistDuration');
-            await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
+            const durations = formData.get('selectedDurationTotal');
+            const response = await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
+            console.log(response);
+            if(!response) {
+                swalError();
+            } else {
+                swalSuccess();
+            }
         }
         
         // return handlePageRefresh(user_id);  

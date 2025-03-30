@@ -21,7 +21,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
-    const [playlistDuration, setPlaylistDuration] = useState(0);
+    const [selectedDurationTotal, setSelectedDurationTotal] = useState(0);
 
     useEffect(() => {
         let response;
@@ -50,18 +50,21 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         if (isSelected) {
             // Remove activity
             setSelectedActivities(prev => prev.filter(id => id !== activityId));
-            setPlaylistDuration(prev => prev - (activity.duration || 0));
+            setSelectedDurationTotal(prev => prev - (activity.duration || 0));
         } else {
             // Add activity
             setSelectedActivities(prev => [...prev, activityId]);
-            setPlaylistDuration(prev => prev + (activity.duration || 0));
+            setSelectedDurationTotal(prev => prev + (activity.duration || 0));
         }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("selectedDurationTotal", selectedDurationTotal);
+        console.log("playlist_id", playlist_id);
+        console.log("selectedActivities", selectedActivities)
         if(selectedActivities.length > 0) {
-            onSubmitActivities(selectedActivities, user_id, playlist_id, playlistDuration);
+            onSubmitActivities(selectedActivities, user_id, playlist_id, selectedDurationTotal);
         } else {
             onClose()
         }

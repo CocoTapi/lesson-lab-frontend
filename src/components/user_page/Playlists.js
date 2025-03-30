@@ -122,8 +122,9 @@ function Playlists ({ data }) {
         return 0; // Default case if no sort option is matched
     });
 
-    const handleSubmitPlaylistActivities = (arr, user_id, playlist_id, playlistDuration) => {
-        submit({ user_id, playlist_id, activity_id_list: arr, playlistDuration}, { method: "PATCH"});
+    // Add activity into a playlist 
+    const handleSubmitPlaylistActivities = (arr, user_id, playlist_id, selectedDurationTotal) => {
+        submit({ user_id, playlist_id, activity_id_list: arr, selectedDurationTotal}, { method: "PATCH"});
         setShowModal(false);
     }
 
