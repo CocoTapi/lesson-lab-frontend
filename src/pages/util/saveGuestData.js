@@ -63,7 +63,10 @@ export async function addGuestFavorite(activity_id) {
 }
 
 export async function removeGuestFavorite(activity_id) {
-    const updatedFavorites = await getGuestData(FAVORITES_KEY).filter(id => id !== activity_id);
+    const userFavorites = await getGuestData(FAVORITES_KEY);
+    if(!userFavorites) throw new Error('Could not get guests favorite data.')
+    
+    const updatedFavorites = userFavorites.filter(id => id !== activity_id);
     setGuestData(FAVORITES_KEY, updatedFavorites);
 }
 
