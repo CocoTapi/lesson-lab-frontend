@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import classes from '../../css/user_page/SelectionForm.module.css';
 import SortBar, { getSortedActivities } from "../../UI/SortBar";
 import Filter, { getFilteredActivities } from "../../UI/Filter";
@@ -85,7 +85,18 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     }
 
     // remove existed activities in the playlist
-    const availableActivities = activityList.filter(activity => !current_activity_ids.includes(activity.activity_id));
+    const availableActivities = useMemo(() => {
+        if (activityList.length === 0) {
+            return [];
+        }; 
+
+        const newList = activityList.filter(activity => 
+            activity.activity_id.includes(current_activity_ids));    
+        
+            return newList
+            
+    }, [activityList])
+    
 
     const filteredActivities = getFilteredActivities(availableActivities, selectedDurations, selectedAgeGroups, selectedTags);
 

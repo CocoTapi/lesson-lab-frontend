@@ -9,6 +9,7 @@ import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
 import PlaylistSelection from "./PlaylistSelection";
 import { baseName } from "../../App";
+import { swalAlert, swalError } from "../../pages/util/swalModal";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -78,6 +79,12 @@ function ActivityItem({ activity, activities }) {
         const playlist_title = `New Playlist - ${formattedDate}`;
         const activity_id = activity.activity_id;
         const activity_duration = activity.duration;
+
+        // Check the data validity
+        if (!playlist_title | activity_id | !activity_duration) {
+            swalError()
+            setShowPlaylistSelection(false);   
+        }
 
         submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
     }

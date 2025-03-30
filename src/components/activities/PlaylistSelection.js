@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { loadUserPlaylists } from "../../pages/user_page/UserPlaylistsPage";
 import Modal from "../UI/Modal";
 import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import TopButton from "../UI/TopButton";
-import { fetchGuestPlaylist } from "../../pages/util/saveGuestData";
 import ButtonM from "../UI/ButtonM";
 import { Link } from "react-router-dom";
 
@@ -45,12 +44,18 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
         onClose();
     }
 
-    let availablePlaylists;
-    if (userPlaylists.length > 0) {
-        availablePlaylists = userPlaylists.filter(playlist => 
-            playlist.activity_ids.includes(current_activity_id)
+
+    //Update userPlaylists after refetching playlist data 
+    const availablePlaylists = useMemo(() => {
+        if (userPlaylists.length === 0) {
+            return []; // Return empty array if not loaded yet
+        }
+
+        return userPlaylists.filter(playlist =>
+            // Display only playlists that have no current activity
+            !playlist.activity_ids.includes(current_activity_id)
         );
-    }
+    }, [userPlaylists, current_activity_id]);
 
     let content;
     if (availablePlaylists && Object.keys(availablePlaylists).length === 0) {
@@ -93,7 +98,7 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
                         {content}
                     </div>
                     <div className={classes.createPlaylistButtonComponent}>
-                        {user_id === 'guest' ?
+                        {user_id === 'guest' ?                           
                         (   <ButtonM onClick={handleCreatePlaylist}>
                                 Create Playlist & Add
                             </ButtonM>

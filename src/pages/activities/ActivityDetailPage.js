@@ -7,7 +7,7 @@ import { loadActivities } from "./ActivitiesPage";
 import { getAuthToken } from "../util/checkAuth";
 import { addActivitiesToPlaylist, addGuestFavorite, addPlaylistWithId, FAVORITES_KEY, fetchActivityById, getGuestData, removeGuestFavorite } from "../util/saveGuestData";
 import { handleRequest } from "../user_page/UserPlaylistsPage";
-import Swal from 'sweetalert2';
+import { swalError, swalSuccess } from "../util/swalModal";
 
 // TODO: tell user for the successful playlist update
 
@@ -77,7 +77,7 @@ export async function loader({ request, params }) {
     })
 }
 
-// handle user's like or dislike an activity
+// handle user's like or dislike an activity, add an activity to playlist.
 export async function action({ params, request }) {
     const activity_id = parseInt(params.activityId);
     const method = request.method;
@@ -100,7 +100,9 @@ export async function action({ params, request }) {
                     "Authorization": 'Bearer' + token
                 }
             });
-        } else if (user_id === 'guest') {
+        } 
+        
+        if (user_id === 'guest') {
             await removeGuestFavorite(activity_id);
         }
     }
@@ -122,7 +124,9 @@ export async function action({ params, request }) {
                 },
                 body: JSON.stringify(favData)
             });
-        } else if (user_id === 'guest') {
+        } 
+        
+        if (user_id === 'guest') {
             if (favData.is_favorited) {
                 await removeGuestFavorite(activity_id);
             } else {
@@ -131,6 +135,7 @@ export async function action({ params, request }) {
         }
     }
 
+    // Add an activity into already existed playlist
     if (method === "PATCH") {
         const playlist_id = parseInt(formData.get("playlist_id"));
         const arr = [];
@@ -160,7 +165,9 @@ export async function action({ params, request }) {
                 throw json({ message: "Activity request failed." }, { status: 500 })
             }
 
-        } else if (user_id === 'guest'){
+        } 
+        
+        if (user_id === 'guest'){
             const durations = formData.get('activityDuration');
             await addActivitiesToPlaylist(playlist_id, arr, durations);
 
@@ -168,33 +175,26 @@ export async function action({ params, request }) {
         }
     } 
 
-    // Create a new playlist and add the activity
+    // Create a new playlist with the activity
     if (method === 'POST' && playlist_title) {
+        // For member
         if (token && user_id !== 'guest') {
             const bodyContent = { playlist_title, activity_id};
             let url = `${API_URL}/user/${user_id}/playlists`;
 
             await handleRequest(url, method, token, bodyContent, user_id);
             // TODO: check this post request is working in backend
-        } else {
+        } 
+        
+        // For guest user
+        if (user_id === 'guest') {
             const activity_duration = formData.get('activity_duration');
-
             const newPlaylist = await addPlaylistWithId(playlist_title, activity_duration, activity_id);
 
             if(newPlaylist) {
-                Swal.fire({
-                    title: "Success!",
-                    icon: "success",
-                    draggable: true,
-                    confirmButtonColor: '#315079'
-                  });
+                swalSuccess();
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong. Please try again later.",
-                    footer: '<a href="#">Why do I have this issue?</a>'
-                  });   
+                swalError();
             }
         }
     }

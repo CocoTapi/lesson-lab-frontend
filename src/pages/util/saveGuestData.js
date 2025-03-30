@@ -116,7 +116,6 @@ export async function fetchGuestPlaylist() {
 
     const userPlaylists = playlists.map(playlist => {
         const activities = [];
-        console.log(playlist);
         playlist.activity_ids.map((activity_id, index) => {
             const activity = activityMap.get(activity_id);
 
@@ -153,7 +152,29 @@ export async function addPlaylistWithId(title, activityDuration, activity_id) {
     newPlaylist.total_duration = activityDuration;
     newPlaylist.activity_ids.push(activity_id);
 
+    // Update userPlaylists
+    await updatePlaylist(newPlaylist);
+
     return newPlaylist
+}
+
+async function updatePlaylist(updatedPlaylist){
+    const playlists = await getGuestData(PLAYLIST_KEY);
+
+    // Find the index of the playlist to replace
+    const index = playlists.findIndex(
+        (playlist) => playlist.playlist_id === updatedPlaylist.playlist_id
+    );
+
+    if (index !== -1) {
+        // ✅ Replace the existing playlist with the updated one
+        playlists[index] = updatedPlaylist;
+
+        // Save the entire playlists
+        setGuestData(PLAYLIST_KEY, playlists);
+    } else {
+        throw new Error(`Playlist with ID ${updatedPlaylist.playlist_id} not found.`);
+    }
 }
 
 // Add a new Playlist (Only the title of playlist)
@@ -173,6 +194,7 @@ export async function saveNewGuestPlaylist(playlistTitle) {
     return newPlaylist;
 }
 
+// Remove Guest Playlist
 export async function removeGuestPlaylist(playlist_id) {
     const data =  await getGuestData(PLAYLIST_KEY);
     if(!data) throw new Error('Could not get guest playlist data.')
