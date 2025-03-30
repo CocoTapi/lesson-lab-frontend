@@ -81,7 +81,7 @@ function ActivityItem({ activity, activities }) {
         const activity_duration = activity.duration;
 
         // Check the data validity
-        if (!playlist_title | activity_id | !activity_duration) {
+        if (!playlist_title | !activity_id | !activity_duration) {
             swalError()
             setShowPlaylistSelection(false);   
         } else {
