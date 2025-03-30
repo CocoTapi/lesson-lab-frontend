@@ -84,9 +84,10 @@ function ActivityItem({ activity, activities }) {
         if (!playlist_title | activity_id | !activity_duration) {
             swalError()
             setShowPlaylistSelection(false);   
+        } else {
+            submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
         }
 
-        submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
     }
 
     return (

@@ -17,6 +17,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
     const [isReorderMode, setIsReorderMode] = useState(false);
     const [reorderedActivities, setReorderedActivities] = useState([]);
 
+
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 640) {
@@ -148,7 +149,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                 }
                 buttonChildren={ playlistButtons? (
                     <div className={classes.iconButtonGroup}>
-                        <IconButton onClick={() => onAddActivity(playlist.playlist_id, playlist.user_id, playlist.playlist_title, playlist.activity_ids)}>
+                        <IconButton onClick={() => onAddActivity(playlist.playlist_id, playlist.playlist_title, playlist.activity_ids)}>
                             <MdAddCircle className={classes.plusIconButton} />
                         </IconButton>
                         <IconButton onClick={() => onDeletePlaylist(playlist.playlist_id, playlist.playlist_title)}>

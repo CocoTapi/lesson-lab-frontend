@@ -11,6 +11,7 @@ import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
 import Swal from "sweetalert2";
+import { swalError } from "../../pages/util/swalModal";
 
 // TODO: change add playlist form style from accordion to normal
 // TODO: check if the title is empty or not
@@ -87,16 +88,21 @@ function Playlists ({ data }) {
           });
     }
 
-    const handleAddActivity = (playlist_id, user_id, playlist_title, activity_ids) => {
-        console.log('activity_id', activity_ids)
-        setModalInfo({
-            selected_playlist_id: playlist_id,
-            selected_playlist_user_id: user_id,
-            selected_playlist_title: playlist_title,
-            current_playlist_activity_ids: activity_ids
-        })
-
-        setShowModal(true);
+    const handleAddActivity = (playlist_id, playlist_title, activity_ids) => {
+        
+        if (!user_id | !playlist_id | !playlist_title | !activity_ids) {
+            swalError();
+            setShowModal(false);
+        } else {
+            setModalInfo({
+                selected_playlist_id: playlist_id,
+                selected_playlist_user_id: user_id,
+                selected_playlist_title: playlist_title,
+                current_playlist_activity_ids: activity_ids
+            })
+    
+            setShowModal(true);
+        }
     }
 
     const handleShowPlaylist = (e) => {
