@@ -1,6 +1,7 @@
 import { Link, useRouteLoaderData } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
 import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
+import { baseName, baseUrl } from '../../App';
 
 
 function Footer(){
@@ -23,7 +24,7 @@ function Footer(){
                 </div>
                 <p>Personal Projects:</p>
                 <div className={classes.links}>
-                    <Link to='/' className={classes.link}>Home</Link>
+                    <a href={`${baseUrl}${baseName}`} className={classes.link} >Home</a>
                     <Link to='/activities' className={classes.link} >Activities</Link>
                     <Link to={`/mypage/${user_id}`} className={classes.link} >My Page</Link>
                 </div>
