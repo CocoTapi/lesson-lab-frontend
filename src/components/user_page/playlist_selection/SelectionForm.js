@@ -108,7 +108,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
 
     let content;
     if (Object.keys(sortedActivities).length === 0) {
-        content = <p>You haven't {selectedList}ed activities yet.</p>
+        content = <p>You haven't liked activities yet.</p>
     } else {
         content = sortedActivities.map((activity) => (
             <label key={activity.activity_id} className={classes.checkContainer}>

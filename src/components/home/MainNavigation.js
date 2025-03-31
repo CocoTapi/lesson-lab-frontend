@@ -81,9 +81,9 @@ function MainNavigation() {
             )} 
                 {displayMenu && 
                     <div className={classes.menuComponent}>
-                        <NavLink className={classes.menuItem}  to="/" onClick={handleCloseMenu} activeclassName="active" >Home</NavLink>
-                        <NavLink className={classes.menuItem} to="/activities" onClick={handleCloseMenu} activeclassName="active">Activities</NavLink>
-                        <NavLink className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} activeclassName="active">My Page</NavLink>
+                        <NavLink className={classes.menuItem}  to="/" onClick={handleCloseMenu} activeclassname="active" >Home</NavLink>
+                        <NavLink className={classes.menuItem} to="/activities" onClick={handleCloseMenu} activeclassname="active">Activities</NavLink>
+                        <NavLink className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} activeclassname="active">My Page</NavLink>
                     </div>
                 }
             </div>

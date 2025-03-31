@@ -8,7 +8,7 @@ export async function fetchActivities() {
     const activities = demoData.activities;
     if(!activities) {
         return null;
-        // throw new Error('There is no list of activities.')
+       
     }
     return activities;
 }
@@ -22,9 +22,6 @@ export async function fetchActivityById(id) {
 
     if (!activity) {
         return null;
-
-        // react router dom doesn't handle this
-        // throw new Error(`No matched activity with activity_id: ${id}`);
     }
 
     return activity;
@@ -60,7 +57,7 @@ export async function setGuestData(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Guest favorites functions
+// Add activity into favorite list
 export async function addGuestFavorite(activity_id) {
     const favorites = await getGuestData(FAVORITES_KEY);
 
@@ -68,17 +65,31 @@ export async function addGuestFavorite(activity_id) {
         favorites.push(activity_id);
         setGuestData(FAVORITES_KEY, favorites);
     }
+
+    const newList = await getGuestData(FAVORITES_KEY);
+
+    // true: correctly added
+    return newList.includes(activity_id);
 }
 
+// Remove activity from favorite list
 export async function removeGuestFavorite(activity_id) {
     const userFavorites = await getGuestData(FAVORITES_KEY);
     if(!userFavorites) {
         return null;
-        // throw new Error('Could not get guests favorite data.')
     }
     
-    const updatedFavorites = userFavorites.filter(id => id !== activity_id);
+    // remove activity_id from list 
+    const updatedFavorites = userFavorites.filter(
+        id => id !== activity_id
+    );
+
     setGuestData(FAVORITES_KEY, updatedFavorites);
+
+    const newList = await getGuestData(FAVORITES_KEY);
+
+    // true: correctly removed
+    return !newList.includes(activity_id);
 }
 
 export async function addFavoritesIntoResponseData(activities) {
@@ -237,22 +248,35 @@ export async function addActivitiesToPlaylist(playListId, newIds, duration) {
     const playlists = await getGuestData(PLAYLIST_KEY);
     let correctDuration;
 
+    // Find a playlist and update the activity list data
     const updated = playlists.map(p => {
         if (p.playlist_id === playListId) {
+            // Calculate correct total duration
             correctDuration = parseInt(p.total_duration) + parseInt(duration);
+
+            // return updated playlist detail
             return {
                 ...p,
                 total_duration: correctDuration,
                 activity_ids: [...p.activity_ids, ...newIds],
             };
         }
+        
         return p;
     });
 
+    // Save the activity
     setGuestData(PLAYLIST_KEY, updated);
 
-    const updatedPlaylists = await getGuestData(PLAYLIST_KEY);
-    const updatedPlaylist = updatedPlaylists.find(p => p.playlist_id === playListId);
+    // Refetch playlists collections
+    const newEntirePlaylists = await getGuestData(PLAYLIST_KEY);
+
+    // Get a target playlist
+    const updatedPlaylist = newEntirePlaylists.find(
+        p => p.playlist_id === playListId
+    );
+
+    // check the total duration is same as updated Durations
     const updatedDuration = parseInt(updatedPlaylist.total_duration);
 
     // return true(success) or false

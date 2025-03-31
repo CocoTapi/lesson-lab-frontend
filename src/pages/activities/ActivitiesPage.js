@@ -32,35 +32,35 @@ function ActivitiesPage() {
 export default ActivitiesPage;
 
 export async function loadActivities() {
-    const token = getAuthToken();
-    let tokenHeaders = null;
+    // const token = getAuthToken();
+    // let tokenHeaders = null;
     let activities;
 
-    if (token) {
-        tokenHeaders = {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-        };
-        const response = await fetch(`${API_URL}/activities`, tokenHeaders);
+    // if (token) {
+    //     tokenHeaders = {
+    //         method: 'GET',
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //     };
+    //     const response = await fetch(`${API_URL}/activities`, tokenHeaders);
 
-        if (!response.ok) {
-            throw json({ message: "Could not fetch activities." }, { status: 500 })
-        }
+    //     if (!response.ok) {
+    //         throw json({ message: "Could not fetch activities." }, { status: 500 })
+    //     }
 
-        const resData = await response.json();
+    //     const resData = await response.json();
 
-        activities = resData.activities;
-    }    
+    //     activities = resData.activities;
+    // }    
 
     // Get activities data locally for demo purpose 
-    if (!token) {
+    // if (!token) {
         activities = await fetchActivities();
 
-        if(!activities) throw new Error('Could not fetch activities.')
+        if(!activities) throw json({ message: "Could not fetch activities." }, { status: 500 })
         await addFavoritesIntoResponseData(activities);
-    }
+    // }
     
     return activities;
 }
@@ -75,49 +75,52 @@ export async function loader() {
 export async function action({ request }) {
     const formData = await request.formData()
     const searchTerm = formData.get('searchTerm').trim();
-    const token = getAuthToken();
-    let tokenHeaders = null;
+    // const token = getAuthToken();
+    // let tokenHeaders = null;
 
     let filteredActivities;
 
-    const searchTermObj = {
-        searchTerm
-    }
+    // const searchTermObj = {
+    //     searchTerm
+    // }
 
-    if (token) {
-        tokenHeaders = {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(searchTermObj)
-        }
+    // if (token) {
+    //     tokenHeaders = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`,
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(searchTermObj)
+    //     }
 
-        const response = await fetch(`${API_URL}/activities/search`, tokenHeaders);
+    //     const response = await fetch(`${API_URL}/activities/search`, tokenHeaders);
 
-        if (!response.ok) {
-            throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
-        }
+    //     if (!response.ok) {
+    //         throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
+    //     }
 
-        const resData = await response.json();
+    //     const resData = await response.json();
 
-        filteredActivities = resData.activities;
-    } else {
-        // handling in backend
-        // tokenHeaders = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(searchTermObj)
-        // }
+    //     filteredActivities = resData.activities;
+    // } else {
+    //     // handling in backend
+    //     // tokenHeaders = {
+    //     //     method: 'POST',
+    //     //     headers: {
+    //     //         'Content-Type': 'application/json'
+    //     //     },
+    //     //     body: JSON.stringify(searchTermObj)
+    //     // }
 
         
-        // handle guest user's favorite
+    //     // handle guest user's favorite
         filteredActivities = await findActivities(searchTerm);
+
+        if(!filteredActivities) throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
+
         await addFavoritesIntoResponseData(filteredActivities);
-    }
+    // }
 
     return filteredActivities;
 }

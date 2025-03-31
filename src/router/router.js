@@ -47,22 +47,8 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 index: true,
                 element: <ActivityDetailPage />,
                 action: activityItemAction
-              },
-              {
-                path: 'edit',
-                id: 'edit-tags',
-                element: <EditActivityPage />,
-                loader: tagsLoader,
-                action: activityFormAction
               }
             ]
-          },
-          {
-            path: 'new',
-            id: 'tags',
-            element: <NewActivityPage />,
-            loader: tagsLoader,
-            action: activityFormAction
           }
         ]
       },
@@ -80,24 +66,11 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 element: <UserMainPage />
               },
               {
-                path: 'edit',
-                id: 'profile-edit',
-                element: <EditProfilePage />,
-                action: profileEditAction,
-              },
-              {
                 path: 'favorites',
                 id: 'user-favorites',
                 element: <UserFavoritesPage />,
                 loader: userFavoritesLoader,
                 action: removeFavoriteActivity,
-              },
-              {
-                path: 'uploads',
-                id: 'user-uploads',
-                element: <UserUploadsPage />,
-                loader: userUploadsLoader,
-                action: deleteUserActivityAction,
               },
               {
                 path: 'playlists',
