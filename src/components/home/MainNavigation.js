@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
-import { useLoaderData, Form } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from '../css/home/MainNavigation.module.css';
 import { IoMenu } from "react-icons/io5";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function MainNavigation() {
-    const user = useLoaderData();  // Assuming user data is correctly provided
-    const token = user ? user.token : null;
-    const user_id = user ? user.user_id : 'guest';
-    const user_name = user ? user.user_name : null;
-    const user_initial = user_name ? user_name.split('')[0] : null;
+    const user_id = 'guest';
     const [showMenuBar, setShoeMenuBar] = useState(false);
     const [displayMenu, setDisplayMenu] = useState(false);
  

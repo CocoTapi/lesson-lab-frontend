@@ -14,15 +14,7 @@ function Home() {
         }; 
         
         if (path === 'add activity') {
-            // if (user_id !== 'guest'){
-                navigate("/activities/new")
-            // } else if (user_id === 'guest') {
-            //     navigate("/auth?mode=login", {
-            //         state: {
-            //             prev_location: '/activities/new'
-            //         }
-            //     })
-            // } 
+             navigate("/activities/new")
         };
        
     }

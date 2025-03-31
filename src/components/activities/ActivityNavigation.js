@@ -1,10 +1,7 @@
-import { useRouteLoaderData } from "react-router-dom";
 import PageHeader from "../UI/PageHeader";
 
 function ActivityNavigation(){
-    const user = useRouteLoaderData('root');
-    let token;
-    if(user) token = user.token;
+    const token = null;
 
     return (
         <PageHeader title='Activities' token={token} link={'/activities'} />     

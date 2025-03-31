@@ -1,8 +1,6 @@
 import ActivityList from "../../components/activities/ActivityList";
-import { API_URL } from "../../App";
 import { json, defer, useLoaderData, Await, useActionData } from "react-router-dom";
 import { Suspense, useState, useEffect } from "react";
-import { getAuthToken } from "../util/checkAuth";
 import { addFavoritesIntoResponseData, fetchActivities, findActivities } from "../util/saveGuestData";
 
 function ActivitiesPage() {
@@ -32,35 +30,13 @@ function ActivitiesPage() {
 export default ActivitiesPage;
 
 export async function loadActivities() {
-    // const token = getAuthToken();
-    // let tokenHeaders = null;
     let activities;
 
-    // if (token) {
-    //     tokenHeaders = {
-    //         method: 'GET',
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         },
-    //     };
-    //     const response = await fetch(`${API_URL}/activities`, tokenHeaders);
+    activities = await fetchActivities();
 
-    //     if (!response.ok) {
-    //         throw json({ message: "Could not fetch activities." }, { status: 500 })
-    //     }
-
-    //     const resData = await response.json();
-
-    //     activities = resData.activities;
-    // }    
-
-    // Get activities data locally for demo purpose 
-    // if (!token) {
-        activities = await fetchActivities();
-
-        if(!activities) throw json({ message: "Could not fetch activities." }, { status: 500 })
+    if(!activities) throw json({ message: "Could not fetch activities." }, { status: 500 })
         await addFavoritesIntoResponseData(activities);
-    // }
+ 
     
     return activities;
 }
@@ -75,52 +51,16 @@ export async function loader() {
 export async function action({ request }) {
     const formData = await request.formData()
     const searchTerm = formData.get('searchTerm').trim();
-    // const token = getAuthToken();
-    // let tokenHeaders = null;
 
     let filteredActivities;
 
-    // const searchTermObj = {
-    //     searchTerm
-    // }
+   
+    filteredActivities = await findActivities(searchTerm);
 
-    // if (token) {
-    //     tokenHeaders = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`,
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(searchTermObj)
-    //     }
+    if(!filteredActivities) throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
 
-    //     const response = await fetch(`${API_URL}/activities/search`, tokenHeaders);
+    await addFavoritesIntoResponseData(filteredActivities);
 
-    //     if (!response.ok) {
-    //         throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
-    //     }
-
-    //     const resData = await response.json();
-
-    //     filteredActivities = resData.activities;
-    // } else {
-    //     // handling in backend
-    //     // tokenHeaders = {
-    //     //     method: 'POST',
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json'
-    //     //     },
-    //     //     body: JSON.stringify(searchTermObj)
-    //     // }
-
-        
-    //     // handle guest user's favorite
-        filteredActivities = await findActivities(searchTerm);
-
-        if(!filteredActivities) throw json({ message: "Could not fetch filtered activities." }, { status: 500 })
-
-        await addFavoritesIntoResponseData(filteredActivities);
-    // }
 
     return filteredActivities;
 }

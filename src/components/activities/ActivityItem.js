@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
+import { useSubmit, Link } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
@@ -12,9 +12,8 @@ import { baseName } from "../../App";
 import { swalError } from "../../pages/util/swalModal";
 
 function ActivityItem({ activity, activities }) {
-    const user = useRouteLoaderData('root');
-    const token = user ? user.token : null;
-    const user_id = user ? user.user_id : 'guest';
+    const token = null;
+    const user_id ='guest';
     
     const submit = useSubmit();
     const [showPlaylistSelection, setShowPlaylistSelection] = useState(false);

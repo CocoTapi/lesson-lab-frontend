@@ -6,7 +6,6 @@ import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import TopButton from "../UI/TopButton";
 import ButtonM from "../UI/ButtonM";
-import { Link } from "react-router-dom";
 
 // Select playlist from Activity Item
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id, onCreatePlaylist }){

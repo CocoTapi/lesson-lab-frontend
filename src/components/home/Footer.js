@@ -1,11 +1,10 @@
-import { Link, useRouteLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
 import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 
 function Footer(){
-    const user = useRouteLoaderData('root');
-    const user_id = user ? user.user_id : 'guest';
+    const user_id = 'guest';
 
     return (
         <footer className={classes.frame}>
