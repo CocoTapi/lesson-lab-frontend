@@ -198,7 +198,7 @@
   
     .menuItem {
       font-size: 1rem;
-      padding: 0.75rem 1rem;
+      padding: 1rem 4rem;
       border-bottom: 1px solid white; 
     }
   
@@ -210,9 +210,16 @@
     /* Active/Selected Link */
     .menuItem:active,
     .menuItem[aria-current="page"] {
-      background-color: var(--color-primary-700);
+      /* background-color: var(--color-primary-700); */
+      background:linear-gradient(to right, #0D477F, #9853A0);
       color: white; /* Different color for active link */
       font-weight: bold;
+    }
+
+    .menuItem:active:last-child,
+    .menuItem[aria-current="page"]:last-child {
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
     }
   
     
