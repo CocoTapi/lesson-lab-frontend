@@ -44,7 +44,7 @@
 .detailCardContents {
     width: 82.5%;
     margin: 0 auto;
-    padding: 10% 0;
+    padding: 5% 0;
 }
 
 .detailCardImage {
@@ -56,10 +56,16 @@
     border-radius: 15px;
 }
 
+.detailCard h1, .detailCard p {
+    margin: 0;
+    padding: 0;
+}
+
 .detailCard h1 {
     font-size: 3rem;
     font-weight: 600;
-    padding-top: 1rem;
+    margin: 1rem 0;
+    margin-top: 2rem;
 }
 
 .detailCardIcons {
@@ -78,17 +84,14 @@
     font-size: 1.25rem;
     display: flex;
     justify-content: space-between;
-    padding-bottom: 1.5rem;
+    margin-top: .2rem;
 }
 
 .creator {
     display: flex;
-}
-
-.creatorIcon {
-    padding-right: 1.2rem;
-    padding-top: 0.18rem;
-
+    gap: .3rem;
+    align-items: center;
+    text-align: center;
 }
 
 .detailCardDetails {
@@ -108,7 +111,6 @@
     display: flex;
     flex-wrap: wrap;
     font-size: 1rem;
-    padding-top: 1rem;
 }
 
 .detailRight {
@@ -118,12 +120,12 @@
 }
 
 .detailItem {
-    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 
 .labelTitle {
     font-weight: 600;
-    padding-bottom: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
 .reference {
@@ -219,30 +221,35 @@ a {
     
     .detailCard h1 {
         font-size: 1.5rem;
-        padding: 1rem 1.3rem 1rem;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        padding: 0;
     }
+
+
     
     .detailCardIcons {
-        font-size: 1rem;
-        padding: 0 0 0.7rem 1.3rem;
+        font-size: 1.5rem;
+        padding: 0 0 0.3rem 0;
+        margin-left: 1rem;
     }
     
     .detailCardCreatorInfo {
         font-size: 1rem;
-        padding: 0 1rem 0.7rem 1rem;
+        padding: 0 1rem;
+        margin-bottom: .5rem;
+        margin-right: .5rem;
     }
     
     .creatorIcon {
         padding-right: 0.6rem;
         padding-top: 0.15rem;
-    
     }
     
     .detailCardDetails {
         display: grid;
         font-size: 1rem;
-        padding: 1rem;
-        padding-bottom: 3rem;
+        padding: .5rem 1rem;
     }
     
     .detailLeft {
@@ -252,7 +259,7 @@ a {
     }
 
     .detailItem {
-        padding-bottom: 1rem;
+        margin-bottom: .5rem;
     }
 
     .flexItem {
@@ -269,5 +276,14 @@ a {
         width: 100%;
     }
 
+    .longText, .materials {
+        margin-top: .3rem !important;
+        margin-bottom: 1rem !important;
+        margin-right: .5rem;
+    }
+
+    .reference {
+        margin-bottom: 1.7rem !important;
+    }
     
 }

@@ -83,22 +83,23 @@
     .viewButtons {
         margin-top: 3rem;
     }
- }
+}
 
- @media (min-width: 590px) {
+@media (min-width: 590px) {
     .checkbox {
         grid-template-columns: repeat(4, 1fr); 
     }
- }
+}
 
 
- @media (min-width: 780px) {
+@media (min-width: 780px) {
     .checkbox {
         grid-template-columns: repeat(6, 1fr); 
+        margin-bottom: 1.5rem;
     }
- }
+}
 
- @media (min-width: 1300px) {
+@media (min-width: 1300px) {
     .box {
         width: 18.75rem;
         height: 37.63rem;
@@ -106,5 +107,5 @@
     .checkbox {
         grid-template-columns: repeat(2, 1fr); 
     }
- }
+}
 

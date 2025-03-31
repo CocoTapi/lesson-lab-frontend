@@ -70,7 +70,7 @@ function Filter({ onDurationsChange, onAgeGroupsChange, onTagsChange, selectedDu
                         <label><input type="checkbox" name="tag" value="icebreaker" checked={selectedTags.includes("icebreaker")} onChange={handleTagChange}/> icebreakers</label>
                         <label><input type="checkbox" name="tag" value="fun" checked={selectedTags.includes("fun")} onChange={handleTagChange}/> fun</label>
                         <label><input type="checkbox" name="tag" value="interactive" checked={selectedTags.includes("interactive")} onChange={handleTagChange}/> interactive</label>
-                        <label><input type="checkbox" name="tag" value="no preparation required" checked={selectedTags.includes("no preparation required")} onChange={handleTagChange}/> no preparation</label>
+                        <label><input type="checkbox" name="tag" value="no preparation required" checked={selectedTags.includes("no preparation required")} onChange={handleTagChange}/> no prep</label>
                     </div>
 
                     <div className={classes.viewButtons}>

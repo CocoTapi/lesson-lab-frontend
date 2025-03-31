@@ -72,9 +72,12 @@ function ActivityItem({ activity, activities }) {
         const now = new Date();
 
         // YYYY-MM-DD HH:mm:ss
-        const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
-
-        if(!formattedDate) throw new Error('Fail to get date.')
+        const formattedDate = 
+            `${String(now.getMonth() + 1).padStart(2, '0')}/
+                ${String(now.getDate()).padStart(2, '0')}/
+                ${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;  
+        
+            if(!formattedDate) throw new Error('Fail to get date.')
 
         const playlist_title = `New Playlist - ${formattedDate}`;
         const activity_id = activity.activity_id;
@@ -119,10 +122,15 @@ function ActivityItem({ activity, activities }) {
 
                     <div className={classes.detailCard}>
                         <div className={classes.detailCardContents}>
+                            {/* img */}
                             <div className={classes.detailCardImage}>
                                 <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
                             </div>
+                            
+                            {/* title */}
                             <h1>{activity.title}</h1>
+                            
+                            {/* icons */}
                             <div className={classes.detailCardIcons}>
                                 {activity.is_favorited ? 
                                     <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> :
@@ -130,13 +138,19 @@ function ActivityItem({ activity, activities }) {
                                 }
                                 <GoBookmark onClick={handleAddPlaylist} /> 
                             </div>
+
                             <div className={classes.detailCardCreatorInfo}>
+                                {/* like count */}
                                 <p>{activityCount} likes</p>
+
+                                {/* creater */}
                                 <div className={classes.creator} >
-                                    <p className={classes.creatorIcon} ><FaRegCircleUser /></p>
+                                  <FaRegCircleUser className={classes.creatorIcon}/>
                                     <p>{activity.user_name}</p>
                                 </div>  
                             </div>
+
+                            {/* Detail */}
                             <div className={classes.detailCardDetails}>
                                 <div className={classes.detailLeft}>
                                     <div className={`${classes.detailItem} ${classes.flexItem}`}>
@@ -149,7 +163,7 @@ function ActivityItem({ activity, activities }) {
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Materials :</p>
-                                        <p>{activity.materials}</p>
+                                        <p className={classes.materials}>{activity.materials}</p>
                                     </div>
                                     <div className={classes.leftTags}>
                                         {activity.tags.map((tag) => (
@@ -160,15 +174,15 @@ function ActivityItem({ activity, activities }) {
                                 <div className={classes.detailRight}>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Summary :</p>
-                                        <p>{activity.summary}</p>
+                                        <p className={classes.longText}>{activity.summary}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Objectives:</p>
-                                        <p>{activity.objectives}</p>
+                                        <p className={classes.longText}>{activity.objectives}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Instructions :</p>
-                                        <p>{activity.instructions}</p>
+                                        <p className={classes.longText}>{activity.instructions}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>References :</p>
