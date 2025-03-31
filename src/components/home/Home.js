@@ -36,7 +36,7 @@ function Home() {
                             <h1>Achieve</h1>
                             <h1><span>Innovative</span> Education</h1>
                             <h1>and</h1>
-                            <h1>Piece of <span>Mind</span></h1>
+                            <h1>Peace of <span>Mind</span></h1>
                         </div>
                     </div>
                    
