@@ -1,7 +1,5 @@
-import { json, defer, Await, useRouteLoaderData } from "react-router-dom";
+import { defer, Await, useRouteLoaderData } from "react-router-dom";
 import { Suspense } from "react";
-import { API_URL } from '../../App';
-import { getAuthToken } from "../util/checkAuth";
 import Profile from "../../components/user_page/Profile";
 
 

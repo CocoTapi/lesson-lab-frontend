@@ -2,14 +2,28 @@ import Swal from "sweetalert2";
 import { GREY_COLOR, PRIMARY_COLOR, SECONDARY_COLOR } from "./commonConstants";
 
 // Tell users a message. 
-export function swalAlert(title, text, buttonWord){
+export function swalAlert(title, text, buttonWord ){
     return (
          Swal.fire({
             title: title,
             text: text,
             showCancelButton: false,
             confirmButtonColor: PRIMARY_COLOR,
-            confirmButtonText: buttonWord
+            confirmButtonText: buttonWord,
+        })
+    )
+}
+
+// Tell users a message. 
+export function swalQuestion(title, text, buttonWord, ){
+    return (
+         Swal.fire({
+            title: title,
+            text: text,
+            showCancelButton: false,
+            confirmButtonColor: PRIMARY_COLOR,
+            confirmButtonText: buttonWord,
+            icon: "question"
         })
     )
 }

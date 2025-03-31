@@ -16,8 +16,8 @@ function Profile({ data }){
                         <div className={classes.centerGroup}>
                             <h3>Hi there!</h3>
                             <h3 className={classes.centerGroupTitle}>
-                                Check out your favorite activities and build your own playlist.
-                                Enjoy exploring all the features and start creating the perfect experience!
+                                Check out your liked activities and build your own playlist.
+                                Enjoy exploring all the features!
                             </h3>
                         </div>
                     </div>
