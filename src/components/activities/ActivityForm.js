@@ -60,7 +60,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
         e.preventDefault();
 
         if (chosenTags.includes(newTag)) {
-            console.log("tag is already in chosenTags")
+            // console.log("tag is already in chosenTags")
         } else {
             setChosenTags(prevTags => [...prevTags, newTag]);
         }

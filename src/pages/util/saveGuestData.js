@@ -6,7 +6,10 @@ export const FAVORITES_KEY = 'guest_favorites';
 // Fetch all activities from demo file
 export async function fetchActivities() {
     const activities = demoData.activities;
-    if(!activities) throw new Error('There is no list of activities.')
+    if(!activities) {
+        return null;
+        // throw new Error('There is no list of activities.')
+    }
     return activities;
 }
 
@@ -17,7 +20,12 @@ export async function fetchActivityById(id) {
         activity.activity_id === id
     );
 
-    if (!activity) throw new Error(`No matched activity with activity_id: ${id}`);
+    if (!activity) {
+        return null;
+
+        // react router dom doesn't handle this
+        // throw new Error(`No matched activity with activity_id: ${id}`);
+    }
 
     return activity;
 }
@@ -64,7 +72,10 @@ export async function addGuestFavorite(activity_id) {
 
 export async function removeGuestFavorite(activity_id) {
     const userFavorites = await getGuestData(FAVORITES_KEY);
-    if(!userFavorites) throw new Error('Could not get guests favorite data.')
+    if(!userFavorites) {
+        return null;
+        // throw new Error('Could not get guests favorite data.')
+    }
     
     const updatedFavorites = userFavorites.filter(id => id !== activity_id);
     setGuestData(FAVORITES_KEY, updatedFavorites);
@@ -123,7 +134,9 @@ export async function fetchGuestPlaylist() {
             const activity = activityMap.get(activity_id);
 
             if (!activity) {
-                throw new Error(`Activity with activity_id: ${activity_id} not found`);
+                return null
+                // throw new Error(`Activity with activity_id: ${activity_id} not found`);
+               
             }
 
             // Add position to the activity object
@@ -150,7 +163,10 @@ export async function fetchGuestPlaylist() {
 export async function addPlaylistWithId(title, activityDuration, activity_id) {
     // create new playlist
     const newPlaylist = await saveNewGuestPlaylist(title);
-    if(!newPlaylist) throw new Error('Could not create new Playlist.');
+    if(!newPlaylist){
+        return null;
+        // throw new Error('Could not create new Playlist.');
+    }
 
     newPlaylist.total_duration = activityDuration;
     newPlaylist.activity_ids.push(activity_id);
@@ -176,13 +192,15 @@ async function updatePlaylist(updatedPlaylist){
         // Save the entire playlists
         setGuestData(PLAYLIST_KEY, playlists);
     } else {
-        throw new Error(`Playlist with ID ${updatedPlaylist.playlist_id} not found.`);
+        return null;
+        // throw new Error(`Playlist with ID ${updatedPlaylist.playlist_id} not found.`);
     }
 }
 
 // Add a new Playlist (Only the title of playlist)
 export async function saveNewGuestPlaylist(playlistTitle) {
     const playlists = await getGuestData(PLAYLIST_KEY);
+    
     const newPlaylist =  {
         playlist_id: playlists.length + 1,
         playlist_title: playlistTitle,
@@ -200,13 +218,15 @@ export async function saveNewGuestPlaylist(playlistTitle) {
 // Remove Guest Playlist
 export async function removeGuestPlaylist(playlist_id) {
     const data =  await getGuestData(PLAYLIST_KEY);
-    if(!data) throw new Error('Could not get guest playlist data.')
 
     const updatedPlaylists = data.filter(p => 
         p.playlist_id !== playlist_id
     );
 
-    if (!updatedPlaylists) throw new Error('Could not remove playlist.')
+    if (!updatedPlaylists) {
+        return null;
+        // throw new Error('Could not remove playlist.')
+    }
 
     setGuestData(PLAYLIST_KEY, updatedPlaylists);
 
@@ -233,11 +253,7 @@ export async function addActivitiesToPlaylist(playListId, newIds, duration) {
 
     const updatedPlaylists = await getGuestData(PLAYLIST_KEY);
     const updatedPlaylist = updatedPlaylists.find(p => p.playlist_id === playListId);
-    console.log(updatedPlaylist);
     const updatedDuration = parseInt(updatedPlaylist.total_duration);
-  
-    console.log(typeof updatedDuration, updatedDuration);
-    console.log(typeof correctDuration, correctDuration);
 
     // return true(success) or false
     return correctDuration === updatedDuration

@@ -90,7 +90,7 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
             <div className={classes.modalContents}>
                 <div className={classes.topButtonComponent}>
                     <TopButton onClick={onClose} >Back</TopButton>
-                    <TopButton onClick={handleSubmit} >Done</TopButton>
+                    <TopButton onClick={handleSubmit} colorScheme="primary">Done</TopButton>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <h2>Select playlist you want to add the activity</h2>

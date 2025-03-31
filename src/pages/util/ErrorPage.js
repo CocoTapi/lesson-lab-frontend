@@ -24,7 +24,6 @@ function ErrorPage(){
         }
       }
 
-      console.log('error: ', error);
     return ( 
         <div className={classes.errorComponent}>
           <div className={classes.errorContents}>

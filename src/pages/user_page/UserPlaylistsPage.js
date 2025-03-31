@@ -225,11 +225,11 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
 
 
 function handlePageRefresh(user_id) {
-    console.log("baseUrl:", baseUrl);
+    // console.log("baseUrl:", baseUrl);
 
     const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
 
-    console.log("Redirecting to:", redirectUrl);
+    // console.log("Redirecting to:", redirectUrl);
     
     window.location.href = redirectUrl;
     return null;

@@ -132,7 +132,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         <div className={classes.selectionContents}>
             <div className={classes.doneButtonComponent}>
                 <TopButton onClick={onBackToSelection} >Back</TopButton>
-                <TopButton onClick={handleSubmit}>Done</TopButton>
+                <TopButton onClick={handleSubmit} colorScheme="primary">Done</TopButton>
             </div>
             <h3>Add to Playlist : {title}</h3>
             {selectedList === 'like' ? 
