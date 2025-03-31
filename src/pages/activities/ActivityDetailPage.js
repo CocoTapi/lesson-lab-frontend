@@ -181,7 +181,7 @@ export async function action({ params, request }) {
             const durations = parseInt(formData.get('activityDuration'));
             const isUpdated = await addActivitiesToPlaylist(playlist_id, arr, durations);
 
-            if(isUpdated) throw json({ message: "Activity request failed." }, { status: 500 })
+            if(!isUpdated) throw json({ message: "Activity request failed." }, { status: 500 })
 
             // TODO: if successful, tell user
         // }

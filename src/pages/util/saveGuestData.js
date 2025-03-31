@@ -127,7 +127,7 @@ export async function getUserFavoritesActivity() {
     return list;
 }
 
-// Guest playlist functions
+// ----- PLAYLIST REQUESTS -----
 
 // Fetch userPlaylist
 export async function fetchGuestPlaylist() {
@@ -170,7 +170,7 @@ export async function fetchGuestPlaylist() {
 
 }
 
-// create new activity with an activity
+// Create new activity with an activity
 export async function addPlaylistWithId(title, activityDuration, activity_id) {
     // create new playlist
     const newPlaylist = await saveNewGuestPlaylist(title);
@@ -188,6 +188,7 @@ export async function addPlaylistWithId(title, activityDuration, activity_id) {
     return newPlaylist
 }
 
+// Update playlist
 async function updatePlaylist(updatedPlaylist){
     const playlists = await getGuestData(PLAYLIST_KEY);
 
@@ -201,7 +202,7 @@ async function updatePlaylist(updatedPlaylist){
         playlists[index] = updatedPlaylist;
 
         // Save the entire playlists
-        setGuestData(PLAYLIST_KEY, playlists);
+        await setGuestData(PLAYLIST_KEY, playlists);
     } else {
         return null;
         // throw new Error(`Playlist with ID ${updatedPlaylist.playlist_id} not found.`);
@@ -220,7 +221,7 @@ export async function saveNewGuestPlaylist(playlistTitle) {
     }
 
     playlists.push(newPlaylist);
-    setGuestData(PLAYLIST_KEY, playlists);
+    await setGuestData(PLAYLIST_KEY, playlists);
     
     // return new playlist 
     return newPlaylist;
@@ -239,9 +240,23 @@ export async function removeGuestPlaylist(playlist_id) {
         // throw new Error('Could not remove playlist.')
     }
 
-    setGuestData(PLAYLIST_KEY, updatedPlaylists);
+    await setGuestData(PLAYLIST_KEY, updatedPlaylists);
 
-    // TODO: check if it is correctly updated and return new playlist 
+    const isDeleted = await removeCheckById(PLAYLIST_KEY, 'item.playlist_id === playlist_id')
+
+    return isDeleted;
+}
+
+// check if the item is removed or not from the local storage
+async function removeCheckById(searchKey, condition){
+    const newList = await getGuestData(PLAYLIST_KEY);
+
+    // Returns true if at least one element matches the condition, otherwise false.
+    const isDeleted = !newList.some(item => 
+        condition
+    );
+
+    return isDeleted;
 }
 
 export async function addActivitiesToPlaylist(playListId, newIds, duration) {
@@ -266,7 +281,7 @@ export async function addActivitiesToPlaylist(playListId, newIds, duration) {
     });
 
     // Save the activity
-    setGuestData(PLAYLIST_KEY, updated);
+    await setGuestData(PLAYLIST_KEY, updated);
 
     // Refetch playlists collections
     const newEntirePlaylists = await getGuestData(PLAYLIST_KEY);
@@ -279,11 +294,12 @@ export async function addActivitiesToPlaylist(playListId, newIds, duration) {
     // check the total duration is same as updated Durations
     const updatedDuration = parseInt(updatedPlaylist.total_duration);
 
-    // return true(success) or false
+    // compare the sum of original + new and updated version
     return correctDuration === updatedDuration
 
 }
 
+// Remove one activity from a playlist
 export async function removeActivityFromPlaylist(playlist_id, activity_id, duration){
     const playlists = await getGuestData(PLAYLIST_KEY);
 
@@ -298,12 +314,27 @@ export async function removeActivityFromPlaylist(playlist_id, activity_id, durat
         return p;
     });
 
-    setGuestData(PLAYLIST_KEY, updated);
+    await setGuestData(PLAYLIST_KEY, updated);
+
+    // Get newLists
+    const newList =  await getGuestData(PLAYLIST_KEY);
+
+    // Get single list
+    const newSingleList = newList.find(p => p.playlist_id === playlist_id);
+
+    // Returns true if at least one element matches the condition, otherwise false.
+    const isDeleted = !newSingleList.activity_ids.some(item => 
+        item === activity_id
+    );
+
+    return isDeleted;
+
 }
 
 export async function reorderPlaylist(playlist_id, reorderedActivityIds) {
     const playlists = await getGuestData(PLAYLIST_KEY);
 
+    // find a playlist by id and update the array data
     const updated = playlists.map(p => {
         if (p.playlist_id === playlist_id) {
             return {
@@ -314,5 +345,29 @@ export async function reorderPlaylist(playlist_id, reorderedActivityIds) {
         return p;
     });
 
-    setGuestData(PLAYLIST_KEY, updated);
+    await setGuestData(PLAYLIST_KEY, updated);
+
+    // Get new playlists
+    const newPlaylists =  await getGuestData(PLAYLIST_KEY);
+
+    // Get single playlist by playlist_id
+    const newPlaylist = newPlaylists.find(p => 
+        p.playlist_id === playlist_id
+    );
+
+    // Get the activity arr
+    const newArr = newPlaylist.activity_ids;
+
+    return areSameOrder(newArr, reorderedActivityIds);
+
+}
+
+// Compare 2 arrays's activity ids are in the same order or not
+function areSameOrder(arr1, arr2) {
+    if(arr1.length !== arr2.length) return false;
+
+    // Compare elements one by one
+    const isSame = arr1.every((value, index) => value === arr2[index]);
+
+    return isSame;
 }
