@@ -88,7 +88,8 @@ function MyFavorites({ data }){
     let content;
     
     if (Object.keys(userFavorites).length === 0) {
-        content = <p className={classes.noContent}>You haven't added activities.</p>
+        // TODO: comment here
+        content = <></>
     } else {
         filteredActivities = getFilteredActivities(userFavorites, selectedDurations, selectedAgeGroups, selectedTags);
         sortedActivities = getSortedActivities( sortOption, filteredActivities );
@@ -165,7 +166,7 @@ function MyFavorites({ data }){
                 </div>
                 <div className={classes.bottomContents}>
                     <div className={classes.bottomLeft}>
-                        {!smallScreen &&
+                        {!smallScreen && Object.keys(userFavorites).length !== 0 &&
                             <div className={classes.filter}>
                                 <Filter 
                                     onDurationsChange={handleDurationChange} 

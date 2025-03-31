@@ -102,10 +102,17 @@
 @media (min-width: 1300px) {
     .box {
         width: 18.75rem;
-        height: 37.63rem;
     }
     .checkbox {
         grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .box h1 {
+        margin-top: 1.5rem;
+    }
+
+    .clearButton {
+        margin-bottom: 1rem;
     }
 }
 
