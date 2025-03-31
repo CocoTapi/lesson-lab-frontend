@@ -1,13 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from '../pages/home/RootLayout';
-// import ErrorPage from '../pages/util/ErrorPage';
 import HomePage from '../pages/home/HomePage';
 import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader, action as searchAction } from '../pages/activities/ActivitiesPage';
-import LoginPage, { action as loginAction } from '../pages/auth/LoginPage';
-import LoginLayout from '../pages/auth/LoginLayout';
-import SignUpPage, { action as signUpAction } from '../pages/auth/SignUpPage';
-import { logoutAction } from '../pages/auth/logout';
 import { userLoader } from '../pages/util/checkAuth';
 import ActivityDetailPage, { loader as activityDetailLoader, action as activityItemAction } from '../pages/activities/ActivityDetailPage';
 import EditActivityPage from '../pages/activities/EditActivityPage';
@@ -19,7 +14,6 @@ import EditProfilePage, { action as profileEditAction } from "../pages/user_page
 import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
 import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
 import UserPlaylistsPage, { userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
-import OauthRedirectPage, { loader as tokenLoader } from "../pages/auth/OauthRedirectPage";
 import ErrorPage from "../pages/util/ErrorPage";
 
 
@@ -71,31 +65,6 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
             action: activityFormAction
           }
         ]
-      },
-      {
-        path: 'auth',
-        element: <LoginLayout />,
-        children: [
-          {
-            index: true,
-            element: <LoginPage />,
-            action: ({ request }) => loginAction({ request, setUserInfo })
-          },
-          {
-            path: 'signup',
-            element: <SignUpPage />,
-            action: signUpAction
-          },
-          {
-            path: 'oauth-redirect',
-            element: <OauthRedirectPage />,
-            loader: tokenLoader
-          }
-        ]
-      },
-      {
-        path: 'logout',
-        action: logoutAction,
       },
       {
         path: 'mypage',
