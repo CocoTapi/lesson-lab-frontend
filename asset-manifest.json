@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lesson-lab-frontend/static/css/main.a50ccc60.css",
-    "main.js": "/lesson-lab-frontend/static/js/main.3d49966e.js",
+    "main.css": "/lesson-lab-frontend/static/css/main.93ca9228.css",
+    "main.js": "/lesson-lab-frontend/static/js/main.35b9bd62.js",
     "static/js/488.d8f86c06.chunk.js": "/lesson-lab-frontend/static/js/488.d8f86c06.chunk.js",
     "index.html": "/lesson-lab-frontend/index.html",
-    "main.a50ccc60.css.map": "/lesson-lab-frontend/static/css/main.a50ccc60.css.map",
-    "main.3d49966e.js.map": "/lesson-lab-frontend/static/js/main.3d49966e.js.map",
+    "main.93ca9228.css.map": "/lesson-lab-frontend/static/css/main.93ca9228.css.map",
+    "main.35b9bd62.js.map": "/lesson-lab-frontend/static/js/main.35b9bd62.js.map",
     "488.d8f86c06.chunk.js.map": "/lesson-lab-frontend/static/js/488.d8f86c06.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a50ccc60.css",
-    "static/js/main.3d49966e.js"
+    "static/css/main.93ca9228.css",
+    "static/js/main.35b9bd62.js"
   ]
 }
