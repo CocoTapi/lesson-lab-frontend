@@ -24,7 +24,6 @@ function ErrorPage(){
         }
       }
 
-      
     return ( 
         <div className={classes.errorComponent}>
           <div className={classes.errorContents}>

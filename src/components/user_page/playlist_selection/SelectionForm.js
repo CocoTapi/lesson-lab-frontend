@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import classes from '../../css/user_page/SelectionForm.module.css';
 import SortBar, { getSortedActivities } from "../../UI/SortBar";
 import Filter, { getFilteredActivities } from "../../UI/Filter";
@@ -21,7 +21,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     const [ selectedAgeGroups, setSelectedAgeGroups ] = useState([]);
     const [ selectedTags, setSelectedTags ] = useState([]);
     const [ showFilterMenu, setShowFilterMenu ] = useState(false);
-    const [playlistDuration, setPlaylistDuration] = useState(0);
+    const [selectedDurationTotal, setSelectedDurationTotal] = useState(0);
 
     useEffect(() => {
         let response;
@@ -50,18 +50,19 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         if (isSelected) {
             // Remove activity
             setSelectedActivities(prev => prev.filter(id => id !== activityId));
-            setPlaylistDuration(prev => prev - (activity.duration || 0));
+            setSelectedDurationTotal(prev => prev - (activity.duration || 0));
         } else {
             // Add activity
             setSelectedActivities(prev => [...prev, activityId]);
-            setPlaylistDuration(prev => prev + (activity.duration || 0));
+            setSelectedDurationTotal(prev => prev + (activity.duration || 0));
         }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        
         if(selectedActivities.length > 0) {
-            onSubmitActivities(selectedActivities, user_id, playlist_id, playlistDuration);
+            onSubmitActivities(selectedActivities, user_id, playlist_id, selectedDurationTotal);
         } else {
             onClose()
         }
@@ -85,7 +86,19 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
     }
 
     // remove existed activities in the playlist
-    const availableActivities = activityList.filter(activity => !current_activity_ids.includes(activity.activity_id));
+    const availableActivities = useMemo(() => {
+        if (activityList.length === 0) {
+            return [];
+        }; 
+
+        const newList = activityList.filter(activity => 
+            !current_activity_ids.includes(activity.activity_id)
+        );    
+
+        return newList
+            
+    }, [activityList, current_activity_ids])
+    
 
     const filteredActivities = getFilteredActivities(availableActivities, selectedDurations, selectedAgeGroups, selectedTags);
 
@@ -119,7 +132,7 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
         <div className={classes.selectionContents}>
             <div className={classes.doneButtonComponent}>
                 <TopButton onClick={onBackToSelection} >Back</TopButton>
-                <TopButton onClick={handleSubmit}>Done</TopButton>
+                <TopButton onClick={handleSubmit} colorScheme="primary">Done</TopButton>
             </div>
             <h3>Add to Playlist : {title}</h3>
             {selectedList === 'like' ? 

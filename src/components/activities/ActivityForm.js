@@ -3,24 +3,18 @@ import { useNavigation, useActionData, Form, useRouteLoaderData, useNavigate } f
 import classes from '../css/activities/ActivityForm.module.css';
 import { FaCheck } from "react-icons/fa";
 import ButtonS from "../UI/ButtonS";
-import ButtonM from "../UI/ButtonM";
 import { IoTrashBinSharp } from "react-icons/io5";
 import Tag from "../UI/Tag";
 import SelectImage from "./SelectImage";
 import { baseName } from "../../App";
+import ButtonM from "../UI/ButtonM";
 
 function ActivityForm({ existingTags, method, activity, locationState }) {   
     const user = useRouteLoaderData('root');
-    let token;
-    let user_name;
-    let user_id;
-    if(user) {
-        token = user.token;
-        user_name = user.user_name
-        user_id = user.user_id;
-    }
-    // const location = useLocation();
-    //const currentPath = location.pathname;
+    const user_id = user ? user.user_id : 'guest';
+    const token = user ? user.token : null;
+    const user_name = user ? user.user_name : null;
+
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
@@ -47,10 +41,10 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
     const handleTypedTagsChange = (event) => {
         const typedValue = event.target.value;
         setTypedTags(typedValue);
-        const matched = existingTags.filter(tag =>
+        const matched = existingTags?.filter(tag =>
         tag.toLowerCase().includes(typedValue.toLowerCase())
         );
-        setMatchedTags(matched);
+        setMatchedTags(matched | []);
     };
 
     const handleTagSelection = (e, selectedTag) => {
@@ -66,7 +60,7 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
         e.preventDefault();
 
         if (chosenTags.includes(newTag)) {
-            console.log("tag is already in chosenTags")
+            // console.log("tag is already in chosenTags")
         } else {
             setChosenTags(prevTags => [...prevTags, newTag]);
         }
@@ -93,13 +87,13 @@ function ActivityForm({ existingTags, method, activity, locationState }) {
 
     return (
         <div className={classes.frame}>
-        {!token && 
+        {!token && user_id === 'guest' &&
             <div className={classes.login}>
                 <h1>Please login first!</h1>
                 <ButtonM onClick={handleNavigate}>Login</ButtonM>
             </div>  
         }
-        {token && 
+        {token &&
             <Form method={method} className={classes.form}>
                 <div className={classes.left}>
                     <h1>{activity ? 'Edit Activity' : 'Add Activity'}</h1>

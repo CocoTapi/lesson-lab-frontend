@@ -89,13 +89,16 @@
 }
 
 .star {
+    align-self: center;
     font-size: 2rem;
     color:  var(--color-info-500);
+
 }
 
 .playlistTitle{
     display: flex;
     gap: 1rem;
+    font-size: 1.2rem;
 }
 
 .playlistItemTrash {
@@ -136,10 +139,28 @@
     font-size: 1.2rem;
 }
 
-.reorderButtonComponent {
+/* .reorderButtonComponent {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1rem;
+} */
+
+.reorderButtonComponent {
+    display: none; /* Hide by default */
+}
+
+.info {
+    padding: 0;
+    margin: 0;
+}
+
+/* Show only when the device supports hover (non-touch devices) */
+@media (hover: hover) {
+    .reorderButtonComponent {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
 }
 
 @media (min-width: 640px) {

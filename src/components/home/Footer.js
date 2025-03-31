@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useRouteLoaderData } from 'react-router-dom';
 import classes from '../css/home/Footer.module.css';
 import { FaGoogle, FaLinkedinIn, FaGithub } from "react-icons/fa6";
 
 
 function Footer(){
+    const user = useRouteLoaderData('root');
+    const user_id = user ? user.user_id : 'guest';
+
     return (
         <footer className={classes.frame}>
             <div className={classes.contents}>
@@ -20,9 +23,9 @@ function Footer(){
                 </div>
                 <p>Personal Projects:</p>
                 <div className={classes.links}>
-                    <Link to='/' className={classes.link}>Home</Link>
+                    <Link to='/' className={classes.link} >Home</Link>
                     <Link to='/activities' className={classes.link} >Activities</Link>
-                    <Link to='/activities/new' className={classes.link} >Add Activity</Link>
+                    <Link to={`/mypage/${user_id}`} className={classes.link} >My Page</Link>
                 </div>
                 <h3>LessonLab</h3>
                 <p>2024</p>

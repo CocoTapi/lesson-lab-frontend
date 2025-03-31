@@ -99,23 +99,7 @@
     display: none; 
   }
 
-  .menuComponent {
-    width: 40vw;
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    background-color: var(--color-primary-300);
-    position: fixed;
-    z-index: 1000;
-    top: 4rem;
-    right: 0;
-  }
-
-  .menuItem {
-    font-size: 1rem;
-    padding: 1rem;
-  }
-
+  
   @media (max-width: 1007px) {
     .header {
       height: 4rem;
@@ -167,12 +151,15 @@
     }
 
     .menuBox {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       padding-right: 1rem;
+      width: 40vw;
     }
     
     .menuIconComponent {
       display: block;
+      align-self: flex-end;
     }
 
     .menuIconComponent:hover {
@@ -195,6 +182,39 @@
     .auth:hover {
       transform: none;
     }
+
+    .menuComponent {
+      display: grid;
+      justify-content: center;
+      text-align: center;
+      background-color: var(--color-primary-300);
+      position: fixed;
+      z-index: 1000;
+      top: 4rem;
+      right: 0;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+  
+    .menuItem {
+      font-size: 1rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid white; 
+    }
+  
+    /* Last link removes border */
+    .menuItem:last-child {
+      border-bottom: none;
+    }
+  
+    /* Active/Selected Link */
+    .menuItem:active,
+    .menuItem[aria-current="page"] {
+      background-color: var(--color-primary-700);
+      color: white; /* Different color for active link */
+      font-weight: bold;
+    }
+  
     
   }
 

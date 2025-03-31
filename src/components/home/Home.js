@@ -1,4 +1,3 @@
-import { baseName } from '../../App';
 import ButtonS from '../UI/ButtonS';
 import classes from '../css/home/home.module.css';
 import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
@@ -6,7 +5,6 @@ import { Link, useRouteLoaderData, useNavigate } from 'react-router-dom';
 
 function Home() {
     const user = useRouteLoaderData('root');
-    // const token = user ? user.token : null;
     const user_id = user ? user.user_id : 'guest';
     const navigate = useNavigate();
 
@@ -16,15 +14,15 @@ function Home() {
         }; 
         
         if (path === 'add activity') {
-            if(user_id){
+            if (user_id !== 'guest'){
                 navigate("/activities/new")
-            } else {
+            } else if (user_id === 'guest') {
                 navigate("/auth?mode=login", {
                     state: {
                         prev_location: '/activities/new'
                     }
                 })
-            }  
+            } 
         };
        
     }

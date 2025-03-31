@@ -6,7 +6,10 @@ export const FAVORITES_KEY = 'guest_favorites';
 // Fetch all activities from demo file
 export async function fetchActivities() {
     const activities = demoData.activities;
-    if(!activities) throw new Error('There is no list of activities.')
+    if(!activities) {
+        return null;
+        // throw new Error('There is no list of activities.')
+    }
     return activities;
 }
 
@@ -17,7 +20,12 @@ export async function fetchActivityById(id) {
         activity.activity_id === id
     );
 
-    if (!activity) throw new Error(`No matched activity with activity_id: ${id}`);
+    if (!activity) {
+        return null;
+
+        // react router dom doesn't handle this
+        // throw new Error(`No matched activity with activity_id: ${id}`);
+    }
 
     return activity;
 }
@@ -63,7 +71,13 @@ export async function addGuestFavorite(activity_id) {
 }
 
 export async function removeGuestFavorite(activity_id) {
-    const updatedFavorites = await getGuestData(FAVORITES_KEY).filter(id => id !== activity_id);
+    const userFavorites = await getGuestData(FAVORITES_KEY);
+    if(!userFavorites) {
+        return null;
+        // throw new Error('Could not get guests favorite data.')
+    }
+    
+    const updatedFavorites = userFavorites.filter(id => id !== activity_id);
     setGuestData(FAVORITES_KEY, updatedFavorites);
 }
 
@@ -106,50 +120,41 @@ export async function getUserFavoritesActivity() {
 
 // Fetch userPlaylist
 export async function fetchGuestPlaylist() {
-    let playlists = await getGuestData(PLAYLIST_KEY);
-    const activities = await fetchActivities();
+    const [playlists, allActivities] = await Promise.all([
+        getGuestData(PLAYLIST_KEY),  //array
+        fetchActivities() //object
+    ]);
 
-    // Iterate through the playlists and map activity IDs to activity details
+    // make a map to insert activity by id
+    const activityMap = new Map(allActivities.map(activity => [activity.activity_id, activity]));
+
     const userPlaylists = playlists.map(playlist => {
-        const playlistActivities = playlist.activity_list.map((activityId, index) => {
-            
-            // Find the activity corresponding to the activityId
-            const activity = activities.find(item => item.activity_id === activityId);
+        const activities = [];
+        playlist.activity_ids.map((activity_id, index) => {
+            const activity = activityMap.get(activity_id);
 
             if (!activity) {
-                throw new Error(`Activity with activity_id: ${activityId} not found`);
+                return null
+                // throw new Error(`Activity with activity_id: ${activity_id} not found`);
+               
             }
 
-            // Build the activity object with additional details
-            return {
-                image_num: activity.image_num,
-                activity_id: activity.activity_id,
-                position: index + 1, // Position in the playlist (1-based index)
-                title: activity.title,
-                summary: activity.summary,
-                duration: activity.duration,
-                instructions: activity.instructions || 'N/A',
-                objectives: activity.objectives || 'N/A',
-                materials: activity.materials || 'N/A',
-                links: activity.links || null
+            // Add position to the activity object
+            const activityWithPosition = {
+                ...activity,
+                position: index + 1
             };
+
+            activities.push(activityWithPosition);
         });
 
-        // Calculate the total duration for the playlist
-        const totalDuration = playlistActivities.reduce(
-            (sum, activity) => sum + activity.duration, 0
-        );
-
+        // Add activities to the playlist
         return {
-            playlist_id: playlist.playlist_id,
-            playlist_title: playlist.playlist_title,
-            user_id: 'guest', 
-            total_duration: totalDuration,
-            activities: playlistActivities,
-            activity_ids: playlist.activity_list
+            ...playlist,
+            activities: activities
         };
-    });
-
+    })
+    
     return userPlaylists; 
 
 }
@@ -158,22 +163,49 @@ export async function fetchGuestPlaylist() {
 export async function addPlaylistWithId(title, activityDuration, activity_id) {
     // create new playlist
     const newPlaylist = await saveNewGuestPlaylist(title);
-    if(!newPlaylist) throw new Error('Could not create new Playlist.');
+    if(!newPlaylist){
+        return null;
+        // throw new Error('Could not create new Playlist.');
+    }
 
     newPlaylist.total_duration = activityDuration;
-    newPlaylist.activity_list.push(activity_id);
+    newPlaylist.activity_ids.push(activity_id);
+
+    // Update userPlaylists
+    await updatePlaylist(newPlaylist);
 
     return newPlaylist
+}
+
+async function updatePlaylist(updatedPlaylist){
+    const playlists = await getGuestData(PLAYLIST_KEY);
+
+    // Find the index of the playlist to replace
+    const index = playlists.findIndex(
+        (playlist) => playlist.playlist_id === updatedPlaylist.playlist_id
+    );
+
+    if (index !== -1) {
+        // ✅ Replace the existing playlist with the updated one
+        playlists[index] = updatedPlaylist;
+
+        // Save the entire playlists
+        setGuestData(PLAYLIST_KEY, playlists);
+    } else {
+        return null;
+        // throw new Error(`Playlist with ID ${updatedPlaylist.playlist_id} not found.`);
+    }
 }
 
 // Add a new Playlist (Only the title of playlist)
 export async function saveNewGuestPlaylist(playlistTitle) {
     const playlists = await getGuestData(PLAYLIST_KEY);
+    
     const newPlaylist =  {
         playlist_id: playlists.length + 1,
         playlist_title: playlistTitle,
         total_duration: 0,
-        activity_list: []
+        activity_ids: []
     }
 
     playlists.push(newPlaylist);
@@ -183,36 +215,49 @@ export async function saveNewGuestPlaylist(playlistTitle) {
     return newPlaylist;
 }
 
+// Remove Guest Playlist
 export async function removeGuestPlaylist(playlist_id) {
     const data =  await getGuestData(PLAYLIST_KEY);
-    if(!data) throw new Error('Could not get guest playlist data.')
 
     const updatedPlaylists = data.filter(p => 
         p.playlist_id !== playlist_id
     );
 
-    if (!updatedPlaylists) throw new Error('Could not remove playlist.')
+    if (!updatedPlaylists) {
+        return null;
+        // throw new Error('Could not remove playlist.')
+    }
 
     setGuestData(PLAYLIST_KEY, updatedPlaylists);
 
     // TODO: check if it is correctly updated and return new playlist 
 }
 
-export async function addActivitiesToPlaylist(playlist_id, newIds, duration) {
+export async function addActivitiesToPlaylist(playListId, newIds, duration) {
     const playlists = await getGuestData(PLAYLIST_KEY);
+    let correctDuration;
 
     const updated = playlists.map(p => {
-        if (p.playlist_id === playlist_id) {
+        if (p.playlist_id === playListId) {
+            correctDuration = parseInt(p.total_duration) + parseInt(duration);
             return {
                 ...p,
-                total_duration: duration,
-                activity_list: [...p.activity_list, ...newIds],
+                total_duration: correctDuration,
+                activity_ids: [...p.activity_ids, ...newIds],
             };
         }
         return p;
     });
 
     setGuestData(PLAYLIST_KEY, updated);
+
+    const updatedPlaylists = await getGuestData(PLAYLIST_KEY);
+    const updatedPlaylist = updatedPlaylists.find(p => p.playlist_id === playListId);
+    const updatedDuration = parseInt(updatedPlaylist.total_duration);
+
+    // return true(success) or false
+    return correctDuration === updatedDuration
+
 }
 
 export async function removeActivityFromPlaylist(playlist_id, activity_id, duration){
@@ -222,7 +267,7 @@ export async function removeActivityFromPlaylist(playlist_id, activity_id, durat
         if (p.playlist_id === playlist_id) {
             return {
                 ...p,
-                activity_list: p.activity_list.filter(id => id !== activity_id),
+                activity_ids: p.activity_ids.filter(id => id !== activity_id),
                 total_duration: Math.max(0, p.total_duration - (duration || 0))
             };
         }
@@ -239,7 +284,7 @@ export async function reorderPlaylist(playlist_id, reorderedActivityIds) {
         if (p.playlist_id === playlist_id) {
             return {
                 ...p,
-                activity_list: reorderedActivityIds
+                activity_ids: reorderedActivityIds
             };
         }
         return p;

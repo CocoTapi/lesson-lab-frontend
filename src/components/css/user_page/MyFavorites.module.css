@@ -68,6 +68,10 @@
     font-size: 1.5rem;
 }
 
+.noContent {
+    color: white;
+}
+
 @media (min-width: 1300px) {
     .bottomContents {
         display: flex;

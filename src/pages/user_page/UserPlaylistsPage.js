@@ -5,6 +5,7 @@ import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
 import Swal from 'sweetalert2';
+import { swalError, swalSuccess } from "../util/swalModal";
 
 //TODO: re-fetch data after adding activities into playlist
 
@@ -50,7 +51,7 @@ export async function loadUserPlaylists(id) {
         userPlaylists = resData.userPlaylists;
         
     } else if (user_id === 'guest') {
-        userPlaylists = await fetchGuestPlaylist()
+        userPlaylists = await fetchGuestPlaylist();
     }
     return { userPlaylists };
 }
@@ -127,20 +128,10 @@ export async function action({ request }) {
             const newPlaylist = await saveNewGuestPlaylist(playlist_title);
 
             if(newPlaylist) {
-                            Swal.fire({
-                                title: "Success!",
-                                icon: "success",
-                                draggable: true,
-                                confirmButtonColor: '#315079'
-                              });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Oops...",
-                                text: "Something went wrong. Please try again later.",
-                                footer: '<a href="#">Why do I have this issue?</a>'
-                              });   
-                        }
+               swalSuccess();
+            } else {
+                swalError();
+            }
         }
        
         return redirect(`/mypage/${user_id}/playlists`);
@@ -190,8 +181,20 @@ export async function action({ request }) {
             await handleRequest(url, method, token, bodyContent, user_id);
 
         } else if (user_id === 'guest')  {
-            const durations = formData.get('playlistDuration');
-            await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
+            const durations = parseInt(formData.get('selectedDurationTotal'));
+
+            if (durations === 0 || activity_id_arr.length === 0 || !playlist_id) {
+                swalError();
+                throw new Error("activity data is missing.");
+            }
+
+            const response = await addActivitiesToPlaylist(playlist_id, activity_id_arr, durations);
+        
+            if(!response) {
+                swalError();
+            } else {
+                swalSuccess();
+            }
         }
         
         // return handlePageRefresh(user_id);  
@@ -216,15 +219,17 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
     if (!response.ok) {
         throw json({ message: "Could not complete the request." }, { status: 500 });
     }
+
+    // TODO: add return value and use it to tell user if it is successful or not
 }
 
 
 function handlePageRefresh(user_id) {
-    console.log("baseUrl:", baseUrl);
+    // console.log("baseUrl:", baseUrl);
 
     const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
 
-    console.log("Redirecting to:", redirectUrl);
+    // console.log("Redirecting to:", redirectUrl);
     
     window.location.href = redirectUrl;
     return null;

@@ -15,26 +15,28 @@
 
 .contents {
     width: 100%;
+    padding-left: 1rem;
 }
 
 .box h1 {
     font-size: 1.3rem;
     font-weight: 600;
-    padding-bottom: 0.3rem;
+    padding-bottom: 0.3rem; 
     transition: all 0.3s ease; 
 }
 
 .box h2 {
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 600;
     transition: all 0.3s ease; 
 }
 
 .checkbox {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
-    gap: 10px 0px;
-    margin-bottom: 2.2rem;
+    gap: .3rem 0;
+    margin-bottom: 1rem;
     transition: all 0.3s ease; 
 }
 
@@ -81,22 +83,23 @@
     .viewButtons {
         margin-top: 3rem;
     }
- }
+}
 
- @media (min-width: 590px) {
+@media (min-width: 590px) {
     .checkbox {
         grid-template-columns: repeat(4, 1fr); 
     }
- }
+}
 
 
- @media (min-width: 780px) {
+@media (min-width: 780px) {
     .checkbox {
         grid-template-columns: repeat(6, 1fr); 
+        margin-bottom: 1.5rem;
     }
- }
+}
 
- @media (min-width: 1300px) {
+@media (min-width: 1300px) {
     .box {
         width: 18.75rem;
         height: 37.63rem;
@@ -104,5 +107,5 @@
     .checkbox {
         grid-template-columns: repeat(2, 1fr); 
     }
- }
+}
 

@@ -19,6 +19,7 @@
     padding: 1rem;
     box-sizing: border-box;
     overflow-y: auto;
+    border-radius: 15px;
 }
 
 

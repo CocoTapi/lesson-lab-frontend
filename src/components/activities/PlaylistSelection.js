@@ -1,14 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { loadUserPlaylists } from "../../pages/user_page/UserPlaylistsPage";
 import Modal from "../UI/Modal";
 import PlaylistItem from "../user_page/PlaylistItem";
 import classes from '../css/activities/PlaylistSelection.module.css'
 import ButtonS from "../UI/ButtonS";
 import TopButton from "../UI/TopButton";
-import { fetchGuestPlaylist } from "../../pages/util/saveGuestData";
 import ButtonM from "../UI/ButtonM";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
 
 // Select playlist from Activity Item
 function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current_activity_id, onCreatePlaylist }){
@@ -17,13 +15,9 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
 
     useEffect(() => {
         const fetchPlaylistData = async () => {
-            let list;
-            if (user_id !== 'guest'){
-                const response = await loadUserPlaylists(user_id);
-                list = response.userPlaylists;
-            } else {
-                list = fetchGuestPlaylist();
-            }
+           
+            const response = await loadUserPlaylists(user_id);
+            const list = response.userPlaylists;
            
             setUserPlaylists(list);
         };
@@ -50,16 +44,27 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
         onClose();
     }
 
-    const availablePlaylists = userPlaylists.filter(playlist => !playlist.activity_ids.includes(current_activity_id));
+
+    //Update userPlaylists after refetching playlist data 
+    const availablePlaylists = useMemo(() => {
+        if (userPlaylists.length === 0) {
+            return []; // Return empty array if not loaded yet
+        }
+
+        return userPlaylists.filter(playlist =>
+            // Display only playlists that have no current activity
+            !playlist.activity_ids.includes(current_activity_id)
+        );
+    }, [userPlaylists, current_activity_id]);
 
     let content;
-    if (Object.keys(availablePlaylists).length === 0) {
+    if (availablePlaylists && Object.keys(availablePlaylists).length === 0) {
         content = (
             <div>
                 <p>No playlist available.</p>
             </div>
         )
-    } else {
+    } else if (availablePlaylists) {
         content = availablePlaylists.map((playlist) => (
             <label key={playlist.playlist_id} className={classes.radioContainer}>
                 <input
@@ -85,7 +90,7 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
             <div className={classes.modalContents}>
                 <div className={classes.topButtonComponent}>
                     <TopButton onClick={onClose} >Back</TopButton>
-                    <TopButton onClick={handleSubmit} >Done</TopButton>
+                    <TopButton onClick={handleSubmit} colorScheme="primary">Done</TopButton>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <h2>Select playlist you want to add the activity</h2>
@@ -93,7 +98,7 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
                         {content}
                     </div>
                     <div className={classes.createPlaylistButtonComponent}>
-                        {user_id === 'guest' ?
+                        {user_id === 'guest' ?                           
                         (   <ButtonM onClick={handleCreatePlaylist}>
                                 Create Playlist & Add
                             </ButtonM>

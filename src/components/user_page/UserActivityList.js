@@ -48,12 +48,9 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
         <>
             <div className={classes.detailIcons}>
                 <GoHeartFill />
-                {/* {activity.is_saved ? <GoBookmarkFill /> : <GoBookmark /> } */}
+                <p className={classes.countNum}>{activity.like_count} likes</p>
             </div>
-            <div className={classes.detailItem}>
-                <p>{activity.like_count} likes</p>
-            </div>
-            <div className={classes.detailItem}>
+            <div className={classes.titleDetailItem}>
                 <p>{activity.summary}</p>
             </div>
             <div className={classes.durationGroup}>
@@ -89,9 +86,9 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
                     <p className={classes.labelTitle}>References :</p>
                     <p className={classes.accordionReference}>
                         {activity.links ? 
-                            <Link to={activity.links}>
+                            <a href={activity.links} >
                                 {activity.links}
-                            </Link> 
+                            </a> 
                         : "none"
                         }
                     </p>

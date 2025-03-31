@@ -88,7 +88,7 @@ function MyFavorites({ data }){
     let content;
     
     if (Object.keys(userFavorites).length === 0) {
-        content = <p>You haven't liked activities.</p>
+        content = <p className={classes.noContent}>You haven't added activities.</p>
     } else {
         filteredActivities = getFilteredActivities(userFavorites, selectedDurations, selectedAgeGroups, selectedTags);
         sortedActivities = getSortedActivities( sortOption, filteredActivities );
@@ -117,10 +117,13 @@ function MyFavorites({ data }){
     return (
         <File> 
             <div className={classes.outerFrame}>
+                {/* file title */}
                 <div className={classes.pageTitle}>
                     <GoHeartFill className={classes.titleIcon} />
                     <h1>Likes</h1>
                 </div>
+
+                {/* create button */}
                 <div className={classes.createPlaylistButtonComponent}>
                     <Link to='../playlists' >
                         <ButtonM colorScheme="secondary">
@@ -129,6 +132,8 @@ function MyFavorites({ data }){
                         </ButtonM>
                     </Link>
                 </div>
+
+                {/* sort bar */}
                 <div className={classes.sortBar}>
                     <SortBar onSortChange={setSortOption} colorScheme="primaryLight"/>
                     { smallScreen && 
@@ -145,7 +150,7 @@ function MyFavorites({ data }){
                     { !smallScreen && <h2 className={classes.itemCounts}>{countTitle} Activities : {sortedActivities? sortedActivities.length : 0} items</h2>}
 
                     {showFilterMenu && (
-                        <div style={{ paddingBottom: '0.7rem'}}>
+                        <div className={classes.filterContentFrame}>
                             <Filter 
                                 onDurationsChange={handleDurationChange} 
                                 onAgeGroupsChange={handleAgeGroupChange} 

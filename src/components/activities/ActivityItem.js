@@ -3,12 +3,13 @@ import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
-import SortBar from "../UI/SortBar";
+import SortBar, { getSortedActivities } from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
 import PlaylistSelection from "./PlaylistSelection";
 import { baseName } from "../../App";
+import { swalError } from "../../pages/util/swalModal";
 
 function ActivityItem({ activity, activities }) {
     const user = useRouteLoaderData('root');
@@ -20,6 +21,14 @@ function ActivityItem({ activity, activities }) {
     const [showTags, setShowTags] = useState(false);
     const initialCount = activity.like_count;
     const [activityCount, setActivityCount] = useState(initialCount);
+
+    // for sort
+    const [ sortOption, setSortOption ] = useState(''); 
+ 
+    const sortedActivities = getSortedActivities( sortOption, activities );
+    
+
+
 
      //handle screen sizes change
      useEffect(() => {
@@ -41,13 +50,13 @@ function ActivityItem({ activity, activities }) {
     }, []);
 
     const handleAddFavorite = (is_favorited) => { 
-        if (user_id === 'guest'){
-            if (is_favorited === true){
-                setActivityCount((prev) => prev - 1);
-            } else if (is_favorited === false) {
-                setActivityCount((prev) => prev + 1);        
-            }
+        // optimistic update
+        if (is_favorited === true){
+            setActivityCount((prev) => prev - 1);
+        } else if (is_favorited === false) {
+            setActivityCount((prev) => prev + 1);        
         }
+     
         submit({ user_id, is_favorited }, { method: "POST" });
     }
 
@@ -71,15 +80,25 @@ function ActivityItem({ activity, activities }) {
         const now = new Date();
 
         // YYYY-MM-DD HH:mm:ss
-        const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
-
-        if(!formattedDate) throw new Error('Fail to get date.')
+        const formattedDate = 
+            `${String(now.getMonth() + 1).padStart(2, '0')}/
+                ${String(now.getDate()).padStart(2, '0')}/
+                ${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;  
+        
+            if(!formattedDate) throw new Error('Fail to get date.')
 
         const playlist_title = `New Playlist - ${formattedDate}`;
         const activity_id = activity.activity_id;
         const activity_duration = activity.duration;
 
-        submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
+        // Check the data validity
+        if (!playlist_title | !activity_id | !activity_duration) {
+            swalError()
+            setShowPlaylistSelection(false);   
+        } else {
+            submit({ playlist_title, activity_id, user_id, activity_duration }, { method: 'POST'})
+        }
+
     }
 
     return (
@@ -97,10 +116,14 @@ function ActivityItem({ activity, activities }) {
             }
             
             <div className={classes.contents}>
+                {/* sort bar for large screen */}
                 <div className={classes.sortBar} >
-                    <SortBar />
+                    <SortBar  onSortChange={setSortOption} />
                 </div>
+
+               
                 <div className={classes.frame}>
+                     {/* activity list for large screen. Sortable */}
                     <ul className={classes.list}>
                         {activities.slice(0, 3).map((item) => (
                             <li key={item.activity_id}>
@@ -111,10 +134,15 @@ function ActivityItem({ activity, activities }) {
 
                     <div className={classes.detailCard}>
                         <div className={classes.detailCardContents}>
+                            {/* img */}
                             <div className={classes.detailCardImage}>
                                 <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
                             </div>
+
+                            {/* title */}
                             <h1>{activity.title}</h1>
+                            
+                            {/* icons */}
                             <div className={classes.detailCardIcons}>
                                 {activity.is_favorited ? 
                                     <GoHeartFill onClick={() => handleAddFavorite(activity.is_favorited)} /> :
@@ -122,13 +150,19 @@ function ActivityItem({ activity, activities }) {
                                 }
                                 <GoBookmark onClick={handleAddPlaylist} /> 
                             </div>
+
                             <div className={classes.detailCardCreatorInfo}>
+                                {/* like count */}
                                 <p>{activityCount} likes</p>
+
+                                {/* creator */}
                                 <div className={classes.creator} >
-                                    <p className={classes.creatorIcon} ><FaRegCircleUser /></p>
+                                  <FaRegCircleUser className={classes.creatorIcon}/>
                                     <p>{activity.user_name}</p>
                                 </div>  
                             </div>
+
+                            {/* Detail */}
                             <div className={classes.detailCardDetails}>
                                 <div className={classes.detailLeft}>
                                     <div className={`${classes.detailItem} ${classes.flexItem}`}>
@@ -141,7 +175,7 @@ function ActivityItem({ activity, activities }) {
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Materials :</p>
-                                        <p>{activity.materials}</p>
+                                        <p className={classes.materials}>{activity.materials}</p>
                                     </div>
                                     <div className={classes.leftTags}>
                                         {activity.tags.map((tag) => (
@@ -152,26 +186,26 @@ function ActivityItem({ activity, activities }) {
                                 <div className={classes.detailRight}>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Summary :</p>
-                                        <p>{activity.summary}</p>
+                                        <p className={classes.longText}>{activity.summary}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Objectives:</p>
-                                        <p>{activity.objectives}</p>
+                                        <p className={classes.longText}>{activity.objectives}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>Instructions :</p>
-                                        <p>{activity.instructions}</p>
+                                        <p className={classes.longText}>{activity.instructions}</p>
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>References :</p>
-                                        <p className={classes.reference}>
+                                        <div className={classes.reference}>
                                             {activity.links ? 
-                                                <Link to={activity.links}>
+                                                <a href={activity.links}>
                                                     {activity.links}
-                                                </Link> 
-                                            : 'none'
+                                                </a> 
+                                            : <p>none</p>
                                             }
-                                        </p>
+                                        </div>
                                     </div>
                                     {showTags && 
                                         <div className={classes.detailItem}>
