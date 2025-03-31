@@ -1,6 +1,7 @@
 .file {
     width: 100%;
     max-width: 80rem;
+    min-height: 36rem;
     margin: auto;
     background-image: linear-gradient(to bottom right, var(--color-primary-700), var(--color-info-400) );
     border: 5px solid var(--color-primary-700);
@@ -15,7 +16,8 @@
 
 @media (min-width: 640px) {
     .file {
-        min-height: 54.6rem;
+        /* min-height: 54.6rem; */
+        min-height: 50rem;
         border: 3px solid var(--color-primary-700);
     }
 }
