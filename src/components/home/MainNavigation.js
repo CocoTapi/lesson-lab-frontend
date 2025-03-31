@@ -39,6 +39,9 @@ function MainNavigation() {
 
     return (
         <header className={classes.header}>
+            <div className={classes.headerContent}>
+
+          
             <div className={classes.left}>
            
                 <NavLink to="/" className={classes.logo}>
@@ -81,6 +84,8 @@ function MainNavigation() {
                         <NavLink className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} activeclassname="active">My Page</NavLink>
                     </div>
                 }
+            </div>
+
             </div>
            
         </header>

@@ -3,7 +3,7 @@
     background-color: white;
     height: 5.5rem;
     display: flex;
-    justify-content: space-between; 
+    /* justify-content: space-between;  */
     align-items: center;
     top: 0;
     left: 0;
@@ -12,6 +12,15 @@
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adding shadow to the navbar */
     z-index: 1000;
+  }
+
+  .headerContent {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    
   }
   
   .left, .right {
@@ -28,7 +37,7 @@
     font-weight: bold;
     color: var(--color-primary-700);
     text-decoration: none;
-    padding-right: 0.8rem;
+    padding-right: 1.5rem;
   }
   
   .link, .auth {
@@ -112,7 +121,7 @@
     
     .logo {
       font-size: 1.5rem;
-      padding-right: 0;
+      padding-right: 1rem;
     }
     
     .link, .auth {
