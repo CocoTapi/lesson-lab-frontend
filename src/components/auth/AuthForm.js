@@ -9,7 +9,7 @@ function AuthForm({ locationState }) {
     const data = useActionData();
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'submitting';
-    const [setLoading] = useState(false);   
+    const [loading, setLoading] = useState(false);   
     const prev_location = locationState? locationState: '/';
 
     const googleLoginHandler = () => {
@@ -104,7 +104,7 @@ function AuthForm({ locationState }) {
                 </div>
                 <div className={classes.centerGroup}>
                     <ButtonM disabled={isSubmitting}>{isLogin ? 'Login' : 'Sign Up' }</ButtonM>
-                    {isLogin && 
+                    {/* {isLogin && 
                     <>
                         <h3>or</h3>
                         <button className={classes.googleButton} onClick={googleLoginHandler}>
@@ -112,7 +112,7 @@ function AuthForm({ locationState }) {
                             Sign in with Google
                         </button>
                     </>
-                    }
+                    } */}
                     {isSubmitting && <p>Submitting...</p>}
                 </div>
                 
