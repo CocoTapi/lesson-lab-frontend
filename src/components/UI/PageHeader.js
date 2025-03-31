@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import classes from '../css/UI/PageHeader.module.css';
-import { TiPlus } from "react-icons/ti";
+// import { TiPlus } from "react-icons/ti";
 
 function PageHeader({ title, token, link }){
     
@@ -15,7 +15,9 @@ function PageHeader({ title, token, link }){
                         {title}
                     </NavLink>
                 </li>
-                <li>
+                {/* 
+                    TODONOW
+                    <li>
                     <NavLink
                         to={"/activities/new"}
                     >
@@ -24,7 +26,7 @@ function PageHeader({ title, token, link }){
                             <span>Add Activity</span> 
                         </button>
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
         </div>
     )

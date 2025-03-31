@@ -84,6 +84,7 @@ function Home() {
                             for more learners everywhere.
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
+                            
                             <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder' onClick={() => handleNavigate('add activity')} >Add Activity</ButtonS>
                         </div>
                     </div>
