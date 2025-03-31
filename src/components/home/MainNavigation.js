@@ -112,12 +112,11 @@ function MainNavigation() {
             )} 
                 {displayMenu && 
                     <div className={classes.menuComponent}>
-                        <Link className={classes.menuItem}  to="/" onClick={handleCloseMenu} >Home</Link>
-                        <Link className={classes.menuItem} to="/activities" onClick={handleCloseMenu} >Activities</Link>
-                        <Link className={classes.menuItem} to="/activities/new" onClick={handleCloseMenu} > Add Activity</Link>
-                        <Link className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} >My Page</Link>
-                        {!token && <Link className={classes.menuItem} to="/auth?mode=login" onClick={handleCloseMenu} >Login</Link>}
-                        {!token && <Link  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} >Sign Up</Link>}
+                        <NavLink className={classes.menuItem}  to="/" onClick={handleCloseMenu} activeClassName="active" >Home</NavLink>
+                        <NavLink className={classes.menuItem} to="/activities" onClick={handleCloseMenu} activeClassName="active">Activities</NavLink>
+                        <NavLink className={classes.menuItem} to={`/mypage/${user_id}`} onClick={handleCloseMenu} activeClassName="active">My Page</NavLink>
+                        {!token && <NavLink className={classes.menuItem} to="/auth?mode=login" onClick={handleCloseMenu} activeClassName="active">Login</NavLink>}
+                        {!token && <NavLink  className={classes.menuItem} to="/auth/signup" onClick={handleCloseMenu} activeClassName="active">Sign Up</NavLink>}
                         {token && 
                             <Form className={classes.menuItem} action='/logout' method='post' >
                                 <button type="submit" className={classes.auth}>Logout</button>
