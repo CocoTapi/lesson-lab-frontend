@@ -155,7 +155,7 @@ function ActivityItem({ activity, activities }) {
                                 {/* like count */}
                                 <p>{activityCount} likes</p>
 
-                                {/* creater */}
+                                {/* creator */}
                                 <div className={classes.creator} >
                                   <FaRegCircleUser className={classes.creatorIcon}/>
                                     <p>{activity.user_name}</p>
@@ -198,14 +198,14 @@ function ActivityItem({ activity, activities }) {
                                     </div>
                                     <div className={classes.detailItem}>
                                         <p className={classes.labelTitle}>References :</p>
-                                        <p className={classes.reference}>
+                                        <div className={classes.reference}>
                                             {activity.links ? 
-                                                <Link to={activity.links}>
+                                                <a href={activity.links}>
                                                     {activity.links}
-                                                </Link> 
-                                            : 'none'
+                                                </a> 
+                                            : <p>none</p>
                                             }
-                                        </p>
+                                        </div>
                                     </div>
                                     {showTags && 
                                         <div className={classes.detailItem}>

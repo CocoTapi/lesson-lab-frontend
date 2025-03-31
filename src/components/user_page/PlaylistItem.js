@@ -79,7 +79,7 @@ function PlaylistItem({playlist, onRemoveActivity, onDeletePlaylist, onAddActivi
                     playlist.playlist_title
                 : (
                     <div className={classes.playlistTitle}>
-                        <p className={classes.star}><FaStar /></p> 
+                       <FaStar className={classes.star}/>
                         <p>{playlist.playlist_title}</p>
                     </div>
                     

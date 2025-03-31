@@ -89,13 +89,16 @@
 }
 
 .star {
+    align-self: center;
     font-size: 2rem;
     color:  var(--color-info-500);
+
 }
 
 .playlistTitle{
     display: flex;
     gap: 1rem;
+    font-size: 1.2rem;
 }
 
 .playlistItemTrash {
@@ -144,6 +147,11 @@
 
 .reorderButtonComponent {
     display: none; /* Hide by default */
+}
+
+.info {
+    padding: 0;
+    margin: 0;
 }
 
 /* Show only when the device supports hover (non-touch devices) */
