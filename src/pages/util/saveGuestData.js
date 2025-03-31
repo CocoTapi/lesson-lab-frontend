@@ -141,7 +141,7 @@ export async function fetchGuestPlaylist() {
 
     const userPlaylists = playlists.map(playlist => {
         const activities = [];
-        playlist.activity_ids.map((activity_id, index) => {
+        playlist.activity_ids.forEach((activity_id, index) => {
             const activity = activityMap.get(activity_id);
 
             if (!activity) {

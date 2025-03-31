@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Accordion from "../UI/Accordion";
 import classes from '../css/user_page/PlaylistItem.module.css';
 import { GoTrash } from "react-icons/go";

@@ -1,7 +1,7 @@
 import Accordion from '../UI/Accordion';
 import classes from '../css/user_page/UserActivityList.module.css';
 import { GoHeartFill } from 'react-icons/go';
-import { Link, useSubmit } from 'react-router-dom';
+import { useSubmit } from 'react-router-dom';
 import Tag from '../UI/Tag';
 import ButtonS from '../UI/ButtonS';
 import { GoTrash } from 'react-icons/go';
