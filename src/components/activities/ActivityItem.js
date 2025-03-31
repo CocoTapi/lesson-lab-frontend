@@ -3,7 +3,7 @@ import { useRouteLoaderData, useSubmit, Link } from "react-router-dom";
 import classes from '../css/activities/ActivityItem.module.css';
 import { GoHeart,GoHeartFill, GoBookmark } from "react-icons/go";
 import ButtonS from "../UI/ButtonS";
-import SortBar from "../UI/SortBar";
+import SortBar, { getSortedActivities } from "../UI/SortBar";
 import SummaryCard from "./SummaryCard";
 import Tag from "../UI/Tag";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -21,6 +21,14 @@ function ActivityItem({ activity, activities }) {
     const [showTags, setShowTags] = useState(false);
     const initialCount = activity.like_count;
     const [activityCount, setActivityCount] = useState(initialCount);
+
+    // for sort
+    const [ sortOption, setSortOption ] = useState(''); 
+ 
+    const sortedActivities = getSortedActivities( sortOption, activities );
+    
+
+
 
      //handle screen sizes change
      useEffect(() => {
@@ -108,10 +116,14 @@ function ActivityItem({ activity, activities }) {
             }
             
             <div className={classes.contents}>
+                {/* sort bar for large screen */}
                 <div className={classes.sortBar} >
-                    <SortBar />
+                    <SortBar  onSortChange={setSortOption} />
                 </div>
+
+               
                 <div className={classes.frame}>
+                     {/* activity list for large screen. Sortable */}
                     <ul className={classes.list}>
                         {activities.slice(0, 3).map((item) => (
                             <li key={item.activity_id}>
@@ -126,7 +138,7 @@ function ActivityItem({ activity, activities }) {
                             <div className={classes.detailCardImage}>
                                 <img src={`${baseName}/images/large/${activity.image_num || 1}.png`} alt="example" />
                             </div>
-                            
+
                             {/* title */}
                             <h1>{activity.title}</h1>
                             

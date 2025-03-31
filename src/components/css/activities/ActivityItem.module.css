@@ -25,6 +25,7 @@
     display: grid;
     gap: 0.7rem;
     max-width: 20rem;
+    max-height: 93rem;
 }
 
 .list li {
@@ -85,6 +86,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: .2rem;
+    margin-bottom: .5rem;
 }
 
 .creator {
