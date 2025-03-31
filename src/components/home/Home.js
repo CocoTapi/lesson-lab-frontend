@@ -14,15 +14,15 @@ function Home() {
         }; 
         
         if (path === 'add activity') {
-            if (user_id !== 'guest'){
+            // if (user_id !== 'guest'){
                 navigate("/activities/new")
-            } else if (user_id === 'guest') {
-                navigate("/auth?mode=login", {
-                    state: {
-                        prev_location: '/activities/new'
-                    }
-                })
-            } 
+            // } else if (user_id === 'guest') {
+            //     navigate("/auth?mode=login", {
+            //         state: {
+            //             prev_location: '/activities/new'
+            //         }
+            //     })
+            // } 
         };
        
     }
@@ -69,7 +69,11 @@ function Home() {
                             while reducing your workload. 
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
-                            <ButtonS className={classes.menuBoxButton} colorScheme='primary' onClick={() => handleNavigate('playlist')}>
+                            <ButtonS 
+                                className={classes.menuBoxButton} 
+                                colorScheme='primary' 
+                                onClick={() => handleNavigate('playlist')}
+                            >
                                 Create Now
                             </ButtonS>
                         </div>
@@ -85,7 +89,13 @@ function Home() {
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
                             
-                            <ButtonS className={classes.menuBoxButton} colorScheme='primaryBorder' onClick={() => handleNavigate('add activity')} >Add Activity</ButtonS>
+                            <ButtonS 
+                                className={classes.menuBoxButton} 
+                                colorScheme='primaryBorder' 
+                                onClick={() => handleNavigate('add activity')} 
+                            >
+                                Add Activity
+                            </ButtonS>
                         </div>
                     </div>
                 </div>

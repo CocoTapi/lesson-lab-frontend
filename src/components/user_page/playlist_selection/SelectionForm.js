@@ -8,7 +8,6 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import ButtonS from "../../UI/ButtonS";
 import { loadUserFavorites } from "../../../pages/user_page/UserFavoritesPage";
-import { loadUserUploads } from "../../../pages/user_page/UserUploadsPage";
 import { loadActivities } from "../../../pages/activities/ActivitiesPage";
 import UserActivityList from "../UserActivityList";
 import TopButton from "../../UI/TopButton";
@@ -29,9 +28,6 @@ function SelectionForm({ selectedList, playlist_id, user_id, onSubmitActivities,
             if(selectedList === 'like') {
                 response = await loadUserFavorites(user_id);
                 setActivityList(response.userFavorites)
-            } else if (selectedList === 'upload') {
-                response = await loadUserUploads(user_id);
-                setActivityList(response.userUploads);
             } else if (selectedList === 'allActivities') {
                 response = await loadActivities();
                 setActivityList(response)

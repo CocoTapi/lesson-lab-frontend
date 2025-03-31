@@ -5,16 +5,12 @@ import ActivitiesRootLayout from '../pages/activities/ActivitiesRootLayout';
 import ActivitiesPage, { loader as activitiesLoader, action as searchAction } from '../pages/activities/ActivitiesPage';
 import { userLoader } from '../pages/util/checkAuth';
 import ActivityDetailPage, { loader as activityDetailLoader, action as activityItemAction } from '../pages/activities/ActivityDetailPage';
-import EditActivityPage from '../pages/activities/EditActivityPage';
-import NewActivityPage from '../pages/activities/NewActivityPage';
-import { action as activityFormAction, loader as tagsLoader } from '../pages/activities/formAction';
 import UserLayout from "../pages/user_page/UserLayout";
 import UserMainPage, { loader as userDetailLoader } from "../pages/user_page/UserMainPage";
-import EditProfilePage, { action as profileEditAction } from "../pages/user_page/EditProfilePage";
-import UserUploadsPage, { loader as userUploadsLoader, action as deleteUserActivityAction } from "../pages/user_page/UserUploadsPage";
 import UserFavoritesPage, { loader as userFavoritesLoader, action as removeFavoriteActivity } from "../pages/user_page/UserFavoritesPage";
 import UserPlaylistsPage, { userPlaylistsLoader, action as playlistAction } from "../pages/user_page/UserPlaylistsPage";
 import ErrorPage from "../pages/util/ErrorPage";
+import NewActivity from "../components/activities/ActivityForm";
 
 
 
@@ -49,6 +45,10 @@ export const createRouter = (setUserInfo) => createBrowserRouter([
                 action: activityItemAction
               }
             ]
+          },
+          {
+            path: 'new',
+            element: <NewActivity />
           }
         ]
       },

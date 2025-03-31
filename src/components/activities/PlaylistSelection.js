@@ -98,15 +98,10 @@ function PlaylistSelection ({ user_id, token, onPlaylistSubmit, onClose, current
                         {content}
                     </div>
                     <div className={classes.createPlaylistButtonComponent}>
-                        {user_id === 'guest' ?                           
-                        (   <ButtonM onClick={handleCreatePlaylist}>
-                                Create Playlist & Add
-                            </ButtonM>
-                        ) : (
-                            <Link to={`../../mypage/${user_id}/playlists`} >
-                                <p>Do you want to create a new playlist first?</p>
-                            </Link>
-                        )}
+                        <ButtonM onClick={handleCreatePlaylist}>
+                            Create Playlist & Add
+                        </ButtonM>
+                      
                     </div>
                     <div className={classes.bottomSubmitButton}>
                         <ButtonS colorScheme="primary">Done</ButtonS> :

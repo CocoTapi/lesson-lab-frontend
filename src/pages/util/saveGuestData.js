@@ -242,18 +242,11 @@ export async function removeGuestPlaylist(playlist_id) {
 
     await setGuestData(PLAYLIST_KEY, updatedPlaylists);
 
-    const isDeleted = await removeCheckById(PLAYLIST_KEY, 'item.playlist_id === playlist_id')
-
-    return isDeleted;
-}
-
-// check if the item is removed or not from the local storage
-async function removeCheckById(searchKey, condition){
     const newList = await getGuestData(PLAYLIST_KEY);
 
     // Returns true if at least one element matches the condition, otherwise false.
     const isDeleted = !newList.some(item => 
-        condition
+        item.playlist_id === playlist_id
     );
 
     return isDeleted;
