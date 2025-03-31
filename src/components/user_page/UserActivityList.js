@@ -85,12 +85,7 @@ function UserActivityList({ activity, onClick, icon, buttonWord, deleteButton='f
                 <div className={classes.detailItem}>
                     <p className={classes.labelTitle}>References :</p>
                     <p className={classes.accordionReference}>
-                        {activity.links ? 
-                            <a href={activity.links} >
-                                {activity.links}
-                            </a> 
-                        : "none"
-                        }
+                        none
                     </p>
                 </div>
                 {activity.tags.map((tag) => (

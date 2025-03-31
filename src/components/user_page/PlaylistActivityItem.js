@@ -69,12 +69,7 @@ function PlaylistActivityItem({ item, i, showSummary, activityButtons, onRemoveA
                   <div className={classes.detailItem}>
                     <p className={classes.labelTitle}>References :</p>
                     <p className={classes.accordionReference}>
-                      {item.links ?
-                        <Link to={item.links}>
-                          {item.links}
-                        </Link>
-                        : 'none'
-                      }
+                      none
                     </p>
                   </div>
                 </div>
