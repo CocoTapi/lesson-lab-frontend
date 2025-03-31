@@ -10,7 +10,6 @@ import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
-import Swal from "sweetalert2";
 import { swalError, swalWarningForComponent } from "../../pages/util/swalModal";
 
 // TODO: change add playlist form style from accordion to normal
