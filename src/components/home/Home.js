@@ -13,8 +13,8 @@ function Home() {
             navigate(`/mypage/${user_id}/playlists`);
         }; 
         
-        if (path === 'add activity') {
-             navigate("/activities/new")
+        if (path === 'favorites') {
+             navigate(`/mypage/${user_id}/favorites`)
         };
        
     }
@@ -73,20 +73,20 @@ function Home() {
                 </div>
                 <div className={classes.menuBox}>
                     <div className={classes.menuBoxContents}>
-                        <h3>Share Your Ideas to Enhance Innovative Education</h3>
+                        <h3>Your Favorite Picks, All in One Place</h3>
                         <p>
-                            Join our community of educators by sharing your innovative activity ideas. 
-                            Contribute to our growing resources and help provide high-quality learning experiences 
-                            for more learners everywhere.
+                        Easily mark and revisit the activities you love. 
+                        Our "Liked" feature helps you quickly access your favorite learning experiences, 
+                        making it simple to reuse or share them anytime.
                         </p>
                         <div className={classes.menuBoxButtonComponent}>
                             
                             <ButtonS 
                                 className={classes.menuBoxButton} 
                                 colorScheme='primaryBorder' 
-                                onClick={() => handleNavigate('add activity')} 
+                                onClick={() => handleNavigate('favorites')} 
                             >
-                                Add Activity
+                                See My Picks
                             </ButtonS>
                         </div>
                     </div>
