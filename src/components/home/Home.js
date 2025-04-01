@@ -86,7 +86,7 @@ function Home() {
                                 colorScheme='primaryBorder' 
                                 onClick={() => handleNavigate('favorites')} 
                             >
-                                See My Picks
+                                Access Now
                             </ButtonS>
                         </div>
                     </div>
