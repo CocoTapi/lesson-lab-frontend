@@ -100,7 +100,8 @@ export async function action({ params, request }) {
         const newPlaylist = await addPlaylistWithId(playlist_title, activity_duration, activity_id);
 
         if(newPlaylist) {
-            swalSuccess();
+            const text = 'Check out your updated playlist on My Page.'
+            swalSuccess(text);
         } else {
             swalError();
         }
