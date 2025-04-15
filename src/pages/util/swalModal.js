@@ -29,10 +29,11 @@ export function swalQuestion(title, text, buttonWord, ){
 }
 
 // Success
-export function swalSuccess(){
+export function swalSuccess(text){
     return (
         Swal.fire({
             title: "Success!",
+            text: text,
             icon: "success",
             draggable: true,
             confirmButtonColor: SECONDARY_COLOR

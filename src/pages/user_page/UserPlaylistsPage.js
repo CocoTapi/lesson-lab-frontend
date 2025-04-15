@@ -87,7 +87,8 @@ export async function action({ request }) {
         const newPlaylist = await saveNewGuestPlaylist(playlist_title);
 
         if(newPlaylist) {
-            swalSuccess();
+            const text = 'Add activities from this playlist or the Activity page.'
+            swalSuccess(text);
         } else {
             swalError();
         }
@@ -134,7 +135,8 @@ export async function action({ request }) {
         if(!response) {
             swalError();
         } else {
-            swalSuccess();
+            const text = 'Activities have been added to your playlist.';
+            swalSuccess(text);
         }
        
         return null;  

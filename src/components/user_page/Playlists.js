@@ -60,7 +60,7 @@ function Playlists ({ data }) {
         activityDuration
     ) => {
         swalWarningForComponent(
-            `Do you want to remove this activity"?`,
+            `Do you want to remove this activity?`,
             "Yes, remove it!"
         ).then((result) => {
             if (result.isConfirmed) {
@@ -73,7 +73,7 @@ function Playlists ({ data }) {
     // Delete a playlist
     const handleDeletePlaylist = (playlist_id, playlist_title) => {
         swalWarningForComponent(
-            `Do you want to delete this playlist"?`,
+            `Do you want to delete this playlist?`,
              "Yes, delete it!"
         ).then((result) => {
             if (result.isConfirmed) {
