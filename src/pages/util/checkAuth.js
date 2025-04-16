@@ -49,7 +49,7 @@ export async function userLoader({ request, params }) {
         }
     }
 
-    token = getAuthToken()
+    token = getAuthToken();
 
     if (!token) {
         // you have to return "null" if there is anything to return.

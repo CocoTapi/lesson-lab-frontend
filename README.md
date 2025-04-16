@@ -1,13 +1,26 @@
-Lesson Lab (frontend)
+# LessonLab Frontend
 
-This is a Web 2.0 platform crafted to empower educators by streamlining 
-the creation and sharing of classroom activities. The app features a dynamic playlist system, 
-enabling teachers to organize and customize learning activities to meet their educational 
-objectives effortlessly.
+Lesson Lab is a Web 2.0 application designed to empower educators to manage high-quality class activities while reducing workload.resources, I’ve found real fulfillment in overcoming obstacles.
 
-Lesson Lab offers a platform where educators can:
+📌 Note: The backend is housed in a separate repository.
 
-✅ Search for class activities using keywords, filters, and sorting options.
-✅ Organize and manage dynamic playlists of learning activities.
-✅ Customize content effortlessly to align with educational objectives.
-✅ Authenticate securely through Google OAuth, enhancing the login experience.
+## Tech Summary
+
+This is a multi-page React application using React Router DOM, featuring login functionality via OAuth. The frontend is currently deployed using the main_no_backend branch on GitHub Pages.
+
+The full-stack version was previously deployed with AWS EC2 and RDS, but that deployment is currently paused due to Google OAuth changes and AWS cost considerations.
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, JavaScript, HTML, CSS
+- **Backend:** TypeScript, Node.js, Node Express, PostgreSQL
+- **UI/UX Tools:** Figma, PgAdmin, Postman, Git, 
+- **Deployment:** GitHub Pages
+
+## Features
+
+- Clean, responsive UI
+- Activity search & filtering
+- Playlist creation and management
+- Favorite activity bookmarking
+
