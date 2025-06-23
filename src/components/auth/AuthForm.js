@@ -3,7 +3,6 @@ import ButtonM from '../UI/ButtonM';
 import classes from '../css/auth/AuthForm.module.css';
 import { useState } from 'react';
 import { googleOAuthAction } from '../../pages/auth/googleOAuth';
-import { FcGoogle } from "react-icons/fc";
 
 function AuthForm({ locationState }) {
     const data = useActionData();

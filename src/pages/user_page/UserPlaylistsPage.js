@@ -1,10 +1,9 @@
 import { json, defer, Await, useRouteLoaderData, redirect } from "react-router-dom";
 import { Suspense } from "react";
-import { API_URL, baseName, baseUrl } from '../../App';
+import { API_URL } from '../../App';
 import { getAuthToken } from "../util/checkAuth";
 import Playlists from "../../components/user_page/Playlists";
 import { addActivitiesToPlaylist, fetchGuestPlaylist, removeActivityFromPlaylist, removeGuestPlaylist, reorderPlaylist, saveNewGuestPlaylist } from "../util/saveGuestData";
-import Swal from 'sweetalert2';
 import { swalError, swalSuccess } from "../util/swalModal";
 
 //TODO: re-fetch data after adding activities into playlist
@@ -224,14 +223,14 @@ export async function handleRequest(url, method, token, bodyContent, user_id) {
 }
 
 
-function handlePageRefresh(user_id) {
-    // console.log("baseUrl:", baseUrl);
+// function handlePageRefresh(user_id) {
+//     // console.log("baseUrl:", baseUrl);
 
-    const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
+//     const redirectUrl = `${baseUrl}${baseName}/mypage/${user_id}/playlists`;
 
-    // console.log("Redirecting to:", redirectUrl);
+//     // console.log("Redirecting to:", redirectUrl);
     
-    window.location.href = redirectUrl;
-    return null;
-}
+//     window.location.href = redirectUrl;
+//     return null;
+// }
 
