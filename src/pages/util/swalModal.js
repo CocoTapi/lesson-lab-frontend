@@ -14,6 +14,20 @@ export function swalAlert(title, text, buttonWord){
     )
 }
 
+// Tell users a message. 
+export function swalQuestion(title, text, buttonWord, ){
+    return (
+         Swal.fire({
+            title: title,
+            text: text,
+            showCancelButton: false,
+            confirmButtonColor: PRIMARY_COLOR,
+            confirmButtonText: buttonWord,
+            icon: "question"
+        })
+    )
+}
+
 // Success
 export function swalSuccess(){
     return (

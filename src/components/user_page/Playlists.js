@@ -10,7 +10,7 @@ import ButtonS from "../UI/ButtonS";
 import PlaylistItem from "./PlaylistItem";
 import ButtonM from "../UI/ButtonM";
 import ActivitySelection from "./playlist_selection/ActivitySelection";
-import { swalError, swalWarningForComponent } from "../../pages/util/swalModal";
+import { swalError, swalQuestion, swalWarningForComponent } from "../../pages/util/swalModal";
 
 // TODO: change add playlist form style from accordion to normal
 // TODO: check if the title is empty or not
@@ -102,7 +102,15 @@ function Playlists ({ data }) {
 
     const handleSubmitNewPlaylist = (e) => {
         e.preventDefault();
-        const title = titleRef.current.value;
+        let title = titleRef.current.value;
+
+        title = title.trim();
+
+        // Check title is empty or not
+        if(title.trim().length === 0) {
+            swalQuestion("Title is Empty", "Please enter a valid title.", "OK", 'question')
+            return;
+        }
         
         submit({ user_id, playlist_title: title }, { method: "POST" });
 
