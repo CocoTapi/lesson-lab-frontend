@@ -1,9 +1,11 @@
 # LessonLab Frontend
 
-Welcome to Lesson Lab, deployed at https://cocotapi.github.io/lesson-lab-frontend/. This is a Web 2.0 application designed to empower educators to manage high-quality class activities while reducing workload.
+Welcome to **LessonLab**, a modern Web 2.0 application that helps educators management of high-quality classroom activities, all while reducing administrative workload.
 
-📌 Note: The backend is housed in a separate repository.
-📌 Note: The deployed version has no backend support.
+🔗 **Live Demo**: [https://cocotapi.github.io/lesson-lab-frontend/](https://cocotapi.github.io/lesson-lab-frontend/)  
+
+⚠️ **Note**: The deployed demo does not include backend functionality.
+📁 **Backend Repository**: [LessonLab Backend](https://github.com/CocoTapi/lesson-lab-backend)  
 
 ## Tech Summary
 
