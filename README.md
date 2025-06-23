@@ -1,6 +1,6 @@
 # LessonLab Frontend
 
-Welcome to **LessonLab**, a modern Web 2.0 application that helps educators management of high-quality classroom activities, all while reducing administrative workload.
+Welcome to **LessonLab**, a modern Web 2.0 application that helps educators manage high-quality classroom activities, all while reducing administrative workload.
 
 🔗 **Live Demo**: [https://cocotapi.github.io/lesson-lab-frontend/](https://cocotapi.github.io/lesson-lab-frontend/)  
 
